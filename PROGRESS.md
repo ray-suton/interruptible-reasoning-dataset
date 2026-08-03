@@ -21,7 +21,9 @@
 - Model/evaluation freeze.
 - Primary-test and robustness row construction.
 
-## External blocker
+## Publication
 
-The local GitHub CLI token for `ray-suton` is invalid. The repository cannot be
-created or pushed to GitHub until authentication is refreshed.
+- The private GitHub repository is published at
+  `ray-suton/interruptible-reasoning-dataset`.
+- `main` tracks `origin/main`.
+- Collaborator access has not yet been granted.
