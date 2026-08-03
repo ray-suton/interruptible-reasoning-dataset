@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/interruptible-reasoning/source_group.schema.json",
+  "title": "Interruptible Reasoning Source Group",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "task_group_id",
+    "source_dataset",
+    "source_year",
+    "domain",
+    "split",
+    "recipe",
+    "owner_id",
+    "stable_source_id",
+    "statement_sha256",
+    "answer_source",
+    "license_note",
+    "original_answer",
+    "verification"
+  ],
+  "properties": {
+    "task_group_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_year": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1900
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "domain": {
+      "enum": ["math", "planning"]
+    },
+    "split": {
+      "enum": ["development", "primary_test"]
+    },
+    "recipe": {
+      "enum": ["D8", "M4", "T8"]
+    },
+    "owner_id": {
+      "type": "string",
+      "pattern": "^P[1-8]$"
+    },
+    "stable_source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "statement_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "answer_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "license_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "original_problem": {
+      "type": "string"
+    },
+    "original_answer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "symbolic_task": {
+      "type": "object"
+    },
+    "difficulty_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": ["method", "status"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["verified"]
+        }
+      }
+    }
+  }
+}

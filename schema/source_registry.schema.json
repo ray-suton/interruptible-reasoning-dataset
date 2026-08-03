@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/interruptible-reasoning/source_registry.schema.json",
+  "title": "Interruptible Reasoning Pending Source Registry Entry",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "task_group_id",
+    "stable_source_id",
+    "source_dataset",
+    "source_year",
+    "domain",
+    "split",
+    "report_partition",
+    "recipe",
+    "owner_id",
+    "reviewer_id",
+    "import_status",
+    "provenance_status",
+    "license_status",
+    "source_hash_status",
+    "problem_text_redistribution",
+    "statement_text_included",
+    "expected_authored_rows",
+    "expected_primary_rows",
+    "expected_robustness_rows"
+  ],
+  "properties": {
+    "task_group_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stable_source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_year": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1900
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "domain": {
+      "enum": ["math", "planning"]
+    },
+    "split": {
+      "enum": ["development", "primary_test"]
+    },
+    "report_partition": {
+      "enum": ["development", "primary", "primary_test", "robustness", "primary_plus_robustness"]
+    },
+    "recipe": {
+      "enum": ["D8", "M4", "T8"]
+    },
+    "owner_id": {
+      "type": "string",
+      "pattern": "^P[1-8]$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "pattern": "^P[1-8]$"
+    },
+    "import_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "license_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_hash_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_text_redistribution": {
+      "type": "string",
+      "minLength": 1
+    },
+    "statement_text_included": {
+      "type": "boolean"
+    },
+    "expected_authored_rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "expected_primary_rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "expected_robustness_rows": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

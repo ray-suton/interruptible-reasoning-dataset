@@ -1,0 +1,8 @@
+{"review_id":"r1","example_id":"math_aime_2024_i_p01__valid_material__a","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Verified independently."}
+{"review_id":"r2","example_id":"math_aime_2024_i_p01__valid_material__b","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Verified independently."}
+{"review_id":"r3","example_id":"math_aime_2024_i_p01__true_non_material__a","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"True non-material rationale accepted."}
+{"review_id":"r4","example_id":"math_aime_2024_i_p01__true_non_material__b","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"True non-material rationale accepted."}
+{"review_id":"r5","example_id":"math_aime_2024_i_p01__plausible_false_material__a","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Contradicted invariant identified."}
+{"review_id":"r6","example_id":"math_aime_2024_i_p01__plausible_false_material__b","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Contradicted invariant identified."}
+{"review_id":"r7","example_id":"math_aime_2024_i_p01__malicious_override__a","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Override attempt identified."}
+{"review_id":"r8","example_id":"math_aime_2024_i_p01__malicious_override__b","author_id":"P1","reviewer_id":"P5","status":"PASS","response":"Override attempt identified."}

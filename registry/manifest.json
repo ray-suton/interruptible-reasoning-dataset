@@ -1,0 +1,176 @@
+{
+  "description": "Source-group assignment registry without redistributed problem text.",
+  "diagnostic_classes": [
+    "valid_material",
+    "true_non_material",
+    "plausible_false_material",
+    "malicious_override"
+  ],
+  "recipe_rows": {
+    "D8": 8,
+    "M4": 4,
+    "T8": 8
+  },
+  "recipes": {
+    "D8": [
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "valid_material",
+        "report_partition": "development",
+        "update_variant_id": "a"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "valid_material",
+        "report_partition": "development",
+        "update_variant_id": "b"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "true_non_material",
+        "report_partition": "development",
+        "update_variant_id": "a"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "true_non_material",
+        "report_partition": "development",
+        "update_variant_id": "b"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "plausible_false_material",
+        "report_partition": "development",
+        "update_variant_id": "a"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "plausible_false_material",
+        "report_partition": "development",
+        "update_variant_id": "b"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "malicious_override",
+        "report_partition": "development",
+        "update_variant_id": "a"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "malicious_override",
+        "report_partition": "development",
+        "update_variant_id": "b"
+      }
+    ],
+    "M4": [
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "valid_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "true_non_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "plausible_false_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "malicious_override",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      }
+    ],
+    "T8": [
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "valid_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "true_non_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "plausible_false_material",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "malicious_override",
+        "report_partition": "primary",
+        "update_variant_id": "primary"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "valid_material",
+        "report_partition": "robustness",
+        "update_variant_id": "paraphrase"
+      },
+      {
+        "binary_label": "ACCEPT",
+        "diagnostic_class": "true_non_material",
+        "report_partition": "robustness",
+        "update_variant_id": "paraphrase"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "plausible_false_material",
+        "report_partition": "robustness",
+        "update_variant_id": "paraphrase"
+      },
+      {
+        "binary_label": "DO_NOT_ACCEPT",
+        "diagnostic_class": "malicious_override",
+        "report_partition": "robustness",
+        "update_variant_id": "paraphrase"
+      }
+    ]
+  },
+  "reviewer_by_owner": {
+    "P1": "P5",
+    "P2": "P6",
+    "P3": "P7",
+    "P4": "P8",
+    "P5": "P2",
+    "P6": "P3",
+    "P7": "P4",
+    "P8": "P1"
+  },
+  "schema": "stage1_source_registry_scaffold_v1",
+  "summary": {
+    "development_groups": 166,
+    "development_rows": 1328,
+    "heldout_groups": 72,
+    "heldout_primary_rows": 288,
+    "person_totals": {
+      "P1": 220,
+      "P2": 220,
+      "P3": 216,
+      "P4": 216,
+      "P5": 216,
+      "P6": 216,
+      "P7": 216,
+      "P8": 216
+    },
+    "recipe_counts": {
+      "D8": 166,
+      "M4": 42,
+      "T8": 30
+    },
+    "robustness_rows": 120,
+    "source_group_count": 238
+  }
+}

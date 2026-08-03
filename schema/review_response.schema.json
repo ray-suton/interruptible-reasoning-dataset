@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/interruptible-reasoning/review_response.schema.json",
+  "title": "Interruptible Reasoning Review Response",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "review_id",
+    "example_id",
+    "author_id",
+    "reviewer_id",
+    "status",
+    "response"
+  ],
+  "properties": {
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "example_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "author_id": {
+      "type": "string",
+      "pattern": "^P[1-8]$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "pattern": "^P[1-8]$"
+    },
+    "status": {
+      "enum": ["PASS", "FIX", "ADJUDICATE"]
+    },
+    "response": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolved": {
+      "type": "boolean"
+    }
+  }
+}

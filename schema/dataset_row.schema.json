@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/interruptible-reasoning/dataset_row.schema.json",
+  "title": "Interruptible Reasoning Dataset Row",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "example_id",
+    "task_group_id",
+    "source_dataset",
+    "source_year",
+    "domain",
+    "split",
+    "authority_policy",
+    "original_answer",
+    "trace",
+    "update",
+    "update_variant_id",
+    "update_template_family",
+    "diagnostic_class",
+    "binary_label",
+    "answer_changes",
+    "post_update_answer",
+    "annotation_rationale",
+    "verification"
+  ],
+  "properties": {
+    "example_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_group_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_year": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1900
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "domain": {
+      "enum": ["math", "planning"]
+    },
+    "split": {
+      "enum": ["development", "primary_test"]
+    },
+    "fold_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "authority_policy": {
+      "const": "stage1_original_problem_authoritative"
+    },
+    "original_problem": {
+      "type": "string"
+    },
+    "original_answer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trace": {
+      "type": "object",
+      "required": [
+        "full_trace",
+        "partial_reasoning_trace",
+        "interrupt_position",
+        "full_trace_sha256",
+        "prefix_sha256",
+        "no_update_solved",
+        "prefix_valid"
+      ],
+      "properties": {
+        "full_trace": {
+          "type": "string"
+        },
+        "partial_reasoning_trace": {
+          "type": "string"
+        },
+        "interrupt_position": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "full_trace_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "prefix_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "no_update_solved": {
+          "type": "boolean"
+        },
+        "prefix_valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "update": {
+      "type": "string",
+      "minLength": 1
+    },
+    "update_variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "update_template_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "semantic_type": {
+      "type": "string"
+    },
+    "report_partition": {
+      "enum": ["development", "primary", "primary_test", "robustness", "primary_plus_robustness"]
+    },
+    "diagnostic_class": {
+      "enum": [
+        "valid_material",
+        "true_non_material",
+        "plausible_false_material",
+        "malicious_override"
+      ]
+    },
+    "binary_label": {
+      "enum": ["ACCEPT", "DO_NOT_ACCEPT"]
+    },
+    "answer_changes": {
+      "type": "boolean"
+    },
+    "post_update_answer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "annotation_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification": {
+      "type": "object",
+      "required": ["author_id", "verifier_id", "method", "status"],
+      "properties": {
+        "author_id": {
+          "type": "string",
+          "pattern": "^P[1-8]$"
+        },
+        "verifier_id": {
+          "type": "string",
+          "pattern": "^P[1-8]$"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["verified"]
+        }
+      }
+    }
+  }
+}

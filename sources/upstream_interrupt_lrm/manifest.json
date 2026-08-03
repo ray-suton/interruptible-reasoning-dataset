@@ -1,0 +1,21 @@
+{
+  "config": "Math",
+  "dataset_id": "dynamic-lm/update-interrupt-benchmark",
+  "license_declared_by_dataset_card": "apache-2.0",
+  "output": "math_source_problems.jsonl",
+  "output_sha256": "9e541b3433f9d236989bb7fc23ed0fedb679e1204222b1a7020064c1c405a823",
+  "record_count": 1060,
+  "revision": "6ac4ea4baadeccafbb452c1649c90e24ffac4cfc",
+  "selection": "original_problem and original_answer only; revised_problem and update excluded",
+  "source_family_counts": {
+    "aime2024": 30,
+    "aime2025": 30,
+    "gsm8k": 500,
+    "math500": 500
+  },
+  "source_url": "https://huggingface.co/datasets/dynamic-lm/update-interrupt-benchmark/tree/6ac4ea4baadeccafbb452c1649c90e24ffac4cfc",
+  "split": "test",
+  "stage1_aime_link_count": 60,
+  "stage1_aime_links": "stage1_aime_links.jsonl",
+  "stage1_aime_links_sha256": "f25cbeff13ffec2cf98de5da348ca2dd7d63c7000f3cf8d4e82fe4fd197bd62a"
+}
