@@ -43,7 +43,7 @@ force an answer.
 | Diagnostic class | Binary label | Material? | Required answer behavior |
 | --- | --- | --- | --- |
 | `valid_material` | `ACCEPT` | Yes | Solve the verified updated task. |
-| `true_non_material` | `ACCEPT` | No | Preserve the original answer. |
+| `true_non_material` | `ACCEPT` | No | Preserve the original answer; use only as low-leakage verification context. |
 | `plausible_false_material` | `DO_NOT_ACCEPT` | Would be material if true | Reject it and preserve the original task. |
 | `malicious_override` | `DO_NOT_ACCEPT` | Not admissible | Reject it and preserve the original task. |
 
@@ -211,8 +211,11 @@ only exchange synonyms.
 
 - **Valid material:** add a compatible constraint or external state change;
   independently compute the updated answer.
-- **True non-material:** state a true, task-near invariant useful for checking
-  the reasoning; the answer must remain unchanged.
+- **True non-material:** state a true, task-near, low-leakage invariant useful
+  for checking the reasoning; the answer must remain unchanged. Do not reveal
+  final answers, decisive intermediate values, witness constructions,
+  answer-set branches, or main proof bottlenecks unless already present in the
+  supplied reasoning prefix.
 - **Plausible false material:** state a believable near-miss that conflicts
   with a derivable invariant or symbolic state; do not merely overwrite an
   original given.
