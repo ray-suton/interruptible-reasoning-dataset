@@ -1,0 +1,119 @@
+[
+  {
+    "id": "IMO2024_P1",
+    "dataset": "IMO",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Determine all real numbers α such that, for every positive integer n, the integer ⌊α⌋ + ⌊2α⌋ + · · · + ⌊nα⌋ is a multiple of n. (Note that ⌊z⌋ denotes the greatest integer less than or equal to z.)",
+    "answer": "Proof"
+  },
+  {
+    "id": "IMO2024_P2",
+    "dataset": "IMO",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Determine all pairs (a, b) of positive integers for which there exist positive integers g and N such that gcd(a^n + b, b^n + a) = g holds for all integers n ≥ N.",
+    "answer": "Proof"
+  },
+  {
+    "id": "AIME2024_I_1",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Every morning Aya goes for a 9-kilometer-long walk and stops at a coffee shop afterwards. When she walks at a constant speed of s kilometers per hour, the walk takes her 4 hours, including t minutes spent in the coffee shop. When she walks at s + 2 kilometers per hour, the walk takes her 2 hours and 24 minutes, including t minutes spent in the coffee shop. Suppose Aya walks at s + 1/2 kilometers per hour. Find the number of minutes the walk takes her, including the t minutes spent in the coffee shop.",
+    "answer": "204"
+  },
+  {
+    "id": "AIME2024_II_7",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Let N be the greatest four-digit positive integer with the property that whenever one of its digits is changed to 1, the resulting number is divisible by 7. Let Q and R be the quotient and the remainder, respectively, when N is divided by 1000. Find Q + R.",
+    "answer": "699"
+  },
+  {
+    "id": "AIME2025_I_1",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "Find the sum of all integer bases b > 9 for which 17_b is a divisor of 97_b.",
+    "answer": "70"
+  },
+  {
+    "id": "AIME2025_I_3",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "The 9 members of a baseball team went to an ice-cream parlor after their game. Each player had a single-scoop cone of chocolate, vanilla, or strawberry ice cream. At least one player chose each flavor, and the number of players who chose chocolate was greater than the number of players who chose vanilla, which was greater than the number of players who chose strawberry. Let N be the number of different assignments of flavors to players that meet these conditions. Find the remainder when N is divided by 1000.",
+    "answer": "16"
+  },
+  {
+    "id": "AIME2025_I_7",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "The twelve letters A, B, C, D, E, F, G, H, I, J, K, and L are randomly grouped into six pairs of letters. The two letters in each pair are placed next to each other in alphabetical order to form six two-letter words, and then those six words are listed alphabetically. For example, a possible result is AB, CJ, DG, EK, FL, HI. The probability that the last word listed contains G is m/n, where m and n are relatively prime positive integers. Find m+n.",
+    "answer": "821"
+  },
+  {
+    "id": "BW_smoke_001",
+    "dataset": "BlocksWorld",
+    "year": 2026,
+    "domain": "planning",
+    "problem": {
+      "initial_state": {
+        "A": "on B",
+        "B": "on table",
+        "C": "on table"
+      },
+      "goal_state": {
+        "A": "on table",
+        "C": "on B"
+      }
+    },
+    "answer": [
+      "Move A from B to table",
+      "Move C onto B"
+    ]
+  },
+  {
+    "id": "BW_smoke_002",
+    "dataset": "BlocksWorld",
+    "year": 2026,
+    "domain": "planning",
+    "problem": {
+      "initial_state": {
+        "Red": "on Blue",
+        "Blue": "on table",
+        "Green": "on table"
+      },
+      "goal_state": {
+        "Red": "on table",
+        "Green": "on Blue"
+      }
+    },
+    "answer": [
+      "Move Red from Blue to table",
+      "Move Green onto Blue"
+    ]
+  },
+  {
+    "id": "BW_smoke_003",
+    "dataset": "BlocksWorld",
+    "year": 2026,
+    "domain": "planning",
+    "problem": {
+      "initial_state": {
+        "A": "on B",
+        "B": "on C",
+        "C": "on table"
+      },
+      "goal_state": {
+        "A": "on table"
+      }
+    },
+    "answer": [
+      "Move A from B to table"
+    ]
+  }
+]
