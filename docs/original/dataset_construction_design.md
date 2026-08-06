@@ -215,7 +215,15 @@ only exchange synonyms.
   for checking the reasoning; the answer must remain unchanged. Do not reveal
   final answers, decisive intermediate values, witness constructions,
   answer-set branches, or main proof bottlenecks unless already present in the
-  supplied reasoning prefix.
+  supplied reasoning prefix. For `D8` groups, author variant `a` in the
+  `restated_given` style (a restatement, unit conversion, or aggregation of
+  explicitly stated givens) and variant `b` in the
+  `implicit_given_clarification` style (a fact the problem entails but never
+  states, such as a shared-variable identity or standard domain convention).
+  Record the style in `semantic_type`, keep both styles instance-specific
+  where possible, and cite the entailing given or convention in the
+  annotation rationale. A clarification that resolves a genuine ambiguity is
+  material and must not be used in this class.
 - **Plausible false material:** state a believable near-miss that conflicts
   with a derivable invariant or symbolic state; do not merely overwrite an
   original given.
