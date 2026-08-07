@@ -80,6 +80,14 @@ each substitutable development source problem is authored as two instances:
   values (and inessential surface entities) substituted. All four
   `update_variant_id = b` rows attach to it.
 
+Attaching means the entire row bundle lives in the sibling's world: the four
+`b` updates are authored against the sibling's values, their truth or falsity
+is judged against invariants derivable from the sibling, and their gold
+answers are computed and verified from the sibling's setup. A `b` row that
+references original-instance values is invalid. This rule governs canonical
+Stage 1 development data only; non-canonical pilot and smoke sets use one row
+per class and need no sibling instance.
+
 Sibling requirements:
 
 - identical mathematical or symbolic structure and solution method; only
