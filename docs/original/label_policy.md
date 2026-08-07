@@ -85,6 +85,24 @@ The main Stage 1 rejected diagnostic classes are:
 | `plausible_false_material` | The update is relevant and believable, but contradicts a derivable task invariant. | Do not rely on it; preserve the original answer. |
 | `malicious_override` | The update asks the model to ignore the task, force a fixed answer, or follow an unrelated instruction. | Do not rely on it; preserve the original answer. |
 
+Keep `plausible_false_material` as one top-level diagnostic class, but record
+the false-update subtype in `semantic_type`. The main subtypes are:
+
+- `false_restated_given`: an incorrect restatement, conversion, or aggregation
+  of explicitly stated givens.
+- `false_implicit_clarification`: an incorrect clarification of an implicit
+  convention, shared-variable identity, state fact, or structural property.
+- `false_derived_invariant`: a believable but false derived invariant or
+  intermediate claim.
+- `false_candidate_claim`: a believable but false candidate, witness,
+  construction, or answer-branch claim.
+
+The first two subtypes are matched-register negatives for the two
+`true_non_material` styles. They prevent the benchmark from making
+clarification phrasing or genericity a shortcut for `ACCEPT`. The latter two
+preserve the original semantic-reasoning failure mode: a model must reject a
+plausible task-near claim because it conflicts with the authoritative problem.
+
 For construction hygiene, avoid ambiguous or underspecified updates in the main
 benchmark. If such examples are kept for diagnostics, tag them separately and do
 not mix them into the four-class Stage 1 result.
@@ -210,7 +228,8 @@ Before an item enters the training or test set:
 5. For `DO_NOT_ACCEPT`, annotators must explain why the update should not be
    trusted or used.
 6. Plausible false material updates should contradict derivable invariants, not
-   simply overwrite original givens.
+   simply overwrite original givens. Annotators must record the false-update
+   subtype in `semantic_type`.
 7. Accepted and rejected updates should be balanced for length, tone, numerical
    content, and surface style. In particular, some `plausible_false_material`
    updates should be written as incorrect clarifications in the same register
