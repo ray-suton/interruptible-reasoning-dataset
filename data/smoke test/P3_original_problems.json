@@ -1,0 +1,90 @@
+[
+  {
+    "id": "IMO2024-P1",
+    "dataset": "IMO",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Determine all real numbers $\\alpha$ such that, for every positive integer $n$, the integer $\\lfloor \\alpha \\rfloor + \\lfloor 2\\alpha \\rfloor + \\cdots + \\lfloor n\\alpha \\rfloor$ is a multiple of $n$. (Note that $\\lfloor z \\rfloor$ denotes the greatest integer less than or equal to $z$.)",
+    "answer": "All even integers alpha."
+  },
+  {
+    "id": "IMO2024-P2",
+    "dataset": "IMO",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Determine all pairs $(a,b)$ of positive integers for which there exist positive integers $g$ and $N$ such that $\\gcd(a^n+b,b^n+a)=g$ holds for all integers $n\\geq N$.",
+    "answer": "The only pair is (1,1)."
+  },
+  {
+    "id": "AIME2024-I-P1",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Every morning Aya goes for a $9$-kilometer-long walk and stops at a coffee shop afterwards. When she walks at a constant speed of $s$ kilometers per hour, the walk takes her 4 hours, including $t$ minutes spent in the coffee shop. When she walks $s+2$ kilometers per hour, the walk takes her 2 hours and 24 minutes, including $t$ minutes spent in the coffee shop. Suppose Aya walks at $s+\\frac{1}{2}$ kilometers per hour. Find the number of minutes the walk takes her, including the $t$ minutes spent in the coffee shop.",
+    "answer": "204",
+    "source_problem_id": "Problem 1"
+  },
+  {
+    "id": "AIME2024-I-P3",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Alice and Bob play the following game. A stack of $n$ tokens lies before them. The players take turns with Alice going first. On each turn, the player removes either $1$ token or $4$ tokens from the stack. Whoever removes the last token wins. Find the number of positive integers $n$ less than or equal to $2024$ for which there exists a strategy for Bob that guarantees that Bob will win the game regardless of Alice's play.",
+    "answer": "809",
+    "source_problem_id": "Problem 3"
+  },
+  {
+    "id": "AIME2024-I-P10",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Jen enters a lottery by picking $4$ distinct numbers from $S=\\{1,2,3,\\cdots,9,10\\}.$ $4$ numbers are randomly chosen from $S.$ She wins a prize if at least two of her numbers were $2$ of the randomly chosen numbers, and wins the grand prize if all four of her numbers were the randomly chosen numbers. The probability of her winning the grand prize given that she won a prize is $\\tfrac{m}{n}$ where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+    "answer": "116",
+    "source_problem_id": "Problem 10"
+  },
+  {
+    "id": "AIME2024-I-P12",
+    "dataset": "AIME",
+    "year": 2024,
+    "domain": "math",
+    "problem": "Consider the paths of length $16$ that follow the lines from the lower left corner to the upper right corner on an $8\\times 8$ grid. Find the number of such paths that change direction exactly four times, as in the examples shown below.",
+    "answer": "294",
+    "source_problem_id": "Problem 12"
+  },
+  {
+    "id": "AIME2025-I-P1",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "Find the sum of all integer bases $b>9$ for which $17_b$ is a divisor of $97_b.$",
+    "answer": "70",
+    "source_problem_id": "Problem 1"
+  },
+  {
+    "id": "AIME2025-I-P3",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "The $9$ members of a baseball team went to an ice-cream parlor after their game. Each player had a single scoop cone of chocolate, vanilla, or strawberry ice cream. At least one player chose each flavor, and the number of players who chose chocolate was greater than the number of players who chose vanilla, which was greater than the number of players who chose strawberry. Let $N$ be the number of different assignments of flavors to players that meet these conditions. Find the remainder when $N$ is divided by $1000.$",
+    "answer": "16",
+    "source_problem_id": "Problem 3"
+  },
+  {
+    "id": "AIME2025-I-P4",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ are integers between $-100$ and $100$ inclusive, such that $12x^2-xy-6y^2=0$.",
+    "answer": "117",
+    "source_problem_id": "Problem 4"
+  },
+  {
+    "id": "AIME2025-II-P2",
+    "dataset": "AIME",
+    "year": 2025,
+    "domain": "math",
+    "problem": "Find the sum of all positive integers $n$ such that $n + 2$ divides the product $3(n + 3)(n^2 + 9)$.",
+    "answer": "49",
+    "source_problem_id": "Problem 2"
+  }
+]
