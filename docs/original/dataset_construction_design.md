@@ -57,8 +57,8 @@ The independent experimental unit is the **source problem**, identified by
 counterfactual examples, not independent observations.
 
 - One row contains one update.
-- All rows from one source problem use the same cached no-update reasoning trace
-  and the same 60% prefix.
+- All rows from one problem instance use the same cached no-update reasoning
+  trace and the same 60% prefix.
 - All rows from one source problem remain in the same fold and split.
 - Confidence intervals and significance tests resample source-problem groups,
   not individual rows.
@@ -67,6 +67,41 @@ Development problems receive eight rows: two independently instantiated
 updates per diagnostic class. These are training augmentation and within-task
 controls. The primary test receives four rows: one update per class. A separate
 planning robustness set provides one meaning-preserving paraphrase per class.
+
+### 3.1 Two instances per development group
+
+To avoid training on eight rows that share one identical problem and prefix,
+and to control for source memorization in the pre-cutoff development pool,
+each substitutable development source problem is authored as two instances:
+
+- **Instance `a` (original):** the canonical source problem, unchanged. All
+  four `update_variant_id = a` rows attach to it.
+- **Instance `b` (value-substituted sibling):** the same problem with numeric
+  values (and inessential surface entities) substituted. All four
+  `update_variant_id = b` rows attach to it.
+
+Sibling requirements:
+
+- identical mathematical or symbolic structure and solution method; only
+  values change;
+- well-posed after substitution; AIME-style siblings keep an integer answer in
+  0-999;
+- the sibling answer is independently recomputed and verified like an
+  original;
+- the sibling receives its own no-update trace and 60% prefix under the same
+  frozen generation config, with its own hashes and `no_update_solved` flag;
+- both instances share one `task_group_id`, fold, and split; sibling rows are
+  never split from their group; and
+- the headline statistics still resample source-problem groups, so siblings
+  add no apparent sample size.
+
+Exemptions: IMO and other proof-style items whose content cannot be
+value-substituted keep both variants on the original instance and must instead
+use semantically distinct propositions (the previous rule). The BlocksWorld
+analog of substitution is a re-instantiated sibling (relabeled blocks or
+mirrored state with the same plan skeleton), re-executed in the validator.
+Malicious variants `a` and `b` must use different attack strategies in either
+case; changed values alone do not diversify an attack.
 
 ## 4. Sources, splits, and counts
 
@@ -188,7 +223,8 @@ For every source problem, store:
 
 ### Step 3: No-update reasoning trace
 
-Generate one no-update trace per source problem using a frozen model revision,
+Generate one no-update trace per problem instance (original, and the
+value-substituted sibling where one exists) using a frozen model revision,
 chat template, decoding configuration, and seed policy.
 
 1. Save the complete model-visible trace and final answer.
@@ -396,8 +432,13 @@ Create these exact rows:
 
 Thus one `D8` group contains four `ACCEPT` and four `DO_NOT_ACCEPT` rows. The
 `a` and `b` go in `update_variant_id`; `diagnostic_class` remains one of the
-four canonical classes. The two variants must use different propositions or
-attacks; mere wording changes are insufficient.
+four canonical classes. Per section 3.1, all `a` rows attach to the original
+instance and all `b` rows attach to the value-substituted sibling instance
+(where the source is substitutable); each instance carries its own verified
+answer, trace, and prefix. For exempt (proof-style) sources both variants stay
+on the original instance and must use different propositions or attacks; mere
+wording changes are insufficient. Malicious `a` and `b` must use different
+attack strategies in every case.
 
 #### Recipe `M4`: four independent held-out-math rows
 

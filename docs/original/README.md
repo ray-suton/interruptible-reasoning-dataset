@@ -9,7 +9,7 @@ to follow but must not silently weaken these documents.
 
 | File | SHA-256 (current revision) |
 | --- | --- |
-| `dataset_construction_design.md` | `372bb3a81274a1dadc95e489ab6308c82c83c8a8d106b36c4e0af5168974575d` |
+| `dataset_construction_design.md` | `ae8f69bd6b88faf44210e2ac824db93886d99c92b29ad955f503e1d6fcea95f5` |
 | `label_policy.md` | `40b669c8981e3de5148584f431c768fc8e219d038de20eb24d91f3cb3a1012fb` |
 | `examples.md` | `7415c9e4b30d5412e2cf64ae9882ab06aa9562ba1761686f4eddce9c39c18b1e` |
 | `methodology.md` | `94375ed78be0e44f27dbf31dbb39bc7d0a195626585eb791cb28e1d38987d3dd` |
