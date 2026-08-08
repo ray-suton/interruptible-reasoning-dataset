@@ -1,0 +1,16 @@
+{
+  "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
+  "version": 1,
+  "locked_at": "2026-08-08T09:40:33Z",
+  "locked_by": "P1",
+  "reason": "Adopt repository-contained scoreability rules for behaviour signatures, answer-form equivalence, and trace-prefix binding before row authoring begins. No authored rows invalidated (none authored).",
+  "files": {
+    "schema/dataset_row.schema.json": "c3281fc9716fb0e60cad65f365ff6b21253e011ceade8dc151f494321966be42",
+    "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+    "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+    "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+    "scripts/validate_dataset.py": "e021e4072c244dfcd96edcf884ca0cae02d19d927bab39109cd40163aa7d46ca",
+    "DATASET.md": "253a08f8cf61418ac5ce247a2949965a369b8413a84320c3a8954b19d9a12cef"
+  },
+  "history": []
+}

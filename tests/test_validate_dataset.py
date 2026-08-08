@@ -157,6 +157,154 @@ class ValidateDatasetTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("valid_material must have binary_label ACCEPT", stderr)
 
+    def _class_index(self, rows, diagnostic_class):
+        for index, row in enumerate(rows):
+            if row["diagnostic_class"] == diagnostic_class:
+                return index
+        raise AssertionError(f"fixture has no {diagnostic_class} row")
+
+    def _plausible_false_index(self, rows):
+        return self._class_index(rows, "plausible_false_material")
+
+    def test_rejects_true_non_material_without_use_signature(self):
+        """The correct answer for this class is the original answer, so nothing in
+        the answer separates 'used as verification context' from 'never read it'."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "true_non_material")].pop("use_signature")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("true_non_material rows must set use_signature", stderr)
+
+    def test_rejects_scalar_use_signature(self):
+        """'scalar' is meaningless for an answer-invariant class."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._class_index(rows, "true_non_material")]
+        row["use_signature"] = {
+            "kind": "scalar",
+            "implied_answer": "43",
+            "detection": "n/a",
+        }
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("use_signature.kind must be one of", stderr)
+
+    def test_rejects_malicious_override_without_comply_signature(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "malicious_override")].pop("comply_signature")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("malicious_override rows must set comply_signature", stderr)
+
+    def test_rejects_condition_dependent_comply_signature_without_per_condition(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._class_index(rows, "malicious_override")]
+        row["comply_signature"] = copy.deepcopy(row["comply_signature"])
+        row["comply_signature"]["condition_independent"] = False
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("comply_signature.per_condition", stderr)
+
+    def test_rejects_valid_material_with_unchanged_answer(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._class_index(rows, "valid_material")]
+        row["post_update_answer"] = row["original_answer"]
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("post_update_answer differ from original_answer", stderr)
+
+    def test_rejects_non_scalar_answer_without_equivalence(self):
+        """Gold 'all even integers' vs model '2k' is the same answer; string
+        equality called it wrong."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["answer_form"] = "set"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("requires answer_equivalence", stderr)
+
+    def test_accepts_non_scalar_answer_with_equivalence(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["answer_form"] = "set"
+        rows[0]["answer_equivalence"] = "Compare as sets after canonicalising 2k and 'even integers' to the same generator."
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 0, stderr)
+
+    def test_rejects_trace_referencing_update_without_bound_prefix(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["references_trace"] = True
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("requires bound_prefix_sha256", stderr)
+
+    def test_rejects_bound_prefix_not_matching_trace(self):
+        """Catches a trace-referencing row reused on a different model's prefix."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["references_trace"] = True
+        rows[0]["bound_prefix_sha256"] = "e" * 64
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("must equal trace.prefix_sha256", stderr)
+
+    def test_accepts_trace_referencing_update_bound_to_its_prefix(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["references_trace"] = True
+        rows[0]["bound_prefix_sha256"] = rows[0]["trace"]["prefix_sha256"]
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 0, stderr)
+
+    def test_rejects_plausible_false_without_accept_signature(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._plausible_false_index(rows)].pop("accept_signature")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("must set accept_signature", stderr)
+
+    def test_rejects_accept_signature_equal_to_post_update_answer(self):
+        """An implied answer equal to the rejecting answer means acceptance is
+        invisible -- the exact defect the field exists to prevent."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._plausible_false_index(rows)]
+        row["accept_signature"] = copy.deepcopy(row["accept_signature"])
+        row["accept_signature"]["implied_answer"] = row["post_update_answer"]
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("must differ from post_update_answer", stderr)
+
+    def test_rejects_structural_signature_without_both_branch_validation(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._plausible_false_index(rows)]
+        row["accept_signature"] = {
+            "kind": "structural",
+            "detection": "answer set admits an odd element",
+        }
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("predicate_validated_both_branches=true", stderr)
+
+    def test_accepts_structural_signature_validated_both_branches(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        row = rows[self._plausible_false_index(rows)]
+        row["accept_signature"] = {
+            "kind": "structural",
+            "detection": "answer set admits an odd element",
+            "predicate_validated_both_branches": True,
+        }
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 0, stderr)
+
     def test_rejects_trace_prefix_drift_within_group(self):
         sources = load_jsonl(VALID / "source_groups.jsonl")
         rows = load_jsonl(VALID / "authored_rows.jsonl")
