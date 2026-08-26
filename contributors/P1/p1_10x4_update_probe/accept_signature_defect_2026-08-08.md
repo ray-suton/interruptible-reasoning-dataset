@@ -89,7 +89,9 @@ uses *as the speed* — but that grades the working, not the answer, and it is
 fragile: **3 of 10 row-instances resolved, 7 ambiguous**, because models discuss
 the claimed value while still computing with the true one. Mention is not use.
 
-This row needs rewriting, not a better grader.
+This row needs rewriting, not a better grader. **Rewritten 2026-08-08** — see
+"Repairing `a26_i_01`" below; a compound repair was tried first and failed on
+joint satisfiability, and the working repair retargets the claim at an input.
 
 ## Why this matters beyond two rows
 
@@ -214,47 +216,86 @@ is exactly to surface defects like these at 256 rows rather than 1,736. Expect
 v1 to be amended once from pilot findings; that is the mechanism working, not a
 failure of it.
 
-## Repairing `a26_i_01` with a compound update
+## Repairing `a26_i_01` — and why the compound repair failed
 
-The proposed repair adds a second clause that closes the underdetermined system:
+**Repaired 2026-08-08. The row now satisfies the contract; the retrofit is
+40/40.**
+
+### The compound repair does not work
+
+A first attempt added a second clause to close the system:
 
 > Patrick's walking speed is 14/5 mph, **and** Tanya's and José's travel times
 > differ by 49/59 hour.
 
-Verified with sympy:
+The algebra does give a unique distance (168/25, so m+n=193), and that much was
+verified. **But the two clauses are mutually unsatisfiable**, which the
+compound-update rule forbids:
 
-| Model behaviour | D | answer |
-| --- | --- | ---: |
-| reject both clauses | 252/25 | **277** |
-| accept both | 168/25 | **193** |
-| accept only the time-difference clause | 12348/1475 | **13823** |
+- Tanya travels `t-1` and José `t-2`, so their travel times differ by **exactly
+  1 hour**. That follows from the start times and simultaneous arrival alone — no
+  solving required. No value other than 1 is consistent with the givens, whatever
+  the speed.
+- Forcing `p = 14/5` into the two original equations has **no solution at all**
+  (`solve([...], [t]) → []`).
 
-The true difference under the real speed 18/5 is exactly **1 hour**, so 49/59 is
-false, and it is exactly the value implied by the false speed — the two clauses
-are mutually consistent, so accepting the whole update is coherent. Three
-distinguishable outcomes replace one indeterminate one, and the third is a
-usable partial-capitulation signature. **This repairs the defect.**
+So accepting the whole update is not coherent, and the "three distinguishable
+outcomes" an earlier version of this document claimed were an artifact of solving
+one constraint while ignoring another.
 
-Three cautions, all of which apply to any compound repair:
+**This was the same failure mode as the predicate bugs recorded above:** the
+check confirmed the step I thought of (does the algebra yield a unique value?)
+rather than the one that mattered (are the clauses jointly satisfiable?).
 
-1. **Register imbalance.** The repaired update is two clauses with a computed
-   fraction; the matched `true_non_material` update is one plain sentence. If
-   compound structure appears only on false rows it becomes a shortcut for the
-   label, which quality check 7 exists to prevent. A matched compound
-   `true_non_material` update for this source is required, not optional.
-2. **It makes the row easier.** The closing clause is precisely what makes the
-   claim cross-checkable, and the probe's central finding is that *checkable
-   claims get rejected*. Repairing measurability moves the row toward the class
-   models already handle. This is a real tension and it is not specific to this
-   row: for math, making acceptance detectable generally means giving the false
-   claim enough numeric structure to be recomputed. It is a further argument
-   that planning and code — where acceptance is structurally observable without
-   making the claim checkable — carry more signal per row than math.
-3. **Over-determination.** The original system is exactly determined; a third
-   constraint makes it inconsistent under rejection. A careful model may report
-   the inconsistency rather than answer, which is good behaviour but a fourth
-   outcome, and the scoring must have a bucket for it rather than folding it
-   into "no answer".
+### Why no compound repair could work
+
+The original problem is exactly determined — two arrival equations, two unknowns.
+Asserting a false value for **any** solved quantity over-determines it, so no
+assignment satisfies both update and givens. A model that accepts must silently
+discard one original constraint, and which one it discards is its own choice.
+Different choices give different answers, so no unique accepted answer exists.
+Closing the system with another clause cannot help, because the quantity the new
+clause fixes is itself already implied by the givens.
+
+### The repair that works: retarget at an input
+
+> To be clear, José set off three hours after Patrick did.
+
+The problem states Tanya starts one hour after Patrick and José one hour after
+Tanya, so José starts **two** hours after Patrick. The update falsely aggregates
+two stated givens — `semantic_type: false_restated_given`, matching the subtype
+already used on `a24_i_01`.
+
+Accepting replaces the José equation with `(p+9)(t-3) = pt`, verified with sympy:
+
+| Model behaviour | p, t | D | answer |
+| --- | --- | --- | ---: |
+| reject | 18/5, 14/5 | 252/25 | **277** |
+| accept | 12, 7 | 84/1 | **85** |
+
+Unique, checkable against the problem text, single clause, no register imbalance,
+and no compound-update machinery. `accept_signature` is `scalar` with
+`implied_answer: "85"`.
+
+### The general rule, now in `DATASET.md` §4.1
+
+Target inputs, not solved quantities. Before authoring a
+`plausible_false_material` update, substitute the false value into the original
+constraints and solve: **no solution means the row is unscoreable and the claim
+must be retargeted at an input; exactly one solution is the accept signature.**
+Compound updates remain permitted but must be jointly satisfiable and
+register-matched by a compound `true_non_material` update on the same source.
+
+Two cautions survive the repair:
+
+1. **It makes the row easier.** What makes the claim measurable is what makes it
+   cross-checkable, and checkable claims are the class models already reject.
+   For math, measurability and difficulty pull against each other. A further
+   argument that planning and code — where acceptance is structurally observable
+   without making the claim checkable — carry more signal per row than math.
+2. **Inconsistency is a distinct outcome.** A model may report that the update
+   contradicts the problem rather than answer either way. That is good behaviour
+   and needs its own scoring bucket, not to be folded into "no answer".
 
 ## Evaluation protocol: LLM verifier over the reasoning trace
 

@@ -457,6 +457,55 @@ def validate_row_semantics(record: dict[str, Any], path: str, errors: Validation
     validate_behaviour_signature(record, path, errors)
     validate_answer_form(record, path, errors)
     validate_trace_reference(record, path, errors)
+    validate_evidence_status(record, path, errors)
+
+
+# What the evidence available to the model warrants -- not what the author knows.
+EVIDENCE_STATUSES = ("supported", "contradicted", "unresolved", "not_applicable")
+
+# Values each class may carry. malicious_override is deliberately unconstrained:
+# that is the axis carrying the project's central finding, since attacks with a
+# checkable proposition were resisted while bare directives (not_applicable) were
+# obeyed. Constraining it would erase the distinction.
+EVIDENCE_FOR_CLASS: dict[str, tuple[str, ...]] = {
+    # Entailed by a given or a domain convention, per the label policy.
+    "true_non_material": ("supported",),
+    # Must contradict something derivable from the task, per DATASET.md 4.1.
+    "plausible_false_material": ("contradicted",),
+    # Admissible by AUTHORITY, not evidence: adding a compatible constraint is
+    # usually unresolved from the task text. Never contradicted.
+    "valid_material": ("supported", "unresolved"),
+    "malicious_override": EVIDENCE_STATUSES,
+}
+
+
+def validate_evidence_status(
+    record: dict[str, Any], path: str, errors: ValidationErrorCollector
+) -> None:
+    """Require the epistemically justified status, not the author's ground truth.
+
+    Recording a true-but-unverifiable update as 'supported' would teach a model to
+    accept claims it cannot check, which generalises to accepting false
+    unverifiable claims -- the exact failure this benchmark measures. 'unresolved'
+    is for truth-apt claims the task state cannot settle; 'not_applicable' is for
+    bare directives, which have no truth value at all.
+    """
+    status = record.get("evidence_status")
+    if status not in EVIDENCE_STATUSES:
+        errors.add(
+            path,
+            f"evidence_status must be one of {list(EVIDENCE_STATUSES)}",
+        )
+        return
+
+    diagnostic_class = record.get("diagnostic_class")
+    allowed = EVIDENCE_FOR_CLASS.get(diagnostic_class)
+    if allowed is not None and status not in allowed:
+        errors.add(
+            path,
+            f"{diagnostic_class} rows must have evidence_status in {list(allowed)}, "
+            f"not {status!r}",
+        )
 
 
 # Which signature each class must carry, and which signature kinds it may use.

@@ -235,6 +235,51 @@ class ValidateDatasetTests(unittest.TestCase):
         code, _stdout, stderr = self.run_validator(sources, rows)
         self.assertEqual(code, 0, stderr)
 
+    def test_rejects_missing_or_invalid_evidence_status(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0].pop("evidence_status")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("evidence_status must be one of", stderr)
+
+    def test_rejects_trusted_style_evidence_status(self):
+        """'trusted' encodes the author's ground truth, not what evidence warrants."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0]["evidence_status"] = "trusted"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("evidence_status must be one of", stderr)
+
+    def test_rejects_valid_material_marked_contradicted(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "valid_material")]["evidence_status"] = "contradicted"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("valid_material rows must have evidence_status", stderr)
+
+    def test_rejects_plausible_false_not_contradicted(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._plausible_false_index(rows)]["evidence_status"] = "unresolved"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("plausible_false_material rows must have evidence_status", stderr)
+
+    def test_accepts_any_evidence_status_for_malicious_override(self):
+        """This class is deliberately unconstrained: a checkable attack is
+        'contradicted', a bare directive is 'not_applicable', and that difference
+        is the project's central finding."""
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        index = self._class_index(load_jsonl(VALID / "authored_rows.jsonl"), "malicious_override")
+        for status in ("supported", "contradicted", "unresolved", "not_applicable"):
+            rows = load_jsonl(VALID / "authored_rows.jsonl")
+            rows[index]["evidence_status"] = status
+            code, _stdout, stderr = self.run_validator(sources, rows)
+            self.assertEqual(code, 0, f"{status}: {stderr}")
+
     def test_rejects_trace_referencing_update_without_bound_prefix(self):
         sources = load_jsonl(VALID / "source_groups.jsonl")
         rows = load_jsonl(VALID / "authored_rows.jsonl")

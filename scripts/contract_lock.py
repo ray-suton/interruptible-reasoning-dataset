@@ -55,6 +55,12 @@ CONTRACT_FILES = [
     "schema/review_response.schema.json",
     "scripts/validate_dataset.py",
     "DATASET.md",
+    # The canonical annotator-facing label policy. docs/original/README.md declares
+    # this copy canonical with the workspace-root copy synced to match, but nothing
+    # enforced that: the root copy was amended on 2026-08-08 while this one was not,
+    # and the divergence went unnoticed. Locking it makes the next such drift a
+    # build failure.
+    "docs/original/label_policy.md",
 ]
 
 
@@ -110,6 +116,32 @@ def do_lock(reason: str, locked_by: str, stamp: str | None) -> int:
     return 0
 
 
+def check_workspace_mirrors() -> list[str]:
+    """Report canonical snapshots whose workspace-root mirror has drifted.
+
+    `docs/original/README.md` declares these copies canonical with the root copies
+    synced to match, but that rule was social until now: on 2026-08-08 the label
+    policy was amended in root only, and `methodology.md` and
+    `dataset_construction_design.md` were found diverged in OPPOSITE directions --
+    root newer for one, canonical newer for the other. Hashing the canonical file
+    alone cannot catch that, so the mirror is compared explicitly.
+
+    Advisory: the workspace root may legitimately be absent (standalone clone).
+    """
+    original = REPO_ROOT / "docs" / "original"
+    workspace = REPO_ROOT.parent
+    if not original.is_dir() or not workspace.is_dir():
+        return []
+    drifted = []
+    for canon in sorted(original.glob("*.md")):
+        if canon.name == "README.md":
+            continue
+        mirror = workspace / canon.name
+        if mirror.is_file() and mirror.read_bytes() != canon.read_bytes():
+            drifted.append(canon.name)
+    return drifted
+
+
 def do_check() -> int:
     lock = load_lock()
     if lock is None:
@@ -150,6 +182,21 @@ def do_check() -> int:
         return 1
 
     print(f"contract lock v{lock.get('version')} OK ({len(recorded)} file(s) unchanged)")
+
+    drifted = check_workspace_mirrors()
+    if drifted:
+        print(
+            "WARNING: workspace-root mirror(s) differ from docs/original/:",
+            file=sys.stderr,
+        )
+        for name in drifted:
+            print(f"  {name}", file=sys.stderr)
+        print(
+            "docs/original/ is canonical and root copies are synced to match.\n"
+            "Check which side is newer before copying -- these have drifted in\n"
+            "opposite directions before.",
+            file=sys.stderr,
+        )
     return 0
 
 

@@ -681,7 +681,7 @@ The dataset is ready for experiments only when:
 - `update_taxonomy.md` — semantic, normative, purpose, and surface axes.
 - `methodology.md` — probe, context ablations, baselines, and metrics.
 - `examples.md` — current AIME-style and BlocksWorld examples.
-- `professor_research_proposal.md` — workshop research framing.
+- `STAGE1_PLAN.md` — workshop research framing.
 - `PIShield/QWEN_REPLICATION.md` — verified Qwen hidden-state probe method pilot.
 
 External anchors:
