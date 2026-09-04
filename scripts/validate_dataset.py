@@ -41,6 +41,9 @@ EXPECTED_TRACE_FIELDS = (
 PEOPLE = {f"P{i}" for i in range(1, 9)}
 SPLITS = {"development", "primary_test"}
 REPORT_PARTITIONS = {"development", "primary", "primary_test", "robustness", "primary_plus_robustness"}
+AUTHORITY_STATUSES = ("authorized", "unauthorized", "ambiguous")
+RELATIONS_TO_PRIOR_STATE = ("consistent", "supersedes", "contradicts", "unrelated")
+HINT_STRENGTHS = ("redundant", "corroborating", "compressive", "substituting")
 
 
 @dataclass(frozen=True)
@@ -242,6 +245,10 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
             "answer_changes",
             "post_update_answer",
             "annotation_rationale",
+            "answer_form",
+            "evidence_status",
+            "authority_status",
+            "relation_to_prior_state",
             "verification",
         ),
         errors,
@@ -261,6 +268,10 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
         "binary_label",
         "post_update_answer",
         "annotation_rationale",
+        "answer_form",
+        "evidence_status",
+        "authority_status",
+        "relation_to_prior_state",
     ):
         require_type(record, path, field, str, errors)
     require_source_year(record, path, errors)
@@ -458,6 +469,8 @@ def validate_row_semantics(record: dict[str, Any], path: str, errors: Validation
     validate_answer_form(record, path, errors)
     validate_trace_reference(record, path, errors)
     validate_evidence_status(record, path, errors)
+    validate_authority_relation(record, path, errors)
+    validate_tnm_hint_strength(record, path, errors)
 
 
 # What the evidence available to the model warrants -- not what the author knows.
@@ -472,9 +485,10 @@ EVIDENCE_FOR_CLASS: dict[str, tuple[str, ...]] = {
     "true_non_material": ("supported",),
     # Must contradict something derivable from the task, per DATASET.md 4.1.
     "plausible_false_material": ("contradicted",),
-    # Admissible by AUTHORITY, not evidence: adding a compatible constraint is
-    # usually unresolved from the task text. Never contradicted.
-    "valid_material": ("supported", "unresolved"),
+    # Admissible by authority. Pure task revisions are not_applicable;
+    # compatible truth-apt additions may be supported or unresolved.
+    # Never contradicted.
+    "valid_material": ("supported", "unresolved", "not_applicable"),
     "malicious_override": EVIDENCE_STATUSES,
 }
 
@@ -506,6 +520,77 @@ def validate_evidence_status(
             f"{diagnostic_class} rows must have evidence_status in {list(allowed)}, "
             f"not {status!r}",
         )
+
+
+AUTHORITY_FOR_CLASS: dict[str, tuple[str, ...]] = {
+    "valid_material": ("authorized",),
+    "true_non_material": ("authorized",),
+    "plausible_false_material": ("unauthorized",),
+    "malicious_override": ("unauthorized",),
+}
+
+RELATION_FOR_CLASS: dict[str, tuple[str, ...]] = {
+    "valid_material": ("consistent", "supersedes"),
+    "true_non_material": ("consistent",),
+    "plausible_false_material": ("contradicts",),
+    "malicious_override": RELATIONS_TO_PRIOR_STATE,
+}
+
+
+def validate_authority_relation(
+    record: dict[str, Any], path: str, errors: ValidationErrorCollector
+) -> None:
+    """Keep authority separate from factual support.
+
+    An authorized task revision can supersede mutable prior state; an
+    unauthorized false claim contradicts the task. Both may conflict with old
+    text, but they are different classes and must not be collapsed into
+    evidence_status.
+    """
+    authority = record.get("authority_status")
+    if authority not in AUTHORITY_STATUSES:
+        errors.add(
+            path,
+            f"authority_status must be one of {list(AUTHORITY_STATUSES)}",
+        )
+        return
+
+    relation = record.get("relation_to_prior_state")
+    if relation not in RELATIONS_TO_PRIOR_STATE:
+        errors.add(
+            path,
+            f"relation_to_prior_state must be one of {list(RELATIONS_TO_PRIOR_STATE)}",
+        )
+        return
+
+    diagnostic_class = record.get("diagnostic_class")
+    allowed_authority = AUTHORITY_FOR_CLASS.get(diagnostic_class)
+    if allowed_authority is not None and authority not in allowed_authority:
+        errors.add(
+            path,
+            f"{diagnostic_class} rows must have authority_status in "
+            f"{list(allowed_authority)}, not {authority!r}",
+        )
+
+    allowed_relation = RELATION_FOR_CLASS.get(diagnostic_class)
+    if allowed_relation is not None and relation not in allowed_relation:
+        errors.add(
+            path,
+            f"{diagnostic_class} rows must have relation_to_prior_state in "
+            f"{list(allowed_relation)}, not {relation!r}",
+        )
+
+
+def validate_tnm_hint_strength(
+    record: dict[str, Any], path: str, errors: ValidationErrorCollector
+) -> None:
+    hint_strength = record.get("hint_strength")
+    if hint_strength is not None and hint_strength not in HINT_STRENGTHS:
+        errors.add(path, f"hint_strength must be one of {list(HINT_STRENGTHS)}")
+        return
+
+    if record.get("diagnostic_class") == "true_non_material" and hint_strength is None:
+        errors.add(path, "true_non_material rows must set hint_strength")
 
 
 # Which signature each class must carry, and which signature kinds it may use.

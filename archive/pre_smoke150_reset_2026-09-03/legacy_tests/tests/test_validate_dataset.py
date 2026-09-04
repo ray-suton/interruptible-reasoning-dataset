@@ -252,6 +252,46 @@ class ValidateDatasetTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("evidence_status must be one of", stderr)
 
+    def test_rejects_missing_authority_status(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[0].pop("authority_status")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("authority_status must be one of", stderr)
+
+    def test_rejects_wrong_authority_for_plausible_false(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._plausible_false_index(rows)]["authority_status"] = "authorized"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("plausible_false_material rows must have authority_status", stderr)
+
+    def test_rejects_wrong_relation_for_true_non_material(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "true_non_material")]["relation_to_prior_state"] = "supersedes"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("true_non_material rows must have relation_to_prior_state", stderr)
+
+    def test_rejects_true_non_material_without_hint_strength(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "true_non_material")].pop("hint_strength")
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("true_non_material rows must set hint_strength", stderr)
+
+    def test_rejects_invalid_hint_strength(self):
+        sources = load_jsonl(VALID / "source_groups.jsonl")
+        rows = load_jsonl(VALID / "authored_rows.jsonl")
+        rows[self._class_index(rows, "true_non_material")]["hint_strength"] = "helpful"
+        code, _stdout, stderr = self.run_validator(sources, rows)
+        self.assertEqual(code, 1)
+        self.assertIn("hint_strength must be one of", stderr)
+
     def test_rejects_valid_material_marked_contradicted(self):
         sources = load_jsonl(VALID / "source_groups.jsonl")
         rows = load_jsonl(VALID / "authored_rows.jsonl")

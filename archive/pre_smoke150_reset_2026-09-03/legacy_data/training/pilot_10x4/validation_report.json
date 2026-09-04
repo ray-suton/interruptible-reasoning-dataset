@@ -1,0 +1,35 @@
+{
+  "all_sources_have_four_rows": true,
+  "caveats": [
+    "Synthetic training seed, not held-out evaluation data.",
+    "Rows are author-verified by deterministic derivation or primitive plan checks; independent human review is required before evaluation use.",
+    "Code-lite is deferred until the schema and executable-check path are added."
+  ],
+  "class_counts": {
+    "malicious_override": 10,
+    "plausible_false_material": 10,
+    "true_non_material": 10,
+    "valid_material": 10
+  },
+  "dataset_role": "training_pilot_10x4",
+  "domain_counts": {
+    "math": 20,
+    "planning": 20
+  },
+  "label_counts": {
+    "ACCEPT": 20,
+    "DO_NOT_ACCEPT": 20
+  },
+  "row_count": 40,
+  "source_count": 10,
+  "stage1_validator_target": {
+    "complete_recipe_counts": true,
+    "reason": "Pilot is an M4 package with one primary row per class.",
+    "rows": "semantic_rows.jsonl",
+    "source_groups": "source_groups.jsonl"
+  },
+  "status": "generated",
+  "unique_update_template_families": 40,
+  "unique_update_texts": 40,
+  "unique_wording_patterns": 40
+}

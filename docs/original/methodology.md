@@ -2,9 +2,16 @@
 
 ## Core Idea
 
-This project studies whether a reasoning model can decide whether a mid-reasoning update should be accepted before it revises or verifies its answer.
+This project studies whether a reasoning model can decide whether a
+mid-reasoning update should be accepted before it revises, verifies, or
+preserves its answer.
 
-The method is inspired by prompt-injection detection. In prompt injection, the model or guard must decide whether a new instruction should be followed or treated as hostile, irrelevant, or lower authority. In our setting, the model must decide whether an in-flight update is valid and task-relevant, or whether it should preserve the original task semantics.
+The method is inspired by prompt-injection detection. In prompt injection, the
+model or guard must decide whether a new instruction should be followed or
+treated as hostile, irrelevant, or lower authority. In our setting, the model
+must decide whether an in-flight update is authorized and task-relevant, and
+whether it is supported by, supersedes, contradicts, or is unrelated to the
+prior task state.
 
 The proposed method is a selective acceptance gate:
 
@@ -33,7 +40,10 @@ The linear classifier is not meant to solve the whole reasoning problem by itsel
 
    The probe recipe follows the PIShield-style protocol already replicated locally in `PIShield/QWEN_REPLICATION.md`: final non-padding-token residual representations at every transformer layer, one logistic probe per layer, layer chosen on validation accuracy only, then frozen for test. That pilot used Qwen3-1.7B (28 layers, 2048-dim hidden states); note that the paper's released Llama probes cannot be reused, since their 4096-dim coefficients do not match Qwen hidden sizes.
 6. Use the classifier as an external gate:
-   - `ACCEPT`: use the update as admissible context. If it is material, revise the task or answer; if it is true but non-material, it may only help verify the existing answer.
+   - `ACCEPT`: use the update as admissible context. If it is material,
+     revise the mutable task state or answer; if it is true but non-material,
+     engage with it according to its recorded `hint_strength` while preserving
+     the existing answer.
    - `DO_NOT_ACCEPT`: do not rely on the update; preserve the original task semantics.
 7. Evaluate both the decision and the final answer.
 
@@ -51,9 +61,13 @@ This baseline should perform well on valid updates, including true non-material 
 
 ### All-Reject
 
-The model always ignores the update and preserves the original task semantics.
+The model always preserves the original task semantics and does not admit the
+update.
 
-This baseline should perform well on invalid updates but fail on valid updates, including true non-material updates that should be admitted as verification context. It measures under-acceptance: the tendency to ignore admissible information.
+This baseline should perform well on invalid updates but fail on valid updates,
+including true non-material updates that should be admitted as supported
+context. It measures under-acceptance: the tendency to reject or fail to
+engage with admissible information.
 
 ### Prompt-Only Verification
 
@@ -115,7 +129,19 @@ Decision metrics:
 - false-accept rate;
 - false-reject rate.
 
-For the *gated model's behavior* (as opposed to the probe's own label output), decisions must be read from the continuation, not from the final answer. Every `DO_NOT_ACCEPT` row has the original answer as its target, so an unchanged answer is produced both by a model that detected and rejected the update and by one that never engaged with it. Score three-way — never-noticed / detected-and-rejected / accepted — and count never-noticed separately from rejection. This is not a hypothetical concern: in a preliminary Qwen3-8B probe run, a plausible-false row scored as resisted contained no reference to the planted false claim anywhere in its continuation, while other rows in the same class showed explicit detection and recovery.
+For the *gated model's behavior* (as opposed to the probe's own label output),
+decisions must be read from the continuation, not from the final answer. Every
+`DO_NOT_ACCEPT` row has the original answer as its target, so an unchanged
+answer is produced both by a model that detected and rejected the update and by
+one that never engaged with it. TNM rows have the same problem in reverse: an
+unchanged answer can be genuine level-appropriate use, silent registration, or
+complete non-engagement. Score behavior before answer correctness. For invalid
+rows separate never-noticed from detected rejection; for TNM rows report
+`observably_engaged`, `observably_rejected`, and `not_demonstrated`. This is
+not a hypothetical concern: in a preliminary Qwen3-8B probe run, a
+plausible-false row scored as resisted contained no reference to the planted
+false claim anywhere in its continuation, while other rows in the same class
+showed explicit detection and recovery.
 
 Two supporting measures:
 

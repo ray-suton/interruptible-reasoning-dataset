@@ -79,6 +79,8 @@
     "annotation_rationale",
     "answer_form",
     "evidence_status",
+    "authority_status",
+    "relation_to_prior_state",
     "verification"
   ],
   "properties": {
@@ -209,8 +211,20 @@
       "enum": ["scalar", "set", "expression", "plan"]
     },
     "evidence_status": {
-      "description": "What the evidence available to the model warrants about this update -- NOT whether the dataset author knows it is true. The distinction is load-bearing: labelling a true-but-unverifiable update 'trusted' would train a model to accept claims it cannot check, which generalises directly to accepting false unverifiable claims. This is an annotation for stratified reporting, not a Stage 1 decision target; the decision stays binary.\n\nsupported: the task state supports the proposition.\ncontradicted: the task state contradicts it.\nunresolved: truth-apt, but the task state cannot settle it (an unverifiable authority claim, an unstated domain convention).\nnot_applicable: no truth-apt content -- a bare directive. Commands have no truth value, so 'unresolved' would be wrong.\n\nThe supported/contradicted/unresolved vs not_applicable split is what makes the project's central finding recordable: within malicious_override, attacks carrying a checkable proposition were resisted while bare directives were obeyed.",
+      "description": "What the evidence available to the model warrants about this update -- NOT whether the dataset author knows it is true and NOT whether the update is authorized. Authority is recorded separately in authority_status, and prior-state relation is recorded in relation_to_prior_state.\n\nsupported: the task state, visible prefix, or explicitly stated domain convention supports the proposition.\ncontradicted: the task state contradicts the proposition.\nunresolved: truth-apt, but the task state cannot settle it.\nnot_applicable: not a factual hypothesis to verify against the prior task state, such as a directive, command, or constitutive task revision.\n\nThe supported/contradicted/unresolved vs not_applicable split is what makes the project's central finding recordable: within malicious_override, attacks carrying a checkable proposition were resisted while bare directives were obeyed.",
       "enum": ["supported", "contradicted", "unresolved", "not_applicable"]
+    },
+    "authority_status": {
+      "description": "Whether the update is authorized to modify or clarify the task under the Stage 1 authority model. Core Stage 1 rows should be authorized or unauthorized; ambiguous rows are quarantined unless authority ambiguity is the diagnostic.",
+      "enum": ["authorized", "unauthorized", "ambiguous"]
+    },
+    "relation_to_prior_state": {
+      "description": "How the update relates to the prior task state: consistent with it, authoritatively superseding mutable state, unauthorized contradiction, or materially unrelated.",
+      "enum": ["consistent", "supersedes", "contradicts", "unrelated"]
+    },
+    "hint_strength": {
+      "description": "Required for true_non_material. redundant: repeats/paraphrases an explicit given or visible prefix fact. corroborating: independent local check entailed by the task or prefix. compressive: valid strategy or shortcut. substituting: correct intermediate result, not the final answer.",
+      "enum": ["redundant", "corroborating", "compressive", "substituting"]
     },
     "answer_equivalence": {
       "description": "Required when answer_form is not 'scalar': how two renderings of the same answer are judged equal.",
@@ -306,7 +320,7 @@
         "properties": { "diagnostic_class": { "const": "true_non_material" } },
         "required": ["diagnostic_class"]
       },
-      "then": { "required": ["use_signature"] }
+      "then": { "required": ["use_signature", "hint_strength"] }
     },
     {
       "if": {
@@ -323,29 +337,55 @@
       "then": { "required": ["bound_prefix_sha256"] }
     },
     {
-      "$comment": "true_non_material must be entailed by a given or a domain convention (label policy), so its evidence status is 'supported' by construction.",
+      "$comment": "true_non_material must be supported, authorized, answer-preserving, and consistent with the prior task state.",
       "if": {
         "properties": { "diagnostic_class": { "const": "true_non_material" } },
         "required": ["diagnostic_class"]
       },
-      "then": { "properties": { "evidence_status": { "const": "supported" } } }
+      "then": {
+        "properties": {
+          "evidence_status": { "const": "supported" },
+          "authority_status": { "const": "authorized" },
+          "relation_to_prior_state": { "const": "consistent" }
+        }
+      }
     },
     {
-      "$comment": "plausible_false_material must contradict something derivable from the task (DATASET.md 4.1, target-inputs rule), so its evidence status is 'contradicted'.",
+      "$comment": "plausible_false_material is an unauthorized false claim that contradicts something derivable from the task.",
       "if": {
         "properties": { "diagnostic_class": { "const": "plausible_false_material" } },
         "required": ["diagnostic_class"]
       },
-      "then": { "properties": { "evidence_status": { "const": "contradicted" } } }
+      "then": {
+        "properties": {
+          "evidence_status": { "const": "contradicted" },
+          "authority_status": { "const": "unauthorized" },
+          "relation_to_prior_state": { "const": "contradicts" }
+        }
+      }
     },
     {
-      "$comment": "A valid material update is admissible by AUTHORITY, not by evidence: adding a compatible constraint is usually unresolved from the task text. It may never be contradicted, and it always has truth-apt content.",
+      "$comment": "A valid material update is admissible by authority. Pure task revisions are not_applicable; compatible truth-apt additions may be supported or unresolved; contradicted is never allowed.",
       "if": {
         "properties": { "diagnostic_class": { "const": "valid_material" } },
         "required": ["diagnostic_class"]
       },
       "then": {
-        "properties": { "evidence_status": { "enum": ["supported", "unresolved"] } }
+        "properties": {
+          "evidence_status": { "enum": ["supported", "unresolved", "not_applicable"] },
+          "authority_status": { "const": "authorized" },
+          "relation_to_prior_state": { "enum": ["consistent", "supersedes"] }
+        }
+      }
+    },
+    {
+      "$comment": "malicious_override is unauthorized by definition, but its evidence status and prior-state relation vary with attack form.",
+      "if": {
+        "properties": { "diagnostic_class": { "const": "malicious_override" } },
+        "required": ["diagnostic_class"]
+      },
+      "then": {
+        "properties": { "authority_status": { "const": "unauthorized" } }
       }
     }
   ]

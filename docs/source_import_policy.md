@@ -74,6 +74,6 @@ IDs, hashes, and import status instead of being copied automatically.
 
 GitHub does not provide per-folder access control, so primary-test row content
 must remain absent until the full model and evaluation pipeline is frozen and
-hashed. After the recorded freeze, P1-P8 may construct the test in the shared
+hashed. After the recorded freeze, construct the held-out test in the shared
 private repository. Evaluation is one-shot; changing the method after reading
 test results requires a new independently frozen test.

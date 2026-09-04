@@ -3,7 +3,7 @@
     {
       "id": "contract",
       "status": "verified",
-      "description": "Stage 1 DATASET.md, contributor workflow, source policy, and imported design snapshot"
+      "description": "Stage 1 DATASET.md, update rules, source policy, and imported design snapshot"
     },
     {
       "id": "hf_source_snapshot",
@@ -12,18 +12,23 @@
     },
     {
       "id": "assignment_registry",
-      "status": "verified",
-      "description": "238 non-overlapping source groups assigned across P1-P8"
+      "status": "archived",
+      "description": "Former 238-group P1-P8 workload scaffold moved under archive/pre_smoke150_reset_2026-09-03"
     },
     {
       "id": "schema_and_validator",
       "status": "verified",
-      "description": "Dependency-free structural and cross-record validation with regression tests"
+      "description": "Dependency-free row/source validation and contract checks for smoke-test generation"
+    },
+    {
+      "id": "smoke_150_workspace",
+      "status": "ready",
+      "description": "Fresh data/smoke_150 workspace for generating a real smoke test over 150 original samples"
     },
     {
       "id": "constructed_development_dataset",
       "status": "not_started",
-      "description": "The 1,328 target development rows have not been authored or reviewed"
+      "description": "The reviewed benchmark dataset has not been authored or reviewed"
     },
     {
       "id": "frozen_primary_test",

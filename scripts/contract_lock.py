@@ -2,10 +2,10 @@
 """Version and hash the authoring contract so "locked" is checkable, not social.
 
 The authoring contract is the set of documents that decide whether a row is
-valid. Once eight people begin authoring ~1,736 rows against it, a silent edit
-to any of them means different rows were built to different rules, and nothing
-in the repository would record that. This script pins the contract by content
-hash into `registry/contract_lock.json`.
+valid. Once smoke-test generation begins, a silent edit to any of them means
+different rows were built to different rules, and nothing in the repository
+would record that. This script pins the contract by content hash into
+`registry/contract_lock.json`.
 
 Two operations:
 
@@ -24,7 +24,8 @@ choice before the pilot has informed it.
 Amending a locked contract:
 
  1. open a PR that changes the contract file AND re-runs `lock` with a reason;
- 2. state in the PR which already-authored rows the change invalidates;
+ 2. state in the PR which already-authored rows or generated smoke artifacts
+    the change invalidates;
  3. get the amendment reviewed by someone who is not its author, per the
     no-self-review rule; and
  4. re-verify affected rows before they re-enter the dataset.

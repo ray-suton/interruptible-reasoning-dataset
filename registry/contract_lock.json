@@ -1,17 +1,17 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 5,
-  "locked_at": "2026-08-08T16:44:44Z",
+  "version": 7,
+  "locked_at": "2026-09-03T18:38:10Z",
   "locked_by": "P1",
-  "reason": "Add advisory workspace-mirror drift check to contract_lock check. The docs/original canonical-vs-root sync rule was social only; label_policy drifted root-only, and methodology and dataset_construction_design were found diverged in opposite directions. Hashing the canonical file cannot detect a stale mirror.",
+  "reason": "Align the locked contract with the smoke-150 reset and archived workload topology; no authored rows invalidated",
   "files": {
-    "schema/dataset_row.schema.json": "b398f5789c34a4606feb007560da5cf713987cf0ffb817a7013e870b2ddfaba4",
+    "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "223324315ba432b8f6c0655bd139ffdbd09ce05f8e76c00762b42a1f9544a6a3",
-    "DATASET.md": "3247cbe5813314f040d4e4746665776a99e69e8d78935e2a3664bf4f11d45bca",
-    "docs/original/label_policy.md": "7d6fb783bd8a7ec5988329d659f1efe8a18fda5c3802348f90855bda6ee67952"
+    "scripts/validate_dataset.py": "0b1c6ace23667e7bbf2530bcdbad6c99c24cb1eeb90a247e8d231cbc8f361e11",
+    "DATASET.md": "2c8658e3dcdc37771eb2adfad2057cf966c0d7bee5d5fcb2dcdbc2f72770fd08",
+    "docs/original/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
   },
   "history": [
     {
@@ -70,6 +70,36 @@
         "scripts/validate_dataset.py": "223324315ba432b8f6c0655bd139ffdbd09ce05f8e76c00762b42a1f9544a6a3",
         "DATASET.md": "3247cbe5813314f040d4e4746665776a99e69e8d78935e2a3664bf4f11d45bca",
         "docs/original/label_policy.md": "7d6fb783bd8a7ec5988329d659f1efe8a18fda5c3802348f90855bda6ee67952"
+      }
+    },
+    {
+      "version": 5,
+      "locked_at": "2026-08-08T16:44:44Z",
+      "locked_by": "P1",
+      "reason": "Add advisory workspace-mirror drift check to contract_lock check. The docs/original canonical-vs-root sync rule was social only; label_policy drifted root-only, and methodology and dataset_construction_design were found diverged in opposite directions. Hashing the canonical file cannot detect a stale mirror.",
+      "files": {
+        "schema/dataset_row.schema.json": "b398f5789c34a4606feb007560da5cf713987cf0ffb817a7013e870b2ddfaba4",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "223324315ba432b8f6c0655bd139ffdbd09ce05f8e76c00762b42a1f9544a6a3",
+        "DATASET.md": "3247cbe5813314f040d4e4746665776a99e69e8d78935e2a3664bf4f11d45bca",
+        "docs/original/label_policy.md": "7d6fb783bd8a7ec5988329d659f1efe8a18fda5c3802348f90855bda6ee67952"
+      }
+    },
+    {
+      "version": 6,
+      "locked_at": "2026-09-03T12:09:46Z",
+      "locked_by": "P1",
+      "reason": "Require authority_status, relation_to_prior_state, VM not_applicable support, and TNM hint_strength in the Stage 1 row contract",
+      "files": {
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "0b1c6ace23667e7bbf2530bcdbad6c99c24cb1eeb90a247e8d231cbc8f361e11",
+        "DATASET.md": "04151bf9d6fdddbe477f54bb04d01db37e8878f9803909ad5f2e8527ef1038c8",
+        "docs/original/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
       }
     }
   ]
