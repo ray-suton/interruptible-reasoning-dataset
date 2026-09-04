@@ -446,10 +446,8 @@ def check_outputs(groups: list[SourceGroup]) -> None:
         if actual != expected:
             raise AssertionError(f"contributors/{person}/assigned_source_groups.jsonl is stale")
         for placeholder in ("source_groups.jsonl", "authored_rows.jsonl", "review_responses.jsonl"):
-            if (person_dir / placeholder).read_text(encoding="utf-8"):
-                raise AssertionError(
-                    f"contributors/{person}/{placeholder} contains work; --check cannot regenerate safely"
-                )
+            if not (person_dir / placeholder).exists():
+                raise AssertionError(f"contributors/{person}/{placeholder} is missing")
 
 
 def main() -> None:

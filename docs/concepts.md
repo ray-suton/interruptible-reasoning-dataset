@@ -4,8 +4,9 @@ This page defines the shared terms used across the dataset workspace.
 
 ## Artifact Root
 
-The artifact root is `data/stage1/`. Everything in the Stage 1 dataset
-workflow should hang off that directory.
+The active smoke-test root is `data/smoke_150/`. Fresh Stage 1 generation work
+should hang off that directory. Older scaffold outputs are preserved under
+`archive/pre_smoke150_reset_2026-09-03/`.
 
 ## Source Registry
 
@@ -49,6 +50,24 @@ It should be able to validate:
 
 If a file passes the schema, it is structurally valid. If it also passes the
 validator, it is considered ready for review or release.
+
+## Authority And Evidence
+
+The current curation guide separates authority from evidential support.
+`evidence_status` records what the task evidence available to the model
+warrants. It must not be used to encode whether an update is allowed to change
+the task.
+
+Rows also record:
+
+- `authority_status`: whether the update is authorized to modify or clarify
+  the task;
+- `relation_to_prior_state`: whether the update is consistent with,
+  supersedes, contradicts, or is unrelated to the prior task state.
+
+This split keeps `valid_material` task revisions distinct from
+`plausible_false_material` claims. An authorized revision may supersede a
+mutable prior fact; an unauthorized contradicted claim may not.
 
 ## Validator
 
@@ -101,13 +120,11 @@ records `PASS`, `FIX`, or `ADJUDICATE`.
 
 The adjudicator resolves disagreements that survive one revision cycle.
 
-## P1-P8 Ownership
+## Archived P1-P8 Ownership
 
 The original design assigns the construction workload across P1 through P8.
-Those labels are ownership tags, not user-facing names.
-
-Use them as branch and PR prefixes, and keep the corresponding slices
-disjoint unless a documented handoff says otherwise.
+Those labels are ownership tags, not user-facing names. That workload scaffold
+is archived for reference and is no longer the active smoke-test workflow.
 
 ## Source Text Status
 
