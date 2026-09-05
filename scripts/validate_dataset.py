@@ -53,7 +53,13 @@ VERIFICATION_STATUSES = ("verified", "unverified_draft")
 BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_claim")
 # v8 [old R3 / Q9]: the factors RQ1 is stated in terms of.
 REQUIRED_FACTOR_FIELDS = ("speech_act", "update_operation", "checkability",
-                          "relevance", "operational_action", "task_consequence")
+                          "relevance", "operational_action", "task_consequence",
+                          "wording_pattern", "syntactic_form")
+# v8 [Q-D1]: syntactic form is the balanced surface axis that replaced the
+# dropped framing-wrapper vocabulary.
+SYNTACTIC_FORMS = ("bare_declarative", "correction_with_negation", "hedged",
+                   "imperative", "appositive", "mid_sentence_aside",
+                   "question_turned_statement")
 
 
 @dataclass(frozen=True)
@@ -732,6 +738,17 @@ def validate_v8_row_rules(record: dict[str, Any], path: str, errors: ValidationE
     absent = [f for f in REQUIRED_FACTOR_FIELDS if not record.get(f)]
     if absent:
         errors.add(path, f"missing required factor field(s): {', '.join(absent)}")
+
+    form = record.get("syntactic_form")
+    if isinstance(form, str) and form and form not in SYNTACTIC_FORMS:
+        errors.add(path, f"syntactic_form {form!r} is not one of {', '.join(SYNTACTIC_FORMS)}")
+
+    update = record.get("update")
+    if isinstance(update, str):
+        import re as _re
+        if _re.match(r"^[A-Z][A-Za-z ]{0,30}:\s", update.strip()):
+            errors.add(path, "update opens with a colon-prefixed framing label; "
+                             "the wrapper vocabulary was dropped in v8 [Q-D1]")
 
 
 def validate_answer_form(

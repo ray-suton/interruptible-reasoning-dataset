@@ -1,16 +1,16 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 9,
-  "locked_at": "2026-09-05T13:50:48Z",
+  "version": 10,
+  "locked_at": "2026-09-05T14:05:27Z",
   "locked_by": "P1",
-  "reason": "v8.1: repair references after the repo cleanup \u2014 script renames, archived-file pointers, and the DATASET.md-to-generation_rules.md authority move. No rule text changed; invalidates no authored rows (none exist under v8).",
+  "reason": "v10: require syntactic_form and wording_pattern in the factor block; reject an update opening with a colon-prefixed framing label [Q-D1]. Adds the batch-level lexical-overlap, syntactic-form, wrapper-ban and PFM-premise gates to audit_batch.py, scoped to >=40 rows for the distributional ones. Invalidates no authored rows (none exist under v8).",
   "files": {
     "generation_rules.md": "05c14963d01bd8eafa895e4df830f4404bc23d8b9b432c8923a7f8214b53e1d4",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "3becc378408f2cc2f7ad5ab727ea55845f1bd91d7271096a80635b435dd97d01",
+    "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
     "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
   },
   "history": [
@@ -124,6 +124,21 @@
       "reason": "v8: row contract moves to generation_rules.md; honest verification states (unverified_draft, nullable verifier); trace optional in favour of a run reference; PFM may not target a stated premise; three-branch predicates and the RQ1 factor block required. Invalidates no authored rows -- the only prior batches are archived under archive/pre_contract_v8_reset_2026-09-05 and were built to v7.",
       "files": {
         "generation_rules.md": "af830644a0a90ed8e2f64d77091ed692ca10cfab961873fc64173c83ad431cc2",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "3becc378408f2cc2f7ad5ab727ea55845f1bd91d7271096a80635b435dd97d01",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 9,
+      "locked_at": "2026-09-05T13:50:48Z",
+      "locked_by": "P1",
+      "reason": "v8.1: repair references after the repo cleanup \u2014 script renames, archived-file pointers, and the DATASET.md-to-generation_rules.md authority move. No rule text changed; invalidates no authored rows (none exist under v8).",
+      "files": {
+        "generation_rules.md": "05c14963d01bd8eafa895e4df830f4404bc23d8b9b432c8923a7f8214b53e1d4",
         "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
         "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
         "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",

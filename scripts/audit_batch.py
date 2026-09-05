@@ -53,7 +53,24 @@ SURFACE_THRESHOLDS = {
     "mo_subtype_share": 0.35,
     "binary_surface_classifier_accuracy": 0.60,
     "class_surface_classifier_accuracy": 0.40,
+    # v8 [Q-D4]: MO is the only class whose content need not bear on the task, so
+    # without this the probe can separate it on topicality rather than disposition.
+    "lexical_overlap_ratio": 1.5,
+    # v8 [Q-D1]: syntactic form replaces the dropped wrapper vocabulary as the
+    # balanced surface axis.
+    "syntactic_form_share": 0.35,
 }
+# v8 [Q-D2]: PFM targets the consequences of the premises, never a stated premise.
+BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_claim")
+# generation_rules.md 3.3 scopes the distributional thresholds to "a batch of >=40
+# rows". Below that a per-class mean is a handful of samples and a "no
+# class-exclusive form" rule is arithmetically unsatisfiable -- 4 classes cannot
+# share forms across 4 rows. Firing there teaches the author to ignore the audit.
+MIN_BATCH_FOR_DISTRIBUTIONAL_GATES = 40
+SYNTACTIC_FORMS = (
+    "bare_declarative", "correction_with_negation", "hedged", "imperative",
+    "appositive", "mid_sentence_aside", "question_turned_statement",
+)
 
 
 @dataclass(frozen=True)
@@ -451,6 +468,118 @@ def run_validator(batch_dir: Path, rows_path: Path, source_groups_path: Path, re
     }
 
 
+
+_SOURCE_POOL_CACHE: dict[str, dict[str, Any]] = {}
+_STOPWORDS = {
+    "the","a","an","of","and","or","to","in","is","are","was","were","be","for",
+    "on","at","by","with","that","this","it","as","if","then","than","from","how",
+    "many","much","what","which","he","she","they","his","her","their","its","not",
+    "but","so","do","does","did","has","have","had","will","would","can","could",
+}
+
+
+def _content_tokens(text: str) -> set[str]:
+    return {w for w in tokenize(text) if len(w) > 2 and w not in _STOPWORDS}
+
+
+def source_statement(row: dict[str, Any]) -> str | None:
+    """Fetch the source statement from the pinned pool via source_record_locator.
+
+    Recomputed here rather than read off the row so the overlap gate is an
+    independent measurement, not a restatement of what the author asserted.
+    """
+    locator = row.get("source_record_locator")
+    if not isinstance(locator, str) or ":" not in locator:
+        return None
+    rel, _, line_no = locator.rpartition(":")
+    if not line_no.isdigit():
+        return None
+    if rel not in _SOURCE_POOL_CACHE:
+        path = REPO_ROOT / rel
+        if not path.exists():
+            _SOURCE_POOL_CACHE[rel] = {}
+        else:
+            _SOURCE_POOL_CACHE[rel] = {
+                str(i): json.loads(l)
+                for i, l in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1)
+                if l.strip()
+            }
+    rec = _SOURCE_POOL_CACHE[rel].get(line_no)
+    if not rec:
+        return None
+    return rec.get("original_problem") or rec.get("statement")
+
+
+def lexical_overlap_by_class(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Mean fraction of an update's content tokens that appear in its source."""
+    per: dict[str, list[float]] = {}
+    unresolved = 0
+    for row in rows:
+        stmt = source_statement(row)
+        if stmt is None:
+            unresolved += 1
+            continue
+        upd = _content_tokens(str(row.get("update") or ""))
+        if not upd:
+            continue
+        share = len(upd & _content_tokens(stmt)) / len(upd)
+        per.setdefault(row_class(row), []).append(share)
+    means = {c: round(sum(v) / len(v), 4) for c, v in per.items() if v}
+    ratio = (max(means.values()) / min(means.values())) if len(means) > 1 and min(means.values()) > 0 else None
+    return {"mean_by_class": means, "ratio": ratio, "unresolved_sources": unresolved}
+
+
+def wrapper_ban_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """[Q-D1]: no update may open with a colon-prefixed framing label."""
+    out = []
+    for row in rows:
+        upd = str(row.get("update") or "").strip()
+        m = re.match(r"^([A-Z][A-Za-z ]{0,30}):\s", upd)
+        hit = m.group(1) if m else None
+        if hit is None:
+            for prefix in WRAPPER_PREFIXES:
+                if upd.lower().startswith(prefix.lower()):
+                    hit = prefix.rstrip(":,- ")
+                    break
+        if hit is not None:
+            out.append({"example_id": row.get("example_id"), "opens_with": hit})
+    return out
+
+
+def syntactic_form_spread(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    per_class: dict[str, Counter[str]] = {}
+    spans: dict[str, set[str]] = {}
+    missing = []
+    for row in rows:
+        form = row.get("syntactic_form")
+        if not isinstance(form, str) or not form.strip():
+            missing.append(row.get("example_id"))
+            continue
+        per_class.setdefault(row_class(row), Counter())[form] += 1
+        spans.setdefault(form, set()).add(row_class(row))
+    max_share = None
+    if per_class:
+        max_share = max(
+            max(c.values()) / sum(c.values()) for c in per_class.values() if sum(c.values())
+        )
+    return {
+        "missing_field": missing,
+        "distinct_forms": len(spans),
+        "class_exclusive": sorted(f for f, s in spans.items() if len(s) == 1),
+        "max_share_of_a_class": round(max_share, 4) if max_share is not None else None,
+        "unknown_forms": sorted(f for f in spans if f not in SYNTACTIC_FORMS),
+    }
+
+
+def pfm_premise_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {"example_id": r.get("example_id"), "semantic_type": r.get("semantic_type")}
+        for r in rows
+        if row_class(r) == "plausible_false_material"
+        and str(r.get("semantic_type")) in BANNED_PFM_SEMANTIC_TYPES
+    ]
+
+
 def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[str, Any]:
     gates: list[GateResult] = []
 
@@ -821,13 +950,85 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         )
     )
 
+    # ---- contract v8 gates ---------------------------------------------------
+    wrapper_hits = wrapper_ban_violations(rows)
+    gates.append(
+        GateResult(
+            "no_framing_wrapper",
+            not wrapper_hits,
+            json.dumps(wrapper_hits[:6]) if wrapper_hits
+            else "no update opens with a colon-prefixed framing label",
+        )
+    )
+
+    distributional = len(rows) >= MIN_BATCH_FOR_DISTRIBUTIONAL_GATES
+    scope_note = (
+        f"reported only; {len(rows)} rows is below the "
+        f"{MIN_BATCH_FOR_DISTRIBUTIONAL_GATES}-row scope in generation_rules.md 3.3"
+    )
+
+    overlap = lexical_overlap_by_class(rows)
+    ov_ratio = overlap["ratio"]
+    ov_cap = SURFACE_THRESHOLDS["lexical_overlap_ratio"]
+    ov_detail = (
+        f"ratio={ov_ratio} (cap {ov_cap}); means={json.dumps(overlap['mean_by_class'])}"
+        if ov_ratio is not None
+        else f"could not compute; unresolved_sources={overlap['unresolved_sources']}"
+    )
+    if overlap["unresolved_sources"]:
+        ov_detail += f"; unresolved_sources={overlap['unresolved_sources']}"
+    gates.append(
+        GateResult(
+            "lexical_overlap_balance",
+            True if not distributional else (ov_ratio is not None and ov_ratio <= ov_cap),
+            ov_detail if distributional else f"{ov_detail} -- {scope_note}",
+        )
+    )
+
+    forms = syntactic_form_spread(rows)
+    form_cap = SURFACE_THRESHOLDS["syntactic_form_share"]
+    # The field must be present and drawn from the vocabulary at any batch size;
+    # only the spread thresholds are scoped to a full batch.
+    form_ok = not forms["missing_field"] and not forms["unknown_forms"]
+    if distributional:
+        form_ok = (
+            form_ok
+            and not forms["class_exclusive"]
+            and forms["max_share_of_a_class"] is not None
+            and forms["max_share_of_a_class"] <= form_cap
+        )
+    gates.append(
+        GateResult(
+            "syntactic_form_spread",
+            form_ok,
+            json.dumps(forms) if distributional else f"{json.dumps(forms)} -- spread {scope_note}",
+        )
+    )
+
+    pfm_hits = pfm_premise_violations(rows)
+    gates.append(
+        GateResult(
+            "pfm_targets_consequences_not_premises",
+            not pfm_hits,
+            json.dumps(pfm_hits[:6]) if pfm_hits else "no PFM uses a premise-targeting semantic_type",
+        )
+    )
+
+    report_v8 = {
+        "no_framing_wrapper": {"violations": wrapper_hits},
+        "lexical_overlap": overlap,
+        "syntactic_form": forms,
+        "pfm_premise_violations": pfm_hits,
+    }
+
     hard_gate_failures = [gate for gate in gates if not gate.passed]
     caveats: list[str] = []
     if validator_result["exit_code"] != 0:
         caveats.append(
-            "Rank-1 validator failed. For reduced smoke drafts, verification.status='unverified_draft', "
-            "verifier_id=null, and missing stored trace metadata are expected until DATASET.md 4.1 "
-            "and validate_dataset.py are amended."
+            "Rank-1 validator failed. Under contract v8 an honest draft validates: "
+            "verification.status='unverified_draft' with a null verifier_id is accepted, and a row "
+            "references a run via trace_run_id rather than embedding a trace. A failure here is a "
+            "real defect, not an expected artifact."
         )
     if stratum_balances["interrupt_position_tertile"]["status"] == "not_applicable_at_authoring_time":
         caveats.append("Interrupt-position stratum balance cannot be audited until runtime trace manifests exist.")
@@ -874,6 +1075,7 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
             {"name": gate.name, "passed": gate.passed, "detail": gate.detail}
             for gate in gates
         ],
+        "contract_v8": report_v8,
         "hard_gate_failures": [
             {"name": gate.name, "detail": gate.detail}
             for gate in hard_gate_failures

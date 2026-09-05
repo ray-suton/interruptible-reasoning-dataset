@@ -1,0 +1,41 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {
+    "created_at": "2026-09-05",
+    "description": "No-update screening over the 10 authored PDDL planning originals.",
+    "grading": "plan equivalence via scripts/grade_plans.py, NOT string match against the gold plan",
+    "mode": "initial",
+    "model_name": "Qwen/Qwen3-14B-FP8",
+    "purpose": "screening_criterion_a_no_update_solved",
+    "runner": "../interrupt-lrm/src/run.py",
+    "runner_args": {
+      "max_tokens": 8192,
+      "num_gpus": 1,
+      "problem_field_name": "original_problem",
+      "seed": 42,
+      "task": "math",
+      "temperature": 0.6,
+      "tensor_parallel_size": 1,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "runner_environment": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "VLLM_MAX_MODEL_LEN": "12288"
+    },
+    "source_groups": "data/smoke_20/source_groups_planning.jsonl",
+    "source_policy_note": "Statements are authored in-house and carried inline; no upstream text is involved."
+  },
+  "sidecar": "/tmp/plan_screen/input/sidecar_stage1.json",
+  "sidecar_sha256": "ce0d98d0db36deb8175d93ba99d9728f671a9ff9257464fcc02595479979561b",
+  "solvability_counts": {
+    "unsolved": 10
+  },
+  "stage1_output": "/tmp/plan_screen/initial/output_0.jsonl",
+  "stage1_output_sha256": "c0d32b5f4eb83d0d6b4ac2b21daf21301f83f6affa97b0d3441273210a99cdfe",
+  "status": "complete",
+  "trace_count": 10,
+  "traces_path": "data/smoke_20/model_trace_runs/qwen3_14b_fp8_plan_screen_20260905/traces.jsonl",
+  "traces_sha256": "c7686524fcff8a9d9de736acf32ceb518ab0f5672f5e79fdec2954233d7aa019"
+}

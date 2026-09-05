@@ -61,11 +61,18 @@ def main() -> int:
     stage1_records: list[dict[str, Any]] = []
     sidecar: dict[str, dict[str, Any]] = {}
     for index, group in enumerate(source_groups):
-        key = (str(group["source_family"]), str(group["upstream_id"]))
-        source = source_pool.get(key)
-        if source is None:
-            raise ValueError(f"missing source pool record for {key[0]}:{key[1]}")
-        problem = source["original_problem"]
+        # Authored sources (e.g. the planning instances) carry their statement
+        # inline and have no pool record to look up. Pinned sources are still
+        # resolved through the pool with a hash check.
+        if group.get("statement_text_included") and group.get("statement"):
+            source = {"_source_line": 0}
+            problem = group["statement"]
+        else:
+            key = (str(group["source_family"]), str(group["upstream_id"]))
+            source = source_pool.get(key)
+            if source is None:
+                raise ValueError(f"missing source pool record for {key[0]}:{key[1]}")
+            problem = source["original_problem"]
         if sha256_text(problem) != group["statement_sha256"]:
             raise ValueError(f"statement hash mismatch for {group['task_group_id']}")
 
@@ -85,8 +92,8 @@ def main() -> int:
             "task_group_id": group["task_group_id"],
             "stable_source_id": group["stable_source_id"],
             "source_family": group["source_family"],
-            "upstream_id": group["upstream_id"],
-            "upstream_revision": group["upstream_revision"],
+            "upstream_id": group.get("upstream_id"),
+            "upstream_revision": group.get("upstream_revision"),
             "source_dataset": group["source_dataset"],
             "source_year": group["source_year"],
             "split": group["split"],
@@ -94,7 +101,7 @@ def main() -> int:
             "original_answer": group["original_answer"],
             "source_record_locator": group["source_record_locator"],
             "statement_sha256": group["statement_sha256"],
-            "original_record_sha256": group["original_record_sha256"],
+            "original_record_sha256": group.get("original_record_sha256"),
             "source_line": source["_source_line"],
         }
 
