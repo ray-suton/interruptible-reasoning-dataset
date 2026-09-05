@@ -24,16 +24,22 @@ imported).
 ## Authority
 
 `generation_rules.md` + `schema/` + `scripts/validate_dataset.py` are normative
-and hash-locked at **contract v8**. The validator is the executable form — a
-schema-only change is inert, so any new rule must land in the validator too.
-Where any other document disagrees with those three, they win.
+and hash-locked; `scripts/audit_batch.py`, `scripts/review_checklist.py` and
+`docs/label_policy.md` are locked alongside them. The validator is the executable
+form — a schema-only change is inert, so any new rule must land in the validator
+too. Where any other document disagrees with those three, they win.
+
+The current lock version lives in `registry/contract_lock.json`; run
+`make contract-check` to read it. No document restates it, because a version
+written into a file goes stale the moment that file is relocked — which is
+exactly how a v10/v11 mismatch reached an author here.
 
 ## Commands
 
 ```bash
 ./init.sh                                  # the full gate: compile + contract lock
-make validate BATCH_DIR=data/smoke_20      # row-level validation
-make batch-audit BATCH_DIR=data/smoke_20   # batch gates: leakage, coverage, balance
+make validate BATCH_DIR=data/smoke_80      # row-level validation
+make batch-audit BATCH_DIR=data/smoke_80   # batch gates: leakage, coverage, balance
 make contract-check                        # fail if a locked file changed unrecorded
 make contract-lock REASON="why" BY=P1      # amend the lock
 ```

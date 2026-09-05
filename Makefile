@@ -7,10 +7,22 @@ check: pycheck contract-check
 
 pycheck:
 	PYTHONPYCACHEPREFIX=/tmp/interruptible-reasoning-dataset-pycache python3 -m py_compile \
+		scripts/author_smoke_20.py \
+		scripts/author_smoke_20_planning.py \
 		scripts/audit_batch.py \
+		scripts/assign_sources.py \
+		scripts/build_smoke_80.py \
+		scripts/check_source_traces.py \
+		scripts/make_smoke_80_planning.py \
+		scripts/planning_statements.py \
+		scripts/select_math_candidates.py \
 		scripts/contract_lock.py \
 		scripts/export_model_traces.py \
+		scripts/grade_plans.py \
+		scripts/review_checklist.py \
 		scripts/import_hf_sources.py \
+		scripts/make_planning_sources.py \
+		scripts/planning_domains.py \
 		scripts/prepare_trace_input.py \
 		scripts/validate_dataset.py
 

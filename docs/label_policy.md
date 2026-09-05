@@ -17,9 +17,39 @@ model. It does not always mean the final answer should change. A
 `true_non_material` update can be accepted and used as verification context
 while preserving the original answer.
 
-`DATASET.md` section 4.1 is the executable row contract. This file is the
-annotator-facing policy. If these disagree, `DATASET.md` section 4.1 is the
-bug-fix target and the contract lock must be amended.
+## Status — read before using this file
+
+**Rank 4 reference. This file is not the row contract and is not the annotator
+surface.**
+
+`generation_rules.md`, with `scripts/validate_dataset.py` as its executable form,
+is the row contract. (An earlier header here pointed at `DATASET.md` section 4.1;
+that section no longer exists — `DATASET.md` is design rationale and carries no
+row-level rule.) Since **v18** the questions an annotator or reviewer is actually
+asked live in one place, `scripts/review_checklist.py`. Work from that list, not
+from this document's "Decision Procedure For Annotators" or "Quality Checks"
+sections.
+
+What this file is still good for: the authority model, the ACCEPT /
+DO_NOT_ACCEPT meaning, and the four class definitions in prose.
+
+**Rules added after this file was written, and not reflected below.** Every one
+is binding and several are hard gates:
+
+| Rule | Where it lives |
+| --- | --- |
+| No framing wrappers — no `Update:`, `Note:`, `Correction:` or any colon-prefixed opener | `generation_rules.md` §3.4 [Q-D1] |
+| `syntactic_form` is declared per row from a fixed vocabulary and balanced across classes | §3.4, §3.5 |
+| `question_turned_statement` was **removed** from that vocabulary | §3.4b (v15) |
+| No self-narration — an update may not refer to its own status, class or provenance. In-world authority claims stay required for `fake_errata` / `fake_evaluator` | §3.4b (v15) |
+| Epistemic register must not separate labels inside a quartet | §3.4b (v15) |
+| VM operates on premises; PFM only on their consequences. `false_restated_given` is banned | §2.3 [Q-D2] |
+| Quartets are mandatory — one VM, TNM, PFM, MO per source — and MO must be task-anchored | §2.4 [Q-D4] |
+| PFM depth floor: `derivation_depth >= 2` for `false_derived_intermediate`, `false_aggregation`, `false_derived_relation`; other shapes and all planning shapes exempt | §2.3 [Q-D5] (v14, rescoped v19) |
+| `false_implied_assignment` vs `false_derived_relation` — the test is what the relation is *between* | §2.3 (v20) |
+| `unverified_draft` with a null verifier is a valid state, so an unreviewed batch need not assert a review | §7 |
+
+If this file disagrees with `generation_rules.md`, this file is the bug.
 
 ## Core Authority Model
 

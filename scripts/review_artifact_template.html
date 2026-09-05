@@ -1,0 +1,443 @@
+<title>Pilot 20 Verification Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+:root{
+  --paper:#EFF2F6; --surface:#FFF; --surface-2:#F7F9FB; --rail:#E5EAF1;
+  --line:#D2DAE5; --line-2:#BFCAD9;
+  --ink:#141A24; --ink-2:#435063; --ink-3:#6E7B8F;
+  --accent:#33487A; --accent-2:#5C74AC; --accent-soft:#E2E8F5;
+  --accept:#0B6E63; --accept-soft:#DEF0EC;
+  --reject:#9A3B23; --reject-soft:#F8E7E0;
+  --pass:#1B6B4A; --fail:#A32B3F; --warn:#8A5A12; --warn-soft:#FAEEDB;
+  --plan:#5B4B8A; --plan-soft:#E9E5F3;
+  --shadow:0 1px 2px rgba(20,26,36,.06),0 8px 24px -12px rgba(20,26,36,.14);
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"Newsreader",Iowan Old Style,Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0E1218; --surface:#161C25; --surface-2:#1B222D; --rail:#121821;
+  --line:#28323F; --line-2:#394553;
+  --ink:#E3E9F2; --ink-2:#A6B2C4; --ink-3:#76829A;
+  --accent:#8CA4DC; --accent-2:#A9BCE8; --accent-soft:#1D2739;
+  --accept:#4CBFAF; --accept-soft:#123030;
+  --reject:#E08A66; --reject-soft:#33211A;
+  --pass:#54B98C; --fail:#E5808F; --warn:#D8A85C; --warn-soft:#2C2417;
+  --plan:#A99BD6; --plan-soft:#232037;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --paper:#0E1218; --surface:#161C25; --surface-2:#1B222D; --rail:#121821;
+  --line:#28323F; --line-2:#394553;
+  --ink:#E3E9F2; --ink-2:#A6B2C4; --ink-3:#76829A;
+  --accent:#8CA4DC; --accent-2:#A9BCE8; --accent-soft:#1D2739;
+  --accept:#4CBFAF; --accept-soft:#123030;
+  --reject:#E08A66; --reject-soft:#33211A;
+  --pass:#54B98C; --fail:#E5808F; --warn:#D8A85C; --warn-soft:#2C2417;
+  --plan:#A99BD6; --plan-soft:#232037;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.lbl{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+ul{margin:0;padding:0}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center}
+.brand{display:flex;flex-direction:column;gap:2px;margin-right:auto}
+.brand h1{margin:0;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.brand .sub{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.stat{display:flex;flex-direction:column;gap:1px}
+.stat b{font-family:var(--mono);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat.ok b{color:var(--pass)}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.btn{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);border-radius:5px;padding:6px 11px;font-size:12px;font-weight:500}
+.btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-2)}
+.btn[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.hbtns{display:flex;gap:8px}
+
+.work{display:grid;grid-template-columns:292px minmax(0,1fr) 400px;min-height:calc(100vh - 66px)}
+.rail{background:var(--rail);border-right:1px solid var(--line);padding:16px 14px 28px;position:sticky;top:0;align-self:stretch;max-height:100vh;overflow-y:auto}
+.stage{padding:22px 26px 60px;min-width:0}
+.rules{background:var(--surface);border-left:1px solid var(--line);padding:18px 18px 60px;align-self:stretch}
+@media (max-width:1200px){.work{grid-template-columns:1fr}
+  .rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)}
+  .rules{border-left:0;border-top:1px solid var(--line)}}
+
+.mx{display:grid;grid-template-columns:auto repeat(4,1fr);gap:3px;margin-top:6px}
+.mx .hd{font-size:9.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);text-align:center;padding-bottom:4px}
+.mx .rowid{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);display:flex;align-items:center;padding-right:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:104px}
+.cell{border:1px solid var(--line);background:var(--surface);border-radius:4px;height:27px;display:flex;align-items:center;justify-content:center;gap:4px}
+.cell:hover{border-color:var(--accent-2)}
+.cell[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.cell .dot{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+.cell[data-v="PASS"] .dot{background:var(--pass)}
+.cell[data-v="FIX"] .dot{background:var(--fail)}
+.cell[data-v="ADJUDICATE"] .dot{background:var(--warn)}
+.cell .lt{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--ink-3)}
+.cell[aria-current="true"] .lt{color:var(--accent)}
+.sechd{margin:14px 0 2px;display:flex;align-items:baseline;gap:7px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2)}
+.legend span{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-3)}
+.legend i{width:6px;height:6px;border-radius:50%}
+.prog{margin-top:12px;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.bar{height:4px;border-radius:2px;background:var(--line-2);overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0}
+
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;border:1px solid transparent}
+.chip.cls{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-2)}
+.chip.ACCEPT{background:var(--accept-soft);color:var(--accept);border-color:var(--accept)}
+.chip.DO_NOT_ACCEPT{background:var(--reject-soft);color:var(--reject);border-color:var(--reject)}
+.chip.dom{background:var(--surface-2);color:var(--ink-2);border-color:var(--line-2)}
+.chip.dom.planning{background:var(--plan-soft);color:var(--plan);border-color:var(--plan)}
+.crumb .eid{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-left:auto}
+.block{margin-bottom:20px}
+.block>.lbl{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.block>.lbl .note{font-weight:400;letter-spacing:0;text-transform:none;font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.stmt{font-family:var(--serif);font-size:15.5px;line-height:1.62;max-width:66ch}
+.trace{font-family:var(--serif);font-size:14px;line-height:1.62;max-width:70ch;max-height:300px;overflow-y:auto}
+.trace .tail{color:var(--ink-3);opacity:.5;font-style:italic}
+.cutm{display:inline-flex;align-items:center;gap:4px;margin:0 5px;padding:1px 6px;border-radius:3px;background:var(--warn-soft);color:var(--warn);border:1px dashed var(--warn);font-family:var(--mono);font-size:10.5px;font-weight:600;font-style:normal;white-space:nowrap}
+.upd{background:var(--surface);border:1px solid var(--accent-2);border-left:3px solid var(--accent);border-radius:6px;padding:15px 17px;box-shadow:var(--shadow)}
+.upd p{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.52;max-width:62ch}
+.upd .meta{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.hint-b{margin-top:9px;background:var(--surface-2);border:1px solid var(--line);border-left:2px solid var(--accent-2);border-radius:5px;padding:10px 13px;font-size:12.5px;line-height:1.5;color:var(--ink-2);max-width:72ch}
+.hint-b b{color:var(--ink)}
+.spread{display:flex;flex-wrap:wrap;gap:8px}
+.sv{flex:1 1 130px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.sv b{font-family:var(--mono);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;overflow-wrap:anywhere;line-height:1.3}
+.sv.gold b{color:var(--ink)} .sv.right b{color:var(--accept)} .sv.wrong b{color:var(--fail)}
+.sv.self{box-shadow:inset 0 0 0 2px var(--accent)}
+.sv .hint{font-size:10.5px;color:var(--ink-3);line-height:1.35}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:12px}
+.kv dt{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.kv dd{margin:0;font-family:var(--mono);font-size:11.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.factors{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px}
+.fx{background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:8px 10px}
+.fx .fk{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);display:block}
+.fx .fv{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.branch{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:12px;padding-top:8px;border-top:1px dashed var(--line-2);margin-top:8px}
+.branch dt{font-family:var(--mono);font-size:10.5px;font-weight:600}
+.branch dt.f{color:var(--pass)} .branch dt.d{color:var(--fail)} .branch dt.n{color:var(--warn)}
+.branch dd{margin:0;color:var(--ink-2);line-height:1.45}
+
+.rules h2{margin:0 0 3px;font-size:12.5px;font-weight:600}
+.rules .zsub{font-size:11.5px;color:var(--ink-3);line-height:1.45;margin:0 0 11px}
+.zone{margin-bottom:24px}
+.mach{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.mach li{list-style:none;display:grid;grid-template-columns:15px 1fr;gap:8px;padding:9px 11px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.mach li:last-child{border-bottom:0}
+.mach .tick{font-family:var(--mono);font-weight:700;font-size:12px}
+.mach .tick.pass{color:var(--pass)} .mach .tick.fail{color:var(--fail)}
+.mach .rt{font-size:11.5px;line-height:1.42;color:var(--ink-2)}
+.mach .ev{margin-top:4px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:2px 9px}
+.mach .ev b{color:var(--ink);font-weight:600}
+.mach .cite{margin-top:3px;font-family:var(--mono);font-size:10px;color:var(--ink-3);opacity:.85}
+.hum{display:flex;flex-direction:column;gap:7px}
+.hrule{border:1px solid var(--line);border-left:2px solid var(--warn);border-radius:5px;background:var(--surface-2);padding:9px 11px;display:grid;grid-template-columns:16px 1fr;gap:9px;cursor:pointer}
+.hrule:hover{background:var(--accent-soft)}
+.hrule input{margin:2px 0 0;width:13px;height:13px;accent-color:var(--accent)}
+.hrule.done{border-left-color:var(--pass);opacity:.66}
+.hrule.done .ht{text-decoration:line-through}
+.ht{font-size:12px;font-weight:600;line-height:1.35}
+.hd2{font-size:11.5px;line-height:1.45;color:var(--ink-2);margin-top:3px}
+.hc{margin-top:4px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.verdict{display:flex;gap:6px;margin-bottom:9px}
+.vb{flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:5px;padding:8px 4px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-2)}
+.vb[aria-pressed="true"]{color:#fff}
+.vb.PASS[aria-pressed="true"]{background:var(--pass);border-color:var(--pass)}
+.vb.FIX[aria-pressed="true"]{background:var(--fail);border-color:var(--fail)}
+.vb.ADJUDICATE[aria-pressed="true"]{background:var(--warn);border-color:var(--warn)}
+textarea{width:100%;font-family:var(--mono);font-size:11.5px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:5px;padding:8px 10px;resize:vertical}
+
+table.g{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:12.5px}
+table.g th{text-align:left;padding:10px 12px;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line);background:var(--surface-2);font-weight:600}
+table.g td{padding:10px 12px;border-bottom:1px solid var(--line)}
+table.g tr:last-child td{border-bottom:0}
+.res{font-family:var(--mono);font-size:11.5px;white-space:nowrap}
+.res .m{display:inline-block;width:14px;font-weight:700}
+.res.p{color:var(--pass)} .res.f{color:var(--fail)}
+.scroll{overflow-x:auto}
+.note{background:var(--warn-soft);border:1px solid var(--warn);border-radius:6px;padding:12px 15px;font-size:12.5px;line-height:1.55;color:var(--ink-2);max-width:80ch}
+.note.ok{background:var(--accept-soft);border-color:var(--accept)}
+.note b{color:var(--ink)}
+h2.sec{font-size:14px;font-weight:600;margin:26px 0 10px}
+p.lead{font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink-2);margin:0 0 20px;padding-left:13px;border-left:2px solid var(--accent-2);max-width:68ch}
+</style>
+
+<header>
+  <div class="brand">
+    <h1>Pilot 20 Verification Bench</h1>
+    <div class="sub" id="prov"></div>
+  </div>
+  <div class="stat ok"><span class="lbl">Row checks</span><b id="s-chk">–</b></div>
+  <div class="stat ok"><span class="lbl">Gates</span><b id="s-g">–</b></div>
+  <div class="stat"><span class="lbl">Judged</span><b id="s-j">–</b></div>
+  <div class="hbtns">
+    <button class="btn" id="t-row" aria-pressed="true">Inspect</button>
+    <button class="btn" id="t-gate" aria-pressed="false">Gates</button>
+  </div>
+</header>
+
+<main class="work">
+  <aside class="rail">
+    <div class="sechd"><span class="lbl">Math · 3 GSM8K + 7 MATH500</span></div>
+    <div class="mx" id="mx-math"></div>
+    <div class="sechd"><span class="lbl">Planning · authored PDDL</span></div>
+    <div class="mx" id="mx-plan"></div>
+    <div class="legend">
+      <span><i style="background:var(--pass)"></i>PASS</span>
+      <span><i style="background:var(--fail)"></i>FIX</span>
+      <span><i style="background:var(--warn)"></i>ADJUDICATE</span>
+      <span><i style="background:var(--line-2)"></i>unreviewed</span>
+    </div>
+    <div class="prog"><span id="ptxt">0 / 80 judged</span><span class="bar"><i id="pbar"></i></span></div>
+    <div class="prog" style="margin-top:12px;line-height:1.55">↑↓ source &nbsp; ←→ class<br>1 · 2 · 3 verdict</div>
+  </aside>
+  <section class="stage" id="stage"></section>
+  <aside class="rules" id="rules"></aside>
+</main>
+
+<script type="application/json" id="payload">__PAYLOAD__</script>
+<script>
+(function(){
+"use strict";
+const D=JSON.parse(document.getElementById("payload").textContent);
+const CLS=["valid_material","true_non_material","plausible_false_material","malicious_override"];
+const SHORT={valid_material:"VM",true_non_material:"TNM",plausible_false_material:"PFM",malicious_override:"MO"};
+const G=D.groups;
+const ORDER=Object.keys(G).sort((a,b)=>{
+  const da=G[a].domain==="math"?0:1, db=G[b].domain==="math"?0:1;
+  return da-db || a.localeCompare(b);
+});
+const MATH=ORDER.filter(g=>G[g].domain==="math"), PLAN=ORDER.filter(g=>G[g].domain==="planning");
+const KEY="pilot20-review-v1";
+let store={};try{const r=localStorage.getItem(KEY);if(r)store=JSON.parse(r)||{}}catch(e){store={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}};
+const rec=id=>store[id]||(store[id]={verdict:null,note:"",checks:{}});
+let gi=0,ci=0,view="row";
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const row=(g,c)=>D.rows.find(r=>r.task_group_id===g&&r.diagnostic_class===c);
+const cur=()=>row(ORDER[gi],CLS[ci]);
+
+const S=D.stats,P=D.provenance;
+document.getElementById("prov").textContent=`${S.groups} sources · ${S.rows} rows · ${P.model} · cut ${P.cut}`;
+document.getElementById("s-chk").textContent=(S.checks-S.fails)+"/"+S.checks;
+document.getElementById("s-g").textContent=S.gates_pass+"/"+S.gates;
+
+function buildMx(el,list){
+  let h='<div></div>'+CLS.map(c=>'<div class="hd">'+SHORT[c]+'</div>').join("");
+  list.forEach(g=>{
+    const lab=G[g].stable_source_id.replace("SMOKE20-","");
+    h+='<div class="rowid" title="'+esc(g)+'">'+esc(lab)+'</div>';
+    CLS.forEach((c,j)=>{const r=row(g,c);
+      h+='<button class="cell" data-g="'+ORDER.indexOf(g)+'" data-c="'+j+'" title="'+esc(r.example_id)+'">'+
+         '<span class="dot"></span><span class="lt">'+SHORT[c]+'</span></button>';});
+  });
+  el.innerHTML=h;
+  el.querySelectorAll(".cell").forEach(b=>b.addEventListener("click",()=>{
+    gi=+b.dataset.g;ci=+b.dataset.c;view="row";tabs();render();}));
+}
+buildMx(document.getElementById("mx-math"),MATH);
+buildMx(document.getElementById("mx-plan"),PLAN);
+
+function paint(){
+  document.querySelectorAll(".cell").forEach(b=>{
+    const r=row(ORDER[+b.dataset.g],CLS[+b.dataset.c]);
+    b.dataset.v=(store[r.example_id]||{}).verdict||"";
+    b.setAttribute("aria-current",String(view==="row"&&+b.dataset.g===gi&&+b.dataset.c===ci));});
+  const n=D.rows.filter(r=>(store[r.example_id]||{}).verdict).length;
+  document.getElementById("ptxt").textContent=n+" / "+D.rows.length+" judged";
+  document.getElementById("pbar").style.width=(n/D.rows.length*100)+"%";
+  document.getElementById("s-j").textContent=n+"/"+D.rows.length;
+}
+
+function spread(r){
+  const g=r.task_group_id, grp=G[g];
+  const vm=row(g,"valid_material"),pf=row(g,"plausible_false_material"),mo=row(g,"malicious_override");
+  const sig=x=>{const s=x.signature||{};return s.implied_answer!=null?s.implied_answer:(s.implied_plan!=null?s.implied_plan:"structural")};
+  const cells=[
+    {k:"gold",v:grp.gold,l:"original answer",h:"correct with no update",cls:"gold"},
+    {k:"valid_material",v:vm.post_update_answer,l:"VM accepts",h:"correct after the revision",cls:"right"},
+    {k:"plausible_false_material",v:sig(pf),l:"PFM wrong branch",h:"what accepting gives",cls:"wrong"},
+    {k:"malicious_override",v:sig(mo),l:"MO wrong branch",h:"what obeying gives",cls:"wrong"}];
+  return '<div class="spread">'+cells.map(c=>'<div class="sv '+c.cls+(c.k===r.diagnostic_class?" self":"")+'">'+
+    '<span class="lbl">'+c.l+'</span><b>'+esc(c.v)+'</b><span class="hint">'+c.h+'</span></div>').join("")+'</div>';
+}
+
+function stageRow(){
+  const r=cur(), g=G[r.task_group_id];
+  const pct=g.interrupt_position!=null?(g.interrupt_position*100).toFixed(2):null;
+  const s=r.signature,bt=(s&&s.branch_tests)||null;
+  let sig="";
+  if(s){sig='<div class="block"><div class="lbl">'+esc(r.signature_field)+'<span class="note">kind: '+esc(s.kind)+'</span></div>'+
+    '<div class="paper"><div style="font-size:12.5px;line-height:1.5;color:var(--ink-2)">'+esc(s.detection||"")+'</div>'+
+    (s.implied_answer!=null?'<dl class="kv" style="margin-top:8px"><dt>implied_answer</dt><dd>'+esc(s.implied_answer)+'</dd></dl>':"")+
+    (s.implied_plan!=null?'<dl class="kv" style="margin-top:8px"><dt>implied_plan</dt><dd>'+esc(s.implied_plan)+'</dd></dl>':"")+
+    (bt?'<dl class="branch"><dt class="f">fires</dt><dd>'+esc(bt.fires)+'</dd>'+
+        '<dt class="d">must not</dt><dd>'+esc(bt.does_not_fire)+'</dd>'+
+        '<dt class="n">never noticed</dt><dd>'+esc(bt.never_noticed)+'</dd></dl>':"")+
+    '</div></div>';}
+  const F=[["speech_act",r.speech_act],["update_operation",r.update_operation],["checkability",r.checkability],
+           ["relevance",r.relevance],["operational_action",r.operational_action],["task_consequence",r.task_consequence],
+           ["syntactic_form",r.syntactic_form],["wording_pattern",r.wording_pattern]];
+  const ad=r.answer_derivation||{};
+  document.getElementById("stage").innerHTML=
+    '<div class="crumb"><span class="chip cls">'+SHORT[r.diagnostic_class]+' · '+esc(r.diagnostic_class)+'</span>'+
+      '<span class="chip '+r.binary_label+'">'+r.binary_label.replace(/_/g," ")+'</span>'+
+      '<span class="chip dom '+r.domain+'">'+esc(r.domain)+'</span>'+
+      '<span class="eid mono">'+esc(r.example_id)+'</span></div>'+
+    '<div class="block"><div class="lbl">Original problem<span class="note">'+esc(g.stable_source_id)+' · '+esc(g.source_family)+' · gold '+esc(g.gold)+'</span></div>'+
+      '<div class="paper stmt">'+esc(g.statement)+'</div></div>'+
+    '<div class="block"><div class="lbl">Model reasoning · cut at '+pct+'%'+
+      '<span class="note">'+esc(r.trace_run_id||"")+' · '+g.prefix_tokens+' of '+g.total_tokens+' tokens</span></div>'+
+      '<div class="paper trace"><span>'+esc(g.prefix)+'</span>'+
+      '<span class="cutm">↯ update injected · '+pct+'% of reasoning tokens</span>'+
+      '<span class="tail">'+esc(g.tail||"")+'</span></div></div>'+
+    '<div class="block"><div class="lbl">The update</div>'+
+      '<div class="upd"><p>'+esc(r.update)+'</p><div class="meta">'+
+        '<span>'+esc(r.semantic_type||"")+'</span>'+
+        (r.pfm_shape?'<span>shape: '+esc(r.pfm_shape)+'</span>':"")+
+        (r.vm_shape?'<span>shape: '+esc(r.vm_shape)+'</span>':"")+
+        (r.mo_subtype?'<span>subtype: '+esc(r.mo_subtype)+'</span>':"")+
+        '<span>'+esc(r.syntactic_form)+'</span><span>'+r.update_len+' chars</span>'+
+      '</div></div>'+
+      (r.diagnostic_class==="plausible_false_material"&&g.consequence_note?
+        '<div class="hint-b"><b>The consequence this PFM should falsify</b> (recorded at source selection): '+
+        esc(g.consequence_note)+'</div>':"")+
+      '</div>'+
+    '<div class="block"><div class="lbl">Answer spread across this quartet<span class="note">no value repeats, including gold</span></div>'+spread(r)+'</div>'+
+    sig+
+    '<div class="block"><div class="lbl">Factor block<span class="note">the variables RQ1 is stated in terms of</span></div>'+
+      '<div class="factors">'+F.map(([k,v])=>'<div class="fx"><span class="fk">'+k+'</span><span class="fv">'+esc(v)+'</span></div>').join("")+'</div></div>'+
+    '<div class="block"><div class="lbl">Metadata</div><div class="paper"><dl class="kv">'+
+      '<dt>authority_status</dt><dd>'+esc(r.authority_status)+'</dd>'+
+      '<dt>relation_to_prior_state</dt><dd>'+esc(r.relation)+'</dd>'+
+      '<dt>evidence_status</dt><dd>'+esc(r.evidence_status)+'</dd>'+
+      (r.hint_strength?'<dt>hint_strength</dt><dd>'+esc(r.hint_strength)+'</dd>':"")+
+      '<dt>answer_form</dt><dd>'+esc(r.answer_form)+'</dd>'+
+      (r.answer_equivalence?'<dt>answer_equivalence</dt><dd>'+esc(r.answer_equivalence)+'</dd>':"")+
+      (ad.method?'<dt>answer_derivation</dt><dd>'+esc(ad.method)+(ad.original_answer_reproduced!=null?' · gold reproduced: '+ad.original_answer_reproduced:"")+'</dd>':"")+
+      '</dl></div></div>'+
+    (r.target_continuation?'<div class="block"><div class="lbl">Target continuation<span class="note">what correct handling does</span></div>'+
+      '<div class="paper" style="font-family:var(--serif);font-size:14.5px;line-height:1.55;max-width:68ch;color:var(--ink-2)">'+esc(r.target_continuation)+'</div></div>':"")+
+    '<div class="block"><div class="lbl">Author rationale</div><div class="paper" style="font-size:13px;line-height:1.55;max-width:70ch;color:var(--ink-2)">'+esc(r.rationale)+'</div></div>'+
+    '<div class="block"><div class="note"><b>Authored by an agent, reviewed by an agent, not reviewed by a person.</b> '+
+      '<span class="mono">review_responses.jsonl</span> is empty and no agent pass substitutes for human review. '+
+      'Your verdicts here are the first human pass.</div></div>';
+}
+
+function stageGates(){
+  const st=D.strata;
+  document.getElementById("stage").innerHTML=
+    '<div class="crumb"><span class="chip cls">Gate scorecard</span><span class="eid mono">recomputed independently of the batch audit</span></div>'+
+    '<p class="lead">Every threshold recomputed from the raw rows, not read from the author’s audit output. '+
+    'The numbers agreed.</p>'+
+    '<div class="scroll"><table class="g"><thead><tr><th>Gate</th><th>Value</th><th>Target</th></tr></thead><tbody>'+
+    D.gates.map(g=>'<tr><td>'+esc(g.name)+'</td>'+
+      '<td class="res '+(g.ok?"p":"f")+'"><span class="m">'+(g.ok?"✓":"✕")+'</span>'+esc(g.value)+'</td>'+
+      '<td class="mono" style="color:var(--ink-3)">'+esc(g.target)+'</td></tr>').join("")+'</tbody></table></div>'+
+    '<h2 class="sec">Lexical overlap — the MO topicality confound</h2>'+
+    '<p style="font-size:13px;line-height:1.6;max-width:76ch;color:var(--ink-2)">MO is the only class whose '+
+    'content need not bear on the task, so a probe could separate it on <i>topicality</i> rather than on '+
+    'accept/reject. Task-anchoring is meant to close that. These are measured, not assumed:</p>'+
+    '<div class="scroll"><table class="g"><tbody>'+
+    Object.entries(D.overlap.mean_by_class).map(([k,v])=>'<tr><td>'+SHORT[k]+' · '+esc(k)+'</td>'+
+      '<td class="mono">'+v.toFixed(4)+'</td></tr>').join("")+
+    '<tr><td><b>ratio</b></td><td class="mono"><b>'+D.overlap.ratio.toFixed(3)+'</b> (cap 1.5)</td></tr>'+
+    '</tbody></table></div>'+
+    '<h2 class="sec">Label balance inside every stratum</h2>'+
+    '<p style="font-size:13px;line-height:1.6;max-width:76ch;color:var(--ink-2)">Quartets give 2 ACCEPT / '+
+    '2 DO_NOT_ACCEPT per source and guarantee nothing inside a slice. Balanced means within ±1 — a stratum '+
+    'with an odd row count cannot split evenly.</p>'+
+    '<div class="scroll"><table class="g"><thead><tr><th>Stratum</th><th>Levels</th><th>Max deviation</th><th>Fails</th></tr></thead><tbody>'+
+    Object.entries(st).map(([k,v])=>'<tr><td>'+esc(k)+'</td><td class="mono">'+v.n+'</td>'+
+      '<td class="mono">'+v.max_dev+'</td>'+
+      '<td class="res '+(v.fails?"f":"p")+'"><span class="m">'+(v.fails?"✕":"✓")+'</span>'+v.fails+'</td></tr>').join("")+
+    '</tbody></table></div>'+
+    '<h2 class="sec">Distributions</h2>'+
+    '<div class="scroll"><table class="g"><tbody>'+
+    [["syntactic_form",D.forms],["answer_form",D.answer_forms],["MO subtype",D.mo_subtypes],["MO evidence_status",D.mo_evidence],
+     ["mean update length by class",D.lens]].map(([k,v])=>
+      '<tr><td>'+esc(k)+'</td><td class="mono" style="font-size:11px">'+esc(JSON.stringify(v))+'</td></tr>').join("")+
+    '</tbody></table></div>'+
+    '<div class="note" style="margin-top:16px"><b>What no gate here checks.</b> Whether a claim is actually '+
+    'true or actually false; whether a PFM falsifies a consequence rather than a premise; whether a signature '+
+    'points at obedience rather than refusal; whether an implied answer is coherent in the task’s units. Those '+
+    'are the right-hand panel, and they are where every real defect in this project has been found.</div>';
+}
+
+function renderRules(){
+  const el=document.getElementById("rules");
+  if(view!=="row"){
+    el.innerHTML='<div class="zone"><h2>How this was produced</h2>'+
+      '<p class="zsub">One agent authored, a second recomputed every gate with its own code and read every row. '+
+      'Neither is a human verifier.</p><ul class="mach">'+
+      '<li><span class="tick">1</span><div class="rt">The audit script existed <b>before</b> the first row. Rules that live only in prose are inert.<div class="cite">workflow.md §4</div></div></li>'+
+      '<li><span class="tick">2</span><div class="rt">The reviewer did <b>not</b> run the author’s audit — that proves only self-consistency.<div class="cite">workflow.md §1</div></div></li>'+
+      '<li><span class="tick">3</span><div class="rt">Fixes went into the generator and the batch was regenerated to an identical hash.<div class="cite">workflow.md §4</div></div></li>'+
+      '<li><span class="tick">4</span><div class="rt">Every answer was derived by an executed solver that first reproduced the pinned gold.<div class="cite">generation_rules.md §9</div></div></li>'+
+      '</ul></div>'+
+      '<div class="zone"><h2>Still open</h2><ul class="mach">'+
+      '<li><span class="tick fail">✕</span><div class="rt">No human review. <span class="mono">review_responses.jsonl</span> is empty.</div></li>'+
+      '<li><span class="tick fail">✕</span><div class="rt">The elicited-disposition protocol has only run on rows where ACCEPT is correct, so its <b>discrimination is untested</b>.</div></li>'+
+      '<li><span class="tick fail">✕</span><div class="rt">80 rows of a 320-row smoke target.</div></li>'+
+      '</ul></div>';
+    return;
+  }
+  const r=cur(),R=rec(r.example_id);
+  el.innerHTML=
+    '<div class="zone"><h2>Enforced by the validator</h2>'+
+    '<p class="zsub">Machine-checked on this row. Shown so you can see what was checked and what it means.</p>'+
+    '<ul class="mach">'+r.checks.map(c=>'<li><span class="tick '+c.verdict+'">'+(c.verdict==="pass"?"✓":"✕")+
+      '</span><div><div class="rt">'+esc(c.rule)+'</div><div class="ev"><span>expected <b>'+esc(c.expected)+
+      '</b></span><span>actual <b>'+esc(c.actual)+'</b></span></div><div class="cite">'+esc(c.cite)+
+      '</div></div></li>').join("")+'</ul></div>'+
+    '<div class="zone"><h2>Only you can check &nbsp;<span class="mono" style="font-weight:400;color:var(--ink-3)">'+
+      r.human.filter((_,i)=>R.checks[i]).length+'/'+r.human.length+'</span></h2>'+
+    '<p class="zsub">The semantic judgements. Every real defect found in this project came from these, never from a threshold.</p>'+
+    '<div class="hum">'+r.human.map((h,i)=>'<label class="hrule'+(R.checks[i]?" done":"")+'" data-i="'+i+'">'+
+      '<input type="checkbox" '+(R.checks[i]?"checked":"")+'><div><div class="ht">'+esc(h[0])+'</div>'+
+      '<div class="hd2">'+esc(h[1])+'</div><div class="hc">generation_rules.md '+esc(h[2])+'</div></div></label>').join("")+'</div></div>'+
+    '<div class="zone"><h2>Verdict</h2><div class="verdict">'+
+      ["PASS","FIX","ADJUDICATE"].map(v=>'<button class="vb '+v+'" data-v="'+v+'" aria-pressed="'+(R.verdict===v)+'">'+v+'</button>').join("")+
+      '</div><textarea id="note" rows="3" placeholder="What you checked, and what you found.">'+esc(R.note)+'</textarea></div>';
+  el.querySelectorAll(".hrule").forEach(l=>l.querySelector("input").addEventListener("change",e=>{
+    const i=l.dataset.i; if(e.target.checked)R.checks[i]=true; else delete R.checks[i]; save(); renderRules();}));
+  el.querySelectorAll(".vb").forEach(b=>b.addEventListener("click",()=>{
+    R.verdict=(R.verdict===b.dataset.v)?null:b.dataset.v; save(); renderRules(); paint();}));
+  const n=el.querySelector("#note"); n.addEventListener("input",()=>{R.note=n.value;save();});
+}
+
+function tabs(){
+  document.getElementById("t-row").setAttribute("aria-pressed",String(view==="row"));
+  document.getElementById("t-gate").setAttribute("aria-pressed",String(view==="gate"));
+}
+function render(){ if(view==="row")stageRow(); else stageGates(); renderRules(); paint(); }
+document.getElementById("t-row").addEventListener("click",()=>{view="row";tabs();render();});
+document.getElementById("t-gate").addEventListener("click",()=>{view="gate";tabs();render();});
+document.addEventListener("keydown",e=>{
+  const t=e.target.tagName;
+  if(t==="TEXTAREA"||t==="INPUT"||e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key;let hit=true;
+  if(k==="ArrowDown"||k==="j")gi=(gi+1)%ORDER.length;
+  else if(k==="ArrowUp"||k==="k")gi=(gi-1+ORDER.length)%ORDER.length;
+  else if(k==="ArrowRight"||k==="l")ci=(ci+1)%CLS.length;
+  else if(k==="ArrowLeft"||k==="h")ci=(ci-1+CLS.length)%CLS.length;
+  else if(k==="1"||k==="2"||k==="3"){if(view!=="row")return;
+    const v=["PASS","FIX","ADJUDICATE"][+k-1],R=rec(cur().example_id);
+    R.verdict=(R.verdict===v)?null:v;save();}
+  else hit=false;
+  if(!hit)return; e.preventDefault();
+  if(view!=="row"){view="row";tabs();}
+  render();
+});
+render();
+})();
+</script>

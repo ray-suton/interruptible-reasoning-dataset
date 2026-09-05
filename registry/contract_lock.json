@@ -1,17 +1,19 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 10,
-  "locked_at": "2026-09-05T14:05:27Z",
+  "version": 21,
+  "locked_at": "2026-09-05T22:16:23Z",
   "locked_by": "P1",
-  "reason": "v10: require syntactic_form and wording_pattern in the factor block; reject an update opening with a colon-prefixed framing label [Q-D1]. Adds the batch-level lexical-overlap, syntactic-form, wrapper-ban and PFM-premise gates to audit_batch.py, scoped to >=40 rows for the distributional ones. Invalidates no authored rows (none exist under v8).",
+  "reason": "v21: close three stale rule surfaces found by auditing every patch from v11 forward. (1) scripts/review_checklist.py had not changed since v17, so v19's rescoping of the depth floor and v20's assignment/derived-relation boundary never reached a reviewer -- the depth item still stated v14's rule and asked nothing about which shapes are exempt. Rewritten: one item for whether the floor applies at all, one for tracing the chain, one for the v20 boundary test. (2) docs/label_policy.md predated v11 and pointed at 'DATASET.md section 4.1', a section that no longer exists; it now carries a status header naming it rank-4 reference, pointing at review_checklist.py as the annotator surface, and tabulating the ten rules added after it was written. (3) scripts/audit_batch.py is now LOCKED -- it holds v15's no_self_narration, quartet_epistemic_register and tone_only_classifier gates, which exist nowhere else, and an unlocked gate can be loosened while contract-check still reports the contract unchanged. This widens rank 1 by one file. No row rule changed; invalidates no rows. Locked by P1 over P1's own amendments, as v11-v20 were; the second-reviewer requirement remains unmet for that whole span.",
   "files": {
-    "generation_rules.md": "05c14963d01bd8eafa895e4df830f4404bc23d8b9b432c8923a7f8214b53e1d4",
+    "generation_rules.md": "4289b065d9343d71d2f266aaf02ce88a7881d7253502fdf28fdb8c1da26ba7dd",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
-    "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+    "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+    "scripts/review_checklist.py": "e6def128788bf320741365a637180fff6ef6168b51efe2101ae3d5772f171149",
+    "scripts/audit_batch.py": "041a568b494aa906db0529edac93bce261ce59e188db521d7816cc53392a70a1",
+    "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
     {
@@ -144,6 +146,175 @@
         "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
         "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
         "scripts/validate_dataset.py": "3becc378408f2cc2f7ad5ab727ea55845f1bd91d7271096a80635b435dd97d01",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 10,
+      "locked_at": "2026-09-05T14:05:27Z",
+      "locked_by": "P1",
+      "reason": "v10: require syntactic_form and wording_pattern in the factor block; reject an update opening with a colon-prefixed framing label [Q-D1]. Adds the batch-level lexical-overlap, syntactic-form, wrapper-ban and PFM-premise gates to audit_batch.py, scoped to >=40 rows for the distributional ones. Invalidates no authored rows (none exist under v8).",
+      "files": {
+        "generation_rules.md": "05c14963d01bd8eafa895e4df830f4404bc23d8b9b432c8923a7f8214b53e1d4",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 11,
+      "locked_at": "2026-09-05T14:36:58Z",
+      "locked_by": "P1",
+      "reason": "v11: correct the PFM scoreability test \u2014 the criterion is a unique downstream answer, not global satisfiability, so a falsified derived intermediate in a linear chain is admissible; add false_derived_intermediate to the PFM shape list; make syntactic_form the balanced stratum that the dropped wrapper vocabulary vacated, with a +/-1 tolerance and an explicit exemption for class-tied features; mark the v8-v10 amendments as landed. Found by Codex during the first authoring pass under v10. Invalidates no rows.",
+      "files": {
+        "generation_rules.md": "1811b00ea7585a6c74077e5391dd12abca5a506cf43fb3e281614f42a4575f69",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 12,
+      "locked_at": "2026-09-05T14:43:26Z",
+      "locked_by": "P1",
+      "reason": "v12: stop hardcoding the lock version in generation_rules.md \u2014 a version stated inside a locked file goes stale the moment that file is relocked, which is how the v10/v11 mismatch Codex found arose. The header now points at registry/contract_lock.json. No rule text changed; invalidates no rows.",
+      "files": {
+        "generation_rules.md": "94b15e9d42738e23e1830441203ae7400227cc081c67858471f9ce08c129bb2a",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 13,
+      "locked_at": "2026-09-05T14:59:20Z",
+      "locked_by": "P1",
+      "reason": "v13: align G0 in section 0 with the +/-1 tolerance in 3.5 and name syntactic_form and answer_form as the strata; add an explicit exemption for strata with no spread, since interrupt position is fixed at 0.6 for the primary condition and its tertile is degenerate outside the position sweep. Both found by Codex during the planning authoring pass. No rule tightened; invalidates no rows.",
+      "files": {
+        "generation_rules.md": "d35c9f05d1a124ea0aa55dbf4e5dd3287e15dd21701c321ccd61c14e63cba87f",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 14,
+      "locked_at": "2026-09-05T20:37:51Z",
+      "locked_by": "P1",
+      "reason": "v14: add a depth floor to false_derived_intermediate \u2014 a falsified intermediate must sit at least two operations from the stated inputs that determine it, because a depth-1 target tests arithmetic already visible in the prefix rather than update handling. Screening criterion (b) in section 1 now requires a depth>=2 consequence, so selection and authoring stay in step. INVALIDATES ONE AUTHORED ROW: smoke20_gsm8k_000_plausible_false_material falsifies '10 - 1 = 9' (orange remaining), depth 1. Verified NOT invalidated: gsm8k_001 falsifies 40+30=70 (depth 2) and gsm8k_002 falsifies 19+10=29 (depth 3); an earlier guess that all three failed was wrong.",
+      "files": {
+        "generation_rules.md": "bc24605fa4989270165385dc14539b40b332b9d53dd5a48c1a94fe7872745c32",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "25d4a22b3f03fb0107c5095120a9b9f1c069682fef841548231d6018b8f599f9",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 15,
+      "locked_at": "2026-09-05T20:44:37Z",
+      "locked_by": "P1",
+      "reason": "v15: drop question_turned_statement from the syntactic-form vocabulary \u2014 a question needs an answer and the only authority available to answer it is the row's own metadata, so the form structurally produced self-narrating updates. Add section 3.4b: an update may not refer to its own authority, class or provenance (in-world authority claims remain required for fake_errata and fake_evaluator), and hedging must not separate labels inside a quartet. Enforced by the validator (form vocabulary, self-narration ban) and by three new audit gates (no_self_narration, quartet_epistemic_register, tone_only_classifier). INVALIDATES ROWS: every row using the dropped form, plus 3 self-narrating rows. Found by the owner reading gsm8k_000 and gsm8k_002.",
+      "files": {
+        "generation_rules.md": "922c2eb6e14cae2a868175d63e9db8151cf5cb4955b313fdd20126ee326caca9",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "74351019b26ba441f53f8ee5d9ba8431dd12743f37748d01661a0beb844bc622",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 16,
+      "locked_at": "2026-09-05T20:44:59Z",
+      "locked_by": "P1",
+      "reason": "v16: correct the tone_only_classifier call to train_perceptron's actual (training_pairs, labels) signature. No rule change; v15 rules unaltered.",
+      "files": {
+        "generation_rules.md": "922c2eb6e14cae2a868175d63e9db8151cf5cb4955b313fdd20126ee326caca9",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "74351019b26ba441f53f8ee5d9ba8431dd12743f37748d01661a0beb844bc622",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 17,
+      "locked_at": "2026-09-05T21:03:37Z",
+      "locked_by": "P1",
+      "reason": "v17: move the human-review checklist into the repo as scripts/review_checklist.py and lock it. It previously lived in a throwaway script outside the repo and stayed at v13 while the contract moved to v16, so the review artifact never asked about the depth floor, the self-narration ban or quartet register \u2014 a reviewer would have signed off an injection that announced itself. Locking it makes a contract change that should reach reviewers fail contract-check until the list is updated. No row rule changed; invalidates no rows.",
+      "files": {
+        "generation_rules.md": "922c2eb6e14cae2a868175d63e9db8151cf5cb4955b313fdd20126ee326caca9",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "74351019b26ba441f53f8ee5d9ba8431dd12743f37748d01661a0beb844bc622",
+        "scripts/review_checklist.py": "543482b829776930e958da51e753ee8a132068350425977098f44db82b579730",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 18,
+      "locked_at": "2026-09-05T21:03:54Z",
+      "locked_by": "P1",
+      "reason": "v18: point generation_rules.md \u00a79 and workflow.md at scripts/review_checklist.py as the single definition of the human-review questions, rather than restating them. No row rule changed.",
+      "files": {
+        "generation_rules.md": "852b2a379846875bf6828bcc8e23578471df5d10636bd9d8e7418f6a49a6eec4",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "74351019b26ba441f53f8ee5d9ba8431dd12743f37748d01661a0beb844bc622",
+        "scripts/review_checklist.py": "543482b829776930e958da51e753ee8a132068350425977098f44db82b579730",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 19,
+      "locked_at": "2026-09-05T21:12:17Z",
+      "locked_by": "P1",
+      "reason": "v19: [Q-D5] require answer_derivation.derivation_depth >= 2 on math PFM rows whose shape falsifies a computed chain value (false_derived_intermediate, false_aggregation, false_derived_relation), and state why bounds, rearrangements, properties and all planning shapes are out of scope. [Q-D6] record the settled compute decision: one GPU per job, two jobs across two GPUs, FP8 accepted at 14B because hidden states remain bf16. Invalidates one row: smoke20_math500_008 PFM, which carries no derivation_depth.",
+      "files": {
+        "generation_rules.md": "8fdbab43f544639dacc8594389fa4b73de4dd803bfa47ba50691fdec0be297c6",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "543482b829776930e958da51e753ee8a132068350425977098f44db82b579730",
+        "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 20,
+      "locked_at": "2026-09-05T21:19:58Z",
+      "locked_by": "P1",
+      "reason": "v20: sharpen the boundary between false_implied_assignment and false_derived_relation, which prose did not settle and an author hit on the first batch. An assignment is a one-step algebraic normalisation of a STATED expression, exempt from the depth floor even when the false result is propagated through later work; a derived relation holds between objects that were themselves computed. Reclassifies smoke20_math500_008 PFM; no answer changed.",
+      "files": {
+        "generation_rules.md": "4289b065d9343d71d2f266aaf02ce88a7881d7253502fdf28fdb8c1da26ba7dd",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "543482b829776930e958da51e753ee8a132068350425977098f44db82b579730",
         "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
       }
     }

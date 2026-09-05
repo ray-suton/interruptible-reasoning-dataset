@@ -1,0 +1,17 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {},
+  "sidecar": "/tmp/b100_screen/math/sidecar_stage1.json",
+  "sidecar_sha256": "d315935b31f3770d3712e7a34c44dc70debd9c0f1930d79363721b33841580fd",
+  "solvability_counts": {
+    "solved": 22,
+    "unsolved": 4
+  },
+  "stage1_output": "/tmp/b100_screen/math/out/output_0.jsonl",
+  "stage1_output_sha256": "e53792ddc5eb566938379f7a63aa2e0444bd0811d677b44bd0bdd69d3e3e2687",
+  "status": "complete",
+  "trace_count": 26,
+  "traces_path": "data/batch_100/model_trace_runs/qwen3_14b_fp8_screen_20260906/traces.jsonl",
+  "traces_sha256": "e7fa224b34268c1a58db9b2861209a273adb2b7f12ad217f266927b20e8d2c8d"
+}

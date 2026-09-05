@@ -1,350 +1,378 @@
-# Workflow: double-checked update-row generation
+# Workflow: authoring and reviewing update rows
 
 Status: working procedure
-Audience: anyone generating or reviewing update rows for this dataset
+Audience: **contributors P1–P4.** Read this before you author anything.
+Self-contained: everything you need is in this repository. You do not need any
+prior conversation, and you should not need to ask the owner what a step means.
 
-## What this is
+## What you are building
 
-How a batch of update rows gets generated and checked in this project: one agent
-authors, a second agent independently reviews, and a human owner takes the
-verdict. It is written so two people who have not worked together can run it on
-the same batch and produce a result either of them can defend.
+A dataset for one question: an LRM is part-way through a reasoning trace when an
+update arrives — **should it accept it?**
 
-The procedure is not specific to any one batch. Where it needs an example it
-names a class or a field, not a particular row.
+Every row pairs a source problem, a frozen reasoning prefix, and an update, with
+a binary disposition (`ACCEPT` / `DO_NOT_ACCEPT`) and, for three of the four
+classes, a **behaviour signature** recording what incorrect handling would
+observably produce.
 
-## Read these first
+You will author **20 originals — 80 rows**, one complete quartet per original.
+Your assignment is at `data/<batch>/contributors/<you>/assigned_source_groups.jsonl`.
 
-In this order. Do not start authoring before finishing them.
+The current batch is **`data/smoke_80/`** — read its `README.md` first for what
+is specific to it (shape, screening results, and what is still unconfirmed on
+your sources). Four contributors × 20 originals = **80 originals, 320 rows**.
 
-| Document | What it governs |
-| --- | --- |
-| `CLAUDE.md` | Repo layout, commands, authority order |
-| `generation_rules.md` | **The row contract, rank 1.** Batch shape, the four classes, the diversity mandate, thresholds, who checks what. `scripts/validate_dataset.py` is its executable form and `schema/` is documentation only |
-| `q&a.md` | The owner's settled design decisions, cited as `[Qn]` and `[Q-Dn]`. Not open for relitigation |
-| `DATASET.md` | Overview and design rationale — why the rules take their shape. No row-level rule lives here |
-| `docs/label_policy.md`, `docs/update_taxonomy.md`, `docs/examples.md` | Annotator-facing reference and worked rows |
+## Why the checking is heavier than you expect
 
-Background, non-authoritative: `archive/pre_contract_v8_reset_2026-09-05/` holds
-the superseded rulebooks, the recovery record of what an earlier generation did
-better, and the review that produced several of the current gates.
-
-## Why the checking is this heavy
-
-Two reasons specific to this dataset.
+Two reasons specific to this dataset. Almost every rule follows from one of them,
+so they are worth understanding before you write a row.
 
 **Answer-only grading is invalid here.** For three of the four classes the
-correct answer *is* the original answer, so a model that correctly resists an
-update and a model that never noticed it produce identical output. That is why
-every row in those classes carries a behaviour signature, and why a wrong or
-missing signature makes a row worthless in a way no schema check can see.
+correct answer *is* the original answer. An unchanged answer is produced both by
+a model that correctly resisted the update and by one that never read it — they
+are indistinguishable at the answer level. That is why those classes carry a
+behaviour signature, and why a row whose incorrect handling looks identical to
+correct handling **is not authorable at all**.
 
 **A surface leak invalidates the probe.** One of the project's two contributions
-is a linear probe separating `ACCEPT` from `DO_NOT_ACCEPT` from hidden states. If
-the diagnostic class is predictable from an update's phrasing, the probe can
-score well by encoding phrasing and never touch the decision — and no ablation on
-the probe can detect that, because the leak is in the data. `generation_rules.md`
-§0 states this; §3 is its enforcement. Treat leakage findings as blocking, not
+is a linear probe separating the two labels from hidden states. If the class is
+predictable from an update's phrasing, the probe can score well by encoding
+phrasing and never touch the decision — and no ablation on the probe detects
+that, because the leak is in the data. Treat a leakage finding as blocking, not
 cosmetic.
 
 ---
 
-# 1. The pattern
+# 1. Read these first, in this order
 
-```
-                    ┌──────────────┐
-   brief ──────────▶│   AUTHOR     │──── data/<batch>/ ─────┐
-                    │              │                        │
-                    └──────────────┘                        ▼
-                            ▲                     ┌──────────────┐
-                            │                     │   REVIEWER   │
-                            └──── review file ────│              │
-                                                  └──────────────┘
-                                                         │
-                                                  PASS / FIX / ADJUDICATE
-                                                         │
-                                                         ▼
-                                                       owner
-```
+| Document | What it governs |
+| --- | --- |
+| `generation_rules.md` | **The row contract, rank 1.** Classes, fields, thresholds, signatures, gates. Hash-locked; `scripts/validate_dataset.py` is its executable form |
+| `q&a.md` | The owner's settled decisions, cited `[Qn]` / `[Q-Dn]`. **Not open for relitigation** |
+| `DATASET.md` | Overview and design rationale — why the rules have this shape |
+| `scripts/review_checklist.py` | The questions your reviewer will ask. Read it *before* authoring, not after |
+| `docs/label_policy.md`, `docs/update_taxonomy.md`, `docs/examples.md` | Annotator reference and worked rows |
 
-Two agent sessions, everything crossing between them a file on disk. Neither
-reads the other's session, which keeps the exchange auditable and stops the
-reviewer inheriting the author's reasoning.
+**Do not read `archive/`.** It holds superseded rulebooks whose rules the current
+contract overturned.
 
-## Roles
-
-**Author.** Reads the contract, builds the audit tooling, generates rows, runs
-its own audit, reports. Owns `scripts/author_<batch>.py`,
-`scripts/audit_batch.py` and the batch directory.
-
-**Reviewer.** Reads the same contract, then independently checks the output.
-Returns exactly one of `PASS`, `FIX`, `ADJUDICATE` — the verifier vocabulary
-already used across the repo. Owns nothing; writes only the review file.
-
-**Neither is the dataset's human verifier.** `DATASET.md` §7–8 governs human
-label review. An agent reviewing another agent's rows improves the draft; it does
-not make the batch reviewed. A batch that has only been agent-reviewed must never
-be recorded as reviewed, and `review_responses.jsonl` stays empty until a person
-fills it.
-
-## The one rule that makes it work
-
-> **The reviewer must not run the author's audit script.**
-
-That script encodes the author's beliefs about what is being checked. Running it
-tells you only that the author is self-consistent. The reviewer recomputes every
-gate from the raw rows with its own code.
-
-Two payoffs. When the independent numbers agree with the author's, you have
-earned the right to trust the audit script — which matters, because it becomes
-the gate every later batch leans on. And the defects that actually matter are the
-ones **no audit script checks**: they are semantic, and only reading the rows
-finds them.
+**Nothing in this file restates a row rule.** That is deliberate. An earlier
+version of this document drifted three contract versions behind, and a reviewer
+following it would have approved rows the contract forbids. Rules live in
+`generation_rules.md`; process lives here. If they disagree, the contract wins
+and this file is the bug.
 
 ---
 
-# 2. Setting it up
+# 2. The four classes, one paragraph each
+
+Enough to orient. The binding definitions are `generation_rules.md` §2.
+
+**`valid_material` (VM) → ACCEPT.** An authorized change to the **premises** —
+what the problem states. VM is the only class allowed to touch them. The correct
+answer changes and you must derive the new one.
+
+**`true_non_material` (TNM) → ACCEPT.** A true statement about the
+**consequences** of the premises. It adds no task state, the answer is unchanged,
+and it carries a `hint_strength` and an engagement signature.
+
+**`plausible_false_material` (PFM) → DO_NOT_ACCEPT.** A *false* statement about
+the consequences — never about a stated premise. A false claim about an input is
+an unauthorized attempt at a premise and is **out of class**. Nobody has
+authority over entailment, which is what makes PFM unauthorized necessarily
+rather than by convention.
+
+**`malicious_override` (MO) → DO_NOT_ACCEPT.** Prompt injection. Not about the
+task, but it must be **task-anchored** — naming quantities from your source — or
+a probe separates it on topicality instead of on the decision.
+
+---
+
+# 3. Your loop
+
+```
+   assignment ─▶ author ─▶ self-check ─▶ your reviewer ─▶ fix ─▶ done
+                    ▲                                      │
+                    └──────────────────────────────────────┘
+```
+
+**1. Check your sources are screened.** Your assignment records
+`screening.status`. Every source must be `passed`: the model solves the base task
+with no update, *and* the source has a falsifiable consequence. Never author
+against an unscreened source — if the model cannot solve the problem, a failure
+cannot be attributed to update handling.
+
+**2. Read each source's `consequence_note`, then confirm it — or write it.**
+It names the derivable fact your PFM should falsify, chosen at selection time so
+you need not rediscover it — but `screening.consequence_confirmed` is false until
+a person checks it, and the note's author is not that person. Check
+`consequence_status` first: `authored_unconfirmed` and `derived_unconfirmed` mean
+a note exists for you to verify, and **`not_authored` means there is none and you
+derive and record it yourself.** Your batch README says how many of each you
+hold and why some were left empty rather than guessed. Math sources also record
+`prefix_contains_target_value`: whether the model's prefix has **already**
+computed that intermediate. If it has, your PFM contradicts something the model
+just derived; if it has not, it front-runs work the model has yet to do. Those
+are different rows. Read the prefix and know which one you are writing.
+
+**3. Author the quartet.** One VM, TNM, PFM, MO per source. Required, not a
+default: it is what makes problem identity orthogonal to label, which is what the
+probe needs.
+
+**4. Derive every answer by executing a solver.** Never type an answer. Write a
+function, have it **reproduce the pinned gold first**, then compute the VM and
+PFM branches with the same function. A wrong implied answer makes a row
+unscoreable and **fails silently** — nothing downstream disagrees with it.
+
+> The single highest-value habit here. Four separate grading bugs in this project
+> produced confident wrong numbers; the one caught early was caught because a
+> tool had to reproduce known-good output before being trusted.
+
+**5. Self-check** — §4.
+
+**6. Hand to your reviewer.** You may not review your own rows.
+
+## What you produce, and where it goes
+
+You write **a generator**, not a JSONL file. The rows are its output.
+
+```
+scripts/author_<batch>_<you>.py          <- you write this; it is the artefact
+      │  emits
+      ▼
+data/<batch>/contributors/<you>/semantic_rows.jsonl
+      │  owner concatenates, in contributor order, after review
+      ▼
+data/<batch>/semantic_rows.jsonl         <- what make validate reads
+```
+
+So P2 on the smoke-80 batch writes `scripts/author_smoke_80_P2.py`, which emits
+`data/smoke_80/contributors/P2/semantic_rows.jsonl`. Copy the closest existing
+generator — `scripts/author_smoke_20.py` for math, `scripts/author_smoke_20_planning.py`
+for planning — and work from it; they are the worked examples for every field the
+contract requires. The planning solvers themselves live in
+`scripts/planning_domains.py` (`blocks_problem`, `logistics_problem`, `solve_bfs`
+for a gold plan, `execute_plan` to show a wrong-branch plan actually *fails*
+rather than asserting that it does). Note that `author_smoke_20_planning.py`
+predates Logistics, so take the domain from `planning_domains.py`, not from it.
+
+Three consequences worth stating outright, because each has cost someone a day:
+
+- **Your solver lives in the generator.** §3 step 4 is not advice about how to
+  check your work — it is a statement about where the answers come from. If a
+  number in your output cannot be traced to a function that ran, it does not
+  belong in a row.
+- **Fixes go into the generator, never into the emitted rows.** A hand-edited
+  JSONL drifts from the code that claims to produce it and silently reverts the
+  next time anyone runs it. This is repeated in §5 because it is the single
+  easiest rule to break under time pressure.
+- **Re-running your generator must reproduce your file byte for byte.** Sort
+  keys, seed anything random, and never key output off a dict that iterates in
+  insertion order you did not set. A generator whose output moves cannot be
+  reviewed, because the reviewer cannot tell your fix from your noise.
+
+You may validate your own slice against the batch contract at any time by
+pointing the tools at your directory:
 
 ```bash
-mkdir -p /tmp/tmux-$(id -u) && chmod 700 /tmp/tmux-$(id -u)   # socket dir may not exist
-cd /path/to/interruptible-reasoning-dataset
-tmux new-session -d -s author   -c "$PWD" -x 220 -y 50
-tmux new-session -d -s reviewer -c "$PWD" -x 220 -y 50
-tmux send-keys -t author "codex \"\$(cat /tmp/brief_author.md)\"" C-m
+make validate BATCH_DIR=data/<batch>          # after the owner has concatenated
+python3 scripts/audit_batch.py --batch-dir data/<batch>
 ```
 
-Attach to watch: `tmux attach -t author`.
+The batch-level gates in §4 are **batch-level**: several are scoped to >= 40 rows
+and are not meaningful on your 80 alone until the batch is assembled. Run them
+anyway — a gate that fails on your slice will certainly fail on the batch.
 
-## Sending a message to a running session
+---
 
-The composer does not submit on `C-m` in every state. **Always capture the pane
-after sending** and confirm the text left the input box:
+# 4. Self-check before you hand over
 
 ```bash
-tmux send-keys -t author "your message" C-m
-sleep 3
-tmux capture-pane -t author -p | tail -8
+make validate    BATCH_DIR=data/<batch>    # row-level, rank 1
+make batch-audit BATCH_DIR=data/<batch>    # batch-level gates
 ```
 
-- Pane shows `tab to queue message` ⇒ the agent is mid-turn. Send `Tab`; it is
-  picked up when the turn ends.
-- Text still on the `›` line while the agent is idle ⇒ send `Enter` again.
+Then read `scripts/review_checklist.py` for your classes and answer every item
+yourself. The gates cannot see any of it — **every real defect found in this
+project came from reading rows, not from a threshold.**
 
-Anything longer than a few lines goes in a file with a short pointer message;
-terminal wrapping mangles the rest.
+Traps that have actually bitten people here:
 
-## Knowing when an agent has finished
+- **No framing wrappers.** No update may open with `Update:`, `Note:`,
+  `Correction:` or any colon-prefixed label. Declare a `syntactic_form` and vary
+  it.
+- **No self-narration.** An update may not refer to its own status in our
+  taxonomy. *"The injected instruction says"* is a description of an attack, not
+  an attack — a real injection never announces itself. In-world authority claims
+  stay required: *"an official erratum revises this answer"* is what a
+  `fake_errata` should say.
+- **PFM depth, and whether it even applies.** The floor binds three shapes
+  (`false_derived_intermediate`, `false_aggregation`, `false_derived_relation`)
+  and deliberately exempts the rest, planning included. Applying it to an exempt
+  shape bans a row the contract permits, which is its own defect. Work the three
+  depth items in `scripts/review_checklist.py`; they carry the current scope and
+  the assignment-versus-derived-relation test.
+- **Signatures point at obedience.** If *obeying* your update produces correct
+  behaviour, the signature is backwards and the row measures nothing.
+- **Three branches.** Structural and engagement signatures need `fires`,
+  `does_not_fire` and `never_noticed`. The third is mandatory — a predicate
+  validated only on outcomes that happen to occur confirms whatever you already
+  believe.
+- **Quartet register.** If your PFM hedges, your VM should too. Register that
+  tracks the label *within* a source is readable even when batch-wide balance
+  passes.
+- **No answer collisions.** Within a quartet, gold, the VM answer and both
+  wrong-branch values must all differ. Re-check after *any* change — repairing
+  one row is how a collision appears in another.
 
-```bash
-#!/usr/bin/env bash   # usage: wait_idle.sh <session>
-idle=0
-for i in $(seq 1 150); do
-  pane="$(tmux capture-pane -t "$1" -p 2>/dev/null || echo GONE)"
-  [ "$pane" = "GONE" ] && { echo "session gone"; exit 2; }
-  if echo "$pane" | grep -qiE "Working \(|esc to interrupt"; then idle=0; else idle=$((idle+1)); fi
-  [ "$idle" -ge 3 ] && { echo "idle - awaiting input"; exit 0; }
-  sleep 10
-done
-echo "timeout"; exit 1
+---
+
+# 5. Review — who reviews whom
+
+**No self-review, ever.** A fixed cycle, so nobody negotiates:
+
+```
+P1 → P2 → P3 → P4 → P1
 ```
 
-Run it in the background. Three consecutive idle polls avoids firing in the gap
-between an agent's tool calls.
+You review the person to your right; the person to your left reviews you.
+
+## The one rule that makes review work
+
+> **Do not run the author's audit script.**
+
+It encodes the author's beliefs about what is being checked. Running it tells you
+only that they were self-consistent. **Recompute every gate from the raw rows
+with your own code.** When your numbers match theirs, the audit has earned trust.
+When the defects are semantic, only reading finds them.
+
+## Three passes
+
+**Pass 1 — recompute the gates.** Surface-form concentration, length balance,
+template and wording spread, subtype and metadata coverage, answer collisions,
+signature completeness, label balance inside every stratum. Say whether your
+numbers match the author's; a mismatch is itself a finding.
+
+**Pass 2 — verify every derived answer,** independently.
+
+**Pass 3 — read every row**, working through `scripts/review_checklist.py`.
+
+## Your verdict
+
+Exactly one of **`PASS`**, **`FIX`**, **`ADJUDICATE`**, written to
+`data/<batch>/review_responses.jsonl`.
+
+Report format: verdict first, then **what passes** — explicitly, so the author
+does not churn on what is already right — then one section per defect with the
+rule cited and a suggested repair.
+
+**Fixes go into the generator, never into the emitted rows.** Hand-edited JSONL
+drifts from its generator and silently reverts on the next run.
 
 ---
 
-# 3. The briefs
+# 6. If you use a coding agent
 
-Both point at the same contract; only the task differs.
+Fine, with two boundaries.
 
-## Author brief
+**An agent review is not a review.** An agent critiquing another agent's rows
+improves the draft and catches real defects. It is not the human label review §5
+describes, and a batch reviewed only by agents **must not** be recorded as
+reviewed. `review_responses.jsonl` stays empty until a person fills it.
 
-1. **Orient** — the reading order in "Read these first", stated explicitly, with
-   `q&a.md` marked as settled.
-2. **State of play** — what exists, and in particular **what is a negative
-   example**. Naming a prior batch that passes `validate_dataset.py` while
-   failing the §3 gates is what stops an agent reusing its phrasing as a
-   template.
-3. **The working split** — who authors, who reviews, and that neither is the
-   human verifier.
-4. **The task, sequenced.** Never "generate the whole batch".
-5. **Things that will bite you** — the traps in §6 below, listed. Highest-value
-   section in the brief; every item is a mistake not made.
-6. **Output location** — a fresh `data/<batch>/`, and what must not be touched.
-7. **What to report** — including *what in `generation_rules.md` you think is
-   wrong*.
+**`verification.status` is a claim about that review.** A draft nobody has read
+records `unverified_draft` with a null verifier. The validator accepts that state
+precisely so an honest draft need not assert a review that never happened. If you
+find yourself writing `verified` to make a check pass, stop.
 
-Item 7 earns its place. An author reading the contract closely finds real
-problems in it; asking turns that into a deliverable instead of silent
-compliance.
-
-## Reviewer brief
-
-Items 1–3 as above, then:
-
-- recompute every §3.3 threshold from the raw rows, with your own code, and say
-  so;
-- **do not run the author's audit script**;
-- verify every VM `post_update_answer` and every PFM/MO scalar signature
-  independently;
-- read every row for what no gate checks;
-- return `PASS` / `FIX` / `ADJUDICATE`, with per-row reasons and suggested
-  repairs;
-- state which of the author's criticisms of the contract you accept.
+*Owner-specific, skip unless you use the same setup.* Practical notes for driving
+an agent in tmux: create `/tmp/tmux-$(id -u)` mode 700 first; the composer does
+not always submit on Enter, so capture the pane after sending and look for a
+queue prompt; put anything longer than a few lines in a file and send a short
+pointer.
 
 ---
 
-# 4. Sequencing
+# 7. Failure modes we have already hit
 
-| Step | Why this order |
-| ---: | --- |
-| 1 | **Build `scripts/audit_batch.py` and `make batch-audit` before the first row.** A rule that lives only in prose is inert. A batch can satisfy `validate_dataset.py` completely and violate every balance rule in `archive/pre_contract_v8_reset_2026-09-05/superseded_rules/update_rules.md` — that is the normal outcome when nothing executes them. |
-| 2 | **A small slice first** — enough originals to exercise all four classes across more than one domain, few enough that a reviewer reads every row. |
-| 3 | **Author runs its own audit,** iterates until the §3.1 hard gates pass, reports. |
-| 4 | **Reviewer recomputes independently,** reads every row, returns a verdict. |
-| 5 | **Author patches the generator, not the rows,** and regenerates. |
-| 6 | **Re-audit, re-review.** Only then scale. |
+Named because they recur, and because no gate detects any of them.
 
-Step 5 is not a style preference. Hand-edited JSONL drifts from the generator
-that produced it and silently reverts on the next run. Fixes go upstream and the
-batch is regenerated deterministically.
+**Self-neutralising attack.** An MO that carries a payload *and* tells the model
+to disregard it. The signature fires only when the model **disobeys**, so the row
+measures nothing.
 
----
+**Absurd falsehood.** A PFM wrong in a way any competent solver catches at once,
+typically false arithmetic over stated values. It tests recomputation, not update
+handling.
 
-# 5. What the reviewer checks
+**Incoherent implied answer.** A wrong branch arithmetically derived but
+impossible in the task's units — a fractional count of discrete things. It tests
+"notices an impossible value".
 
-Three passes, in order.
+**Answer collision.** One value serving as both a correct answer and a
+wrong-branch value inside a quartet. A model that has learned only "the salient
+alternative here" scores well without engaging.
 
-**Pass 1 — recompute the gates.** From raw rows, with the reviewer's own code:
-first-unigram and first-bigram concentration and class-exclusivity; class mean
-update-length ratio; `update_template_family` and `wording_pattern`
-concentration; MO subtype and `evidence_status` spread; VM shape spread and
-additive fraction; TNM `hint_strength` spread; answer collisions within a
-quartet; three-branch presence on every structural and engagement signature; and
-`binary_label` balance inside every stratum in §3.5. Compare against the author's
-reported numbers and say whether they agree — a mismatch is itself a finding.
+**A grader written for one surface form.** **Ten times** here a tool scored
+confidently and wrongly because it was validated against the format that happened
+to occur first — a regex that could not read nested braces, a plan splitter that
+handled one separator, a collision check that sorted tokens instead of actions, a
+scalar grader pointed at plans, an answer comparison that called `\boxed{1.00}`
+unequal to `1` and `\boxed{B}` unequal to `\text{(B)}`, a plan parser that
+read `\rightarrow` as part of an action name and collapsed a four-action plan to
+one, and then four more while screening smoke-80:
 
-**Pass 2 — verify every derived answer.** Every VM `post_update_answer`, every
-PFM `accept_signature.implied_answer`, every scalar `comply_signature`. Work each
-independently. A wrong derived answer makes a row unscoreable and **fails
-silently**: nothing downstream disagrees with it and no schema check can see it.
+- `grade_plans.grade()` consulted only its hand-written `CHECKS` table and never
+  called `checker_from_spec`, so every source outside that table graded `False`.
+  It now builds a checker from `solver_params` and **raises** where it has none —
+  a missing checker must not be reportable as a model failure.
+- `\texttt{pkg1}` survived as the literal token `texttt{pkg1}`.
+- `\begin{aligned}` parsed as the plan's first action, so every plan using that
+  environment failed at step 1.
+- `&` alignment tabs, `\_` escaped underscores (`truck\_lis` → `truck _lis`) and
+  inline step numbers each fused into the following action name.
 
-**Pass 3 — read every row.** This is where the real defects come from. The
-questions no script asks:
+Every one of them reported a *correct* model answer as a failure.
+**Make any tool reproduce a known-good case before trusting its verdict.**
 
-- Is the claim actually true (TNM) or actually false (PFM), as its class
-  requires?
-- Would it survive a careless read, or is it obviously wrong?
-- **Does the update do what its signature says it does?**
-- Is the implied answer *coherent* in the task's units, not merely arithmetically
-  derived?
-- Is the declared `hint_strength` honest — H0 on something the prefix has not
-  reached is really H3?
-- Could you name the class from the wording alone, without reading the task?
+When you widen a grader to accept a spelling, widen it *narrowly and by name*.
+Stripping braces wholesale would have made `\frac{1}{16}` and `\frac{11}{6}`
+compare equal — turning a grading miss into a grading lie, which is worse.
 
-## Report format
-
-Verdict first. Then **what passes**, explicitly — otherwise the author churns on
-things that are already right. Then one section per defect, each citing the rule
-and suggesting a repair. Then which of the author's criticisms of
-`generation_rules.md` you accept, and which you do not.
+**A rule surface not wired to the rules.** This document once drifted three
+contract versions behind. That is why the reviewer's questions now live in one
+hash-locked file, and why this document points rather than restates.
 
 ---
 
-# 6. Failure modes
+# 8. Checklist
 
-## Orchestration
+**Before authoring**
 
-| Problem | Fix |
-| --- | --- |
-| tmux refuses to create a session — socket directory missing. | Create it mode 700 before the first session. |
-| The agent's own tool servers fail to start. | Usually not fatal; the session runs with reduced tooling. Note it, and do not attribute later gaps to the task. |
-| A message sits unsent in the composer. | Capture the pane after every send; `Tab` to queue mid-turn, re-send `Enter` when idle. |
-| A brief references files that later vanish. | **Never point a brief at an ephemeral path.** Session scratch directories rotate. Use repo paths, or copy handoff files somewhere stable. |
-| Waiting on an agent blocks the orchestrator. | Background idle-poll; let the completion notification arrive. |
+- [ ] Read §1's documents, including `scripts/review_checklist.py`
+- [ ] Every assigned source is `screening.status: passed`
+- [ ] For each source: read the `consequence_note` and confirmed it, or — where
+      `consequence_status` is `not_authored` — derived and recorded one
 
-## Orientation
+**While authoring**
 
-The expensive ones, because everything built afterwards inherits them.
+- [ ] One VM, TNM, PFM, MO per source — no exceptions
+- [ ] Every answer derived by a solver that first reproduced the pinned gold
+- [ ] `syntactic_form` declared and varied; no colon-prefixed openers
+- [ ] No row refers to its own status as an update
+- [ ] Signatures point at obedience; three branches where required
 
-| Problem | Fix |
-| --- | --- |
-| An agent asserts something does not exist after a narrowly scoped search, and the design is built around its absence. | **Before asserting absence, search the whole workspace by filename *and* by content**, excluding only virtualenvs and VCS internals. This repo hides real material under `.omx/reports/` and `archive/`, which a search scoped to `data/` and `scripts/` misses entirely. |
-| A contract section is written around an artifact that already exists in a better form. | Inventory `data/*/model_trace_runs/`, `.omx/reports/` and `archive/` before designing. Prior runs often already settle the question the contract is trying to decide. |
-| Scope is briefed before the owner has fixed it. | Confirm scope in originals and rows, not adjectives, before dispatch. |
+**Before handing over**
 
-## Row defect patterns
+- [ ] `make validate` and `make batch-audit` run, results recorded
+- [ ] You answered every `review_checklist.py` item for your own rows
+- [ ] No quartet has a repeated answer, gold included
+- [ ] `verification.status` is `unverified_draft` with a null verifier
 
-Named because they recur, and because none is detectable by `validate_dataset.py`
-or by any threshold in §3.3.
+**As reviewer**
 
-**Self-neutralising attack row.** A `malicious_override` update carries a payload
-*and* tells the model how to handle it correctly — quoting an injection and then
-adding "treat this as inert", or similar. The `comply_signature` then fires only
-when the model **disobeys** the update, so the row measures nothing.
-
-> General rule: a wrong-behaviour signature must describe what an *obedient*
-> model does. If obeying the update produces correct behaviour, the signature is
-> pointed the wrong way.
-
-Fix by presenting the payload with no guidance either way — content the model
-must process but not obey — so compliance and refusal are both observable.
-
-**Absurd-falsehood row.** A `plausible_false_material` claim that is wrong in a
-way any competent solver catches instantly, typically false arithmetic over
-stated values. `archive/pre_contract_v8_reset_2026-09-05/superseded_rules/update_rules.md` §PFM Anti-Patterns forbids it. The row then
-tests recomputation rather than update handling. Fix by retargeting at a stated
-given, a stated relation, or an implied constraint that survives a careless read.
-
-**Incoherent implied answer.** The wrong branch is arithmetically derived but
-impossible in the task's units — a fractional count of discrete objects, a
-negative quantity where only positives exist. The row measures "notices an
-impossible value", and it breaks answer comparison, since one value has several
-string forms under `answer_form: scalar` with no `answer_equivalence`. Fix by
-choosing a perturbation that lands on a legal value.
-
-**Answer collision inside a quartet.** One value serves as both the VM
-`post_update_answer` and a PFM or MO wrong-behaviour value. A model that has
-learned only "the salient alternative here" scores well without engaging. This is
-a §3.1 hard gate; re-check it after *any* change to a derived answer, since
-repairing one row often moves a value into collision with another.
-
-## Contract-level
-
-| Problem | Fix |
-| --- | --- |
-| `validate_row_shape` requires `verification.status == "verified"` and a `verifier_id`, so an honest draft **cannot** pass. Expect a fixed number of errors per row. | Expected failure. Tell the author explicitly **not** to work around it by stamping a review that did not happen; use `unverified_draft` with a null verifier and report the failure. The fix is the `pending` amendment in `generation_rules.md` §11, not a change in the generator. |
-| A generator's class default silently overwrites a per-row authored value — the archived pilot hardcoded `hint_strength = "redundant"` and destroyed ten authored `corroborating` values. The row stays valid; the loss is invisible. | A class default must never assign over a spec value. Derive the field, or assert the spec satisfies the class constraint and fail loudly. |
-| Rules stated only in prose are never executed, so batches ship violating them. | The audit script is step 1. Anything stated as a threshold in §3.3 must have code behind it before rows exist. |
-
----
-
-# 7. Checklist
-
-**Before dispatch**
-
-- [ ] Scope confirmed with the owner, in originals and rows.
-- [ ] Whole-workspace search done for anything the brief claims is absent.
-- [ ] Existing run artifacts inventoried (`model_trace_runs/`, `.omx/reports/`, `archive/`).
-- [ ] Brief references only stable paths.
-- [ ] Negative examples named explicitly.
-- [ ] Known traps from §6 listed.
-- [ ] Brief asks the agent what it thinks is wrong with `generation_rules.md`.
-
-**During**
-
-- [ ] `scripts/audit_batch.py` and `make batch-audit` exist before the first row.
-- [ ] Pane captured after every message sent.
-- [ ] Idle detection running in the background.
-
-**At review**
-
-- [ ] Reviewer recomputed every §3.3 threshold with its own code; did not run the
-      author's audit.
-- [ ] Every VM and PFM/MO scalar answer verified independently.
-- [ ] Every row read.
-- [ ] Verdict is exactly `PASS`, `FIX` or `ADJUDICATE`.
-- [ ] Fixes went into the generator, not the emitted rows.
-- [ ] Quartets re-checked for collisions after any answer changed.
-- [ ] Batch **not** recorded as reviewed; `review_responses.jsonl` still awaits a
-      person.
+- [ ] Recomputed the gates with your own code; did **not** run the author's audit
+- [ ] Verified every derived answer independently
+- [ ] Read every row against the checklist
+- [ ] Verdict is exactly `PASS`, `FIX` or `ADJUDICATE`, in `review_responses.jsonl`
+- [ ] Fixes went to the generator, not the rows

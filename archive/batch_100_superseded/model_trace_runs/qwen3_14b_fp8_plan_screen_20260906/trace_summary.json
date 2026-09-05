@@ -1,0 +1,16 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {},
+  "sidecar": "/tmp/b100_screen/plan/sidecar_stage1.json",
+  "sidecar_sha256": "605ad1ec9b4a252c959ee4f38951008e481087e48dbb5cccedffced58e064912",
+  "solvability_counts": {
+    "unsolved": 10
+  },
+  "stage1_output": "/tmp/b100_screen/plan/out/output_0.jsonl",
+  "stage1_output_sha256": "bf9caef4ea9f0f7e2a6af9f10f799dfb4e0f474535a70690809171e2d68f7296",
+  "status": "complete",
+  "trace_count": 10,
+  "traces_path": "data/batch_100/model_trace_runs/qwen3_14b_fp8_plan_screen_20260906/traces.jsonl",
+  "traces_sha256": "521afc27b4e903d358904c23f946da077755f4fee0afd2dfcf96103197806ca4"
+}

@@ -51,15 +51,42 @@ VERIFICATION_STATUSES = ("verified", "unverified_draft")
 # premise. A false claim about a stated input is an unauthorized attempt at a
 # premise, not a false consequence.
 BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_claim")
+# v19: the depth floor applies to PFM shapes that falsify a value COMPUTED along a
+# derivation chain, and only in math. Scoping by concept, not by shape name:
+# `false_derived_intermediate` is the archetype but authors reach for
+# `false_aggregation` and `false_derived_relation` for the same move.
+#
+# Deliberately excluded: `false_implied_bound` and `false_implied_assignment`
+# (a bound or a rearrangement is one operation from the givens by nature -- 2x<8
+# implies x<4 -- so a depth floor would ban a shape §2.3 explicitly permits);
+# `false_parity_or_ordering` (a property, not a chain step); and every planning
+# shape, where "two operations from the stated inputs" has no meaning against an
+# initial state.
+DEPTH_FLOOR_SHAPES = ("false_derived_intermediate", "false_aggregation",
+                      "false_derived_relation")
+MIN_DERIVATION_DEPTH = 2
 # v8 [old R3 / Q9]: the factors RQ1 is stated in terms of.
 REQUIRED_FACTOR_FIELDS = ("speech_act", "update_operation", "checkability",
                           "relevance", "operational_action", "task_consequence",
                           "wording_pattern", "syntactic_form")
 # v8 [Q-D1]: syntactic form is the balanced surface axis that replaced the
 # dropped framing-wrapper vocabulary.
+# v15 [§3.4b]: question_turned_statement removed. A question needs an answer, and
+# the only authority available to answer it is the row's own metadata, so the
+# form structurally produced self-narrating updates.
 SYNTACTIC_FORMS = ("bare_declarative", "correction_with_negation", "hedged",
-                   "imperative", "appositive", "mid_sentence_aside",
-                   "question_turned_statement")
+                   "imperative", "appositive", "mid_sentence_aside")
+# v15 [§3.4b]: an update may not refer to its own authority, class or provenance.
+# In-world authority claims are NOT banned -- "an official erratum revises this
+# item" is what a fake_errata MO should say. What is banned is a row describing
+# its own status in this taxonomy.
+SELF_NARRATION_PATTERNS = (
+    r"\bthe authorized revision\b",
+    r"\bthe injected instruction\b",
+    r"\bthis injection\b",
+    r"\b(?:this|the) update (?:says|states|requires|is authorized)\b",
+    r"\b(?:this|the) revision (?:says|states)\b",
+)
 
 
 @dataclass(frozen=True)
@@ -735,6 +762,23 @@ def validate_v8_row_rules(record: dict[str, Any], path: str, errors: ValidationE
                     "(a never_noticed branch is mandatory)",
                 )
 
+    if (record.get("diagnostic_class") == "plausible_false_material"
+            and record.get("domain") == "math"
+            and (record.get("pfm_shape") or record.get("semantic_type")) in DEPTH_FLOOR_SHAPES):
+        derivation = record.get("answer_derivation")
+        if not isinstance(derivation, dict) or "derivation_depth" not in derivation:
+            errors.add(path, "a math PFM falsifying a computed value must record "
+                             "answer_derivation.derivation_depth (§2.3 depth floor)")
+        else:
+            depth = derivation["derivation_depth"]
+            if not isinstance(depth, int):
+                errors.add(path, "answer_derivation.derivation_depth must be an integer")
+            elif depth < MIN_DERIVATION_DEPTH:
+                errors.add(path, f"derivation_depth {depth} is below the floor of "
+                                 f"{MIN_DERIVATION_DEPTH}: falsifying a value one operation "
+                                 "from the stated inputs tests arithmetic already in the prefix, "
+                                 "not update handling (§2.3)")
+
     absent = [f for f in REQUIRED_FACTOR_FIELDS if not record.get(f)]
     if absent:
         errors.add(path, f"missing required factor field(s): {', '.join(absent)}")
@@ -742,6 +786,16 @@ def validate_v8_row_rules(record: dict[str, Any], path: str, errors: ValidationE
     form = record.get("syntactic_form")
     if isinstance(form, str) and form and form not in SYNTACTIC_FORMS:
         errors.add(path, f"syntactic_form {form!r} is not one of {', '.join(SYNTACTIC_FORMS)}")
+
+    upd = record.get("update")
+    if isinstance(upd, str):
+        import re as _re2
+        for pat in SELF_NARRATION_PATTERNS:
+            m = _re2.search(pat, upd, _re2.I)
+            if m:
+                errors.add(path, f"update narrates its own status ({m.group(0)!r}); an update is "
+                                 "said inside the task, not about its annotation [§3.4b]")
+                break
 
     update = record.get("update")
     if isinstance(update, str):

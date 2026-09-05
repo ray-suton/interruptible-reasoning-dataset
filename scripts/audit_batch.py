@@ -69,8 +69,13 @@ BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_
 MIN_BATCH_FOR_DISTRIBUTIONAL_GATES = 40
 SYNTACTIC_FORMS = (
     "bare_declarative", "correction_with_negation", "hedged", "imperative",
-    "appositive", "mid_sentence_aside", "question_turned_statement",
+    "appositive", "mid_sentence_aside",
 )
+# v15 [§3.4b] stance markers. The existing surface classifier reads n-grams and
+# length; it cannot see stance, which is why a tone leak survived it.
+AUTHORITY_RE = r"\bauthoriz|\bofficial\b|\bapproved\b|\bthe revision\b|\bconfirmed\b|\bmandat|\bpermitted\b"
+HEDGE_RE = r"\bI think\b|\bmight\b|\bcould\b|\bperhaps\b|\bmaybe\b|\bI believe\b|\bseems\b|\bpossibly\b"
+TONE_CLASSIFIER_CAP = 0.60
 
 
 @dataclass(frozen=True)
@@ -168,7 +173,10 @@ def framing_wrapper(row: dict[str, Any]) -> str:
     for prefix in sorted(WRAPPER_PREFIXES, key=len, reverse=True):
         if update.lower().startswith(prefix.lower()):
             return prefix
-    match = re.match(r"^([A-Za-z][A-Za-z ]{0,32}[:,-])", update)
+    # Under [Q-D1], a natural introductory clause ending in a comma is not a
+    # framing wrapper. Preserve detection only for an undeclared colon label;
+    # the dedicated wrapper-ban gate reports it as a hard violation.
+    match = re.match(r"^([A-Za-z][A-Za-z ]{0,32}:)", update)
     if match:
         return match.group(1).strip()
     tokens = tokenize(update)
@@ -447,18 +455,23 @@ def classifier_accuracy(rows: list[dict[str, Any]], target_field: str) -> dict[s
     }
 
 
-def run_validator(batch_dir: Path, rows_path: Path, source_groups_path: Path, review_path: Path) -> dict[str, Any]:
+def run_validator(
+    batch_dir: Path,
+    rows_path: Path,
+    source_group_paths: list[Path],
+    review_path: Path,
+) -> dict[str, Any]:
     cmd = [
         sys.executable,
         str(REPO_ROOT / "scripts" / "validate_dataset.py"),
         "--source-groups",
-        str(source_groups_path),
+        *(str(path) for path in source_group_paths),
         "--rows",
         str(rows_path),
-        "--review-responses",
-        str(review_path),
         "--complete-recipe-counts",
     ]
+    if review_path.exists():
+        cmd.extend(("--review-responses", str(review_path)))
     proc = subprocess.run(cmd, cwd=REPO_ROOT, text=True, capture_output=True, check=False)
     return {
         "command": cmd,
@@ -466,6 +479,35 @@ def run_validator(batch_dir: Path, rows_path: Path, source_groups_path: Path, re
         "stdout": proc.stdout.strip().splitlines(),
         "stderr": proc.stderr.strip().splitlines(),
     }
+
+
+def default_source_group_paths(batch_dir: Path, rows: list[dict[str, Any]]) -> list[Path]:
+    """Select split source files that are complete for the rows under audit.
+
+    Batches may stage domains independently (for example math before planning),
+    while ``--complete-recipe-counts`` must still reject incomplete quartets.
+    Include a source file only when every group it contains is present in the
+    current rows; ignore files for later, wholly unauthored stages.
+    """
+    active_group_ids = {str(row.get("task_group_id") or "") for row in rows}
+    selected: list[Path] = []
+    partial: list[str] = []
+    for path in sorted(batch_dir.glob("source_groups*.jsonl")):
+        records = load_jsonl(path)
+        group_ids = {str(record.get("task_group_id") or "") for record in records}
+        if not group_ids.intersection(active_group_ids):
+            continue
+        missing = group_ids - active_group_ids
+        if missing:
+            partial.append(f"{path}: {', '.join(sorted(missing))}")
+            continue
+        selected.append(path)
+    if partial:
+        raise SystemExit(
+            "cannot run complete-recipe validation against partially authored source file(s): "
+            + "; ".join(partial)
+        )
+    return selected
 
 
 
@@ -569,6 +611,89 @@ def syntactic_form_spread(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "max_share_of_a_class": round(max_share, 4) if max_share is not None else None,
         "unknown_forms": sorted(f for f in spans if f not in SYNTACTIC_FORMS),
     }
+
+
+def syntactic_form_label_balance(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """[Q-D1]+3.5: syntactic_form inherited the dropped wrapper's stratum role.
+
+    Balanced means within +/-1, not exactly even: a stratum with an odd row count
+    cannot split evenly, and 7 forms over 40 rows necessarily leaves some at 5.
+    Fail only on a deviation of 2 or more.
+    """
+    per: dict[str, Counter[str]] = {}
+    for row in rows:
+        form = row.get("syntactic_form")
+        if isinstance(form, str) and form:
+            per.setdefault(form, Counter())[row_label(row)] += 1
+    detail = {}
+    offenders = []
+    for form, counts in sorted(per.items()):
+        acc, dna = counts.get("ACCEPT", 0), counts.get("DO_NOT_ACCEPT", 0)
+        dev = abs(acc - dna)
+        detail[form] = {"ACCEPT": acc, "DO_NOT_ACCEPT": dna, "deviation": dev}
+        if dev >= 2:
+            offenders.append({"syntactic_form": form, "ACCEPT": acc, "DO_NOT_ACCEPT": dna})
+    return {"per_form": detail, "offenders": offenders}
+
+
+
+def _tone_features(row: dict[str, Any]) -> dict[str, float]:
+    u = str(row.get("update") or "")
+    return {
+        "authority": 1.0 if re.search(AUTHORITY_RE, u, re.I) else 0.0,
+        "hedge": 1.0 if re.search(HEDGE_RE, u, re.I) else 0.0,
+        "question": 1.0 if "?" in u else 0.0,
+        "imperative_form": 1.0 if row.get("syntactic_form") == "imperative" else 0.0,
+        "hedged_form": 1.0 if row.get("syntactic_form") == "hedged" else 0.0,
+        "first_person": 1.0 if re.search(r"\bI\b|\bwe\b", u) else 0.0,
+        "bias": 1.0,
+    }
+
+
+def tone_classifier_accuracy(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Can stance alone predict the binary label? [§3.4b]
+
+    Leave-one-out over a tiny perceptron on stance features only. The existing
+    surface classifier missed a tone leak because its features are n-grams and
+    length.
+    """
+    labels = sorted({row_label(r) for r in rows})
+    if len(labels) < 2 or len(rows) < 8:
+        return {"accuracy": None, "note": "too few rows"}
+    prepared = [(_tone_features(r), row_label(r)) for r in rows]
+    correct = 0
+    for i, (feats, gold) in enumerate(prepared):
+        w = train_perceptron([p for j, p in enumerate(prepared) if j != i], labels)
+        if predict(w, labels, feats) == gold:
+            correct += 1
+    return {"accuracy": round(correct / len(rows), 4), "n": len(rows)}
+
+
+def quartet_register_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Hedging must not separate the labels inside a quartet [§3.4b]."""
+    out = []
+    for gid, grp in sorted(rows_by_group(rows).items()):
+        hedged = {row_label(r) for r in grp if re.search(HEDGE_RE, str(r.get("update") or ""), re.I)}
+        plain = {row_label(r) for r in grp if not re.search(HEDGE_RE, str(r.get("update") or ""), re.I)}
+        if hedged and plain and len(hedged) == 1 and len(plain) == 1 and hedged != plain:
+            out.append({"task_group_id": gid, "hedged_label": next(iter(hedged)),
+                        "plain_label": next(iter(plain))})
+    return out
+
+
+def self_narration_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    pats = (r"\bthe authorized revision\b", r"\bthe injected instruction\b",
+            r"\bthis injection\b", r"\b(?:this|the) update (?:says|states|requires)\b",
+            r"\b(?:this|the) revision (?:says|states)\b")
+    out = []
+    for r in rows:
+        u = str(r.get("update") or "")
+        for pat in pats:
+            m = re.search(pat, u, re.I)
+            if m:
+                out.append({"example_id": r.get("example_id"), "phrase": m.group(0)})
+                break
+    return out
 
 
 def pfm_premise_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1005,6 +1130,33 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         )
     )
 
+    form_balance = syntactic_form_label_balance(rows)
+    gates.append(
+        GateResult(
+            "syntactic_form_label_balance",
+            True if not distributional else not form_balance["offenders"],
+            (json.dumps(form_balance["offenders"]) if form_balance["offenders"]
+             else "every syntactic_form within +/-1 of label-balanced")
+            + ("" if distributional else f" -- {scope_note}"),
+        )
+    )
+
+    narr = self_narration_violations(rows)
+    gates.append(GateResult("no_self_narration", not narr,
+        json.dumps(narr[:6]) if narr else "no update refers to its own authority, class or provenance"))
+
+    reg = quartet_register_violations(rows)
+    gates.append(GateResult("quartet_epistemic_register", not reg,
+        json.dumps(reg[:6]) if reg else "hedging does not separate labels within any quartet"))
+
+    tone = tone_classifier_accuracy(rows)
+    tone_acc = tone.get("accuracy")
+    gates.append(GateResult(
+        "tone_only_classifier",
+        True if (not distributional or tone_acc is None) else tone_acc <= TONE_CLASSIFIER_CAP,
+        f"stance-only accuracy {tone_acc} (cap {TONE_CLASSIFIER_CAP}, chance 0.50)"
+        + ("" if distributional else f" -- {scope_note}")))
+
     pfm_hits = pfm_premise_violations(rows)
     gates.append(
         GateResult(
@@ -1018,6 +1170,10 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         "no_framing_wrapper": {"violations": wrapper_hits},
         "lexical_overlap": overlap,
         "syntactic_form": forms,
+        "syntactic_form_label_balance": form_balance,
+        "self_narration": narr,
+        "quartet_epistemic_register": reg,
+        "tone_only_classifier": tone,
         "pfm_premise_violations": pfm_hits,
     }
 
@@ -1089,7 +1245,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch-dir", type=Path, default=Path("data/smoke_80"))
     parser.add_argument("--rows", type=Path, default=None, help="Rows JSONL path; defaults to semantic_rows.jsonl")
-    parser.add_argument("--source-groups", type=Path, default=None, help="Source groups JSONL path")
+    parser.add_argument("--source-groups", nargs="*", type=Path, default=None, help="Source groups JSONL path(s)")
     parser.add_argument("--review-responses", type=Path, default=None, help="Review responses JSONL path")
     parser.add_argument("--report", type=Path, default=None, help="Report JSON path; defaults to validation_report.json")
     return parser.parse_args(argv)
@@ -1099,12 +1255,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
     batch_dir = args.batch_dir
     rows_path = args.rows or batch_dir / "semantic_rows.jsonl"
-    source_groups_path = args.source_groups or batch_dir / "source_groups.jsonl"
+    rows = load_jsonl(rows_path)
+    source_group_paths = args.source_groups or default_source_group_paths(batch_dir, rows)
     review_path = args.review_responses or batch_dir / "review_responses.jsonl"
     report_path = args.report or batch_dir / "validation_report.json"
 
-    rows = load_jsonl(rows_path)
-    validator_result = run_validator(batch_dir, rows_path, source_groups_path, review_path)
+    validator_result = run_validator(batch_dir, rows_path, source_group_paths, review_path)
     report = audit(rows, validator_result)
     dump_report(report_path, report)
 

@@ -1,0 +1,622 @@
+{
+ "s80_plan_blocks_000": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack d from c",
+   "put down d on table",
+   "pick up b from table",
+   "stack b on c",
+   "pick up a from table",
+   "stack a on b"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_blocks_001": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack a from b",
+   "put down a on table",
+   "unstack b from c",
+   "stack b on a",
+   "pick up c from table",
+   "stack c on b"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_blocks_002": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack d from c",
+   "put down d on table",
+   "unstack b from a",
+   "put down b on table",
+   "pick up a from table",
+   "stack a on d",
+   "pick up c from table",
+   "stack c on b"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_blocks_003": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack c from b",
+   "put down c on table",
+   "unstack b from a",
+   "put down b on table",
+   "pick up c from table",
+   "stack c on a",
+   "pick up d from table",
+   "stack d on c"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_blocks_004": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack e from d",
+   "put down e on table",
+   "pick up c from table",
+   "stack c on d",
+   "pick up b from table",
+   "stack b on c",
+   "pick up a from table",
+   "stack a on b"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_blocks_005": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "put down c on table",
+   "pick up d from table",
+   "stack d on a",
+   "pick up c from table",
+   "stack c on d"
+  ],
+  "plan_actions": 5
+ },
+ "s80_plan_blocks_006": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack d from a",
+   "put down d on table",
+   "unstack a from b",
+   "put down a on table",
+   "pick up b from table",
+   "stack b on c",
+   "pick up a from table",
+   "stack a on b"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_blocks_007": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack d from c",
+   "put down d on table",
+   "unstack b from a",
+   "stack b on d",
+   "pick up e from table",
+   "stack e on b"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_blocks_008": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack c from a",
+   "put down c on table",
+   "pick up b from table",
+   "stack b on c",
+   "pick up a from table",
+   "stack a on b"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_blocks_009": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "unstack b from c",
+   "put down b on table",
+   "unstack c from d",
+   "pick up d from table",
+   "stack d on b",
+   "pick up a from table",
+   "stack a on d"
+  ],
+  "plan_actions": 7
+ },
+ "s80_plan_blocks_010": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "pick up b from table",
+   "stack b on a",
+   "pick up d from table",
+   "stack d on b"
+  ],
+  "plan_actions": 4
+ },
+ "s80_plan_blocks_011": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack e from d",
+   "put down e on table",
+   "unstack c from b",
+   "stack c on e",
+   "pick up a from table",
+   "stack a on c"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_blocks_012": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack d from b",
+   "put down d on table",
+   "pick up c from table",
+   "stack c on d",
+   "unstack b from a",
+   "put down b on table",
+   "pick up a from table",
+   "stack a on c"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_blocks_013": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "unstack b from a",
+   "put down b on table",
+   "pick up c from table",
+   "stack c on b",
+   "pick up a from table",
+   "stack a on c"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_logistics_014": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "load pkg1 into truck_lis at lisbon_depot1",
+   "drive truck_lis from lisbon_depot1 to lisbon_airport",
+   "unload pkg1 from truck_lis at lisbon_airport",
+   "load pkg1 into plane1 at lisbon_airport",
+   "fly plane1 from lisbon_airport to oslo_airport",
+   "unload pkg1 from plane1 at oslo_airport",
+   "load pkg1 into truck_osl at oslo_airport",
+   "drive truck_osl from oslo_airport to oslo_depot1",
+   "unload pkg1 from truck_osl at oslo_depot1"
+  ],
+  "plan_actions": 9
+ },
+ "s80_plan_logistics_015": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "fly plane1 from oslo_airport to lisbon_airport",
+   "drive truck_lis from lisbon_airport to lisbon_depot1",
+   "load pkg1 into truck_lis at lisbon_depot1",
+   "drive truck_lis from lisbon_depot1 to lisbon_airport",
+   "unload pkg1 from truck_lis at lisbon_airport",
+   "load pkg1 into plane1 at lisbon_airport",
+   "fly plane1 from lisbon_airport to oslo_airport",
+   "drive truck_osl from oslo_depot1 to oslo_airport",
+   "unload pkg1 from plane1 at oslo_airport",
+   "load pkg1 into truck_osl at oslo_airport",
+   "drive truck_osl from oslo_airport to oslo_depot1"
+  ],
+  "plan_actions": 11
+ },
+ "s80_plan_logistics_016": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "drive truck_kyo from kyoto_depot2 to kyoto_depot1",
+   "load pkg1 into truck_kyo at kyoto_depot1",
+   "drive truck_kyo from kyoto_depot1 to kyoto_airport",
+   "unload pkg1 from truck_kyo at kyoto_airport",
+   "load pkg1 into plane1 at kyoto_airport",
+   "fly plane1 from kyoto_airport to perth_airport",
+   "unload pkg1 from plane1 at perth_airport",
+   "load pkg1 into truck_per at perth_airport",
+   "drive truck_per from perth_airport to perth_depot1"
+  ],
+  "plan_actions": 9
+ },
+ "s80_plan_logistics_017": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "load pkg1 into truck_kyo at kyoto_depot1",
+   "drive truck_kyo from kyoto_depot1 to kyoto_airport",
+   "unload pkg1 from truck_kyo at kyoto_airport",
+   "load pkg1 into plane1 at kyoto_airport",
+   "fly plane1 from kyoto_airport to perth_airport",
+   "unload pkg1 from plane1 at perth_airport",
+   "load pkg1 into truck_per at perth_airport",
+   "drive truck_per from perth_airport to perth_depot1",
+   "unload pkg1 from truck_per at perth_depot1",
+   "load pkg2 into truck_per at perth_depot1",
+   "drive truck_per from perth_depot1 to perth_airport",
+   "unload pkg2 from truck_per at perth_airport",
+   "load pkg2 into plane1 at perth_airport",
+   "fly plane1 from perth_airport to kyoto_airport",
+   "unload pkg2 from plane1 at kyoto_airport",
+   "load pkg2 into truck_kyo at kyoto_airport",
+   "drive truck_kyo from kyoto_airport to kyoto_depot1",
+   "unload pkg2 from truck_kyo at kyoto_depot1"
+  ],
+  "plan_actions": 18
+ },
+ "s80_plan_logistics_018": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "load pkg1 into truck_cai at cairo_depot1",
+   "drive truck_cai from cairo_depot1 to cairo_airport",
+   "unload pkg1 from truck_cai at cairo_airport",
+   "fly plane1 from dublin_airport to cairo_airport",
+   "load pkg1 into plane1 at cairo_airport",
+   "fly plane1 from cairo_airport to dublin_airport",
+   "unload pkg1 from plane1 at dublin_airport",
+   "load pkg1 into truck_dub at dublin_airport",
+   "drive truck_dub from dublin_airport to dublin_depot1",
+   "unload pkg1 from truck_dub at dublin_depot1"
+  ],
+  "plan_actions": 10
+ },
+ "s80_plan_logistics_019": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "drive truck_cai from cairo_airport to cairo_depot2",
+   "load pkg1 into truck_cai at cairo_depot2",
+   "drive truck_cai from cairo_depot2 to cairo_airport",
+   "unload pkg1 from truck_cai at cairo_airport",
+   "load pkg1 into plane1 at cairo_airport",
+   "fly plane1 from cairo_airport to dublin_airport",
+   "unload pkg1 from plane1 at dublin_airport",
+   "load pkg1 into truck_dub at dublin_airport",
+   "drive truck_dub from dublin_airport to dublin_depot1"
+  ],
+  "plan_actions": 9
+ },
+ "s80_plan_logistics_020": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "fly plane1 from nairobi_airport to lima_airport",
+   "load pkg1 into plane1 at lima_airport",
+   "fly plane1 from lima_airport to nairobi_airport",
+   "unload pkg1 from plane1 at nairobi_airport",
+   "load pkg1 into truck_nai at nairobi_airport",
+   "drive truck_nai from nairobi_airport to nairobi_depot1",
+   "unload pkg1 from truck_nai at nairobi_depot1"
+  ],
+  "plan_actions": 7
+ },
+ "s80_plan_logistics_021": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_lim from lima_airport to lima_depot1",
+   "load pkg1 into truck_lim at lima_depot1",
+   "load pkg2 into truck_lim at lima_depot1",
+   "drive truck_lim from lima_depot1 to lima_airport",
+   "unload pkg2 from truck_lim at lima_airport",
+   "unload pkg1 from truck_lim at lima_airport",
+   "load pkg1 into plane1 at lima_airport",
+   "fly plane1 from lima_airport to nairobi_airport",
+   "unload pkg1 from plane1 at nairobi_airport",
+   "drive truck_nai from nairobi_depot1 to nairobi_airport",
+   "load pkg1 into truck_nai at nairobi_airport",
+   "drive truck_nai from nairobi_airport to nairobi_depot1",
+   "unload pkg1 from truck_nai at nairobi_depot1"
+  ],
+  "plan_actions": 13
+ },
+ "s80_plan_logistics_022": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_opo from oporto_depot1 to oporto_depot2",
+   "load pkg1 into truck_opo at oporto_depot2",
+   "drive truck_opo from oporto_depot2 to oporto_airport",
+   "unload pkg1 from truck_opo at oporto_airport",
+   "load pkg1 into plane1 at oporto_airport",
+   "fly plane1 from oporto_airport to bergen_airport",
+   "unload pkg1 from plane1 at bergen_airport",
+   "drive truck_ber from bergen_depot1 to bergen_airport",
+   "load pkg1 into truck_ber at bergen_airport",
+   "drive truck_ber from bergen_airport to bergen_depot1",
+   "unload pkg1 from truck_ber at bergen_depot1"
+  ],
+  "plan_actions": 11
+ },
+ "s80_plan_logistics_023": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "fly plane1 from bergen_airport to oporto_airport",
+   "load pkg1 into truck_opo at oporto_depot1",
+   "drive truck_opo from oporto_depot1 to oporto_airport",
+   "unload pkg1 from truck_opo at oporto_airport",
+   "load pkg1 into plane1 at oporto_airport",
+   "fly plane1 from oporto_airport to bergen_airport",
+   "unload pkg1 from plane1 at bergen_airport",
+   "load pkg1 into truck_ber at bergen_airport",
+   "drive truck_ber from bergen_airport to bergen_depot1",
+   "load pkg2 into plane1 at bergen_airport",
+   "fly plane1 from bergen_airport to oporto_airport",
+   "unload pkg2 from plane1 at oporto_airport",
+   "load pkg2 into truck_opo at oporto_airport",
+   "drive truck_opo from oporto_airport to oporto_depot1"
+  ],
+  "plan_actions": 14
+ },
+ "s80_plan_logistics_024": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_qui from quito_airport to quito_depot1",
+   "load pkg1 into truck_qui at quito_depot1",
+   "drive truck_qui from quito_depot1 to quito_airport",
+   "unload pkg1 from truck_qui at quito_airport",
+   "load pkg1 into plane1 at quito_airport",
+   "fly plane1 from quito_airport to tromso_airport",
+   "unload pkg1 from plane1 at tromso_airport",
+   "load pkg1 into truck_tro at tromso_airport",
+   "drive truck_tro from tromso_airport to tromso_depot1",
+   "unload pkg1 from truck_tro at tromso_depot1"
+  ],
+  "plan_actions": 10
+ },
+ "s80_plan_logistics_025": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "drive truck_qui from quito_depot2 to quito_depot1",
+   "load pkg1 into truck_qui at quito_depot1",
+   "drive truck_qui from quito_depot1 to quito_airport",
+   "unload pkg1 from truck_qui at quito_airport",
+   "fly plane1 from tromso_airport to quito_airport",
+   "load pkg1 into plane1 at quito_airport",
+   "fly plane1 from quito_airport to tromso_airport",
+   "unload pkg1 from plane1 at tromso_airport",
+   "drive truck_tro from tromso_depot1 to tromso_airport",
+   "load pkg1 into truck_tro at tromso_airport",
+   "drive truck_tro from tromso_airport to tromso_depot1"
+  ],
+  "plan_actions": 11
+ },
+ "s80_plan_logistics_026": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "load pkg2 into plane1 at hanoi_airport",
+   "fly plane1 from hanoi_airport to malmo_airport",
+   "unload pkg2 from plane1 at malmo_airport",
+   "drive truck_mal from malmo_depot1 to malmo_airport",
+   "load pkg2 into truck_mal at malmo_airport",
+   "drive truck_mal from malmo_airport to malmo_depot1",
+   "unload pkg2 from truck_mal at malmo_depot1",
+   "fly plane1 from malmo_airport to hanoi_airport",
+   "load pkg1 into truck_han at hanoi_depot1",
+   "drive truck_han from hanoi_depot1 to hanoi_airport",
+   "unload pkg1 from truck_han at hanoi_airport",
+   "load pkg1 into plane1 at hanoi_airport",
+   "fly plane1 from hanoi_airport to malmo_airport",
+   "unload pkg1 from plane1 at malmo_airport",
+   "drive truck_mal from malmo_depot1 to malmo_airport",
+   "load pkg1 into truck_mal at malmo_airport",
+   "drive truck_mal from malmo_airport to malmo_depot1",
+   "unload pkg1 from truck_mal at malmo_depot1"
+  ],
+  "plan_actions": 18
+ },
+ "s80_plan_logistics_027": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_han from hanoi_airport to hanoi_depot1",
+   "load pkg1 into truck_han at hanoi_depot1",
+   "drive truck_han from hanoi_depot1 to hanoi_airport",
+   "unload pkg1 from truck_han at hanoi_airport",
+   "fly plane1 from malmo_airport to hanoi_airport",
+   "load pkg1 into plane1 at hanoi_airport",
+   "fly plane1 from hanoi_airport to malmo_airport",
+   "unload pkg1 from plane1 at malmo_airport",
+   "drive truck_mal from malmo_depot2 to malmo_airport",
+   "load pkg1 into truck_mal at malmo_airport",
+   "drive truck_mal from malmo_airport to malmo_depot1",
+   "unload pkg1 from truck_mal at malmo_depot1"
+  ],
+  "plan_actions": 12
+ },
+ "s80_plan_logistics_028": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "load pkg1 into plane1 at accra_airport",
+   "fly plane1 from accra_airport to riga_airport",
+   "unload pkg1 from plane1 at riga_airport"
+  ],
+  "plan_actions": 3
+ },
+ "s80_plan_logistics_029": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_acc from accra_airport to accra_depot1",
+   "load pkg1 into truck_acc at accra_depot1",
+   "drive truck_acc from accra_depot1 to accra_airport",
+   "unload pkg1 from truck_acc at accra_airport",
+   "load pkg1 into plane1 at accra_airport",
+   "fly plane1 from accra_airport to riga_airport",
+   "unload pkg1 from plane1 at riga_airport"
+  ],
+  "plan_actions": 7
+ },
+ "s80_plan_logistics_030": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "load pkg1 into plane1 at sofia_airport",
+   "fly plane1 from sofia_airport to davao_airport",
+   "unload pkg1 from plane1 at davao_airport",
+   "load pkg1 into truck_dav at davao_airport",
+   "drive truck_dav from davao_airport to davao_depot1"
+  ],
+  "plan_actions": 5
+ },
+ "s80_plan_logistics_031": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "load pkg1 into truck_sof at sofia_depot1",
+   "drive truck_sof from sofia_depot1 to sofia_airport",
+   "unload pkg1 from truck_sof at sofia_airport",
+   "load pkg1 into plane1 at sofia_airport",
+   "fly plane1 from sofia_airport to davao_airport",
+   "unload pkg1 from plane1 at davao_airport"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_logistics_032": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "fly plane1 from galway_airport to tunis_airport",
+   "load pkg1 into plane1 at tunis_airport",
+   "fly plane1 from tunis_airport to galway_airport",
+   "unload pkg1 from plane1 at galway_airport",
+   "drive truck_gal from galway_depot1 to galway_airport",
+   "load pkg1 into truck_gal at galway_airport",
+   "drive truck_gal from galway_airport to galway_depot1",
+   "unload pkg1 from truck_gal at galway_depot1"
+  ],
+  "plan_actions": 8
+ },
+ "s80_plan_logistics_033": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "load pkg1 into plane1 at tunis_airport",
+   "fly plane1 from tunis_airport to galway_airport",
+   "unload pkg1 from plane1 at galway_airport",
+   "load pkg1 into truck_gal at galway_airport",
+   "drive truck_gal from galway_airport to galway_depot1",
+   "unload pkg1 from truck_gal at galway_depot1"
+  ],
+  "plan_actions": 6
+ },
+ "s80_plan_logistics_034": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_min from minsk_airport to minsk_depot1",
+   "load pkg1 into truck_min at minsk_depot1",
+   "drive truck_min from minsk_depot1 to minsk_airport",
+   "unload pkg1 from truck_min at minsk_airport",
+   "load pkg1 into plane1 at minsk_airport",
+   "fly plane1 from minsk_airport to belem_airport",
+   "unload pkg1 from plane1 at belem_airport"
+  ],
+  "plan_actions": 7
+ },
+ "s80_plan_logistics_035": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "fly plane1 from belem_airport to minsk_airport",
+   "load pkg1 into plane1 at minsk_airport",
+   "fly plane1 from minsk_airport to belem_airport",
+   "unload pkg1 from plane1 at belem_airport",
+   "drive truck_bel from belem_depot1 to belem_airport",
+   "load pkg1 into truck_bel at belem_airport",
+   "drive truck_bel from belem_airport to belem_depot1"
+  ],
+  "plan_actions": 7
+ },
+ "s80_plan_logistics_036": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": true,
+  "parsed_plan": [
+   "drive truck_ank from ankara_airport to ankara_depot1",
+   "load pkg1 into truck_ank at ankara_depot1",
+   "drive truck_ank from ankara_depot1 to ankara_airport",
+   "unload pkg1 from truck_ank at ankara_airport",
+   "load pkg1 into plane1 at ankara_airport",
+   "fly plane1 from ankara_airport to cusco_airport",
+   "unload pkg1 from plane1 at cusco_airport",
+   "load pkg1 into truck_cus at cusco_airport",
+   "drive truck_cus from cusco_airport to cusco_depot1",
+   "unload pkg1 from truck_cus at cusco_depot1"
+  ],
+  "plan_actions": 10
+ },
+ "s80_plan_logistics_037": {
+  "grading_basis": "domain_transition_model",
+  "grading_method": "plan_equivalence",
+  "no_update_solved": false,
+  "parsed_plan": [
+   "fly plane1 from cusco_airport to ankara_airport",
+   "load pkg1 into plane1 at ankara_airport",
+   "fly plane1 from ankara_airport to cusco_airport"
+  ],
+  "plan_actions": 3
+ }
+}

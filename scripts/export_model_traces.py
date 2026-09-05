@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 from collections import Counter
 from pathlib import Path
@@ -55,6 +56,48 @@ def normalize_answer(value: str | None) -> str:
     v = re.sub(r"^\s*[a-zA-Z]\s*=\s*", "", v)        # drop a leading "x = "
     v = v.replace(",", "").replace(" ", "")
     return v.rstrip(".")
+
+
+def answers_equivalent(extracted: str | None, expected: str | None) -> tuple[bool, str]:
+    """Are two answer spellings the same answer? Returns (verdict, why).
+
+    normalize_answer is deliberately conservative: it must NOT strip braces
+    wholesale, or \\frac{1}{16} and \\frac{11}{6} both collapse to "frac116" and
+    a wrong answer grades as right. So the extra equivalences live here, each
+    one narrow and named:
+
+      numeric        -- "1.00" is the answer "1" (a dollar amount rendered to
+                        cents), but only when BOTH sides parse as numbers.
+      multiple_choice-- "\\text{(B)}" is the answer "B", but only when both
+                        sides reduce to a single bare letter.
+
+    Both were real screening misses: a gsm8k row whose model output boxed
+    "1.00" and a MATH500 row whose model boxed "B", each reported unsolved.
+    """
+    if extracted is None:
+        return False, "no_answer_extracted"
+    a, b = normalize_answer(extracted), normalize_answer(expected)
+    if a == b:
+        return True, "exact"
+
+    def as_number(v: str) -> float | None:
+        try:
+            return float(v.replace("\\%", "").replace("%", "").lstrip("$"))
+        except ValueError:
+            return None
+
+    na, nb = as_number(a), as_number(b)
+    if na is not None and nb is not None and math.isclose(na, nb, rel_tol=1e-9, abs_tol=1e-9):
+        return True, "numeric"
+
+    def as_choice(v: str) -> str | None:
+        core = re.sub(r"[\[\]{}()]", "", v)
+        return core.upper() if re.fullmatch(r"[A-Za-z]", core) else None
+
+    ca, cb = as_choice(a), as_choice(b)
+    if ca is not None and ca == cb:
+        return True, "multiple_choice"
+    return False, "differs"
 
 
 def extract_boxed_answer(output_text: str) -> tuple[str | None, str]:
@@ -152,7 +195,7 @@ def main() -> int:
         )
         extracted, extraction_method = extract_boxed_answer(output_text)
         expected = source["original_answer"]
-        no_update_solved = normalize_answer(extracted) == normalize_answer(expected)
+        no_update_solved, answer_match_basis = answers_equivalent(extracted, expected)
         status_counts["solved" if no_update_solved else "unsolved"] += 1
 
         trace = {
@@ -181,6 +224,7 @@ def main() -> int:
             "prefix_text_is_prefix": reasoning_trace.startswith(prefix),
             "no_update_solved": no_update_solved,
             "answer_extraction_method": extraction_method,
+            "answer_match_basis": answer_match_basis,
             "prefix_valid": bool(prefix.strip()),
             "expected_answer": expected,
             "extracted_answer": extracted,

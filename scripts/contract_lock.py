@@ -59,6 +59,18 @@ CONTRACT_FILES = [
     "schema/source_registry.schema.json",
     "schema/review_response.schema.json",
     "scripts/validate_dataset.py",
+    # The human-review checklist. Locked because it is the review surface that
+    # mirrors this contract: when it lived outside the repo it silently stayed at
+    # v13 while the rules moved to v16, so a reviewer was never asked about the
+    # depth floor or the self-narration ban.
+    "scripts/review_checklist.py",
+    # v21: the batch-level enforcement surface. audit_batch.py implements gates
+    # that exist only there and nowhere in validate_dataset.py -- v15's
+    # no_self_narration, quartet_epistemic_register and tone_only_classifier
+    # among them. An unlocked gate can be loosened or silently broken and
+    # contract-check would still report the contract unchanged, which is exactly
+    # the drift the lock exists to prevent.
+    "scripts/audit_batch.py",
     "docs/label_policy.md",
 ]
 

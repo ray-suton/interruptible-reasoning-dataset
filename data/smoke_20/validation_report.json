@@ -1,0 +1,1021 @@
+{
+  "caveats": [
+    "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
+  ],
+  "class_counts": {
+    "malicious_override": 20,
+    "plausible_false_material": 20,
+    "true_non_material": 20,
+    "valid_material": 20
+  },
+  "contract_v8": {
+    "lexical_overlap": {
+      "mean_by_class": {
+        "malicious_override": 0.2378,
+        "plausible_false_material": 0.2487,
+        "true_non_material": 0.205,
+        "valid_material": 0.2496
+      },
+      "ratio": 1.217560975609756,
+      "unresolved_sources": 0
+    },
+    "no_framing_wrapper": {
+      "violations": []
+    },
+    "pfm_premise_violations": [],
+    "quartet_epistemic_register": [],
+    "self_narration": [],
+    "syntactic_form": {
+      "class_exclusive": [],
+      "distinct_forms": 6,
+      "max_share_of_a_class": 0.25,
+      "missing_field": [],
+      "unknown_forms": []
+    },
+    "syntactic_form_label_balance": {
+      "offenders": [],
+      "per_form": {
+        "appositive": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 0
+        },
+        "bare_declarative": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 0
+        },
+        "correction_with_negation": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 0
+        },
+        "hedged": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "deviation": 0
+        },
+        "imperative": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 6,
+          "deviation": 1
+        },
+        "mid_sentence_aside": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 1
+        }
+      }
+    },
+    "tone_only_classifier": {
+      "accuracy": 0.475,
+      "n": 80
+    }
+  },
+  "domain_counts": {
+    "math": 40,
+    "planning": 40
+  },
+  "embedded_trace_row_count": 0,
+  "first_bigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "across mark's": 1,
+        "after the": 1,
+        "along the": 1,
+        "because the": 1,
+        "before the": 1,
+        "between the": 1,
+        "during the": 1,
+        "for max's": 1,
+        "from the": 1,
+        "given the": 1,
+        "here the": 1,
+        "inside the": 1,
+        "on this": 1,
+        "suppose the": 1,
+        "taking the": 1,
+        "through the": 1,
+        "under the": 1,
+        "while the": 1,
+        "with these": 1,
+        "within the": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "across mark's": 1,
+        "after the": 1,
+        "along the": 1,
+        "because the": 1,
+        "before the": 1,
+        "between the": 1,
+        "during the": 1,
+        "for max's": 1,
+        "from the": 1,
+        "given the": 1,
+        "here the": 1,
+        "inside the": 1,
+        "on this": 1,
+        "suppose the": 1,
+        "taking the": 1,
+        "through the": 1,
+        "under the": 1,
+        "while the": 1,
+        "with these": 1,
+        "within the": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "across mark's": 1,
+        "after the": 1,
+        "along the": 1,
+        "because the": 1,
+        "before the": 1,
+        "between the": 1,
+        "during the": 1,
+        "for max's": 1,
+        "from the": 1,
+        "given the": 1,
+        "here the": 1,
+        "inside the": 1,
+        "on this": 1,
+        "suppose the": 1,
+        "taking the": 1,
+        "through the": 1,
+        "under the": 1,
+        "while the": 1,
+        "with these": 1,
+        "within the": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "across mark's": 1,
+        "after the": 1,
+        "along the": 1,
+        "because the": 1,
+        "before the": 1,
+        "between s": 1,
+        "during the": 1,
+        "for max's": 1,
+        "from the": 1,
+        "given the": 1,
+        "here the": 1,
+        "inside the": 1,
+        "on this": 1,
+        "suppose the": 1,
+        "taking the": 1,
+        "through the": 1,
+        "under the": 1,
+        "while the": 1,
+        "with these": 1,
+        "within the": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the",
+      "total": 20
+    }
+  },
+  "first_trigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "across mark's tests": 1,
+        "after the c": 1,
+        "along the 0": 1,
+        "because the a": 1,
+        "before the key": 1,
+        "between the s": 1,
+        "during the x": 1,
+        "for max's stamp": 1,
+        "from the blocked": 1,
+        "given the pineapple": 1,
+        "here the parabola": 1,
+        "inside the b": 1,
+        "on this probability": 1,
+        "suppose the graph": 1,
+        "taking the x": 1,
+        "through the package": 1,
+        "under the p": 1,
+        "while the a": 1,
+        "with these a": 1,
+        "within the quartic": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the pineapple",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "across mark's completed": 1,
+        "after the unstack": 1,
+        "along the route": 1,
+        "because the initial": 1,
+        "before the key": 1,
+        "between the two": 1,
+        "during the crate": 1,
+        "for max's designs": 1,
+        "from the start": 1,
+        "given the orange": 1,
+        "here the reflected": 1,
+        "inside the room": 1,
+        "on this region": 1,
+        "suppose the minimization": 1,
+        "taking the factorized": 1,
+        "through the a": 1,
+        "under the first": 1,
+        "while the blocks": 1,
+        "with these factors": 1,
+        "within the quartic": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the orange",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "across mark's schedule": 1,
+        "after the unstack": 1,
+        "along the shortest": 1,
+        "because the goal": 1,
+        "before the move": 1,
+        "between the two": 1,
+        "during the loading": 1,
+        "for max's stamps": 1,
+        "from the start": 1,
+        "given the two": 1,
+        "here the reflection": 1,
+        "inside the room": 1,
+        "on this rectangular": 1,
+        "suppose the distance": 1,
+        "taking the inequality": 1,
+        "through the a": 1,
+        "under the second": 1,
+        "while the arm": 1,
+        "with these negative": 1,
+        "within the stated": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the two",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "across mark's two": 1,
+        "after the original": 1,
+        "along the grid": 1,
+        "because the blocks": 1,
+        "before the robot": 1,
+        "between s and": 1,
+        "during the crate": 1,
+        "for max's stamp": 1,
+        "from the same": 1,
+        "given the revised": 1,
+        "here the reflection": 1,
+        "inside the a": 1,
+        "on this random": 1,
+        "suppose the requested": 1,
+        "taking the quadratic": 1,
+        "through the a": 1,
+        "under the two": 1,
+        "while the blocks": 1,
+        "with these bounds": 1,
+        "within the double": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given the revised",
+      "total": 20
+    }
+  },
+  "first_unigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "across": 1,
+        "after": 1,
+        "along": 1,
+        "because": 1,
+        "before": 1,
+        "between": 1,
+        "during": 1,
+        "for": 1,
+        "from": 1,
+        "given": 1,
+        "here": 1,
+        "inside": 1,
+        "on": 1,
+        "suppose": 1,
+        "taking": 1,
+        "through": 1,
+        "under": 1,
+        "while": 1,
+        "with": 1,
+        "within": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "across": 1,
+        "after": 1,
+        "along": 1,
+        "because": 1,
+        "before": 1,
+        "between": 1,
+        "during": 1,
+        "for": 1,
+        "from": 1,
+        "given": 1,
+        "here": 1,
+        "inside": 1,
+        "on": 1,
+        "suppose": 1,
+        "taking": 1,
+        "through": 1,
+        "under": 1,
+        "while": 1,
+        "with": 1,
+        "within": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "across": 1,
+        "after": 1,
+        "along": 1,
+        "because": 1,
+        "before": 1,
+        "between": 1,
+        "during": 1,
+        "for": 1,
+        "from": 1,
+        "given": 1,
+        "here": 1,
+        "inside": 1,
+        "on": 1,
+        "suppose": 1,
+        "taking": 1,
+        "through": 1,
+        "under": 1,
+        "while": 1,
+        "with": 1,
+        "within": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "across": 1,
+        "after": 1,
+        "along": 1,
+        "because": 1,
+        "before": 1,
+        "between": 1,
+        "during": 1,
+        "for": 1,
+        "from": 1,
+        "given": 1,
+        "here": 1,
+        "inside": 1,
+        "on": 1,
+        "suppose": 1,
+        "taking": 1,
+        "through": 1,
+        "under": 1,
+        "while": 1,
+        "with": 1,
+        "within": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given",
+      "total": 20
+    }
+  },
+  "gates": [
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_unigram_share",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_bigram_share",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "class_exclusive_first_unigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_bigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_trigram",
+      "passed": true
+    },
+    {
+      "detail": "all wrappers span >=2 classes",
+      "name": "cross_class_wrapper_pooling",
+      "passed": true
+    },
+    {
+      "detail": "1.092 <= 1.35",
+      "name": "class_mean_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "1.414 <= 2.00",
+      "name": "quartet_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "template_family_share",
+      "passed": true
+    },
+    {
+      "detail": ">= 3 per class",
+      "name": "template_family_distinct_per_class",
+      "passed": true
+    },
+    {
+      "detail": "ok",
+      "name": "template_family_names_do_not_encode_class",
+      "passed": true
+    },
+    {
+      "detail": "unique",
+      "name": "wording_pattern_unique_per_row",
+      "passed": true
+    },
+    {
+      "detail": {
+        "authority_spoof": 2,
+        "exfiltration": 6,
+        "fake_errata": 1,
+        "fake_evaluator": 1,
+        "format_attack": 1,
+        "goal_hijack": 1,
+        "indirect_injection": 2,
+        "marker_injection": 6
+      },
+      "name": "mo_subtype_count",
+      "passed": true
+    },
+    {
+      "detail": {
+        "contradicted": 1,
+        "not_applicable": 14,
+        "unresolved": 5
+      },
+      "name": "mo_evidence_status_count",
+      "passed": true
+    },
+    {
+      "detail": "0.300 <= 0.35",
+      "name": "mo_subtype_share",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "tnm_use_signature_never_noticed_branch",
+      "passed": true
+    },
+    {
+      "detail": {
+        "additive_state": 5,
+        "constraint_change": 1,
+        "external_state_change": 5,
+        "input_revision": 3,
+        "relation_revision": 2,
+        "target_revision": 4
+      },
+      "name": "vm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "5/20",
+      "name": "vm_additive_fraction",
+      "passed": true
+    },
+    {
+      "detail": "all VM rows carry derivation evidence",
+      "name": "vm_independently_solved_updated_answer",
+      "passed": true
+    },
+    {
+      "detail": {
+        "false_aggregation": 3,
+        "false_derived_relation": 4,
+        "false_implied_assignment": 2,
+        "false_implied_bound": 3,
+        "false_parity_or_ordering": 1,
+        "false_precondition": 5,
+        "false_reachability": 2
+      },
+      "name": "pfm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "all PFM rows carry unique-solution derivation evidence",
+      "name": "pfm_substitute_and_solve_unique",
+      "passed": true
+    },
+    {
+      "detail": "no cue-proximate answer leak detected",
+      "name": "non_mo_update_does_not_reveal_final_answer",
+      "passed": true
+    },
+    {
+      "detail": "no collisions",
+      "name": "pfm_mo_signature_not_equal_paired_vm_answer",
+      "passed": true
+    },
+    {
+      "detail": "both proposition/directive in every class",
+      "name": "speech_act_both_values_per_class",
+      "passed": true
+    },
+    {
+      "detail": "0.475 <= 0.60",
+      "name": "surface_classifier_binary_label",
+      "passed": true
+    },
+    {
+      "detail": "0.237 <= 0.40",
+      "name": "surface_classifier_four_way_class",
+      "passed": true
+    },
+    {
+      "detail": "balanced where authoring data exists",
+      "name": "label_balance_within_strata",
+      "passed": true
+    },
+    {
+      "detail": "no prefix-citing updates",
+      "name": "trace_references_bound_when_present",
+      "passed": true
+    },
+    {
+      "detail": "rows rely on run-level trace packages",
+      "name": "no_embedded_row_trace_blocks",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "restored_factor_fields_present",
+      "passed": true
+    },
+    {
+      "detail": "no update opens with a colon-prefixed framing label",
+      "name": "no_framing_wrapper",
+      "passed": true
+    },
+    {
+      "detail": "ratio=1.217560975609756 (cap 1.5); means={\"valid_material\": 0.2496, \"true_non_material\": 0.205, \"plausible_false_material\": 0.2487, \"malicious_override\": 0.2378}",
+      "name": "lexical_overlap_balance",
+      "passed": true
+    },
+    {
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
+      "name": "syntactic_form_spread",
+      "passed": true
+    },
+    {
+      "detail": "every syntactic_form within +/-1 of label-balanced",
+      "name": "syntactic_form_label_balance",
+      "passed": true
+    },
+    {
+      "detail": "no update refers to its own authority, class or provenance",
+      "name": "no_self_narration",
+      "passed": true
+    },
+    {
+      "detail": "hedging does not separate labels within any quartet",
+      "name": "quartet_epistemic_register",
+      "passed": true
+    },
+    {
+      "detail": "stance-only accuracy 0.475 (cap 0.6, chance 0.50)",
+      "name": "tone_only_classifier",
+      "passed": true
+    },
+    {
+      "detail": "no PFM uses a premise-targeting semantic_type",
+      "name": "pfm_targets_consequences_not_premises",
+      "passed": true
+    }
+  ],
+  "hard_gate_failures": [],
+  "label_counts": {
+    "ACCEPT": 40,
+    "DO_NOT_ACCEPT": 40
+  },
+  "mo_evidence_counts": {
+    "contradicted": 1,
+    "not_applicable": 14,
+    "unresolved": 5
+  },
+  "mo_subtype_counts": {
+    "authority_spoof": 2,
+    "exfiltration": 6,
+    "fake_errata": 1,
+    "fake_evaluator": 1,
+    "format_attack": 1,
+    "goal_hijack": 1,
+    "indirect_injection": 2,
+    "marker_injection": 6
+  },
+  "pfm_shape_counts": {
+    "false_aggregation": 3,
+    "false_derived_relation": 4,
+    "false_implied_assignment": 2,
+    "false_implied_bound": 3,
+    "false_parity_or_ordering": 1,
+    "false_precondition": 5,
+    "false_reachability": 2
+  },
+  "review_state": {
+    "unreviewed": 80
+  },
+  "row_count": 80,
+  "rows_with_never_noticed_branch": [
+    "smoke20_gsm8k_000__true_non_material",
+    "smoke20_gsm8k_000__malicious_override",
+    "smoke20_gsm8k_001__true_non_material",
+    "smoke20_gsm8k_001__malicious_override",
+    "smoke20_gsm8k_002__true_non_material",
+    "smoke20_gsm8k_002__malicious_override",
+    "smoke20_math500_003__true_non_material",
+    "smoke20_math500_003__malicious_override",
+    "smoke20_math500_004__true_non_material",
+    "smoke20_math500_004__malicious_override",
+    "smoke20_math500_005__true_non_material",
+    "smoke20_math500_005__malicious_override",
+    "smoke20_math500_006__true_non_material",
+    "smoke20_math500_006__malicious_override",
+    "smoke20_math500_007__true_non_material",
+    "smoke20_math500_007__malicious_override",
+    "smoke20_math500_008__true_non_material",
+    "smoke20_math500_008__malicious_override",
+    "smoke20_math500_009__true_non_material",
+    "smoke20_math500_009__malicious_override",
+    "smoke20_plan_blocks_000__true_non_material",
+    "smoke20_plan_blocks_000__plausible_false_material",
+    "smoke20_plan_blocks_000__malicious_override",
+    "smoke20_plan_blocks_001__true_non_material",
+    "smoke20_plan_blocks_001__plausible_false_material",
+    "smoke20_plan_blocks_001__malicious_override",
+    "smoke20_plan_blocks_002__true_non_material",
+    "smoke20_plan_blocks_002__plausible_false_material",
+    "smoke20_plan_blocks_002__malicious_override",
+    "smoke20_plan_grid_003__true_non_material",
+    "smoke20_plan_grid_003__plausible_false_material",
+    "smoke20_plan_grid_003__malicious_override",
+    "smoke20_plan_grid_004__true_non_material",
+    "smoke20_plan_grid_004__plausible_false_material",
+    "smoke20_plan_grid_004__malicious_override",
+    "smoke20_plan_delivery_005__true_non_material",
+    "smoke20_plan_delivery_005__plausible_false_material",
+    "smoke20_plan_delivery_005__malicious_override",
+    "smoke20_plan_delivery_006__true_non_material",
+    "smoke20_plan_delivery_006__plausible_false_material",
+    "smoke20_plan_delivery_006__malicious_override",
+    "smoke20_plan_door_007__true_non_material",
+    "smoke20_plan_door_007__plausible_false_material",
+    "smoke20_plan_door_007__malicious_override",
+    "smoke20_plan_door_008__true_non_material",
+    "smoke20_plan_door_008__plausible_false_material",
+    "smoke20_plan_door_008__malicious_override",
+    "smoke20_plan_crate_009__true_non_material",
+    "smoke20_plan_crate_009__plausible_false_material",
+    "smoke20_plan_crate_009__malicious_override"
+  ],
+  "source_count": 20,
+  "source_family_counts": {
+    "gsm8k": 12,
+    "math500": 28,
+    "plan_blocks": 12,
+    "plan_crate": 4,
+    "plan_delivery": 8,
+    "plan_door": 8,
+    "plan_grid": 8
+  },
+  "stratum_label_balance": {
+    "domain": {
+      "details": {
+        "math": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        },
+        "planning": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "interrupt_position_tertile": {
+      "detail": "generation_rules.md section 5 moves interrupt_position to runtime manifest",
+      "passed": true,
+      "status": "not_applicable_at_authoring_time"
+    },
+    "source_family": {
+      "details": {
+        "gsm8k": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "math500": {
+          "ACCEPT": 14,
+          "DO_NOT_ACCEPT": 14,
+          "balanced": true
+        },
+        "plan_blocks": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "plan_crate": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "plan_delivery": {
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 4,
+          "balanced": true
+        },
+        "plan_door": {
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 4,
+          "balanced": true
+        },
+        "plan_grid": {
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 4,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "speech_act": {
+      "details": {
+        "directive": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        },
+        "proposition": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "update_length_tertile": {
+      "details": {
+        "tertile_1": {
+          "ACCEPT": 14,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        },
+        "tertile_2": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 14,
+          "balanced": true
+        },
+        "tertile_3": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "wrapper": {
+      "details": {
+        "across": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "after": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "along": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "because": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "before": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "between": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "during": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "for": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "from": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "given": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "here": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "inside": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "on": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "suppose": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "taking": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "through": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "under": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "while": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "with": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "within": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    }
+  },
+  "surface_classifier_accuracies": {
+    "binary_label": {
+      "accuracy": 0.475,
+      "correct": 38,
+      "folds": 5,
+      "total": 80
+    },
+    "four_way_class": {
+      "accuracy": 0.2375,
+      "correct": 19,
+      "folds": 5,
+      "total": 80
+    }
+  },
+  "tnm_hint_strength_counts": {
+    "corroborating": 12,
+    "redundant": 8
+  },
+  "trace_run_counts": {
+    "qwen3_14b_fp8_plan_screen_20260905": 40,
+    "qwen3_14b_fp8_screen_20260905": 40
+  },
+  "unique_template_families": 6,
+  "unique_update_texts": 80,
+  "unique_wording_patterns": 80,
+  "update_length_summary_by_class": {
+    "malicious_override": {
+      "count": 20,
+      "max": 164,
+      "mean": 130.65,
+      "min": 110
+    },
+    "plausible_false_material": {
+      "count": 20,
+      "max": 146,
+      "mean": 119.65,
+      "min": 99
+    },
+    "true_non_material": {
+      "count": 20,
+      "max": 143,
+      "mean": 120.95,
+      "min": 105
+    },
+    "valid_material": {
+      "count": 20,
+      "max": 156,
+      "mean": 126.65,
+      "min": 109
+    }
+  },
+  "validator_result": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "--source-groups",
+      "data/smoke_20/source_groups_math.jsonl",
+      "data/smoke_20/source_groups_planning.jsonl",
+      "--rows",
+      "data/smoke_20/semantic_rows.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "exit_code": 0,
+    "stderr": [],
+    "stdout": [
+      "validated 0 pending registry source(s), 0 assigned source(s), 20 verified source group(s), 80 row(s), 0 review response(s)"
+    ]
+  },
+  "vm_additive_fraction": 0.25,
+  "vm_shape_counts": {
+    "additive_state": 5,
+    "constraint_change": 1,
+    "external_state_change": 5,
+    "input_revision": 3,
+    "relation_revision": 2,
+    "target_revision": 4
+  }
+}

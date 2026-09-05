@@ -1,9 +1,9 @@
 {
   "features": [
     {
-      "id": "row_contract_v8",
+      "id": "row_contract",
       "status": "verified",
-      "description": "generation_rules.md as the row contract, machine-enforced by validate_dataset.py, hash-locked at v8, rules validated on both branches"
+      "description": "generation_rules.md as the row contract, machine-enforced by validate_dataset.py and hash-locked together with the four schemas, audit_batch.py, review_checklist.py and docs/label_policy.md (version in registry/contract_lock.json)"
     },
     {
       "id": "design_docs",
@@ -32,18 +32,28 @@
     },
     {
       "id": "planning_sources",
-      "status": "in_progress",
-      "description": "10 generated PDDL instances specced, not yet written out"
+      "status": "verified",
+      "description": "BlocksWorld and Logistics instances generated from parameter tables, statements rendered from solver params; screened by executable plan equivalence"
     },
     {
       "id": "batch_audit",
-      "status": "partial",
-      "description": "audit_batch.py exists and gates leakage, coverage and signatures; lacks the v8 lexical-overlap and syntactic-form checks"
+      "status": "verified",
+      "description": "audit_batch.py gates leakage, coverage, signatures, lexical overlap, syntactic forms, self-narration, quartet register, tone-only predictability, PFM depth evidence, wrappers, and staged split source-group files"
+    },
+    {
+      "id": "smoke_80_sources",
+      "status": "verified",
+      "description": "80 screened originals (56 math + 24 planning) split across P1-P4 at 20 each, 320 rows, 70/30 math/planning exact; balance rules asserted by assign_sources.py --shape smoke_80"
+    },
+    {
+      "id": "smoke_80_rows",
+      "status": "not_started",
+      "description": "320 rows to be authored by four contributors; blocked on deriving consequence notes for 35 sources and confirming the other 45"
     },
     {
       "id": "pilot_rows",
-      "status": "not_started",
-      "description": "80 rows over the 20 pilot sources under contract v8"
+      "status": "in_progress",
+      "description": "80 rows over all 20 smoke_20 sources; validator and full-batch audit pass; math half agent-reviewed, planning half unreviewed, no human review"
     },
     {
       "id": "elicited_protocol_validation",

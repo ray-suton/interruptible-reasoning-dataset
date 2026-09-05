@@ -2,7 +2,7 @@
 
 Status: active plan
 Owner: P1 / Rui Gao
-Updated: 2026-09-05
+Updated: 2026-09-06
 Target: workshop submission, **early November 2026**
 
 ## The claim
@@ -71,8 +71,8 @@ Contract: `generation_rules.md`. Design rationale: `DATASET.md`. Procedure:
 
 | Batch | Originals | Rows | Purpose |
 | --- | ---: | ---: | --- |
-| Pilot | 20 | 80 | Exercise every class in both domains; every row read |
-| Smoke | 80 | 320 | Show the rules produce scoreable, non-leaking rows at scale |
+| Pilot | 20 | 80 | Exercise every class in both domains; every row read — **authored** |
+| Smoke | 80 | 320 | Show the rules produce scoreable, non-leaking rows at scale; four contributors × 20 originals |
 | Full | 200 | 800 | The Stage 1 dataset |
 
 **Composition.** 70% math, 30% planning; within math 30% GSM8K, 70% MATH500.
@@ -154,14 +154,20 @@ not merely MO from everything.
 
 ## Status
 
-**Done.** Contract v8 with the row rules validated on both branches. Compute
-envelope probed and documented. Qwen3-14B-FP8 in cache and running. Pilot math
-selection screened 10/10 solved at 14B FP8, traces exported at 0.5983–0.6000.
-Two-agent authoring and review procedure exercised end to end on a 40-row batch,
-with three semantic defects found by review and repaired in the generator.
+**Done.** The row contract is locked (version in `registry/contract_lock.json`)
+with the rules validated on both branches, and the three surfaces that mirror it
+— the batch audit, the reviewer's checklist and the annotator policy — are locked
+alongside it. Compute envelope probed. Qwen3-14B-FP8 in cache and running. The
+20-source / 80-row pilot is authored and passes validation and the full batch
+audit; its math half has an agent review, its planning half none, and no human
+review exists for either. The two-agent authoring and review procedure has run
+end to end, finding three semantic defects no gate detects.
 
-**Next.** Ten generated PDDL planning instances; author the 20-source pilot
-under v8; confirm elicited-disposition discrimination; then scale to 80.
+**Next.** The smoke tier: 80 originals / 320 rows over four contributors, 20
+originals each, in `data/smoke_80/`. Sources are BlocksWorld and Logistics for
+planning and the pinned upstream snapshot for math. Then confirm
+elicited-disposition discrimination — still the gate on the evaluation protocol —
+then the full 200.
 
 **Gates before any claim leaves the repository.** Row validation passes; batch
 audit passes every hard gate including the surface classifiers; independent human

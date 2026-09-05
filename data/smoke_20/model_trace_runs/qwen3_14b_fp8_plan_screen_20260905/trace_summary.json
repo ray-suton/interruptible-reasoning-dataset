@@ -1,5 +1,15 @@
 {
+  "grading_method": "plan_equivalence",
   "model_name": "Qwen/Qwen3-14B-FP8",
+  "post_export_processing": {
+    "applied": "plan_equivalence_regrade",
+    "by": "scripts/grade_plans.py",
+    "reason": "The generic exporter compares the extracted answer to the gold string. For answer_form: plan that is invalid -- one plan has many spellings and independent actions may be ordered differently -- so it reported all 10 as unsolved. Each plan was re-graded by executing it from the initial state and checking it reaches the goal. Fields overwritten: no_update_solved, answer_extraction_method, plan_actions.",
+    "solvability_counts_before": {
+      "unsolved": 10
+    },
+    "traces_sha256_before": "c7686524fcff8a9d9de736acf32ceb518ab0f5672f5e79fdec2954233d7aa019"
+  },
   "requested_interrupt_position": 0.6,
   "run_config": {
     "created_at": "2026-09-05",
@@ -30,12 +40,13 @@
   "sidecar": "/tmp/plan_screen/input/sidecar_stage1.json",
   "sidecar_sha256": "ce0d98d0db36deb8175d93ba99d9728f671a9ff9257464fcc02595479979561b",
   "solvability_counts": {
-    "unsolved": 10
+    "solved": 10,
+    "unsolved": 0
   },
   "stage1_output": "/tmp/plan_screen/initial/output_0.jsonl",
   "stage1_output_sha256": "c0d32b5f4eb83d0d6b4ac2b21daf21301f83f6affa97b0d3441273210a99cdfe",
   "status": "complete",
   "trace_count": 10,
   "traces_path": "data/smoke_20/model_trace_runs/qwen3_14b_fp8_plan_screen_20260905/traces.jsonl",
-  "traces_sha256": "c7686524fcff8a9d9de736acf32ceb518ab0f5672f5e79fdec2954233d7aa019"
+  "traces_sha256": "30ab027499dfaf33e71e392578245bcf3e230897cedf9af6307917b990df466a"
 }
