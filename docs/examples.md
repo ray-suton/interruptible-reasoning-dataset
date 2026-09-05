@@ -1,7 +1,7 @@
 # Example Templates
 
 These templates illustrate the current Stage 1 authoring rules from root
-`update_rules.md`. They are construction examples, not final benchmark items.
+`generation_rules.md` (was `update_rules.md`). They are construction examples, not final benchmark items.
 They deliberately show the metadata that separates authority, evidential
 support, prior-state relation, and the binary decision.
 

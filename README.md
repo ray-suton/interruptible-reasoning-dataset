@@ -1,58 +1,52 @@
 # Interruptible Reasoning Dataset
 
-This repository holds the Stage 1 dataset workspace for the interruptible
-reasoning project. The active working target is now the 150-original-sample
-smoke test under `data/smoke_150/`; older workload scaffolds and pilot outputs
-are preserved under `archive/pre_smoke150_reset_2026-09-03/`.
+When an update arrives mid-reasoning-trace, should the model accept it?
 
-The dataset studies whether a reasoning model should accept or reject an
-update that arrives during an ongoing reasoning trace. The current workshop
-setting is binary:
+This repository builds the Stage 1 dataset for that question: a binary
+`ACCEPT` / `DO_NOT_ACCEPT` decision over four diagnostic classes, plus the
+evaluation framework and the linear probe that read it.
 
-- `ACCEPT`
-- `DO_NOT_ACCEPT`
+## Read in this order
 
-## Active Smoke Root
+| # | File | What it is |
+| ---: | --- | --- |
+| 1 | `DATASET.md` | Overview and design — what a row means and why the rules take the shape they do |
+| 2 | `generation_rules.md` | **The row contract.** Classes, fields, thresholds, signatures, gates |
+| 3 | `converged_paper_plan.md` | The whole plan — contributions, research questions, dataset, models, protocol, status |
+| 4 | `workflow.md` | Reusable two-agent authoring and review procedure |
+| 5 | `q&a.md` | The owner's design decisions, cited elsewhere as `[Qn]` and `[Q-Dn]` |
 
-Treat `data/smoke_150/` as the active workspace for the real smoke test. The
-key repository paths that define and govern generation are:
+Reference material lives in `docs/`: `label_policy.md` (annotator-facing),
+`update_taxonomy.md` (class reference), `examples.md` (worked rows),
+`concepts.md` (terminology), `source_import_policy.md` (when source text may be
+imported).
 
-| Path | Purpose |
-| --- | --- |
-| `DATASET.md` | Central human contract for the dataset workflow and review rules. |
-| `update_rules.md` | Current curation guide for VM/TNM/PFM/MO rows; its row-level fields are enforced by the locked validator/contract. |
-| `docs/concepts.md` | Shared terminology for source groups, rows, schema, and validation. |
-| `docs/source_import_policy.md` | Rules for when competition text may be imported. |
-| `docs/original/` | Stage 1 curation plan and design documents copied from the research workspace. |
-| `registry/contract_lock.json` | Hash lock for the active authoring contract. |
-| `schema/` | Executable schema definitions and validation rules. |
-| `scripts/` | Helper scripts for source import, validation, and smoke-workspace checks. |
-| `sources/upstream_interrupt_lrm/` | Pinned original-source pool for smoke-test sampling. |
-| `archive/pre_smoke150_reset_2026-09-03/` | Preserved old workload scaffold, tests, placeholder data, and scratch reports. |
+## Authority
 
-## What Belongs Here
+`generation_rules.md` + `schema/` + `scripts/validate_dataset.py` are normative
+and hash-locked at **contract v8**. The validator is the executable form — a
+schema-only change is inert, so any new rule must land in the validator too.
+Where any other document disagrees with those three, they win.
 
-Keep the active repository focused on smoke-test generation:
+## Commands
 
-- source samples with stable IDs, source revisions, hashes, and provenance
-  notes;
-- executable schema definitions for source groups and rows;
-- validator outputs;
-- generation scripts or generated smoke-test artifacts; and
-- documentation that explains the rules.
+```bash
+./init.sh                                  # the full gate: compile + contract lock
+make validate BATCH_DIR=data/smoke_20      # row-level validation
+make batch-audit BATCH_DIR=data/smoke_20   # batch gates: leakage, coverage, balance
+make contract-check                        # fail if a locked file changed unrecorded
+make contract-lock REASON="why" BY=P1      # amend the lock
+```
 
-## What Does Not Belong Here
+## Layout
 
-Do not add competition problem text unless its provenance and redistribution
-status have been reviewed and recorded. The pinned Interrupt-LRM Math snapshot
-under `sources/upstream_interrupt_lrm/` is an upstream reference import with a
-recorded revision, declared license, extraction rule, and content hash; it is
-not automatically part of the Stage 1 artifact root.
+- `data/<batch>/` — selection records, run packages, rows, review responses
+- `sources/upstream_interrupt_lrm/` — revision-pinned math source pool
+- `scripts/` — trace preparation and export, row validation, batch audit, lock
+- `archive/` — superseded work, recoverable and non-authoritative
 
-Do not mix in unrelated experiments, scratch notes, old workload outputs, or
-model outputs that are not part of the 150-sample smoke-test workflow.
+## What does not belong here
 
-## Where to Start
-
-Read `DATASET.md` first, then `update_rules.md`, then the active smoke-test
-workspace at `data/smoke_150/`.
+Competition text whose provenance and redistribution status has not been
+reviewed; self-approved rows; ad hoc source lists; unrelated experiments. And a
+batch reviewed only by agents is **not** a reviewed batch — see `DATASET.md` §7.

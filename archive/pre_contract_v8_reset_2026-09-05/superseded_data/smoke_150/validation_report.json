@@ -1,0 +1,83 @@
+{
+  "admission_decision_id": "smoke10-gsm8k-provisional-2026-09-04",
+  "files": {
+    "evaluation_sheet": {
+      "bytes": 10343,
+      "nonblank_lines": 44,
+      "path": "data/smoke_150/evaluation_sheet.md",
+      "sha256": "c4b565ee86b0ad05c0cae93aaab7f56b6b29e17216e76ee6df1efd1066b1ba72"
+    },
+    "original_samples": {
+      "bytes": 9503,
+      "nonblank_lines": 10,
+      "path": "data/smoke_150/original_samples.jsonl",
+      "sha256": "9d393730b31607187dddc4bc4d0a30ceac91873f1dd9dec54e98d8114cfbcca3"
+    },
+    "review_responses": {
+      "bytes": 0,
+      "nonblank_lines": 0,
+      "path": "data/smoke_150/review_responses.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "semantic_rows": {
+      "bytes": 101995,
+      "nonblank_lines": 40,
+      "path": "data/smoke_150/semantic_rows.jsonl",
+      "sha256": "128936aced042031653ea4678d57e4d1c8705414a0fd5a3aef50f71931959c26"
+    },
+    "source_admission_decision": {
+      "bytes": 1166,
+      "nonblank_lines": 21,
+      "path": "data/smoke_150/source_admission_decision.md",
+      "sha256": "9cf19ddd80bcb07d10a708eab371493fdba3ba308c90e59cf5713dd5fcbb340e"
+    },
+    "source_groups": {
+      "bytes": 17204,
+      "nonblank_lines": 10,
+      "path": "data/smoke_150/source_groups.jsonl",
+      "sha256": "4f658b8c4ac7e10cee8c51550553421b6c7827af3ec090b094e20ea69612e9ee"
+    },
+    "traces": {
+      "bytes": 8674,
+      "nonblank_lines": 10,
+      "path": "data/smoke_150/traces.jsonl",
+      "sha256": "2537235933728dedd0922ee2256b5e5072b4d6c90315ea218734aa2d8617bce6"
+    }
+  },
+  "generated_artifacts": {
+    "class_counts": {
+      "malicious_override": 10,
+      "plausible_false_material": 10,
+      "true_non_material": 10,
+      "valid_material": 10
+    },
+    "label_counts": {
+      "ACCEPT": 20,
+      "DO_NOT_ACCEPT": 20
+    },
+    "review_response_count": 0,
+    "review_state": "draft_joint_evaluation_pending",
+    "row_count": 40,
+    "source_count": 10,
+    "statement_text_included_in_smoke_root": false,
+    "trace_count": 10
+  },
+  "source_policy_note": "GSM8K records are provisionally admitted for this development draft slice only; release use requires source-admission review.",
+  "status": "validator_passed",
+  "validator": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "scripts/validate_dataset.py",
+      "--source-groups",
+      "data/smoke_150/source_groups.jsonl",
+      "--rows",
+      "data/smoke_150/semantic_rows.jsonl",
+      "--review-responses",
+      "data/smoke_150/review_responses.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "validated 0 pending registry source(s), 0 assigned source(s), 10 verified source group(s), 40 row(s), 0 review response(s)"
+  }
+}

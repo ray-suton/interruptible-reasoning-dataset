@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-09-05",
+  "description": "Initial no-update model run over the provisional Smoke10 GSM8K source groups.",
+  "export_script": "scripts/export_smoke10_model_traces.py",
+  "input_preparation_script": "scripts/prepare_smoke10_trace_input.py",
+  "input_stage1_path": "/tmp/smoke10_trace_qwen3_8b_20260905/input/stage1_input.jsonl",
+  "intervene_prompt_file": "../interrupt-lrm/src/prompts/intervene/wo_prompt_guidance.json",
+  "model_cache": "../interrupt-lrm/tmp/repro_hf_cache",
+  "model_name": "Qwen/Qwen3-8B",
+  "raw_output_path": "/tmp/smoke10_trace_qwen3_8b_20260905/initial/output_0.jsonl",
+  "runner": "../interrupt-lrm/src/run.py",
+  "runner_environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "VLLM_NO_USAGE_STATS": "1"
+  },
+  "runner_args": {
+    "custom_prompt_file": "../interrupt-lrm/src/prompts/intervene/wo_prompt_guidance.json",
+    "input_file": "/tmp/smoke10_trace_qwen3_8b_20260905/input/stage1_input.jsonl",
+    "local_rank": 0,
+    "max_tokens": 4096,
+    "mode": "initial",
+    "num_gpus": 1,
+    "output_dir": "/tmp/smoke10_trace_qwen3_8b_20260905/initial",
+    "problem_field_name": "original_problem",
+    "seed": 42,
+    "task": "math",
+    "temperature": 0.6,
+    "tensor_parallel_size": 1,
+    "top_k": 20,
+    "top_p": 0.95
+  },
+  "source_groups": "data/smoke_150/source_groups.jsonl",
+  "source_policy_note": "Raw source statements were used only in temporary runner input under /tmp; this run package stores source IDs, hashes, traces, and metadata."
+}

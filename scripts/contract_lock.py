@@ -50,18 +50,16 @@ LOCK_PATH = REPO_ROOT / "registry" / "contract_lock.json"
 # lock must work in a standalone clone and cannot depend on parent workspace
 # documents that are not versioned with this repository.
 CONTRACT_FILES = [
+    # v8: the row contract moved out of DATASET.md into generation_rules.md.
+    # DATASET.md is now overview and design rationale and is deliberately NOT
+    # locked -- it contains no row-level rule to drift.
+    "generation_rules.md",
     "schema/dataset_row.schema.json",
     "schema/source_group.schema.json",
     "schema/source_registry.schema.json",
     "schema/review_response.schema.json",
     "scripts/validate_dataset.py",
-    "DATASET.md",
-    # The canonical annotator-facing label policy. docs/original/README.md declares
-    # this copy canonical with the workspace-root copy synced to match, but nothing
-    # enforced that: the root copy was amended on 2026-08-08 while this one was not,
-    # and the divergence went unnoticed. Locking it makes the next such drift a
-    # build failure.
-    "docs/original/label_policy.md",
+    "docs/label_policy.md",
 ]
 
 
@@ -120,7 +118,7 @@ def do_lock(reason: str, locked_by: str, stamp: str | None) -> int:
 def check_workspace_mirrors() -> list[str]:
     """Report canonical snapshots whose workspace-root mirror has drifted.
 
-    `docs/original/README.md` declares these copies canonical with the root copies
+    `the archived design snapshot` declares these copies canonical with the root copies
     synced to match, but that rule was social until now: on 2026-08-08 the label
     policy was amended in root only, and `methodology.md` and
     `dataset_construction_design.md` were found diverged in OPPOSITE directions --

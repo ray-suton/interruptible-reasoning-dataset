@@ -1,19 +1,20 @@
 # Interruptible Reasoning Dataset
 
-This repository is the active construction surface for the Stage 1 binary
-update-acceptance smoke test. It separates shared contracts, schemas, source
-provenance, validation, and generation scripts from archived workload history.
+The construction surface for the Stage 1 binary update-acceptance dataset, and
+for the two contributions built on it: an evaluation framework for mid-reasoning
+update handling, and a linear probe separating `ACCEPT` from `DO_NOT_ACCEPT` from
+hidden states.
 
-The current active target is a real 150-original-sample smoke test under
-`data/smoke_150/`. The older P1-P8 contributor scaffold, placeholder Stage 1
-data files, synthetic 10x4 training pilot, old tests, and scratch reports were
-archived under `archive/pre_smoke150_reset_2026-09-03/` so generation can start
-from a clean active tree.
+A row pairs a source problem, a frozen reasoning prefix, and an update, with a
+binary disposition and a behaviour signature recording what incorrect handling
+would observably produce. That signature is what makes the three
+answer-preserving classes measurable: for them the correct answer is the original
+answer, so answer-only grading cannot separate correct resistance from
+inattention.
 
-The authoring contract is locked at v7. It keeps the v6 row-level scoreability
-rules and aligns the repository topology with the smoke-150 reset: active
-source selection and generated artifacts now live under `data/smoke_150/`,
-while the old workload scaffold is archived.
+The row contract is `generation_rules.md`, machine-enforced by
+`scripts/validate_dataset.py` and hash-locked at contract v8. `DATASET.md` holds
+the design rationale, `converged_paper_plan.md` the plan, `workflow.md` the
+authoring and review procedure.
 
-The repository intentionally uses only Python's standard library for contract
-checks, source import, validation, and smoke-test generation.
+Everything active uses only the Python standard library. This is intentional.

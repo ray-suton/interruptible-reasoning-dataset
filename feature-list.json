@@ -1,44 +1,69 @@
 {
   "features": [
     {
-      "id": "contract",
+      "id": "row_contract_v8",
       "status": "verified",
-      "description": "Stage 1 DATASET.md, update rules, source policy, and imported design snapshot"
+      "description": "generation_rules.md as the row contract, machine-enforced by validate_dataset.py, hash-locked at v8, rules validated on both branches"
     },
     {
-      "id": "hf_source_snapshot",
+      "id": "design_docs",
       "status": "verified",
-      "description": "Pinned Interrupt-LRM Math original-source snapshot: 1,060 records with hashes"
+      "description": "DATASET.md overview and design, converged_paper_plan.md plan, workflow.md procedure, q&a.md decision record"
     },
     {
-      "id": "assignment_registry",
-      "status": "archived",
-      "description": "Former 238-group P1-P8 workload scaffold moved under archive/pre_smoke150_reset_2026-09-03"
-    },
-    {
-      "id": "schema_and_validator",
+      "id": "source_pool",
       "status": "verified",
-      "description": "Dependency-free row/source validation and contract checks for smoke-test generation"
+      "description": "Revision-pinned upstream math snapshot, 1060 originals with hashes"
     },
     {
-      "id": "smoke_150_workspace",
-      "status": "ready",
-      "description": "Fresh data/smoke_150 workspace for generating a real smoke test over 150 original samples"
+      "id": "trace_pipeline",
+      "status": "verified",
+      "description": "prepare_trace_input -> runner -> export_model_traces; 0.6 token-fraction prefixes, run packages, LaTeX-safe answer extraction"
     },
     {
-      "id": "constructed_development_dataset",
+      "id": "compute_envelope",
+      "status": "verified",
+      "description": "One GPU per job probed; Qwen3-14B-FP8 fits and runs on a single 32GB card"
+    },
+    {
+      "id": "pilot_source_selection",
+      "status": "verified",
+      "description": "10 math originals screened 10/10 solved at 14B FP8, each with a candidate PFM family recorded"
+    },
+    {
+      "id": "planning_sources",
+      "status": "in_progress",
+      "description": "10 generated PDDL instances specced, not yet written out"
+    },
+    {
+      "id": "batch_audit",
+      "status": "partial",
+      "description": "audit_batch.py exists and gates leakage, coverage and signatures; lacks the v8 lexical-overlap and syntactic-form checks"
+    },
+    {
+      "id": "pilot_rows",
       "status": "not_started",
-      "description": "The reviewed benchmark dataset has not been authored or reviewed"
+      "description": "80 rows over the 20 pilot sources under contract v8"
+    },
+    {
+      "id": "elicited_protocol_validation",
+      "status": "not_started",
+      "description": "Confirm the elicited-disposition condition discriminates on DO_NOT_ACCEPT rows; gates the evaluation protocol"
+    },
+    {
+      "id": "human_review",
+      "status": "not_started",
+      "description": "review_responses.jsonl is empty; no agent pass substitutes for it"
+    },
+    {
+      "id": "linear_probe",
+      "status": "not_started",
+      "description": "Contribution 2; depends on a non-leaking batch at scale"
     },
     {
       "id": "frozen_primary_test",
       "status": "not_started",
-      "description": "Primary-test construction begins only after the model and evaluation freeze"
-    },
-    {
-      "id": "github_publication",
-      "status": "blocked",
-      "description": "Local repository is ready, but the saved GitHub CLI token is invalid"
+      "description": "Begins only after the model/prompt/layer/threshold/judge freeze is recorded"
     }
   ]
 }

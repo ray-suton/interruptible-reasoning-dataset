@@ -43,12 +43,12 @@ warrants:
 | `unresolved` | The update is truth-apt, but the task state cannot settle it. |
 | `not_applicable` | The update is not a factual hypothesis, such as a bare directive or pure task revision. |
 
-Current validator compatibility: pure VM task revisions ideally use
-`evidence_status: not_applicable`, but the locked validator currently accepts
-only `supported` or `unresolved` for VM. Use `unresolved` for now and include:
+Current validator compatibility: pure VM task revisions use
+`evidence_status: not_applicable` under the locked contract. Include a rationale
+like:
 
 ```text
-Authorized task revision; accepted by stipulation rather than evidential support.
+Authorized task revision; accepted by task authority rather than evidential support.
 ```
 
 ## TNM Hint Strength

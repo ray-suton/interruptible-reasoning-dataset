@@ -1,0 +1,55 @@
+{
+  "batch_id": "smoke40_10x4_draft_20260905",
+  "excluded_sources": [
+    {
+      "reason": "Qwen3-8B no-update trace hit max_tokens and extracted 20 instead of expected 89.",
+      "stable_source_id": "SMOKE10-GSM8K-001"
+    }
+  ],
+  "planning_trace_status": "Five in-house planning groups need a matching no-update trace run before model evaluation.",
+  "scope": "10 originals x 4 diagnostic classes = 40 rows",
+  "solved_trace_sources_used": [
+    {
+      "stable_source_id": "SMOKE10-GSM8K-000",
+      "task_group_id": "smoke10_gsm8k_000",
+      "trace_id": "smoke10_gsm8k_000_qwen_qwen3_8b_initial_r0",
+      "trace_run_status": "solved_no_update_baseline"
+    },
+    {
+      "stable_source_id": "SMOKE10-GSM8K-002",
+      "task_group_id": "smoke10_gsm8k_002",
+      "trace_id": "smoke10_gsm8k_002_qwen_qwen3_8b_initial_r0",
+      "trace_run_status": "solved_no_update_baseline"
+    },
+    {
+      "stable_source_id": "SMOKE10-GSM8K-003",
+      "task_group_id": "smoke10_gsm8k_003",
+      "trace_id": "smoke10_gsm8k_003_qwen_qwen3_8b_initial_r0",
+      "trace_run_status": "solved_no_update_baseline"
+    },
+    {
+      "stable_source_id": "SMOKE10-GSM8K-006",
+      "task_group_id": "smoke10_gsm8k_006",
+      "trace_id": "smoke10_gsm8k_006_qwen_qwen3_8b_initial_r0",
+      "trace_run_status": "solved_no_update_baseline"
+    },
+    {
+      "stable_source_id": "SMOKE10-GSM8K-009",
+      "task_group_id": "smoke10_gsm8k_009",
+      "trace_id": "smoke10_gsm8k_009_qwen_qwen3_8b_initial_r0",
+      "trace_run_status": "solved_no_update_baseline"
+    }
+  ],
+  "status": "draft_claude_review_pending",
+  "trace_policy": "Rows do not embed trace blocks; solved GSM8K rows reference the run-level trace package.",
+  "trace_runs": [
+    {
+      "interrupt_position_basis": "token_fraction_of_model_reasoning_trace",
+      "model_name": "Qwen/Qwen3-8B",
+      "path": "data/smoke_150/model_trace_runs/qwen3_8b_initial_20260905",
+      "requested_interrupt_position": 0.6,
+      "solvability": "9 solved / 1 unsolved in source run",
+      "trace_run_id": "qwen3_8b_initial_20260905"
+    }
+  ]
+}

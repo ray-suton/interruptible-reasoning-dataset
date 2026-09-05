@@ -5,5 +5,5 @@ This repository was initialized from the research-design workspace at
 
 The canonical design snapshot is stored under `docs/original/`. Competition
 problem text is intentionally not imported until provenance and redistribution
-rights are reviewed; the generated source registry records stable source IDs
-and explicit import status instead.
+rights are reviewed; active smoke source-selection records must carry stable
+source IDs, content hashes, provenance, and explicit import status.

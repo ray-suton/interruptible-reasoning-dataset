@@ -20,7 +20,7 @@ The current Stage 1 label mapping is governed by `label_policy.md`. In
 particular, `ACCEPT` means that an update is valid admissible context; it does
 not imply that the final answer must change.
 
-Root `update_rules.md` is the current curation guide for the four primary
+Root `generation_rules.md` (was `update_rules.md`) is the current curation guide for the four primary
 update kinds. The locked row contract requires `authority_status` and
 `relation_to_prior_state` so that authorized task revisions are not confused
 with unauthorized false claims. The mechanical contract is `DATASET.md`
@@ -209,7 +209,7 @@ Typical Stage 1 label: `ACCEPT`, with diagnostic class
 `true_non_material`. Set `authority_status: authorized`,
 `relation_to_prior_state: consistent`, and `hint_strength`.
 
-Use the hint scale from `update_rules.md`:
+Use the hint scale from `generation_rules.md` (was `update_rules.md`):
 
 - H0 `redundant`: repeats an explicit given or visible prefix fact.
 - H1 `corroborating`: adds an independent local consistency check.

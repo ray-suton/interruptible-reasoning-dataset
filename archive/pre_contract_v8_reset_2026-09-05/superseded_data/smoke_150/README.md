@@ -18,11 +18,15 @@ Expected generated artifacts:
 | File | Purpose |
 | --- | --- |
 | `original_samples.jsonl` | The selected 150 source records, with stable IDs, hashes, source-family metadata, and provenance notes. |
+| `source_admission_decision.md` | Any provisional or final decision admitting source families into the active smoke workspace. |
 | `source_groups.jsonl` | Validator-ready source-group records for the selected originals. |
 | `traces.jsonl` | Full traces, partial prefixes, interrupt positions, and prefix hashes used by rows. |
+| `model_trace_runs/` | Model-generated no-update trace exports and summaries before row regeneration. |
 | `semantic_rows.jsonl` | Stage 1 update rows for the smoke test. |
 | `review_responses.jsonl` | Independent review outcomes once labels are reviewed. |
 | `validation_report.json` | A generated record of validator and workspace checks. |
+| `evaluation_sheet.md` | Human-readable draft rows for joint evaluation before independent review. |
+| `evaluation_notes.md` | Current quality notes and caveats for the generated draft slice. |
 
 Do not place primary-test or robustness rows here until the model, prompt,
 probe layer, threshold, and evaluation-code freeze is recorded.

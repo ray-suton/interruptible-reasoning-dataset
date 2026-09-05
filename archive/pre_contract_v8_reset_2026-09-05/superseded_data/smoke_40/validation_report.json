@@ -1,0 +1,830 @@
+{
+  "caveats": [
+    "Rank-1 validator failed. For reduced smoke drafts, verification.status='unverified_draft', verifier_id=null, and missing stored trace metadata are expected until DATASET.md 4.1 and validate_dataset.py are amended.",
+    "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
+  ],
+  "class_counts": {
+    "malicious_override": 10,
+    "plausible_false_material": 10,
+    "true_non_material": 10,
+    "valid_material": 10
+  },
+  "domain_counts": {
+    "math": 20,
+    "planning": 20
+  },
+  "embedded_trace_row_count": 0,
+  "first_bigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "before continuing": 1,
+        "check switch": 1,
+        "clarification the": 1,
+        "correction an": 1,
+        "for this": 1,
+        "heads up": 1,
+        "note return": 1,
+        "small correction": 1,
+        "update a": 1,
+        "use this": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update a",
+      "total": 10
+    },
+    "plausible_false_material": {
+      "counts": {
+        "before continuing": 1,
+        "check use": 1,
+        "clarification greece": 1,
+        "correction arnold": 1,
+        "for this": 1,
+        "heads up": 1,
+        "note quinn": 1,
+        "small correction": 1,
+        "update use": 1,
+        "use this": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update use",
+      "total": 10
+    },
+    "true_non_material": {
+      "counts": {
+        "before continuing": 1,
+        "check half": 1,
+        "clarification because": 1,
+        "correction after": 1,
+        "for this": 1,
+        "heads up": 1,
+        "note with": 1,
+        "small correction": 1,
+        "update the": 1,
+        "use this": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update the",
+      "total": 10
+    },
+    "valid_material": {
+      "counts": {
+        "before continuing": 1,
+        "check revise": 1,
+        "clarification the": 1,
+        "correction on": 1,
+        "for this": 1,
+        "heads up": 1,
+        "note trey": 1,
+        "small correction": 1,
+        "update one": 1,
+        "use this": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update one",
+      "total": 10
+    }
+  },
+  "first_trigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "before continuing quoted": 1,
+        "check switch to": 1,
+        "clarification the operations": 1,
+        "correction an errata": 1,
+        "for this run": 1,
+        "heads up higher": 1,
+        "note return only": 1,
+        "small correction the": 1,
+        "update a grading": 1,
+        "use this clarification": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update a grading",
+      "total": 10
+    },
+    "plausible_false_material": {
+      "counts": {
+        "before continuing treat": 1,
+        "check use eight": 1,
+        "clarification greece takes": 1,
+        "correction arnold stole": 1,
+        "for this run": 1,
+        "heads up let": 1,
+        "note quinn runs": 1,
+        "small correction assume": 1,
+        "update use a": 1,
+        "use this clarification": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update use a",
+      "total": 10
+    },
+    "true_non_material": {
+      "counts": {
+        "before continuing moving": 1,
+        "check half of": 1,
+        "clarification because the": 1,
+        "correction after the": 1,
+        "for this run": 1,
+        "heads up the": 1,
+        "note with the": 1,
+        "small correction there": 1,
+        "update the two": 1,
+        "use this clarification": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update the two",
+      "total": 10
+    },
+    "valid_material": {
+      "counts": {
+        "before continuing set": 1,
+        "check revise the": 1,
+        "clarification the poland": 1,
+        "correction on the": 1,
+        "for this run": 1,
+        "heads up the": 1,
+        "note trey can": 1,
+        "small correction the": 1,
+        "update one additional": 1,
+        "use this clarification": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update one additional",
+      "total": 10
+    }
+  },
+  "first_unigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "before": 1,
+        "check": 1,
+        "clarification": 1,
+        "correction": 1,
+        "for": 1,
+        "heads": 1,
+        "note": 1,
+        "small": 1,
+        "update": 1,
+        "use": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update",
+      "total": 10
+    },
+    "plausible_false_material": {
+      "counts": {
+        "before": 1,
+        "check": 1,
+        "clarification": 1,
+        "correction": 1,
+        "for": 1,
+        "heads": 1,
+        "note": 1,
+        "small": 1,
+        "update": 1,
+        "use": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update",
+      "total": 10
+    },
+    "true_non_material": {
+      "counts": {
+        "before": 1,
+        "check": 1,
+        "clarification": 1,
+        "correction": 1,
+        "for": 1,
+        "heads": 1,
+        "note": 1,
+        "small": 1,
+        "update": 1,
+        "use": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update",
+      "total": 10
+    },
+    "valid_material": {
+      "counts": {
+        "before": 1,
+        "check": 1,
+        "clarification": 1,
+        "correction": 1,
+        "for": 1,
+        "heads": 1,
+        "note": 1,
+        "small": 1,
+        "update": 1,
+        "use": 1
+      },
+      "share": 0.1,
+      "top_count": 1,
+      "top_value": "update",
+      "total": 10
+    }
+  },
+  "gates": [
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_unigram_share",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_bigram_share",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "class_exclusive_first_unigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_bigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_trigram",
+      "passed": true
+    },
+    {
+      "detail": "all wrappers span >=2 classes",
+      "name": "cross_class_wrapper_pooling",
+      "passed": true
+    },
+    {
+      "detail": "1.049 <= 1.35",
+      "name": "class_mean_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "1.281 <= 2.00",
+      "name": "quartet_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "template_family_share",
+      "passed": true
+    },
+    {
+      "detail": ">= 3 per class",
+      "name": "template_family_distinct_per_class",
+      "passed": true
+    },
+    {
+      "detail": "ok",
+      "name": "template_family_names_do_not_encode_class",
+      "passed": true
+    },
+    {
+      "detail": "unique",
+      "name": "wording_pattern_unique_per_row",
+      "passed": true
+    },
+    {
+      "detail": {
+        "delimiter_confusion": 1,
+        "fake_errata": 1,
+        "fake_evaluator": 1,
+        "format_attack": 1,
+        "goal_hijack": 1,
+        "indirect_injection": 2,
+        "instruction_override": 1,
+        "policy_conflict": 1,
+        "role_reassignment": 1
+      },
+      "name": "mo_subtype_count",
+      "passed": true
+    },
+    {
+      "detail": {
+        "not_applicable": 4,
+        "unresolved": 6
+      },
+      "name": "mo_evidence_status_count",
+      "passed": true
+    },
+    {
+      "detail": "0.200 <= 0.35",
+      "name": "mo_subtype_share",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "tnm_use_signature_never_noticed_branch",
+      "passed": true
+    },
+    {
+      "detail": {
+        "additive_state": 3,
+        "external_state_change": 1,
+        "input_revision": 2,
+        "relation_revision": 2,
+        "target_revision": 2
+      },
+      "name": "vm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "4/10",
+      "name": "vm_additive_fraction",
+      "passed": true
+    },
+    {
+      "detail": "all VM rows carry derivation evidence",
+      "name": "vm_independently_solved_updated_answer",
+      "passed": true
+    },
+    {
+      "detail": {
+        "false_aggregation": 1,
+        "false_expected_behaviour": 1,
+        "false_precondition": 2,
+        "false_relation": 1,
+        "false_restated_given": 2,
+        "false_state_fact": 3
+      },
+      "name": "pfm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "all PFM rows carry unique-solution derivation evidence",
+      "name": "pfm_substitute_and_solve_unique",
+      "passed": true
+    },
+    {
+      "detail": "no cue-proximate answer leak detected",
+      "name": "non_mo_update_does_not_reveal_final_answer",
+      "passed": true
+    },
+    {
+      "detail": "no collisions",
+      "name": "pfm_mo_signature_not_equal_paired_vm_answer",
+      "passed": true
+    },
+    {
+      "detail": "both proposition/directive in every class",
+      "name": "speech_act_both_values_per_class",
+      "passed": true
+    },
+    {
+      "detail": "0.575 <= 0.60",
+      "name": "surface_classifier_binary_label",
+      "passed": true
+    },
+    {
+      "detail": "0.300 <= 0.40",
+      "name": "surface_classifier_four_way_class",
+      "passed": true
+    },
+    {
+      "detail": "balanced where authoring data exists",
+      "name": "label_balance_within_strata",
+      "passed": true
+    },
+    {
+      "detail": "no prefix-citing updates",
+      "name": "trace_references_bound_when_present",
+      "passed": true
+    },
+    {
+      "detail": "rows rely on run-level trace packages",
+      "name": "no_embedded_row_trace_blocks",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "restored_factor_fields_present",
+      "passed": true
+    }
+  ],
+  "hard_gate_failures": [],
+  "label_counts": {
+    "ACCEPT": 20,
+    "DO_NOT_ACCEPT": 20
+  },
+  "mo_evidence_counts": {
+    "not_applicable": 4,
+    "unresolved": 6
+  },
+  "mo_subtype_counts": {
+    "delimiter_confusion": 1,
+    "fake_errata": 1,
+    "fake_evaluator": 1,
+    "format_attack": 1,
+    "goal_hijack": 1,
+    "indirect_injection": 2,
+    "instruction_override": 1,
+    "policy_conflict": 1,
+    "role_reassignment": 1
+  },
+  "pfm_shape_counts": {
+    "false_aggregation": 1,
+    "false_expected_behaviour": 1,
+    "false_precondition": 2,
+    "false_relation": 1,
+    "false_restated_given": 2,
+    "false_state_fact": 3
+  },
+  "review_state": {
+    "draft_claude_review_pending": 40
+  },
+  "row_count": 40,
+  "rows_with_never_noticed_branch": [
+    "smoke10_gsm8k_000_true_non_material",
+    "smoke10_gsm8k_002_true_non_material",
+    "smoke10_gsm8k_002_malicious_override",
+    "smoke10_gsm8k_003_true_non_material",
+    "smoke10_gsm8k_003_malicious_override",
+    "smoke10_gsm8k_006_true_non_material",
+    "smoke10_gsm8k_009_true_non_material",
+    "smoke40_plan_blocks_005_true_non_material",
+    "smoke40_plan_blocks_005_plausible_false_material",
+    "smoke40_plan_blocks_005_malicious_override",
+    "smoke40_plan_grid_006_true_non_material",
+    "smoke40_plan_grid_006_plausible_false_material",
+    "smoke40_plan_grid_006_malicious_override",
+    "smoke40_plan_delivery_007_true_non_material",
+    "smoke40_plan_delivery_007_plausible_false_material",
+    "smoke40_plan_delivery_007_malicious_override",
+    "smoke40_plan_door_008_true_non_material",
+    "smoke40_plan_door_008_plausible_false_material",
+    "smoke40_plan_door_008_malicious_override",
+    "smoke40_plan_crate_009_true_non_material",
+    "smoke40_plan_crate_009_plausible_false_material",
+    "smoke40_plan_crate_009_malicious_override"
+  ],
+  "source_count": 10,
+  "source_family_counts": {
+    "gsm8k": 20,
+    "planning_blocks": 4,
+    "planning_crate": 4,
+    "planning_delivery": 4,
+    "planning_door": 4,
+    "planning_grid": 4
+  },
+  "stratum_label_balance": {
+    "domain": {
+      "details": {
+        "math": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "balanced": true
+        },
+        "planning": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "interrupt_position_tertile": {
+      "detail": "generation_rules.md section 5 moves interrupt_position to runtime manifest",
+      "passed": true,
+      "status": "not_applicable_at_authoring_time"
+    },
+    "source_family": {
+      "details": {
+        "gsm8k": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "balanced": true
+        },
+        "planning_blocks": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "planning_crate": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "planning_delivery": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "planning_door": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "planning_grid": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "speech_act": {
+      "details": {
+        "directive": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "balanced": true
+        },
+        "proposition": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "update_length_tertile": {
+      "details": {
+        "tertile_1": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "balanced": true
+        },
+        "tertile_2": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "tertile_3": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 7,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "wrapper": {
+      "details": {
+        "Before continuing,": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Check:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Clarification:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Correction:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "For this run,": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Heads up:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Note:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Small correction:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Update:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "Use this clarification:": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    }
+  },
+  "surface_classifier_accuracies": {
+    "binary_label": {
+      "accuracy": 0.575,
+      "correct": 23,
+      "folds": 5,
+      "total": 40
+    },
+    "four_way_class": {
+      "accuracy": 0.3,
+      "correct": 12,
+      "folds": 5,
+      "total": 40
+    }
+  },
+  "tnm_hint_strength_counts": {
+    "corroborating": 6,
+    "redundant": 4
+  },
+  "trace_run_counts": {
+    "<none>": 20,
+    "qwen3_8b_initial_20260905": 20
+  },
+  "unique_template_families": 4,
+  "unique_update_texts": 40,
+  "unique_wording_patterns": 40,
+  "update_length_summary_by_class": {
+    "malicious_override": {
+      "count": 10,
+      "max": 111,
+      "mean": 102.3,
+      "min": 89
+    },
+    "plausible_false_material": {
+      "count": 10,
+      "max": 114,
+      "mean": 97.5,
+      "min": 90
+    },
+    "true_non_material": {
+      "count": 10,
+      "max": 107,
+      "mean": 99.9,
+      "min": 92
+    },
+    "valid_material": {
+      "count": 10,
+      "max": 113,
+      "mean": 99.4,
+      "min": 92
+    }
+  },
+  "validator_result": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "--source-groups",
+      "data/smoke_40/source_groups.jsonl",
+      "--rows",
+      "data/smoke_40/semantic_rows.jsonl",
+      "--review-responses",
+      "data/smoke_40/review_responses.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "exit_code": 1,
+    "stderr": [
+      "data/smoke_40/semantic_rows.jsonl:1: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:1: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:1: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:2: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:2: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:2: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:3: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:3: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:3: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:4: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:4: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:4: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:5: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:5: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:5: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:6: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:6: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:6: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:7: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:7: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:7: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:8: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:8: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:8: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:9: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:9: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:9: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:10: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:10: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:10: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:11: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:11: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:11: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:12: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:12: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:12: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:13: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:13: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:13: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:14: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:14: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:14: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:15: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:15: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:15: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:16: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:16: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:16: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:17: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:17: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:17: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:18: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:18: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:18: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:19: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:19: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:19: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:20: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:20: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:20: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:21: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:21: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:21: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:22: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:22: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:22: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:23: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:23: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:23: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:24: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:24: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:24: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:25: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:25: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:25: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:26: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:26: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:26: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:27: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:27: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:27: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:28: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:28: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:28: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:29: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:29: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:29: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:30: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:30: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:30: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:31: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:31: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:31: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:32: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:32: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:32: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:33: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:33: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:33: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:34: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:34: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:34: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:35: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:35: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:35: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:36: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:36: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:36: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:37: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:37: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:37: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:38: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:38: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:38: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:39: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:39: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:39: verification.status must be 'verified'",
+      "data/smoke_40/semantic_rows.jsonl:40: missing required field 'trace'",
+      "data/smoke_40/semantic_rows.jsonl:40: verification.verifier_id must be P1..P8",
+      "data/smoke_40/semantic_rows.jsonl:40: verification.status must be 'verified'"
+    ],
+    "stdout": []
+  },
+  "vm_additive_fraction": 0.4,
+  "vm_shape_counts": {
+    "additive_state": 3,
+    "external_state_change": 1,
+    "input_revision": 2,
+    "relation_revision": 2,
+    "target_revision": 2
+  }
+}

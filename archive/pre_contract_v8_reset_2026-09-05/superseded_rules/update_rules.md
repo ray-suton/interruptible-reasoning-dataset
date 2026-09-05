@@ -1,5 +1,18 @@
 # Update Rules For Dataset Curation
 
+> **SUPERSEDED IN PART — read `generation_rules.md` first.**
+>
+> Owner decisions of 2026-09-05 override three rules below. Where this file and
+> `generation_rules.md` disagree, `generation_rules.md` governs:
+>
+> | This file says | Now governed by |
+> | --- | --- |
+> | "PFM should usually be a false twin of TNM" (§Balancing Rules) | **[Q-D2]** VM operates on the premises, PFM only on their consequences. Twinning is structural (shared target space), not surface-level. `generation_rules.md` §2.3, §3.4a |
+> | `Confirmation:` as the safe TNM default (§Current Project Implication) | **[Q-D1]** The framing-wrapper vocabulary is dropped entirely; balance syntactic form instead. `generation_rules.md` §3.4 |
+> | `false_restated_given` as a PFM shape (§Good PFM Targets) | **[Q-D2]** Removed from PFM — a false claim about a stated input is an unauthorized attempt at a premise, not a false consequence. |
+>
+> Everything else here remains current.
+
 Status: working curation guide
 Owner: P1
 Scope: rules for generating the four primary update kinds
@@ -806,6 +819,7 @@ Balance across classes:
 - answer format;
 - where the update appears relative to the prefix.
 
+<!-- SUPERSEDED by [Q-D2]; see generation_rules.md §2.3. Retained for history. -->
 PFM should usually be a false twin of TNM. It may be paired with VM only when
 the authority or update-operation difference is explicitly visible to the model
 and is itself under study. TNM should not always begin with "Confirmation"
@@ -852,6 +866,7 @@ Use these as the compact class decision rules:
 ## Current Project Implication
 
 For current TNM authoring, prefer direct redundant/corroborating confirmations
+<!-- SUPERSEDED by [Q-D1]; the wrapper vocabulary is dropped. See generation_rules.md §3.4. -->
 over hidden solution hints. The safest default is:
 
 ```text

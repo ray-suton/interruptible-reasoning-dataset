@@ -3,7 +3,7 @@
 `sources/` contains revision-pinned upstream records used to construct or audit
 the Stage 1 benchmark. A source snapshot is not automatically part of the
 benchmark: smoke-test selection and generated source-group files under
-`data/smoke_150/` determine which records enter the active 150-sample run. The
+`data/smoke_20/` determine which records enter the active 150-sample run. The
 former source registry was archived with the old workload scaffold.
 
 The initial `upstream_interrupt_lrm/` import contains only original problems

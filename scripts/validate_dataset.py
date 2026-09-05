@@ -44,6 +44,16 @@ REPORT_PARTITIONS = {"development", "primary", "primary_test", "robustness", "pr
 AUTHORITY_STATUSES = ("authorized", "unauthorized", "ambiguous")
 RELATIONS_TO_PRIOR_STATE = ("consistent", "supersedes", "contradicts", "unrelated")
 HINT_STRENGTHS = ("redundant", "corroborating", "compressive", "substituting")
+# v8 [AMEND §4.1]: "verified" is a claim about human review. A draft that nobody
+# has reviewed says so.
+VERIFICATION_STATUSES = ("verified", "unverified_draft")
+# v8 [Q-D2]: PFM operates on the consequences of the premises, never on a stated
+# premise. A false claim about a stated input is an unauthorized attempt at a
+# premise, not a false consequence.
+BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_claim")
+# v8 [old R3 / Q9]: the factors RQ1 is stated in terms of.
+REQUIRED_FACTOR_FIELDS = ("speech_act", "update_operation", "checkability",
+                          "relevance", "operational_action", "task_consequence")
 
 
 @dataclass(frozen=True)
@@ -219,8 +229,8 @@ def validate_source_shape(record: dict[str, Any], path: str, errors: ValidationE
     if not has_sha256(record.get("statement_sha256")):
         errors.add(path, "statement_sha256 must be 64 lowercase hex characters")
     verification = record.get("verification")
-    if isinstance(verification, dict) and verification.get("status") != "verified":
-        errors.add(path, "source verification.status must be 'verified'")
+    if isinstance(verification, dict) and verification.get("status") not in VERIFICATION_STATUSES:
+        errors.add(path, f"source verification.status must be one of {', '.join(VERIFICATION_STATUSES)}")
 
 
 def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
@@ -236,7 +246,6 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
             "split",
             "authority_policy",
             "original_answer",
-            "trace",
             "update",
             "update_variant_id",
             "update_template_family",
@@ -253,6 +262,11 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
         ),
         errors,
     )
+    # v8 [Q5]: reasoning prefixes are model- and run-specific, so a row carries
+    # no embedded trace. It references a run instead. An embedded trace is still
+    # validated if present, for rows authored under v7 or earlier.
+    if "trace" not in record and not record.get("trace_run_id"):
+        errors.add(path, "row needs either trace_run_id (v8, preferred) or an embedded trace block")
     for field in (
         "example_id",
         "task_group_id",
@@ -308,10 +322,17 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
         require_fields(verification, f"{path}.verification", ("author_id", "verifier_id", "method", "status"), errors)
         if verification.get("author_id") not in PEOPLE:
             errors.add(path, "verification.author_id must be P1..P8")
-        if verification.get("verifier_id") not in PEOPLE:
-            errors.add(path, "verification.verifier_id must be P1..P8")
-        if verification.get("status") != "verified":
-            errors.add(path, "verification.status must be 'verified'")
+        # v8: an honest draft must be representable. Before this amendment the
+        # only passing value was "verified", so a batch nobody had reviewed had
+        # to assert a review that never happened.
+        status = verification.get("status")
+        if status not in VERIFICATION_STATUSES:
+            errors.add(path, f"verification.status must be one of {', '.join(VERIFICATION_STATUSES)}")
+        if status == "verified":
+            if verification.get("verifier_id") not in PEOPLE:
+                errors.add(path, "verification.status 'verified' requires verifier_id in P1..P8")
+        elif verification.get("verifier_id") is not None:
+            errors.add(path, "verifier_id must be null unless verification.status is 'verified'")
 
 
 def validate_review_shape(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
@@ -467,6 +488,7 @@ def validate_row_semantics(record: dict[str, Any], path: str, errors: Validation
 
     validate_behaviour_signature(record, path, errors)
     validate_answer_form(record, path, errors)
+    validate_v8_row_rules(record, path, errors)
     validate_trace_reference(record, path, errors)
     validate_evidence_status(record, path, errors)
     validate_authority_relation(record, path, errors)
@@ -668,6 +690,48 @@ def validate_behaviour_signature(
                 "comply_signature.per_condition must be a non-empty list when "
                 "condition_independent is false",
             )
+
+
+def validate_v8_row_rules(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
+    """Row rules adopted in contract v8, from generation_rules.md.
+
+    Three additions over v7:
+      * a structural or engagement predicate needs all three branches, because a
+        predicate validated only on the outcomes that happen to occur confirms
+        whatever the current belief is;
+      * PFM may not target a stated premise [Q-D2];
+      * the RQ1 factor block is required, since without checkability and
+        speech_act the rows cannot answer the paper's primary question.
+    """
+    if record.get("diagnostic_class") == "plausible_false_material":
+        st = record.get("semantic_type")
+        if isinstance(st, str) and st in BANNED_PFM_SEMANTIC_TYPES:
+            errors.add(
+                path,
+                f"plausible_false_material may not use semantic_type {st!r}: PFM targets the "
+                "consequences of the premises, never a stated premise",
+            )
+
+    for field in ("use_signature", "accept_signature", "comply_signature"):
+        sig = record.get(field)
+        if not isinstance(sig, dict):
+            continue
+        if sig.get("kind") in ("structural", "engagement"):
+            branches = sig.get("branch_tests")
+            if not isinstance(branches, dict):
+                errors.add(path, f"{field} of kind {sig.get('kind')!r} requires branch_tests")
+                continue
+            missing = {"fires", "does_not_fire", "never_noticed"} - set(branches)
+            if missing:
+                errors.add(
+                    path,
+                    f"{field}.branch_tests is missing {', '.join(sorted(missing))} "
+                    "(a never_noticed branch is mandatory)",
+                )
+
+    absent = [f for f in REQUIRED_FACTOR_FIELDS if not record.get(f)]
+    if absent:
+        errors.add(path, f"missing required factor field(s): {', '.join(absent)}")
 
 
 def validate_answer_form(
