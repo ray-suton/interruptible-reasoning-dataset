@@ -66,49 +66,66 @@ def main() -> int:
     check(not [k for k, v in seen.items() if v > 1], "no source assigned twice")
     check(not set(by_id) - set(seen), "no source unassigned")
 
-    # ---- admission evidence must not overclaim ---------------------------
+    # ---- the trimmed surface: statement + rules, nothing else ------------
+    # A source record hands over the task and the guarantee that it is admitted.
+    # Everything recording how the batch was BUILT is gone (see
+    # scripts/trim_source_packages.py), because no gate ever read it: the
+    # validator, the batch audit, review_checklist, generation_rules, the
+    # schemas and label_policy contain zero references to any of these names.
+    #
+    # PRESCRIPTIVE fields stay banned for the original reason -- one suggested
+    # target or shape per source makes PFM shape predict source_family, a
+    # regularity a probe encodes instead of the disposition.
     PRESCRIPTIVE = ("candidate_pfm_family", "consequence_depth", "consequence_target",
                     "computed_pfm_target", "computed_pfm_candidates", "depth_floor_applies",
                     "pfm_host_ok", "pfm_host_checked")
+    # BUILD_RECORD fields were deleted by the trim and must not creep back: a
+    # rebuild that reintroduces one is a regression, not an improvement.
+    BUILD_RECORD = ("admission_evidence", "screening", "consequence_note",
+                    "consequence_note_basis", "carried_from", "bound_prefix_sha256",
+                    "source_admission_decision_id", "source_admission_status",
+                    "original_record_sha256", "statement_text_included",
+                    "upstream_answer_text_included", "upstream_id", "upstream_revision",
+                    "upstream_split", "source_year_basis")
+    # Required by validate_dataset.py::validate_source_shape, plus what a row
+    # copies from its source. answer_equivalence is required by §4.1 for any
+    # non-scalar answer_form -- a first draft of the trim dropped it and would
+    # have broken every planning row.
+    MUST_HAVE = ("task_group_id", "source_dataset", "source_year", "domain", "split",
+                 "recipe", "owner_id", "stable_source_id", "statement_sha256",
+                 "answer_source", "license_note", "original_answer", "verification",
+                 "statement", "answer_form", "source_family", "premise")
+
+    premises = {r.get("premise") for r in allsrc}
+    check(len(premises) == 1, f"one identical premise across the batch: {len(premises)} distinct")
+    premise = next(iter(premises)) if len(premises) == 1 else ""
+    # The premise must draw BOTH halves of the line. Stating only the guarantee
+    # would tell an author the source is safe without telling them the one thing
+    # that is still theirs to establish, which is exactly the read that produces
+    # an unscoreable PFM.
+    check("valid" in premise.lower(), "premise states what IS guaranteed")
+    check("not" in premise.lower() and "target" in premise.lower(),
+          "premise states that the PFM target is NOT established")
+    check("generation_rules.md" in premise, "premise points at the rules")
+
     for r in allsrc:
         sid = r["stable_source_id"]
         for f in PRESCRIPTIVE:
             check(f not in r, f"{sid}: prescriptive field {f} is absent")
-        ev = r.get("admission_evidence")
-        check(isinstance(ev, dict), f"{sid}: has admission_evidence")
-        if not isinstance(ev, dict):
-            continue
-        # No criterion_b / a_scoreable_target_exists any more: 43 of the 50
-        # "not demonstrated" markings recorded which pipeline the source came
-        # through, not anything about the source. What survives is the per-source
-        # warning where a candidate was actually tried and failed.
-        check("criterion_b" not in ev, f"{sid}: the criterion_b split is gone")
-        check("a_scoreable_target_exists" not in ev,
-              f"{sid}: the verified/believed flag is gone")
-        warns = "WARNING for this source" in r["consequence_note"]
-        check(warns == ("failed_candidate" in ev),
-              f"{sid}: a failed-candidate warning appears iff the evidence records one")
-        check(bool(ev.get("derivation")), f"{sid}: evidence records a derivation")
-        # Whether an executable solver exists for this source is the difference
-        # between inheriting one and writing the first one. 67 of 100 have one;
-        # 13 have no executable evidence at all. Silence would hide that.
-        sv = ev.get("solver")
-        check(isinstance(sv, dict), f"{sid}: evidence states solver availability")
-        if isinstance(sv, dict):
-            check(sv.get("available") in (True, False), f"{sid}: solver.available is a bool")
-            check(bool(sv.get("note")), f"{sid}: solver record says what to do")
-            if sv.get("available"):
-                check(bool(sv.get("gold")), f"{sid}: an available solver says how to call it")
-        # No note may assert verification. The notes state admission -- a design
-        # fact about why the source is in the batch -- and the author verifies
-        # their own target while building the row.
-        for phrase in ("criterion (b) is met", "NOT demonstrated", "NOT yet demonstrated"):
-            check(phrase not in r["consequence_note"],
-                  f"{sid}: the note does not claim or deny verification ({phrase!r})")
-        check(r["screening"].get("consequence_confirmed") is False,
-              f"{sid}: consequence_confirmed is False -- no human has reviewed this")
+        for f in BUILD_RECORD:
+            check(f not in r, f"{sid}: build-record field {f} was trimmed and stays gone")
+        for f in MUST_HAVE:
+            check(f in r, f"{sid}: keeps {f}")
+        check(r.get("premise") == premise, f"{sid}: carries the batch premise verbatim")
+        # A non-scalar answer cannot be string-compared, so §4.1 requires an
+        # equivalence rule. Checked on both branches: present iff non-scalar.
+        non_scalar = r.get("answer_form") != "scalar"
+        check(non_scalar == ("answer_equivalence" in r),
+              f"{sid}: answer_equivalence present iff answer_form is non-scalar")
         check(r["verification"]["status"] == "unverified_draft",
               f"{sid}: verification.status is unverified_draft")
+        check(r["verification"].get("verifier_id") is None,
+              f"{sid}: verifier_id is null -- no person has reviewed this")
 
     # ---- trace pointers ---------------------------------------------------
     cache: dict[str, dict] = {}

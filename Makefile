@@ -20,6 +20,7 @@ pycheck:
 		scripts/build_smoke_100.py \
 		scripts/check_source_traces.py \
 		scripts/selfcheck_batch.py \
+		scripts/trim_source_packages.py \
 		scripts/math500_consequences.py \
 		scripts/propose_consequences.py \
 		scripts/propose_math500.py \
@@ -53,6 +54,7 @@ batch-rebuild:
 	python3 scripts/check_source_traces.py \
 		data/smoke_100/source_groups_math.jsonl \
 		data/smoke_100/source_groups_planning.jsonl
+	python3 scripts/trim_source_packages.py --check
 	python3 scripts/selfcheck_batch.py
 
 # Row-level validation.  make validate BATCH_DIR=data/smoke_20

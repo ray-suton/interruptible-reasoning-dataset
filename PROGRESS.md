@@ -70,8 +70,10 @@
   admission note; target, shape and depth are the author's. Neither the validator
   nor the audit ever read the removed fields, and one suggestion per source made
   PFM shape predict `source_family`. Derivations are kept as
-  `admission_evidence`, which records what was demonstrated: a scoreable target
-  is *verified* on 50 of 100 and *believed but untested* on the other 50.
+  `admission_evidence`. That record has since been **deleted** along with the
+  rest of the build metadata — see `scripts/trim_source_packages.py`; a source
+  now carries the task and one `premise`, and the author establishes their own
+  target.
 - **An impossible planning initial state was caught by independent review** —
   one instance held a block that was also on the table, and screening "solved" a
   task that cannot exist. `planning_domains` now refuses inconsistent initial

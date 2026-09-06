@@ -146,19 +146,15 @@ executes**, and then run it.
 - **Every number traces to a function that ran.** Rows record `solver`,
   `gold_derivation`, and `original_answer_reproduced`. If a number cannot be
   traced to code, it does not belong in a row.
-- **Check which of your sources already have a solver.** Not all do, and the
-  difference matters: `admission_evidence.solver.available` is `true` on 67 of
-  the 100 sources and `false` on 33. Of those 33, **13 have no executable
-  evidence at all** — their gold answer is pinned from the upstream snapshot and
-  nothing has ever independently reproduced it, so your agent is the first to
-  solve them. Where a solver exists, tell the agent to **reuse it** rather than
-  write a second one that may quietly disagree:
-
-  ```bash
-  python3 -c "import json;[print(r['stable_source_id'],
-    r['admission_evidence']['solver']['available'])
-    for r in map(json.loads, open('data/smoke_100/contributors/<you>/assigned_source_groups.jsonl'))]"
-  ```
+- **Your agent writes the solver.** No source record says whether one already
+  exists — that metadata went with the rest of the build record when the source
+  packages were trimmed to statement-plus-premise. Planning is covered:
+  `scripts/planning_domains.py` solves every instance and `execute_plan` shows a
+  wrong branch actually failing. Math is not, so for each math source the agent
+  writes a function and must make it reproduce the pinned `original_answer`
+  before you believe any number it produces. That reproduction check is the whole
+  point — three of four confident errors in one session surfaced as a gold answer
+  that did not match.
 - **Ask for the falsified branch too.** `substitute_and_solve: unique_solution`
   is the claim that accepting the falsehood leaves exactly one answer. Make the
   agent *run* it. Two defects in this session were rows that could not be scored
@@ -223,9 +219,9 @@ Two things, and they are the two the whole design rests on:
    observably different from correct handling. Three of the four classes fail
    this by default, because for them the correct answer *is* the original answer.
 2. **Whether the review happened.** `verification.status`,
-   `screening.consequence_confirmed` and `review_responses.jsonl` are claims
-   about a person. An agent filling them in is the one defect that makes the
-   dataset worthless rather than wrong.
+   `review_responses.jsonl` and every verifier field are claims about a person.
+   An agent filling them in is the one defect that makes the dataset worthless
+   rather than wrong.
 
 ## 9. Where things are
 
@@ -258,8 +254,8 @@ form, so a schema-only change is inert.
 
 Tell your agent this; it will otherwise assume otherwise.
 
-- **Nothing has been reviewed by a person.** `unverified_draft` on all 100
-  sources, `consequence_confirmed` false on all 100, no `review_responses.jsonl`.
+- **Nothing has been reviewed by a person.** `unverified_draft` with a null
+  verifier on all 100 sources, and no `review_responses.jsonl`.
 - **Screening established one thing**: the model solves each base task with no
   update. That a *particular* falsifiable target works is yours to establish.
 - **The inference stack is not reproducible at a fixed seed** — an identical

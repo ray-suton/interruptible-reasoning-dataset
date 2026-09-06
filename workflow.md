@@ -58,9 +58,9 @@ Four things you must never do. Each has happened here and each was expensive.
 `unverified_draft` with a null verifier, and the validator accepts that state
 precisely so an honest draft need not assert a review that never happened. If you
 find yourself reaching for `verified` to make a check pass, stop and report
-instead. Same for `screening.consequence_confirmed` and
-`review_responses.jsonl`: those are claims about a **person**, and you filling
-them in is the one defect that makes the dataset worthless rather than wrong.
+instead. Same for `review_responses.jsonl` and any verifier field: those are
+claims about a **person**, and you filling them in is the one defect that makes
+the dataset worthless rather than wrong.
 
 **Never attribute a decision to your supervisor that they did not make.** Agents
 on this repository have produced reports saying *"Registering your call"* and
@@ -133,53 +133,45 @@ a probe separates it on topicality instead of on the decision.
                     └──────────────────────────────────────┘
 ```
 
-**1. Check your sources are screened.** Admission has **two** criteria, and only
-one of them was actually established by the screening run:
+**1. Your source file is the whole handover.** Every record carries one
+`premise`, identical across the batch, and it draws the only line that matters:
 
-- **(a) the model solves the base task with no update** -- `screening.status`,
-  which is `passed` on every source in this batch.
-- **(b) the source has a falsifiable consequence** -- recorded as prose in
-  `admission_evidence` (`derivation`, `method`, and `verified_by` where a script
-  demonstrated one), **not** as a per-source verdict. There is deliberately no
-  `demonstrated` / `not_demonstrated` field: the earlier split recorded which
-  pipeline a source came through rather than anything about the source, and
-  `scripts/selfcheck_batch.py` now asserts its absence.
+> What we hand you is valid and is **not yours to re-establish** — the statement
+> is admitted, `original_answer` is the pinned gold answer, and the target model
+> solves the task with no update. What we do **not** hand you is a PFM target:
+> no consequence of any source has been verified as falsifiable.
 
-So **(b) is never pre-established for the target you pick.** Nobody has
-substituted your false value and re-solved to a different unique answer:
-`verified_by` is null on 43 of 100, and where it is set it names the target
-*that script* tried, not yours. **You do that before you author the PFM**, on
-every source. Seven sources additionally carry
-`admission_evidence.failed_candidate` and a matching `WARNING for this source`
-in the note, recording a target that was tried and found unscoreable — read it
-before choosing yours. Never author
-against an unscreened source — if the model cannot solve the problem, a failure
-cannot be attributed to update handling.
+Do not re-derive, re-screen or second-guess the first half. Everything recording
+*how* the batch was built — admission evidence, screening records, the old
+consequence note — is deleted. No gate ever read any of it, and it invited the
+mistake the second half exists to prevent: treating a source as though a
+falsifiable target arrived with it.
 
-**2. Read each source's `consequence_note`, then confirm it — or write it.**
-It names the derivable fact your PFM should falsify, chosen at selection time so
-you need not rediscover it — but `screening.consequence_confirmed` is false until
-a person checks it, and the note's author is not that person. Every source now carries one, and `consequence_note_basis` says what stands
-behind it: `computed` (target and depth computed from the source's own
-`<<expr=result>>` chain), `derived` (from the executed gold plan), or `authored`
-(hand-derived, with a solver that reproduces the gold answer and a re-solve
-proving the falsified target changes it).
+Never author against a source outside your assignment. If the model cannot solve
+the base problem a failure cannot be attributed to update handling, and the first
+half of the premise is what buys you that.
 
-**A note establishes that a valid target EXISTS. It does not choose yours.**
-Nothing in a source group names a shape or a target: every prescriptive field
-was removed, because one suggestion per source made PFM shape predict
-`source_family` — a regularity a probe encodes instead of the disposition, and
-`scripts/selfcheck_batch.py` asserts those fields stay absent. The one count
-that survives is `admission_evidence.qualifying_targets_at_depth_2_or_more` on
-the 20 gsm8k sources, which says *how many* chain values clear the floor (1 to
-4) without naming them. You declare the shape you actually
-wrote. Falsify whatever consequence clears the depth floor and record which you
-chose. What is *not* yours to vary: the premise/consequence boundary
-(`[Q-D2]`) and the depth floor (`[Q-D5]`).
+**2. Choose your own PFM target, and prove it.** Nothing in a source group names
+a target or a shape. Every prescriptive field was removed and
+`scripts/selfcheck_batch.py` asserts they stay absent, because one suggestion per
+source makes PFM shape predict `source_family` — a regularity a probe encodes
+instead of the disposition.
 
-Whether a *person* has checked any note is the separate
-`screening.consequence_confirmed`, and it is false on all 100. Your batch README says how many of each you
-hold and why some were left empty rather than guessed. Then read the prefix itself. Whether it has **already** computed your target
+So the work is yours, on every source, in three steps:
+
+1. Pick a consequence that clears the depth floor where the floor applies.
+2. Substitute the false value and **re-solve**.
+3. Confirm exactly one different answer follows. Run it; do not assert it.
+
+"Leaves the answer unchanged" and "has no answer" are both defects and both look
+fine on the page. `audit_batch.py` requires
+`answer_derivation.substitute_and_solve == "unique_solution"` on every PFM row,
+so this is enforced rather than advised.
+
+What is *not* yours to vary: the premise/consequence boundary (`[Q-D2]`) and the
+depth floor (`[Q-D5]`).
+
+Then read the prefix itself. Whether it has **already** computed your target
 changes what the row measures: if it has, your PFM contradicts something the
 model just derived — sometimes something it explicitly re-checked; if it has not,
 it front-runs work the model has yet to do. Those are different rows, and no
@@ -242,9 +234,11 @@ said 102 where the truth is 100, a model that genuinely accepts the falsehood
 outputs 100, does not match, and is scored as having **resisted**. The row then
 measures the exact opposite of what it claims, and no gate anywhere disagrees.
 
-Some sources already have a solver — check `admission_evidence.solver.available`
-and reuse it rather than writing a second one that may quietly disagree.
-Thirteen have none at all; you are the first to solve those.
+No source tells you whether a solver exists for it; that record went with the
+rest of the build metadata. `scripts/planning_domains.py` solves every planning
+instance — `solve_bfs` for a gold plan, `execute_plan` to show a wrong branch
+actually fails. For math, write your own and make it reproduce the pinned
+`original_answer` before you trust a single number it returns.
 
 **5. STOP AND REPORT after your first five sources.** Do not author all twenty
 before anyone looks. Twenty sources of a repeated mistake is twenty to redo; five
@@ -483,9 +477,9 @@ hash-locked file, and why this document points rather than restates.
 **Before authoring**
 
 - [ ] Read §1's documents, including `scripts/review_checklist.py`
-- [ ] Every assigned source is `screening.status: passed`
-- [ ] For each source: read the `consequence_note` and confirmed it, or — where
-      `consequence_status` is `not_authored` — derived and recorded one
+- [ ] Read the `premise` on your source records and understood both halves
+- [ ] For each source: chose a PFM target yourself, substituted it, re-solved,
+      and confirmed exactly one different answer — run, not asserted
 
 **While authoring**
 
