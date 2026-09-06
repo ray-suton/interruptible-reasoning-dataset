@@ -16,8 +16,13 @@ also checked as a 40-row proxy using the existing Smoke-20 quartets: the selecte
 source set keeps the current batch audit gates passing if those quartets are used
 as the starting design.
 
-## Scope boundary
+## Current draft rows
 
-This directory currently contains source selection records only. No update rows,
-multiple-update sequences, generators, review responses, or validation report
-have been created yet.
+`scripts/author_multiple_updates.py` emits the selected 40-row draft at
+`data/multiple_updates/semantic_rows.jsonl`: one VM, TNM, PFM and MO row for
+each selected source. The rows are single-update components for the
+multiple-update smoke design; sequence composition has not been generated yet.
+
+`data/multiple_updates/validation_report.json` is the current batch-audit report.
+All rows remain `verification.status: unverified_draft`; no independent review
+or human review is recorded here.
