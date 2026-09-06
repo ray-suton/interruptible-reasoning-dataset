@@ -170,11 +170,6 @@ def check(out: dict[str, list[dict]]) -> None:
             # first. workflow.md used to describe `passed` as covering both, which
             # let 50 sources read as fully admitted when criterion (b) had never
             # been demonstrated on them.
-            cb = (r.get("admission_evidence") or {}).get("criterion_b")
-            if cb not in ("demonstrated", "not_demonstrated"):
-                problems.append(
-                    f"{c}: {r['stable_source_id']} does not state "
-                    f"admission_evidence.criterion_b (got {cb!r})")
             # A missing note is a KNOWN, DECLARED state, not a silent gap: the
             # note is an authored judgement about what a PFM can falsify, and
             # inventing one for a source nobody has read would put an

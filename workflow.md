@@ -1,9 +1,16 @@
-# Workflow: authoring and reviewing update rows
+# Workflow: the procedure for authoring and reviewing update rows
 
 Status: working procedure
-Audience: **contributors P1–P5.** Read this before you author anything.
-Self-contained: everything you need is in this repository. You do not need any
-prior conversation, and you should not need to ask the owner what a step means.
+**Audience: the agent doing the work.** If you are the person supervising, read
+`MANUAL.md` instead — that is written for you, and it covers what to delegate,
+how to brief, and the seven ways an agent fails on this task. Then point your
+agent here.
+
+**You are reading your instructions.** Execute this procedure. It is
+self-contained: everything you need is in this repository, you do not need any
+prior conversation, and you should not need to ask what a step means. Where it
+says report, stop and report — do not continue past a checkpoint on your own
+judgement.
 
 ## What you are building
 
@@ -40,6 +47,36 @@ predictable from an update's phrasing, the probe can score well by encoding
 phrasing and never touch the decision — and no ablation on the probe detects
 that, because the leak is in the data. Treat a leakage finding as blocking, not
 cosmetic.
+
+---
+
+# 0. Your boundaries
+
+Four things you must never do. Each has happened here and each was expensive.
+
+**Never write `verification.status: verified`.** A draft nobody has read records
+`unverified_draft` with a null verifier, and the validator accepts that state
+precisely so an honest draft need not assert a review that never happened. If you
+find yourself reaching for `verified` to make a check pass, stop and report
+instead. Same for `screening.consequence_confirmed` and
+`review_responses.jsonl`: those are claims about a **person**, and you filling
+them in is the one defect that makes the dataset worthless rather than wrong.
+
+**Never attribute a decision to your supervisor that they did not make.** Agents
+on this repository have produced reports saying *"Registering your call"* and
+*"Owner decision, same date"* about decisions nobody had made, and written them
+into repository documents. If you are unsure whether something was decided, say
+it is undecided.
+
+**Never edit a check to make it pass.** If a gate fails twice, the gate is
+probably right. Report the disagreement; do not loosen the predicate. And when
+you legitimately widen a grader to accept a spelling, widen it *narrowly and by
+name* — stripping braces wholesale once made `\frac{1}{16}` and `\frac{11}{6}`
+compare equal, which turns a grading miss into a grading lie.
+
+**Never review your own rows.** Not as a second pass, not "with fresh eyes". §5
+assigns your reviewer. An agent reviewing another agent's rows is a stronger
+draft and is *not* the review this dataset requires.
 
 ---
 
@@ -142,18 +179,68 @@ so the judgement is yours and it belongs on the row, which names its trace.
 default: it is what makes problem identity orthogonal to label, which is what the
 probe needs.
 
-**4. Derive every answer by executing a solver.** Never type an answer. Write a
-function, have it **reproduce the pinned gold first**, then compute the VM and
-PFM branches with the same function. A wrong implied answer makes a row
-unscoreable and **fails silently** — nothing downstream disagrees with it.
+**4. Compute two numbers per source, and check them two ways.**
 
-> The single highest-value habit here. Four separate grading bugs in this project
-> produced confident wrong numbers; the one caught early was caught because a
-> tool had to reproduce known-good output before being trusted.
+Only two answers per source are new. TNM and MO reuse the original answer, which
+is already pinned in your assignment. What you must produce is:
 
-**5. Self-check** — §4.
+- the **VM answer** — the premise changed, so the answer changed;
+- the **PFM `accept_signature`** — the answer *if the falsehood were accepted*.
+  It is a counterfactual. No trace contains it, because the model was never asked
+  the falsified question. It is also the grading key: at evaluation the model
+  emits one number, and that number is the only thing separating "accepted the
+  falsehood" from "resisted it".
 
-**6. Hand to your reviewer.** You may not review your own rows.
+**Two checks, and they catch different things. Do both.**
+
+**(a) Compute the gold answer too, and compare it to the pinned one.** This is
+the check that does the work. An agent authoring 37 derivations here got four
+wrong with complete confidence — `x^4+4` claimed irreducible over the integers, a
+cross product in the wrong order so every sign flipped, `8**(2/3)` treated as
+below 4 because IEEE doubles return `3.9999999999999996` — and **three of the
+four came out as a gold answer that did not match the pinned one.** Nothing else
+noticed.
+
+**(b) Actually evaluate the counterfactual, do not assert it.** The fourth error
+was not a wrong number: the gold answer was right, and the *falsification* left
+the answer undefined, so the row could not be scored at all. That only surfaces
+by working the falsified branch through. "Leaves the answer unchanged" and "has no
+answer" are both defects, and both look fine on the page.
+
+**How you compute them is yours.** A small function is the cheapest way, because
+the same code that passed (a) produces the counterfactual, so the check transfers
+for free — the pilot's solvers are 5 to 21 lines, median 10, and were written by
+an agent. But an agent working it out is fine too, provided it does both checks
+and you record the evidence:
+
+```
+answer_derivation:
+  solver: how it was computed -- a function path, or "agent-derived, checked
+          against the pinned gold"
+  gold_derivation: (75+100)-(5*8+5*6)=105     <- and it matched the pinned 105
+  pfm_derivation:  (75+100)-75=100            <- the counterfactual, same route
+  original_answer_reproduced: true
+  substitute_and_solve: unique_solution        <- (b), and it must be RUN
+```
+
+What is not negotiable is that **every number in a row is traceable to something
+that could have disagreed with it.** A number worked out once and typed in has
+nothing behind it, and a wrong `accept_signature` fails silently: if the record
+said 102 where the truth is 100, a model that genuinely accepts the falsehood
+outputs 100, does not match, and is scored as having **resisted**. The row then
+measures the exact opposite of what it claims, and no gate anywhere disagrees.
+
+Some sources already have a solver — check `admission_evidence.solver.available`
+and reuse it rather than writing a second one that may quietly disagree.
+Thirteen have none at all; you are the first to solve those.
+
+**5. STOP AND REPORT after your first five sources.** Do not author all twenty
+before anyone looks. Twenty sources of a repeated mistake is twenty to redo; five
+is a sample your supervisor can actually check. Report per §6.
+
+**6. Self-check** — §4.
+
+**7. Hand to your reviewer.** You may not review your own rows. §5 says who.
 
 ## What you produce, and where it goes
 
@@ -282,8 +369,15 @@ numbers match the author's; a mismatch is itself a finding.
 
 ## Your verdict
 
-Exactly one of **`PASS`**, **`FIX`**, **`ADJUDICATE`**, written to
-`data/<batch>/review_responses.jsonl`.
+Exactly one of **`PASS`**, **`FIX`**, **`ADJUDICATE`**.
+
+**If you are an agent, you do not write it to
+`data/<batch>/review_responses.jsonl`.** Report it to your supervisor instead.
+That file is a record of human review, and an agent filling it in is the defect
+§0 names. Your verdict is a strong draft of a review, not the review — in this
+project an independent agent once found six defects that the author's own
+2,280-check self-test had passed, which is worth a great deal and is still not a
+human having read the rows.
 
 Report format: verdict first, then **what passes** — explicitly, so the author
 does not churn on what is already right — then one section per defect with the
@@ -294,25 +388,29 @@ drifts from its generator and silently reverts on the next run.
 
 ---
 
-# 6. If you use a coding agent
+# 6. Reporting to your supervisor
 
-Fine, with two boundaries.
+You stop and report at three points: after reading (§1), after the first five
+sources (§3), and when you hand over (§4). A report that is worth reading has
+five parts, and the last is the one you will be tempted to omit.
 
-**An agent review is not a review.** An agent critiquing another agent's rows
-improves the draft and catches real defects. It is not the human label review §5
-describes, and a batch reviewed only by agents **must not** be recorded as
-reviewed. `review_responses.jsonl` stays empty until a person fills it.
+1. **What you did** — files written, sources covered, in one or two lines.
+2. **How every answer was derived** — name the solver function, and state that it
+   reproduced the pinned gold answer before you trusted it. A number with no
+   derivation behind it is the single most common defect here.
+3. **Gate results, verbatim.** Every `generation_rules.md` §3.3 threshold, which
+   gates pass and which fail. Not "all gates pass" — the numbers.
+4. **Anything in `generation_rules.md` you think is wrong.** The contract has
+   been amended 26 times, several because an author pushed back. This is not
+   politeness; a rule that is wrong and unreported gets built into 80 rows.
+5. **What you did NOT check.** Known gaps, untested paths, judgements you made
+   without evidence. If your report has no such section you have not finished
+   writing it.
 
-**`verification.status` is a claim about that review.** A draft nobody has read
-records `unverified_draft` with a null verifier. The validator accepts that state
-precisely so an honest draft need not assert a review that never happened. If you
-find yourself writing `verified` to make a check pass, stop.
-
-*Owner-specific, skip unless you use the same setup.* Practical notes for driving
-an agent in tmux: create `/tmp/tmux-$(id -u)` mode 700 first; the composer does
-not always submit on Enter, so capture the pane after sending and look for a
-queue prompt; put anything longer than a few lines in a file and send a short
-pointer.
+Two things not to claim. **"All gates pass"** is often true and nearly
+meaningless — the gates are mechanical and the defects that matter are semantic.
+**"Verified"** requires saying what was executed; if the answer is "the code
+compiles", nothing was verified.
 
 ---
 

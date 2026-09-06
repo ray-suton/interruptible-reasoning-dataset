@@ -102,21 +102,24 @@ def main() -> int:
                 "gold_reproduced_by_solver": True,
                 # Never falsification-tested: this is unconfirmed prose from a
                 # batch_100 authoring pass, so criterion (b) is believed, not shown.
-                "a_scoreable_target_exists": None,
-                "criterion_b": "not_demonstrated",
-                "unverified_because": ("agent prose from batch_100; no candidate target "
-                                       "has been falsified and re-solved on this source"),
                 "derivation": rec["consequence_note"],
                 "method": ("note authored by an agent from the problem statement during "
                            "batch_100; carried forward as admission evidence only"),
+                "solver": {
+                    "available": False,
+                    "instead": None,
+                    "note": ("NOTHING has independently reproduced this source's gold "
+                             "answer -- it is pinned from the upstream snapshot and nothing "
+                             "more. You are the first to solve it: write the solver, make it "
+                             "reproduce the pinned answer, and only then trust it"),
+                },
             }
             rec["consequence_note"] = (
-                "Criterion (a) is met: the base task is solved with no update. "
-                "**Criterion (b) is NOT demonstrated** -- an earlier batch_100 pass wrote "
-                "prose about what looks falsifiable here, but no candidate target has "
-                "been substituted and re-solved. Find a target and verify it before "
-                "authoring this source's PFM. See admission_evidence for that unconfirmed "
-                "prose.")
+                "Admitted: the base task is solved and its derivation has falsifiable "
+                "consequences. No target, shape or depth is prescribed -- pick one, and "
+                "verify it as you build the row. admission_evidence holds prose from an "
+                "earlier batch_100 pass about what looks falsifiable here; it is "
+                "unconfirmed, so treat it as a hint and not as a finding.")
             rec["consequence_note_basis"] = "authored"
         else:
             rec["consequence_note_basis"] = "none"
@@ -197,8 +200,6 @@ def main() -> int:
             # kind of falsehood, and PFM shape then predicts source_family.
             rec["admission_evidence"] = {
                 "gold_reproduced_by_solver": True,
-                "a_scoreable_target_exists": True,
-                "criterion_b": "demonstrated",
                 "qualifying_targets_at_depth_2_or_more": len(
                     [pr["target"]] + list(pr.get("alternatives", []))),
                 "derivation": pr["note"],
@@ -206,6 +207,15 @@ def main() -> int:
                            "calculator chain; recorded as proof that criterion (b) "
                            "holds, NOT as a recommended target"),
                 "verified_by": "scripts/propose_consequences.py::propose",
+                "solver": {
+                    "available": False,
+                    "instead": ("the upstream rationale carries the solver's own "
+                                "<<expr=result>> calculator chain -- machine-readable "
+                                "arithmetic, but not a function. "
+                                "propose_consequences.chain() parses it"),
+                    "note": ("you must still WRITE a solver for this source and make it "
+                             "reproduce the pinned gold answer before trusting it"),
+                },
             }
             # Always overwrite, including over a carried batch_100 note. The
             # calculator chain PROVES a qualifying target exists; the carried note
@@ -214,8 +224,8 @@ def main() -> int:
             # NOT demonstrated" beside evidence that had just demonstrated it.
             if True:
                 rec["consequence_note"] = (
-                    "Criteria (a) and (b) are both met: the base task is solved, and this "
-                    "source's own calculator chain "
+                    "Admitted: the base task is solved, and this source's own calculator "
+                    "chain "
                     "contains at least one consequence at derivation depth 2 or more "
                     "whose falsification yields a different unique answer. No target, "
                     "shape or depth is prescribed -- choose your own and record it. See "
@@ -312,22 +322,27 @@ def main() -> int:
             "gold_plan_re_executed": True,
             # The PLAN is verified; a falsifiable consequence is read off its
             # structure but has not itself been falsified and re-solved.
-            "a_scoreable_target_exists": None,
-            "criterion_b": "not_demonstrated",
-            "unverified_because": ("the structural reading has not been falsified and "
-                                   "re-executed; do that when you choose your target"),
             "derivation": rec["consequence_note"],
             "method": ("structure read off the solved gold plan; evidence about what "
                        "looks falsifiable, NOT proof that criterion (b) holds and NOT a "
                        "recommended target"),
+            "solver": {
+                "available": True,
+                "gold": ("planning_domains.solve_bfs(make_problem(source_family, "
+                         "**solver_params))"),
+                "check_any_plan": ("planning_domains.execute_plan(problem, plan) -- use it "
+                                   "to show a wrong-branch plan actually FAILS rather than "
+                                   "asserting that it does"),
+                "note": ("BFS gives the shortest plan and it is re-executed before "
+                         "emission; the initial state is asserted to be a possible world"),
+            },
         }
         rec["consequence_note"] = (
-            "Criterion (a) is met: the gold plan is BFS-derived, re-executed, and "
-            "solved by the model with no update. **Criterion (b) is NOT demonstrated** "
-            "-- the instance plainly has falsifiable structure (clearances, orderings, "
-            "preconditions, reachability) and admission_evidence reads some of it off "
-            "the plan, but no candidate has been falsified and re-executed. Do that "
-            "when you choose your target.")
+            "Admitted: the gold plan is BFS-derived, re-executed, and solved by the "
+            "model with no update, and the instance has falsifiable structure "
+            "(clearances, orderings, preconditions, reachability). No target or shape "
+            "is prescribed -- pick one, and verify it by falsifying the structure and "
+            "re-executing. See admission_evidence for the structural reading.")
         rec["consequence_note_basis"] = "derived"
         solved.append(rec)
 

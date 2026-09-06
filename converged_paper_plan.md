@@ -158,8 +158,22 @@ on-the-fly quantization.
    classes.
 5. **Resolve engagement before computing any rate** — `observably_engaged`,
    `observably_rejected`, `not_demonstrated`. Silence is never scored as ignored.
-6. Score the behaviour signature, and compare it against the elicited
+6. **Score a scalar signature three ways, never two** — `accepted` (matches the
+   accepted-false answer), `preserved` (matches the original), `disturbed`
+   (matches neither). `disturbed` is reported on its own and never pooled with
+   `preserved`; pooling counts a derailed model as a resistant one and inflates
+   the resistance rate. Both reference values are already on every row, so this
+   costs nothing to collect. See `generation_rules.md` §2.3 [Q-D7].
+7. Score the behaviour signature, and compare it against the elicited
    disposition (RQ3).
+
+**Implementation status: this protocol is DESIGNED, not built.** Steps 1-3 exist
+(`prepare_trace_input.py`, the runner, `export_model_traces.py`). Steps 4-7 do
+not: there is no elicited-disposition harness in this repo, no engagement grader,
+and no judge. The graders that exist compare a boxed answer to a pinned one, so
+`no_update_solved` is a *screening* result and cannot be read as an acceptance
+measure. Nothing should be reported from the tooling as it stands. We are in the
+data-generation stage; this is a known and deliberate ordering, not an oversight.
 
 Constraints that hold throughout: the judge is never the model under test or its
 family; judge model, prompt and version are frozen with everything else; the
