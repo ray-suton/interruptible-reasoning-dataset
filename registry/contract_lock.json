@@ -1,9 +1,9 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 27,
-  "locked_at": "2026-09-06T14:36:09Z",
+  "version": 28,
+  "locked_at": "2026-09-06T20:02:23Z",
   "locked_by": "P1",
-  "reason": "v27: [Q-D7, owner call] score a scalar signature THREE ways, not two. PFM detection said only 'compare with the uniquely derived accepted-false branch', and engagement resolution was defined for TNM alone -- so a model answer matching NEITHER the accept_signature nor the original landed with 'not accepted' and was pooled into resistance. That counts a derailed model as a resistant one and inflates the resistance rate: the same pooling error \u00a70 forbids when it requires engagement to be resolved before any rate is computed. The three buckets are accepted (matches the accept_signature), preserved (matches the original -- then resolve engagement to split resisted from never-noticed), and disturbed (matches neither), and disturbed may never be pooled with preserved. It is evidence in its own right: a model that neither complies nor holds its answer has been affected by an update it did not accept, which is a distinct phenomenon and invisible under a two-way comparison. Costs nothing to collect -- both reference values already sit on every row, so the third bucket is the residual, needing no new field and no extra authoring. Also records the authoring consequence: one computed number per changed-answer row, not two, since the original answer is pinned. Same split applies to a scalar MO comply_signature. One review-checklist item added. No authored row is invalidated; this is a scoring rule, and every existing row already carries both reference values.",
+  "reason": "v28: teach audit_batch.source_statement the second source_record_locator spelling. It parsed only path:LINE. smoke_100's planning sources use path#FRAGMENT -- the trailing segment of a stable_source_id, arriving with content-derived planning ids -- so source_statement returned None for every one of them, all 120 planning rows landed in unresolved_sources, and the [Q-D4] lexical_overlap gate computed its ratio from the 280 math rows alone and PASSED. That gate is the only mechanical defence against MO being separable on semantic distance ('is this update about the problem at all') rather than on the accept/reject decision, so 30% of the batch was exempt from it with nothing reporting a problem. Widened narrowly and by name, per the rule that made \\frac{1}{16} and \\frac{11}{6} compare equal when a grader was loosened wholesale: two spellings are dispatched explicitly and every other malformed locator still returns None. A repeated id fragment poisons its index entry rather than letting the last record win, because silently attaching a statement to the wrong problem is worse than not resolving it. Invalidates NO authored row: this changes what the audit can measure, not what a row must contain, and the only batch with rows (smoke_20) is byte-identical afterwards -- all 38 gates unchanged, lexical_overlap ratio still 1.2176. Reviewed by the owner (P1), who is not the author of the change.",
   "files": {
     "generation_rules.md": "f5590619949411f1ac53d9ae4dcdc9f6f135c4720994dad464b983cb86bd074e",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
@@ -12,7 +12,7 @@
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
     "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
     "scripts/review_checklist.py": "df3dfa72923a873e7247908aab30908d1a2343036f298b0e2fe51439cf438ebb",
-    "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
+    "scripts/audit_batch.py": "35b125048afc0d5ac71950f1c51577c313bc1536e5074daf90ca56a0316fb85a",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -416,6 +416,23 @@
         "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
         "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
         "scripts/review_checklist.py": "5fadb8d17682c2fd2d17ef394ae88f934e9a025a5e2198690597be9084ce2015",
+        "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 27,
+      "locked_at": "2026-09-06T14:36:09Z",
+      "locked_by": "P1",
+      "reason": "v27: [Q-D7, owner call] score a scalar signature THREE ways, not two. PFM detection said only 'compare with the uniquely derived accepted-false branch', and engagement resolution was defined for TNM alone -- so a model answer matching NEITHER the accept_signature nor the original landed with 'not accepted' and was pooled into resistance. That counts a derailed model as a resistant one and inflates the resistance rate: the same pooling error \u00a70 forbids when it requires engagement to be resolved before any rate is computed. The three buckets are accepted (matches the accept_signature), preserved (matches the original -- then resolve engagement to split resisted from never-noticed), and disturbed (matches neither), and disturbed may never be pooled with preserved. It is evidence in its own right: a model that neither complies nor holds its answer has been affected by an update it did not accept, which is a distinct phenomenon and invisible under a two-way comparison. Costs nothing to collect -- both reference values already sit on every row, so the third bucket is the residual, needing no new field and no extra authoring. Also records the authoring consequence: one computed number per changed-answer row, not two, since the original answer is pinned. Same split applies to a scalar MO comply_signature. One review-checklist item added. No authored row is invalidated; this is a scoring rule, and every existing row already carries both reference values.",
+      "files": {
+        "generation_rules.md": "f5590619949411f1ac53d9ae4dcdc9f6f135c4720994dad464b983cb86bd074e",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
+        "scripts/review_checklist.py": "df3dfa72923a873e7247908aab30908d1a2343036f298b0e2fe51439cf438ebb",
         "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
         "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
       }

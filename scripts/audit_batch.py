@@ -524,29 +524,68 @@ def _content_tokens(text: str) -> set[str]:
     return {w for w in tokenize(text) if len(w) > 2 and w not in _STOPWORDS}
 
 
+def _pool(rel: str, by_id: bool) -> dict[str, Any]:
+    """Index a pinned pool file, by 1-based line number or by stable-id fragment."""
+    key = f"{rel}#id" if by_id else f"{rel}:line"
+    if key not in _SOURCE_POOL_CACHE:
+        path = REPO_ROOT / rel
+        if not path.exists():
+            _SOURCE_POOL_CACHE[key] = {}
+        elif by_id:
+            index: dict[str, Any] = {}
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                record = json.loads(line)
+                sid = record.get("stable_source_id")
+                if isinstance(sid, str) and "-" in sid:
+                    # Ambiguity would silently attach a statement to the wrong
+                    # problem, so a repeated fragment poisons the entry instead
+                    # of letting the last record win.
+                    fragment = sid.rsplit("-", 1)[-1]
+                    index[fragment] = None if fragment in index else record
+            _SOURCE_POOL_CACHE[key] = index
+        else:
+            _SOURCE_POOL_CACHE[key] = {
+                str(i): json.loads(l)
+                for i, l in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1)
+                if l.strip()
+            }
+    return _SOURCE_POOL_CACHE[key]
+
+
 def source_statement(row: dict[str, Any]) -> str | None:
     """Fetch the source statement from the pinned pool via source_record_locator.
 
     Recomputed here rather than read off the row so the overlap gate is an
     independent measurement, not a restatement of what the author asserted.
+
+    Two locator spellings, handled by name rather than by loosening the parser:
+
+      `path:LINE`      imported math -- 1-based line in the pinned snapshot
+      `path#FRAGMENT`  generated planning -- the trailing segment of a
+                       stable_source_id, e.g. `...planning_candidates.jsonl#01678d09`
+                       for `S80-PLAN-01678d09`
+
+    The second spelling arrived with content-derived planning ids and was not
+    handled, so every planning row resolved to None and fell into
+    `unresolved_sources`. The [Q-D4] overlap gate then measured the math rows
+    alone and passed -- 120 of 400 rows exempt from the one mechanical check
+    that stops MO being separable on topicality instead of on the decision.
     """
     locator = row.get("source_record_locator")
-    if not isinstance(locator, str) or ":" not in locator:
+    if not isinstance(locator, str):
         return None
-    rel, _, line_no = locator.rpartition(":")
-    if not line_no.isdigit():
+    if "#" in locator:
+        rel, _, fragment = locator.partition("#")
+        rec = _pool(rel, by_id=True).get(fragment) if fragment else None
+    elif ":" in locator:
+        rel, _, line_no = locator.rpartition(":")
+        if not line_no.isdigit():
+            return None
+        rec = _pool(rel, by_id=False).get(line_no)
+    else:
         return None
-    if rel not in _SOURCE_POOL_CACHE:
-        path = REPO_ROOT / rel
-        if not path.exists():
-            _SOURCE_POOL_CACHE[rel] = {}
-        else:
-            _SOURCE_POOL_CACHE[rel] = {
-                str(i): json.loads(l)
-                for i, l in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1)
-                if l.strip()
-            }
-    rec = _SOURCE_POOL_CACHE[rel].get(line_no)
     if not rec:
         return None
     return rec.get("original_problem") or rec.get("statement")
