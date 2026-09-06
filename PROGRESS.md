@@ -111,6 +111,12 @@
   premise/consequence 2x2. Recorded in `converged_paper_plan.md` as a declared
   extra stratum, deliberately not a fifth class: a fifth class would break the
   matched quartet the probe depends on.
+- **The whole evaluation half.** Every grader in this repo is answer-only:
+  `export_model_traces.py` and `grade_plans.py` compare a boxed answer to a
+  pinned one and do not read the trace. So there is **no engagement grader** —
+  never-noticed cannot be told from detected-and-rejected — and **no LLM judge**,
+  though `converged_paper_plan.md` specifies one. `no_update_solved` is a
+  screening result only. Deliberately deferred: we are generating data first.
 - Probe training.
 - The model / prompt / layer / threshold / judge freeze, which gates any
   primary-test row.

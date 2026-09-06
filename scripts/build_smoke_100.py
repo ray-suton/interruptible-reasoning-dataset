@@ -105,6 +105,14 @@ def main() -> int:
                 "derivation": rec["consequence_note"],
                 "method": ("note authored by an agent from the problem statement during "
                            "batch_100; carried forward as admission evidence only"),
+                "solver": {
+                    "available": False,
+                    "instead": None,
+                    "note": ("NOTHING has independently reproduced this source's gold "
+                             "answer -- it is pinned from the upstream snapshot and nothing "
+                             "more. You are the first to solve it: write the solver, make it "
+                             "reproduce the pinned answer, and only then trust it"),
+                },
             }
             rec["consequence_note"] = (
                 "Admitted: the base task is solved and its derivation has falsifiable "
@@ -199,6 +207,15 @@ def main() -> int:
                            "calculator chain; recorded as proof that criterion (b) "
                            "holds, NOT as a recommended target"),
                 "verified_by": "scripts/propose_consequences.py::propose",
+                "solver": {
+                    "available": False,
+                    "instead": ("the upstream rationale carries the solver's own "
+                                "<<expr=result>> calculator chain -- machine-readable "
+                                "arithmetic, but not a function. "
+                                "propose_consequences.chain() parses it"),
+                    "note": ("you must still WRITE a solver for this source and make it "
+                             "reproduce the pinned gold answer before trusting it"),
+                },
             }
             # Always overwrite, including over a carried batch_100 note. The
             # calculator chain PROVES a qualifying target exists; the carried note
@@ -309,6 +326,16 @@ def main() -> int:
             "method": ("structure read off the solved gold plan; evidence about what "
                        "looks falsifiable, NOT proof that criterion (b) holds and NOT a "
                        "recommended target"),
+            "solver": {
+                "available": True,
+                "gold": ("planning_domains.solve_bfs(make_problem(source_family, "
+                         "**solver_params))"),
+                "check_any_plan": ("planning_domains.execute_plan(problem, plan) -- use it "
+                                   "to show a wrong-branch plan actually FAILS rather than "
+                                   "asserting that it does"),
+                "note": ("BFS gives the shortest plan and it is re-executed before "
+                         "emission; the initial state is asserted to be a possible world"),
+            },
         }
         rec["consequence_note"] = (
             "Admitted: the gold plan is BFS-derived, re-executed, and solved by the "

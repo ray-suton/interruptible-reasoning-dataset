@@ -87,6 +87,26 @@ model that detected and rejected the update and by one that never engaged.
 Resolve engagement — never-noticed / detected-and-rejected / accepted — before
 computing any rate.
 
+**...and every grader currently in this repo is answer-only.** That is not a
+contradiction to fix by weakening the rule; it is the state of the work. We are
+in the data-generation stage, and the evaluation half is unbuilt:
+
+- `export_model_traces.py` decides `no_update_solved` by comparing the boxed
+  answer to the pinned one. It **stores** the reasoning trace; it does not grade
+  on it.
+- `grade_plans.py` does the same with plan equivalence on the boxed plan.
+- **No engagement grader exists here**, so never-noticed cannot presently be
+  distinguished from detected-and-rejected. One exists in the other repo at
+  `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`, from earlier
+  probe work; it is unreferenced by this repo and predates this contract.
+- **No LLM judge exists.** `converged_paper_plan.md` specifies one (never the
+  model under test or its family, frozen with everything else). Every "judge" in
+  `scripts/` is the English word in a comment.
+
+So `no_update_solved` means **screening** — did the model solve the base task —
+and nothing more. Do not read it as an engagement or acceptance measure, and do
+not compute any acceptance rate from the tooling as it stands.
+
 **Validate every predicate on both branches.** A predicate exercised only on the
 outcomes that happen to occur confirms whatever the current belief is. This has
 produced both a false positive and a false negative here, and most recently an

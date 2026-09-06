@@ -750,6 +750,16 @@ def for_source(sid: str) -> dict | None:
                        "recorded so a reviewer need not redo it, and is NOT a "
                        "recommended target"),
             "verified_by": "scripts/math500_consequences.py::selftest",
+            # Reusable -- the author does not have to rebuild it, and a second
+            # solver written from scratch may quietly disagree with this one.
+            "solver": {
+                "available": True,
+                "gold": f"math500_consequences.NOTES[{sid!r}]['solve']()",
+                "falsified_branch": (
+                    f"math500_consequences.NOTES[{sid!r}]['resolve'](<false value>)"),
+                "note": ("executable, and it reproduces the pinned gold answer. Reuse it "
+                         "rather than writing a second solver"),
+            },
         },
     }
     if sid in WITHDRAWN:

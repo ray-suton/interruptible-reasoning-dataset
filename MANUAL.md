@@ -85,8 +85,15 @@ derivations: claiming `x⁴+4` is irreducible over ℤ (it factors — Sophie Ge
 using `(a×c)/|a|²` for a minimum-norm solution when it is `(c×a)/|a|²` (every
 sign flipped), and treating `8^(2/3)` as `< 4` because IEEE doubles return
 `3.9999999999999996`.
-→ **Check:** the solver must reproduce the pinned gold answer *before* you trust
-it for anything. All four were caught by that and by nothing else.
+→ **Check:** make it compute the **gold** answer too, and compare that to the
+pinned one. Three of the four errors came out as a gold answer that did not
+match. The fourth was different — gold was right, and the *falsification* left
+the answer undefined — so also make it **run the falsified branch**, not assert
+it. A function is the cheap way (the pilot's are 5–21 lines, median 10, and
+agent-written) because the gold check then transfers to the counterfactual for
+free, but the agent working it out is fine if it does both checks. It is **two
+numbers per source**, not four: the VM answer and the PFM accepted-false answer.
+TNM and MO reuse the pinned original.
 
 **2. A tool written for one surface form.** **Ten** times a grader here scored
 confidently and wrongly, and *every one reported a correct answer as a failure*:
@@ -139,6 +146,19 @@ executes**, and then run it.
 - **Every number traces to a function that ran.** Rows record `solver`,
   `gold_derivation`, and `original_answer_reproduced`. If a number cannot be
   traced to code, it does not belong in a row.
+- **Check which of your sources already have a solver.** Not all do, and the
+  difference matters: `admission_evidence.solver.available` is `true` on 67 of
+  the 100 sources and `false` on 33. Of those 33, **13 have no executable
+  evidence at all** — their gold answer is pinned from the upstream snapshot and
+  nothing has ever independently reproduced it, so your agent is the first to
+  solve them. Where a solver exists, tell the agent to **reuse it** rather than
+  write a second one that may quietly disagree:
+
+  ```bash
+  python3 -c "import json;[print(r['stable_source_id'],
+    r['admission_evidence']['solver']['available'])
+    for r in map(json.loads, open('data/smoke_100/contributors/<you>/assigned_source_groups.jsonl'))]"
+  ```
 - **Ask for the falsified branch too.** `substitute_and_solve: unique_solution`
   is the claim that accepting the falsehood leaves exactly one answer. Make the
   agent *run* it. Two defects in this session were rows that could not be scored
@@ -245,6 +265,12 @@ Tell your agent this; it will otherwise assume otherwise.
 - **The inference stack is not reproducible at a fixed seed** — an identical
   re-run produced 0 of 10 identical traces. Report medians and ranges; never
   treat repeated rollouts of one row as independent observations.
-- **Answer-only grading is invalid.** For three of the four classes the correct
-  answer *is* the original answer, so resolve engagement — never-noticed,
-  detected-and-rejected, accepted — before computing any rate.
+- **Answer-only grading is invalid — and every grader here is answer-only.**
+  For three of the four classes the correct answer *is* the original answer, so
+  engagement has to be resolved (never-noticed / detected-and-rejected /
+  accepted) before any rate means anything. **That grader does not exist yet**,
+  nor does the LLM judge the plan specifies. We are in the data-generation stage
+  and the evaluation half is deliberately unbuilt. Practical consequence for you:
+  `no_update_solved` in a run package means *the model solved the base task* and
+  nothing more. Do not let an agent report an acceptance or resistance rate from
+  the current tooling — it cannot compute one.

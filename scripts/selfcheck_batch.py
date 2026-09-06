@@ -89,6 +89,16 @@ def main() -> int:
         check(warns == ("failed_candidate" in ev),
               f"{sid}: a failed-candidate warning appears iff the evidence records one")
         check(bool(ev.get("derivation")), f"{sid}: evidence records a derivation")
+        # Whether an executable solver exists for this source is the difference
+        # between inheriting one and writing the first one. 67 of 100 have one;
+        # 13 have no executable evidence at all. Silence would hide that.
+        sv = ev.get("solver")
+        check(isinstance(sv, dict), f"{sid}: evidence states solver availability")
+        if isinstance(sv, dict):
+            check(sv.get("available") in (True, False), f"{sid}: solver.available is a bool")
+            check(bool(sv.get("note")), f"{sid}: solver record says what to do")
+            if sv.get("available"):
+                check(bool(sv.get("gold")), f"{sid}: an available solver says how to call it")
         # No note may assert verification. The notes state admission -- a design
         # fact about why the source is in the batch -- and the author verifies
         # their own target while building the row.
