@@ -14,7 +14,7 @@ Two contributions: the benchmark and evaluation framework, and a linear probe
 separating the two labels from hidden states. The probe is why surface leakage is
 a fatal defect rather than a cosmetic one — see `generation_rules.md` §0.
 
-Active batch root: `data/smoke_80/`. Everything under `archive/` is recoverable
+Active batch root: `data/smoke_100/`. Everything under `archive/` is recoverable
 history and **not** authoritative.
 
 Python standard library only for all active checks, validation and generation.

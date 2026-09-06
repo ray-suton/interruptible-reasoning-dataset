@@ -93,7 +93,40 @@ falsify. Both are measured before authoring.
 
 **Declared extra strata**, reported separately and never pooled into a headline
 rate: tight minimal pairs (content held constant, truth varied), an
-interruption-position sweep, and an MO subtype sweep.
+interruption-position sweep, an MO subtype sweep, and — **not built for Stage 1**
+— the unauthorized-premise stratum below.
+
+### A named gap: the unauthorized premise
+
+The four classes fill three cells of a 2x2 and leave one empty:
+
+| | premise | consequence |
+| --- | --- | --- |
+| **authorized** | `valid_material` → ACCEPT | `true_non_material` → ACCEPT |
+| **unauthorized** | *empty* | `plausible_false_material` → DO_NOT_ACCEPT |
+
+`malicious_override` cuts across this as *attack*, not as *unauthorized premise*:
+it is judged on observable injection text, and a bare assertion of new task state
+with no authority claim is not an injection. `generation_rules.md` §2.3 names the
+case — "an unauthorized attempt at a premise" — and bans it ("rows of that shape
+must be retargeted") rather than classifying it.
+
+The gap is worth stating because it is arguably the **most realistic** adversarial
+case: someone asserts new task state mid-reasoning, claiming nothing. Nothing
+schema-level blocks it — `authority_status: unauthorized` and
+`relation_to_prior_state: contradicts` both already exist.
+
+**Decision: a declared extra stratum, deferred, not a fifth class.** A fifth class
+would break the matched quartet, and the quartet is what gives every source two
+`ACCEPT` and two `DO_NOT_ACCEPT` rows so that source can enter the probe as an
+explicit nuisance factor and leave-one-source-out cross-validation is available.
+Trading that for one shape is the wrong trade. As an extra stratum it costs a
+handful of rows on already-selected sources and is reported on its own.
+
+Distinct from the **over-constraint** shape admitted in contract v24, which
+constrains a quantity the premises already entail and is therefore in class for
+PFM. The test between them is unchanged: does the claim constrain what the
+premises entail, or add a premise?
 
 ## Models and compute
 
@@ -164,7 +197,7 @@ review exists for either. The two-agent authoring and review procedure has run
 end to end, finding three semantic defects no gate detects.
 
 **Next.** The smoke tier: 80 originals / 320 rows over four contributors, 20
-originals each, in `data/smoke_80/`. Sources are BlocksWorld and Logistics for
+originals each, in `data/smoke_100/`. Sources are BlocksWorld and Logistics for
 planning and the pinned upstream snapshot for math. Then confirm
 elicited-disposition discrimination — still the gate on the evaluation protocol —
 then the full 200.

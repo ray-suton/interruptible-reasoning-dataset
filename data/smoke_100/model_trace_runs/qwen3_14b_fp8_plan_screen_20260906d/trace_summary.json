@@ -1,0 +1,16 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {},
+  "sidecar": "/tmp/slurm-rui.gao-174731/claude-3430/s80/plan5/input/sidecar_stage1.json",
+  "sidecar_sha256": "f570f9fa2cc4c17f71ae40c04c186e495f92286baa1339673071f6905bddf372",
+  "solvability_counts": {
+    "unsolved": 45
+  },
+  "stage1_output": "/tmp/slurm-rui.gao-174731/claude-3430/s80/plan5/out/output_0.jsonl",
+  "stage1_output_sha256": "a355d544c895bd5852cf72d92ba89c58ce317031dc18cdf8e5c87e2edf542954",
+  "status": "complete",
+  "trace_count": 45,
+  "traces_path": "data/smoke_100/model_trace_runs/qwen3_14b_fp8_plan_screen_20260906d/traces.jsonl",
+  "traces_sha256": "ec0c43f4d02b5aa0bbf1465ee362f64d26e3cac43056395ecfa252a3f1bbbdb9"
+}

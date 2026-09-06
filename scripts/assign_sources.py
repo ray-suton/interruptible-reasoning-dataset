@@ -39,15 +39,30 @@ SHAPES: dict[str, dict] = {
         planning_family_cap=1,
         max_exempt_per_contributor=2,
     ),
-    # smoke-80: four contributors, 20 originals each, 320 rows.
+    # smoke-100: four contributors, 20 originals each, 320 rows.
     # 56 math (16 gsm8k + 40 math500) + 24 planning (12 blocks + 12 logistics).
     # Math rows 224, planning rows 96 -- 70/30 exactly, no rounding.
-    "smoke_80": dict(
+    "smoke_100": dict(
         contributors=("P1", "P2", "P3", "P4"),
         target={c: (14, 6) for c in ("P1", "P2", "P3", "P4")},
         gsm8k_per_contributor=4,
         # Two domains over six sources: an equal 3/3 split is the balanced case,
         # so the cap is a ceiling on concentration, not a ban on repetition.
+        planning_family_cap=3,
+        max_exempt_per_contributor=5,
+    ),
+    # smoke-100: five contributors, 20 originals each, 400 rows.
+    # 70 math (20 gsm8k + 50 math500) + 30 planning (15 blocks + 15 logistics).
+    # Math rows 280, planning rows 120 -- 70/30 exactly. The gsm8k share within
+    # math is 20/70 = 28.6%, NOT the 30% target: 30% needs 21 gsm8k, which is 4.2
+    # per contributor. An equal per-contributor gsm8k count wins the tie, because
+    # an uneven share confounds contributor with math sub-family. Same
+    # shape as smoke_80, so adding P5 changes the batch size and nothing else
+    # about what any one person holds.
+    "smoke_100": dict(
+        contributors=("P1", "P2", "P3", "P4", "P5"),
+        target={c: (14, 6) for c in ("P1", "P2", "P3", "P4", "P5")},
+        gsm8k_per_contributor=4,
         planning_family_cap=3,
         max_exempt_per_contributor=5,
     ),
@@ -151,25 +166,35 @@ def check(out: dict[str, list[dict]]) -> None:
         for r in recs:
             if r.get("screening", {}).get("status") != "passed":
                 problems.append(f"{c}: {r['stable_source_id']} is not screening.status=passed")
+            # Admission has two criteria and screening.status only records the
+            # first. workflow.md used to describe `passed` as covering both, which
+            # let 50 sources read as fully admitted when criterion (b) had never
+            # been demonstrated on them.
+            cb = (r.get("admission_evidence") or {}).get("criterion_b")
+            if cb not in ("demonstrated", "not_demonstrated"):
+                problems.append(
+                    f"{c}: {r['stable_source_id']} does not state "
+                    f"admission_evidence.criterion_b (got {cb!r})")
             # A missing note is a KNOWN, DECLARED state, not a silent gap: the
             # note is an authored judgement about what a PFM can falsify, and
             # inventing one for a source nobody has read would put an
             # unconfirmed claim where the contributor expects a checked one.
             # `consequence_status` must say which it is; only an undeclared
             # absence fails.
-            status = r.get("consequence_status")
+            # consequence_note_basis says HOW the note was produced; whether a
+            # human has checked it is screening.consequence_confirmed, which is a
+            # separate fact. Encoding both in one string meant six values doing
+            # two fields' work, and the two could drift apart.
+            basis = r.get("consequence_note_basis")
             if r.get("consequence_note"):
-                # None is the pre-field state: a note is present, so the source
-                # is usable and the status is simply not recorded. Only a
-                # CONTRADICTORY status is a defect.
-                if status not in (None, "authored_unconfirmed", "derived_unconfirmed"):
+                if basis not in (None, "authored", "derived", "computed"):
                     problems.append(
                         f"{c}: {r['stable_source_id']} has a consequence_note but "
-                        f"consequence_status={status!r}")
-            elif status != "not_authored":
+                        f"consequence_note_basis={basis!r}")
+            elif basis != "none":
                 problems.append(
                     f"{c}: {r['stable_source_id']} has no consequence_note and does not "
-                    f"declare consequence_status='not_authored' (got {status!r})")
+                    f"declare consequence_note_basis='none' (got {basis!r})")
     ids = [r["stable_source_id"] for recs in out.values() for r in recs]
     if len(ids) != len(set(ids)):
         problems.append("a source was assigned to more than one contributor")
@@ -207,7 +232,7 @@ def main() -> int:
         (d / "assigned_source_groups.jsonl").write_text(
             "".join(json.dumps(r, sort_keys=True) + "\n" for r in recs))
         fams = Counter(r["source_family"] for r in recs)
-        todo = sum(1 for r in recs if r.get("consequence_status") == "not_authored")
+        todo = sum(1 for r in recs if r.get("consequence_note_basis") == "none")
         print(f"{c}: {len(recs)} sources, {sum(1 for r in recs if r['domain']=='math')} math / "
               f"{sum(1 for r in recs if r['domain']=='planning')} planning  {dict(fams)}"
               f"   consequence notes to derive: {todo}")

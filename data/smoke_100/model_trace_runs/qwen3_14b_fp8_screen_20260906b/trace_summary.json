@@ -12,6 +12,6 @@
   "stage1_output_sha256": "c838fe4b969cc73a4e371ab81c9921656a2f6fe699ae023652fbed0aa7d470bf",
   "status": "complete",
   "trace_count": 47,
-  "traces_path": "data/smoke_80/model_trace_runs/qwen3_14b_fp8_screen_20260906b/traces.jsonl",
+  "traces_path": "data/smoke_100/model_trace_runs/qwen3_14b_fp8_screen_20260906b/traces.jsonl",
   "traces_sha256": "9685550e8d9f6f89dda89b08a507cd1ae55f0d46a84b0f661199285e8e106447"
 }

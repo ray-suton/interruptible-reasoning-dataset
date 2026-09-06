@@ -113,6 +113,22 @@ _PLAUSIBLE_FALSE_MATERIAL: list[tuple[str, str, str]] = [
      "satisfiability is NOT required — a falsified derived intermediate in a "
      "linear chain is fine.",
      "§2.3"),
+    ("If accepting leaves NO solution, is there a structural signature?",
+     "An over-constraint claim ('x must be even' where the chain pins x = 7) has "
+     "no unique accepted VALUE, so a scalar signature is impossible — but "
+     "acceptance is still observable and the row is authorable with a structural "
+     "signature. Check all three branches exist: accepted (declares the task "
+     "impossible, abandons, or satisfies the false claim against the givens), "
+     "rejected (names the inconsistency and continues to the original answer), "
+     "never-noticed (original answer, no engagement). Reject the row only if no "
+     "such signature can be constructed — not merely because no value follows.",
+     "§2.3 over-constraint"),
+    ("Does the claim CONSTRAIN a derived quantity, or ADD task state?",
+     "Constraining what the premises entail is in class. Adding a new premise is "
+     "not: [Q-D2] reserves premises for valid_material, and an added constraint "
+     "makes the task incoherent rather than false. This is the same premise/"
+     "consequence test as everywhere else, applied to constraints.",
+     "§2.3 [Q-D2]"),
     ("Not absurd", "Would it survive a careless read?", "§2.3"),
     ("Implied answer is coherent in the task's units",
      "Not a fractional count of discrete things, not a negative where only "

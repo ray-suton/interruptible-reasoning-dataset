@@ -1,18 +1,18 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 21,
-  "locked_at": "2026-09-05T22:16:23Z",
+  "version": 25,
+  "locked_at": "2026-09-06T13:03:26Z",
   "locked_by": "P1",
-  "reason": "v21: close three stale rule surfaces found by auditing every patch from v11 forward. (1) scripts/review_checklist.py had not changed since v17, so v19's rescoping of the depth floor and v20's assignment/derived-relation boundary never reached a reviewer -- the depth item still stated v14's rule and asked nothing about which shapes are exempt. Rewritten: one item for whether the floor applies at all, one for tracing the chain, one for the v20 boundary test. (2) docs/label_policy.md predated v11 and pointed at 'DATASET.md section 4.1', a section that no longer exists; it now carries a status header naming it rank-4 reference, pointing at review_checklist.py as the annotator surface, and tabulating the ten rules added after it was written. (3) scripts/audit_batch.py is now LOCKED -- it holds v15's no_self_narration, quartet_epistemic_register and tone_only_classifier gates, which exist nowhere else, and an unlocked gate can be loosened while contract-check still reports the contract unchanged. This widens rank 1 by one file. No row rule changed; invalidates no rows. Locked by P1 over P1's own amendments, as v11-v20 were; the second-reviewer requirement remains unmet for that whole span.",
+  "reason": "v25: two defects an independent verifier (Codex) found in v24. (1) \u00a72.3's scoreability test said a PFM is scoreable 'iff accepting yields a unique downstream answer' and then, four paragraphs later, admitted the no-solution over-constraint case -- which cannot both be read literally. The governing criterion is restated as a uniquely discriminating OBSERVABLE acceptance signature, with a unique downstream answer being the ordinary 'scalar' instance and the no-solution case taking a 'structural' one. This is what v24 intended; only the phrasing was contradictory, so no rule changes and no row is invalidated. (2) schema/source_group.schema.json permitted only verification.status 'verified', while validate_dataset.py has accepted 'unverified_draft' since v8 -- so every honest unreviewed source group violated the locked schema while passing the executable contract. The enum now matches the validator. Because the schemas are documentation and inert, the disagreement had gone unnoticed since v8; that is the argument for the validator being rank 1, not an argument for leaving the schema wrong. No authored row is invalidated by either change.",
   "files": {
-    "generation_rules.md": "4289b065d9343d71d2f266aaf02ce88a7881d7253502fdf28fdb8c1da26ba7dd",
+    "generation_rules.md": "38e064a6d4363f8e965870386147e38fdf6d604d0fc6b668ae9321ab2bedfb47",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
-    "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+    "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
     "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
-    "scripts/review_checklist.py": "e6def128788bf320741365a637180fff6ef6168b51efe2101ae3d5772f171149",
-    "scripts/audit_batch.py": "041a568b494aa906db0529edac93bce261ce59e188db521d7816cc53392a70a1",
+    "scripts/review_checklist.py": "5fadb8d17682c2fd2d17ef394ae88f934e9a025a5e2198690597be9084ce2015",
+    "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -316,6 +316,74 @@
         "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
         "scripts/review_checklist.py": "543482b829776930e958da51e753ee8a132068350425977098f44db82b579730",
         "docs/label_policy.md": "2418ee558eabc0e2950f38d03bc710056749fa9732cb9f7d5c2ae04712a47050"
+      }
+    },
+    {
+      "version": 21,
+      "locked_at": "2026-09-05T22:16:23Z",
+      "locked_by": "P1",
+      "reason": "v21: close three stale rule surfaces found by auditing every patch from v11 forward. (1) scripts/review_checklist.py had not changed since v17, so v19's rescoping of the depth floor and v20's assignment/derived-relation boundary never reached a reviewer -- the depth item still stated v14's rule and asked nothing about which shapes are exempt. Rewritten: one item for whether the floor applies at all, one for tracing the chain, one for the v20 boundary test. (2) docs/label_policy.md predated v11 and pointed at 'DATASET.md section 4.1', a section that no longer exists; it now carries a status header naming it rank-4 reference, pointing at review_checklist.py as the annotator surface, and tabulating the ten rules added after it was written. (3) scripts/audit_batch.py is now LOCKED -- it holds v15's no_self_narration, quartet_epistemic_register and tone_only_classifier gates, which exist nowhere else, and an unlocked gate can be loosened while contract-check still reports the contract unchanged. This widens rank 1 by one file. No row rule changed; invalidates no rows. Locked by P1 over P1's own amendments, as v11-v20 were; the second-reviewer requirement remains unmet for that whole span.",
+      "files": {
+        "generation_rules.md": "4289b065d9343d71d2f266aaf02ce88a7881d7253502fdf28fdb8c1da26ba7dd",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "e6def128788bf320741365a637180fff6ef6168b51efe2101ae3d5772f171149",
+        "scripts/audit_batch.py": "041a568b494aa906db0529edac93bce261ce59e188db521d7816cc53392a70a1",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 22,
+      "locked_at": "2026-09-06T00:01:36Z",
+      "locked_by": "P1",
+      "reason": "v22: the smoke tier is 100 originals over five contributors, not 80 over four, so the rules that name the tier are restated. generation_rules.md \u00a73.1 now gives the composition as 70 math (20 GSM8K / 50 MATH500) + 30 planning; the two rules scoped 'for smoke-80' (trace-referencing updates, and the forbidden injection shape) are rescoped to smoke-100 with no change of substance; and \u00a78's planning description is corrected from 'five task families' to the two recognised domains the batch actually uses, BlocksWorld and Logistics. audit_batch.py's default batch directory follows the rename data/smoke_80 -> data/smoke_100. No row rule changed and no authored row is invalidated: smoke_20's 80 rows are unaffected and no smoke-100 row exists yet. Locked by P1 over P1's own amendment, as v11-v21 were; the second-reviewer requirement remains unmet for that span.",
+      "files": {
+        "generation_rules.md": "710f71b1b3c42b9226546a4e905a3f1fc8dc5cd292126f8c609d3574a1e145b1",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "e6def128788bf320741365a637180fff6ef6168b51efe2101ae3d5772f171149",
+        "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 23,
+      "locked_at": "2026-09-06T08:46:59Z",
+      "locked_by": "P1",
+      "reason": "v23: state the smoke-100 math composition accurately. \u00a73.1 said the split was 30% GSM8K when it is 20/70 = 28.6%, and my own independent recomputation of the batch caught the overclaim. The number is a deliberate trade, now recorded as one: 30% needs 21 GSM8K, which is 4.2 per contributor over five, and an EQUAL per-contributor GSM8K count takes precedence because an uneven share confounds contributor identity with math sub-family -- the confound the matched-quartet design exists to remove. The full 200 is unaffected, where 30% and an integral per-contributor count coincide at 42. No row rule changed; invalidates no rows. Locked by P1 over P1's own amendment; the second-reviewer requirement remains unmet for v11-v23.",
+      "files": {
+        "generation_rules.md": "171414d11052e4bd8432c1f451699f2c6849f167e676846b302b6dc61ff51737",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "e6def128788bf320741365a637180fff6ef6168b51efe2101ae3d5772f171149",
+        "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 24,
+      "locked_at": "2026-09-06T11:54:28Z",
+      "locked_by": "P1",
+      "reason": "v24: [owner call] admit the over-constraint PFM shape. \u00a72.3 said 'No solution => unscoreable, retarget', which conflated no unique accepted VALUE with no observable acceptance. A claim that cannot be reconciled with the givens at all -- 'x must be even' where the chain pins x = 7 -- has no scalar signature, but acceptance is plainly observable: the model declares the task impossible, abandons the derivation, or satisfies the false claim against the givens, and those are distinguishable from rejection and from never-noticing. That is the project's founding observation, not an exception to it, and accept_signature has always permitted kind 'structural' (10 of smoke_20's 20 PFM rows already use one). Such a row is now authorable with a structural signature and retargeted only if none can be constructed. The premise/consequence boundary is UNCHANGED and restated: a claim that ADDS task state rather than constraining a derived quantity remains out of class, because [Q-D2] reserves premises for valid_material. Two review-checklist items added so the rule reaches a reviewer. No authored row is invalidated -- this widens what may be authored and forbids nothing.",
+      "files": {
+        "generation_rules.md": "efad87373dc628fe25e77599b59de6731dce095d0bf183b475082a834ce39a6c",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "a23bc33b1e4f68167517d1aab5f105894f767b0e6120262c805ebcecbdc080e4",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "b4558a06e76c00ca8e57cc7614a387f724e09ad138de92f4b11a6d861125f0a1",
+        "scripts/review_checklist.py": "5fadb8d17682c2fd2d17ef394ae88f934e9a025a5e2198690597be9084ce2015",
+        "scripts/audit_batch.py": "e52f2e823cdce45f0b91999c0a98ae8a1b4fe8419d4d917e6e3c8781b85ce435",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
       }
     }
   ]

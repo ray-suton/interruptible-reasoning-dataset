@@ -1243,7 +1243,7 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--batch-dir", type=Path, default=Path("data/smoke_80"))
+    parser.add_argument("--batch-dir", type=Path, default=Path("data/smoke_100"))
     parser.add_argument("--rows", type=Path, default=None, help="Rows JSONL path; defaults to semantic_rows.jsonl")
     parser.add_argument("--source-groups", nargs="*", type=Path, default=None, help="Source groups JSONL path(s)")
     parser.add_argument("--review-responses", type=Path, default=None, help="Review responses JSONL path")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate BlocksWorld and Logistics candidates for the smoke-80 batch.
+"""Generate BlocksWorld and Logistics candidates for the smoke-100 batch.
 
 DOMAIN CHOICE
 -------------
@@ -52,7 +52,11 @@ BLOCKS_SPECS: list[dict[str, Any]] = [
          holding=None, goals_on={"D":"C","C":"A"}),
     dict(blocks=("A","B","C","D","E"), on={"E":"D"}, on_table={"A","B","C","D"},
          holding=None, goals_on={"A":"B","B":"C","C":"D"}),
-    dict(blocks=("A","B","C","D"), on={"A":"B"}, on_table={"B","C","D"},
+    # C is in the gripper, so it is NOT on the table. The first version listed it
+    # in both, which describes an impossible world; planning_domains now refuses
+    # it. Changing the spec changes the content-derived id, so this is a NEW
+    # instance and is unscreened until a run covers it.
+    dict(blocks=("A","B","C","D"), on={"A":"B"}, on_table={"B","D"},
          holding="C", goals_on={"C":"D","D":"A"}),
     dict(blocks=("A","B","C","D"), on={"D":"A","A":"B"}, on_table={"B","C"},
          holding=None, goals_on={"B":"C","A":"B"}),
@@ -203,6 +207,34 @@ LOGISTICS_SPECS += [
 ]
 
 
+# Third tier, added for the P5 slice. Same admitting band: blocks of 4-8 gold
+# actions, logistics with one package and one depot per city.
+BLOCKS_SPECS += [
+    dict(blocks=("A","B","C"), on={"C":"B"}, on_table={"A","B"},
+         holding=None, goals_on={"B":"A","A":"C"}),
+    dict(blocks=("A","B","C","D"), on={"B":"D"}, on_table={"A","C","D"},
+         holding=None, goals_on={"D":"A","A":"C"}),
+    dict(blocks=("A","B","C","D"), on={"A":"D"}, on_table={"B","C","D"},
+         holding=None, goals_on={"C":"A","B":"C"}),
+    dict(blocks=("A","B","C"), on={"A":"C"}, on_table={"B","C"},
+         holding=None, goals_on={"C":"B","B":"A"}),
+]
+LOGISTICS_SPECS += [
+    _logistics(dict(cities=[("porto",1),("bergenz",1)],
+                    trucks={"truck_por":"porto_airport","truck_ber":"bergenz_airport"},
+                    airplanes={"plane1":"porto_airport"},
+                    packages={"pkg1":"porto_depot1"}, goals={"pkg1":"bergenz_airport"})),
+    _logistics(dict(cities=[("dakar",1),("izmir",1)],
+                    trucks={"truck_dak":"dakar_airport","truck_izm":"izmir_airport"},
+                    airplanes={"plane1":"izmir_airport"},
+                    packages={"pkg1":"dakar_airport"}, goals={"pkg1":"izmir_depot1"})),
+    _logistics(dict(cities=[("dakar",1),("izmir",1)],
+                    trucks={"truck_dak":"dakar_depot1","truck_izm":"izmir_airport"},
+                    airplanes={"plane1":"dakar_airport"},
+                    packages={"pkg1":"dakar_depot1"}, goals={"pkg1":"izmir_airport"})),
+]
+
+
 def _blocks_consequence(params: dict[str, Any], plan: list[str]) -> tuple[str, str]:
     """Derive the note from the SOLVED plan, not from a reading of the prose."""
     on = params["on"]
@@ -214,13 +246,16 @@ def _blocks_consequence(params: dict[str, Any], plan: list[str]) -> tuple[str, s
         note = (
             f"{on[first]} is NOT clear in the initial state because {first} sits on it, "
             f"so nothing can be stacked onto {on[first]} until {first} is removed; the "
-            f"gold plan needs {len(unstacks)} unstack action(s) and {len(plan)} actions in total"
+            f"BFS gold plan is {len(plan)} actions and uses {len(unstacks)} unstack "
+            f"action(s). BFS gives the shortest plan, so that length is minimal, but the "
+            f"unstack count alone does not prove it"
         )
         return note, "false_precondition"
     note = (
-        f"the goal rearranges the initial configuration, so the shortest plan is "
-        f"{len(plan)} actions; no shorter sequence reaches the goal because each of "
-        f"{len(unstacks)} stacked block(s) must be unstacked before its support can be used"
+        f"the goal rearranges the initial configuration; the BFS gold plan is "
+        f"{len(plan)} actions and, because BFS explores by depth, that length is minimal. "
+        f"It uses {len(unstacks)} unstack action(s) -- recorded as a fact about this plan, "
+        f"not as a proof of the bound"
     )
     return note, "false_reachability"
 
@@ -234,11 +269,15 @@ def _logistics_consequence(params: dict[str, Any], plan: list[str]) -> tuple[str
         if start.split("_")[0] != dest.split("_")[0]:
             cross_city.append(pkg)
     if cross_city:
+        # Do NOT claim trucking at both ends: whether a leg is needed depends on
+        # where the package and the airports actually are, and it is false for
+        # several instances. State what the SOLVED plan contains instead.
         note = (
             f"{_and(cross_city)} must change city, and an airplane only lands at an "
-            f"airport, so each such package must first be trucked to its origin airport "
-            f"and trucked again from the destination airport; the gold plan needs "
-            f"{len(flies)} flight(s) and {len(drives)} drive(s), {len(plan)} actions in total"
+            f"airport, so any city change needs a flight between airports plus whatever "
+            f"truck legs the package's own position requires; this instance's gold plan "
+            f"uses {len(flies)} flight(s) and {len(drives)} drive(s), "
+            f"{len(plan)} actions in total"
         )
         return note, "false_precondition"
     note = (
@@ -252,11 +291,20 @@ def _and(items: list[str]) -> str:
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
 
-def build(prefix: str) -> list[dict[str, Any]]:
+def build(prefix: str, locator_base: str = "data/smoke_100/candidates/source_groups_planning_candidates.jsonl") -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     table = ([("plan_blocks", s) for s in BLOCKS_SPECS]
              + [("plan_logistics", s) for s in LOGISTICS_SPECS])
+    # Ids are derived from the instance's SOLVER PARAMETERS, never from its
+    # position in the table.  An index-derived id renumbers every later instance
+    # the moment one is inserted -- which is precisely how batch_100's id space
+    # drifted out from under its own screening traces.  A content-derived id is
+    # stable under insertion, reordering and regeneration.
     for index, (family, params) in enumerate(table):
+        fingerprint = hashlib.sha256(
+            json.dumps({"family": family, "params": params}, sort_keys=True,
+                       default=lambda o: sorted(o) if isinstance(o, (set, frozenset)) else list(o)
+                       ).encode()).hexdigest()[:8]
         problem = make_problem(family, **params)
         plan = solve_bfs(problem)
         reached, _ = execute_plan(problem, plan)
@@ -266,11 +314,14 @@ def build(prefix: str) -> list[dict[str, Any]]:
         note, pfm_family = (_blocks_consequence if family == "plan_blocks"
                             else _logistics_consequence)(params, plan)
         out.append({
-            "stable_source_id": f"{prefix}-PLAN-{index:03d}",
-            "task_group_id": f"{prefix.lower()}_{family}_{index:03d}",
+            "stable_source_id": f"{prefix}-PLAN-{fingerprint}",
+            "task_group_id": f"{prefix.lower()}_{family}_{fingerprint}",
             "statement_text_included": True,
-            "source_record_locator": (
-                f"data/smoke_80/candidates/source_groups_planning_candidates.jsonl:{index + 1}"),
+            # Derived from where this file is actually being written. Hardcoding
+            # it meant the emitted locator still said data/smoke_80 after the
+            # batch was renamed, pointing every planning source at a path that
+            # no longer exists.
+            "source_record_locator": f"{locator_base}#{fingerprint}",
             "source_family": family,
             "source_dataset": f"authored_pddl_{prefix.lower()}_2026_09_06",
             "source_year": 2026,
@@ -311,7 +362,7 @@ def main() -> None:
     ap.add_argument("--output", required=True)
     ap.add_argument("--prefix", default="S80")
     args = ap.parse_args()
-    rows = build(args.prefix)
+    rows = build(args.prefix, locator_base=str(Path(args.output)))
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w") as fh:

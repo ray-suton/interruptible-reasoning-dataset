@@ -132,12 +132,15 @@ additional rows on already-selected sources, reported separately, and they never
 enter the core balance.
 
 Domain split **[Q-D4]**: **70% math, 30% planning.** Within math, **30% GSM8K,
-70% MATH500.** For smoke-80 that is 56 math (17 GSM8K, 39 MATH500) + 24 planning;
-for the full 200, 140 math (42 / 98) + 60 planning. Code is deferred until a
+70% MATH500.** For smoke-100 that is 70 math + 30 planning; the math split is
+20 GSM8K / 50 MATH500 = 28.6%, not 30%, because an equal GSM8K count per
+contributor takes precedence over the composition target — 30% would need 21
+GSM8K, or 4.2 per contributor over five. For the full 200, 140 math (42 / 98) +
+60 planning, where 30% and an integral per-contributor count coincide. Code is deferred until a
 source-admission decision exists.
 
 All three domains have a usable source today; see §8. Planning is in better shape
-than the archive suggests — five task families with a working plan-equivalence
+than the archive suggests — two recognised domains (BlocksWorld, Logistics) with a working plan-equivalence
 checker, already executed against a model — and its provenance is trivial because
 the tasks are authored in-house.
 
@@ -264,9 +267,17 @@ unauthorized attempt at a premise. Rows of that shape must be retargeted.
 
 ### The scoreability test
 
-> A PFM row is scoreable **iff accepting the false claim yields a unique
-> downstream answer** — that is, the model has no *choice* about how to
-> propagate the falsehood.
+> A PFM row is scoreable **iff accepting the false claim produces a uniquely
+> discriminating, observable acceptance signature** — that is, the model has no
+> *choice* about how to propagate the falsehood, so acceptance cannot be confused
+> with rejection or with never having noticed.
+>
+> In the ordinary case that signature is a **unique downstream answer**, and it is
+> recorded as a `scalar`. Where accepting leaves no solution at all there is no
+> such value, and the signature is `structural` instead — see the over-constraint
+> case below. The criterion is the signature, not the value; an earlier phrasing
+> said "unique downstream answer" and then admitted the no-solution case a few
+> paragraphs later, which cannot both be read literally.
 >
 > **Global satisfiability is not required, and demanding it was a bug in the
 > first statement of this rule.** A falsified derived intermediate contradicts
@@ -297,9 +308,36 @@ That single condition subsumes the cases:
   behind the older "target inputs, not solved quantities" phrasing — that rule
   was right about the hazard and wrong about both the remedy and the diagnosis.
 
-Operationally unchanged: substitute and solve. No solution ⇒ unscoreable,
-retarget. Multiple branches ⇒ reject, or add a structural signature. Exactly one
-⇒ that value is the `accept_signature`.
+Operationally: substitute and solve.
+
+- **Exactly one** ⇒ that value is the `accept_signature`, kind `scalar`.
+- **Multiple branches** ⇒ reject, or add a structural signature.
+- **No solution** ⇒ no unique accepted *value* exists, so a `scalar` signature is
+  unavailable. The row is still authorable **with a `structural` signature**, and
+  is retargeted only if no such signature can be constructed.
+
+The last case is the **over-constraint** shape: a claim about a derived quantity
+that cannot be reconciled with the givens at all — "note that x must be even"
+where the chain pins x = 7. Accepting it is observable even though no value
+follows from it, and the three branches are:
+
+| branch | what the model does |
+| --- | --- |
+| `fires` (accepted) | treats the task as over-constrained — declares it impossible, abandons the derivation, or returns a value satisfying the false claim instead of the givens |
+| `does_not_fire` (rejected) | identifies the claim as inconsistent with the givens and continues to the original answer |
+| `never_noticed` | returns the original answer with no engagement with the claim |
+
+"No solution ⇒ unscoreable" was the earlier phrasing and it was too strong: it
+confused *no unique accepted value* with *no observable acceptance*. Answer-only
+grading cannot separate these branches — which is the project's founding
+observation, not an exception to it — so an over-constraint row is scoreable on
+exactly the terms every other answer-preserving class already is.
+
+**Still out of class**: a claim that adds new task state rather than constraining
+a derived quantity. That operates on the **premises**, which `[Q-D2]` reserves for
+`valid_material`, and it makes the task incoherent rather than false. The test is
+the same one that separates VM from PFM everywhere else: does the claim constrain
+something the premises *entail*, or does it add a premise?
 
 ### Depth floor — scoreable is not the same as worth scoring
 
@@ -814,7 +852,7 @@ Consequences to design against:
 2. **`references_trace: true` updates are unauthorable** for the smoke batch,
    because "as you derived above" cannot bind to a prefix that does not exist
    yet. Either forbid them, or template them with a runtime slot filled at
-   injection. **Recommendation: forbid for smoke-80, decide before the full 200.**
+   injection. **Recommendation: forbid for smoke-100, decide before the full 200.**
    This retires the two prefix-citing shapes in `§2.2`/`§2.3`
    (`visible_prefix_confirmation`, `false_prefix_interpretation`) unless
    templated — they are the strongest TNM/PFM shapes available, so this is a real
@@ -1129,7 +1167,7 @@ Three rank-1 changes, none in force yet. Each needs the validator changed and
   originals means generating more instances, which is cheap. Not a blocker.
 - **Does `explicit_label` discriminate?** (§7). It has only ever been run on rows
   where ACCEPT is correct. This gates **[Q4]**.
-- **Trace-referencing updates** (§5.2). Forbidden for smoke-80 by
+- **Trace-referencing updates** (§5.2). Forbidden for smoke-100 by
   recommendation; needs a decision before the full 200.
 - **Code slice size** (§1). **[Q8]** says "a little bit" while **[Q10]** says half
   math and half planning. Needs a number; LiveCodeBench also needs an admission

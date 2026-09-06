@@ -1,7 +1,7 @@
 # Workflow: authoring and reviewing update rows
 
 Status: working procedure
-Audience: **contributors P1–P4.** Read this before you author anything.
+Audience: **contributors P1–P5.** Read this before you author anything.
 Self-contained: everything you need is in this repository. You do not need any
 prior conversation, and you should not need to ask the owner what a step means.
 
@@ -18,9 +18,9 @@ observably produce.
 You will author **20 originals — 80 rows**, one complete quartet per original.
 Your assignment is at `data/<batch>/contributors/<you>/assigned_source_groups.jsonl`.
 
-The current batch is **`data/smoke_80/`** — read its `README.md` first for what
+The current batch is **`data/smoke_100/`** — read its `README.md` first for what
 is specific to it (shape, screening results, and what is still unconfirmed on
-your sources). Four contributors × 20 originals = **80 originals, 320 rows**.
+your sources). Five contributors × 20 originals = **100 originals, 400 rows**.
 
 ## Why the checking is heavier than you expect
 
@@ -96,24 +96,47 @@ a probe separates it on topicality instead of on the decision.
                     └──────────────────────────────────────┘
 ```
 
-**1. Check your sources are screened.** Your assignment records
-`screening.status`. Every source must be `passed`: the model solves the base task
-with no update, *and* the source has a falsifiable consequence. Never author
+**1. Check your sources are screened.** Admission has **two** criteria and they
+live in two fields, because only one of them was actually established by the
+screening run:
+
+- **(a) the model solves the base task with no update** -- `screening.status`,
+  which is `passed` on every source in this batch.
+- **(b) the source has a falsifiable consequence** --
+  `admission_evidence.criterion_b`, which is `demonstrated` on 50 of 100 and
+  `not_demonstrated` on the other 50, each with `unverified_because`.
+
+Where (b) is `not_demonstrated`, nobody has yet substituted a false value and
+re-solved to a different unique answer on that source. **You do that before you
+author its PFM.** Never author
 against an unscreened source — if the model cannot solve the problem, a failure
 cannot be attributed to update handling.
 
 **2. Read each source's `consequence_note`, then confirm it — or write it.**
 It names the derivable fact your PFM should falsify, chosen at selection time so
 you need not rediscover it — but `screening.consequence_confirmed` is false until
-a person checks it, and the note's author is not that person. Check
-`consequence_status` first: `authored_unconfirmed` and `derived_unconfirmed` mean
-a note exists for you to verify, and **`not_authored` means there is none and you
-derive and record it yourself.** Your batch README says how many of each you
-hold and why some were left empty rather than guessed. Math sources also record
-`prefix_contains_target_value`: whether the model's prefix has **already**
-computed that intermediate. If it has, your PFM contradicts something the model
-just derived; if it has not, it front-runs work the model has yet to do. Those
-are different rows. Read the prefix and know which one you are writing.
+a person checks it, and the note's author is not that person. Every source now carries one, and `consequence_note_basis` says what stands
+behind it: `computed` (target and depth computed from the source's own
+`<<expr=result>>` chain), `derived` (from the executed gold plan), or `authored`
+(hand-derived, with a solver that reproduces the gold answer and a re-solve
+proving the falsified target changes it).
+
+**A note establishes that a valid target EXISTS. It does not choose yours.**
+Where more than one consequence qualifies, `computed_pfm_candidates` lists them,
+and `candidate_pfm_family` is advisory — you declare the shape you actually
+wrote. Falsify whatever consequence clears the depth floor and record which you
+chose. What is *not* yours to vary: the premise/consequence boundary
+(`[Q-D2]`) and the depth floor (`[Q-D5]`).
+
+Whether a *person* has checked any note is the separate
+`screening.consequence_confirmed`, and it is false on all 100. Your batch README says how many of each you
+hold and why some were left empty rather than guessed. Then read the prefix itself. Whether it has **already** computed your target
+changes what the row measures: if it has, your PFM contradicts something the
+model just derived — sometimes something it explicitly re-checked; if it has not,
+it front-runs work the model has yet to do. Those are different rows, and no
+field will tell you which you have. A digit-match heuristic was tried and removed
+— it answered "yes" for 19 of 20 sources — and the prefix is run-specific anyway,
+so the judgement is yours and it belongs on the row, which names its trace.
 
 **3. Author the quartet.** One VM, TNM, PFM, MO per source. Required, not a
 default: it is what makes problem identity orthogonal to label, which is what the
@@ -146,8 +169,8 @@ data/<batch>/contributors/<you>/semantic_rows.jsonl
 data/<batch>/semantic_rows.jsonl         <- what make validate reads
 ```
 
-So P2 on the smoke-80 batch writes `scripts/author_smoke_80_P2.py`, which emits
-`data/smoke_80/contributors/P2/semantic_rows.jsonl`. Copy the closest existing
+So P2 on the smoke-100 batch writes `scripts/author_smoke_100_P2.py`, which emits
+`data/smoke_100/contributors/P2/semantic_rows.jsonl`. Copy the closest existing
 generator — `scripts/author_smoke_20.py` for math, `scripts/author_smoke_20_planning.py`
 for planning — and work from it; they are the worked examples for every field the
 contract requires. The planning solvers themselves live in
@@ -232,7 +255,7 @@ Traps that have actually bitten people here:
 **No self-review, ever.** A fixed cycle, so nobody negotiates:
 
 ```
-P1 → P2 → P3 → P4 → P1
+P1 → P2 → P3 → P4 → P5 → P1
 ```
 
 You review the person to your right; the person to your left reviews you.
@@ -320,7 +343,7 @@ handled one separator, a collision check that sorted tokens instead of actions, 
 scalar grader pointed at plans, an answer comparison that called `\boxed{1.00}`
 unequal to `1` and `\boxed{B}` unequal to `\text{(B)}`, a plan parser that
 read `\rightarrow` as part of an action name and collapsed a four-action plan to
-one, and then four more while screening smoke-80:
+one, and then four more while screening smoke-100:
 
 - `grade_plans.grade()` consulted only its hand-written `CHECKS` table and never
   called `checker_from_spec`, so every source outside that table graded `False`.

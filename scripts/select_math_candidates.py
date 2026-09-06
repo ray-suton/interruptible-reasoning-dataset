@@ -31,6 +31,10 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from propose_consequences import propose as _propose
+
 SNAPSHOT = Path("sources/upstream_interrupt_lrm/math_source_problems.jsonl")
 NUMBER = re.compile(r"(?<![\w.])\d+(?:\.\d+)?(?![\w.])")
 
@@ -130,9 +134,12 @@ def main() -> None:
     ap.add_argument("--n-gsm8k", type=int, default=15)
     ap.add_argument("--n-math500", type=int, default=32)
     ap.add_argument("--exclude", nargs="*", default=[])
+    ap.add_argument("--allow-unhostable-gsm8k", action="store_true",
+                    help="skip the depth>=2 PFM-host pre-filter for gsm8k")
     args = ap.parse_args()
 
     _check_extraction()
+    reject_unhostable = not args.allow_unhostable_gsm8k
     used = used_source_keys([Path(p) for p in args.exclude])
     print(f"excluding {len(used)} already-used source key(s)")
 
@@ -155,6 +162,22 @@ def main() -> None:
         value = score(statement, answer)
         if value is None:
             continue
+        # GSM8K only: screening criterion (b) is partly CHECKABLE here, before
+        # any GPU time is spent.  The upstream rationale carries the solver's own
+        # <<expr=result>> chain, so a source whose only depth>=2 value is its own
+        # answer -- which cannot host a false_derived_intermediate at all -- is
+        # rejected now rather than after it survives an inference run.
+        #
+        # Reject ONLY on a proven negative.  12% of GSM8K rationales compute a
+        # value in bare prose, and `propose` reports those `undetermined`; its
+        # `ok` is False for them too, so filtering on `ok` alone would discard
+        # authorable sources sight unseen -- the same false negative the screen
+        # itself was fixed for. An undetermined source is kept; the author traces
+        # its depth by hand.
+        if family == "gsm8k" and reject_unhostable:
+            pr = _propose(statement, row["original_answer"], answer)
+            if not pr["ok"] and not pr.get("undetermined"):
+                continue
         pools[family].append((value, index, sha, row))
 
     out = []

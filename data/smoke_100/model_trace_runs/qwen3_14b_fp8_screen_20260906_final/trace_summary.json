@@ -1,0 +1,17 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {},
+  "sidecar": "/tmp/slurm-rui.gao-174731/claude-3430/s80/finalmath/input/sidecar_stage1.json",
+  "sidecar_sha256": "7a6b934a8ec8f319f84780013e04ae7773977bf3ab03004d84b8be813b02f8be",
+  "solvability_counts": {
+    "solved": 18,
+    "unsolved": 4
+  },
+  "stage1_output": "/tmp/slurm-rui.gao-174731/claude-3430/s80/finalmath/out/output_0.jsonl",
+  "stage1_output_sha256": "502c653d87318fefc71a74c58fd883a643a10532ba1457f571258c5784cd8663",
+  "status": "complete",
+  "trace_count": 22,
+  "traces_path": "data/smoke_100/model_trace_runs/qwen3_14b_fp8_screen_20260906_final/traces.jsonl",
+  "traces_sha256": "67ae8465d4b3c752e18c5175f17c30a387fef739bbccee08ed074a7cdcc17536"
+}

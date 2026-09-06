@@ -41,14 +41,14 @@
       "description": "audit_batch.py gates leakage, coverage, signatures, lexical overlap, syntactic forms, self-narration, quartet register, tone-only predictability, PFM depth evidence, wrappers, and staged split source-group files"
     },
     {
-      "id": "smoke_80_sources",
-      "status": "verified",
-      "description": "80 screened originals (56 math + 24 planning) split across P1-P4 at 20 each, 320 rows, 70/30 math/planning exact; balance rules asserted by assign_sources.py --shape smoke_80"
+      "id": "smoke_100_sources",
+      "status": "in_progress",
+      "description": "100 screened originals (70 math + 30 planning) split across P1-P5 at 20 each, 400 rows to author, 70/30 math/planning exact. Criterion (a) passed on all 100; criterion (b) DEMONSTRATED on 50 and not_demonstrated on 50. No source prescribes a PFM target, shape or depth. No human review; every record is unverified_draft"
     },
     {
-      "id": "smoke_80_rows",
+      "id": "smoke_100_rows",
       "status": "not_started",
-      "description": "320 rows to be authored by four contributors; blocked on deriving consequence notes for 35 sources and confirming the other 45"
+      "description": "400 rows to be authored by five contributors; blocked on deriving consequence notes for 37 sources and confirming the other 63"
     },
     {
       "id": "pilot_rows",

@@ -1,5 +1,6 @@
 {
   "model_name": "Qwen/Qwen3-14B-FP8",
+  "path_note": "this run was produced for batch_100 and COPIED into smoke_100; batch_100 is retired to archive/batch_100_superseded/, so the original path no longer exists. traces_sha256 is unchanged and still identifies the same bytes.",
   "requested_interrupt_position": 0.6,
   "run_config": {},
   "sidecar": "/tmp/b100_screen/math/sidecar_stage1.json",
@@ -12,6 +13,7 @@
   "stage1_output_sha256": "e53792ddc5eb566938379f7a63aa2e0444bd0811d677b44bd0bdd69d3e3e2687",
   "status": "complete",
   "trace_count": 26,
-  "traces_path": "data/batch_100/model_trace_runs/qwen3_14b_fp8_screen_20260906/traces.jsonl",
+  "traces_path": "data/smoke_100/model_trace_runs/qwen3_14b_fp8_screen_20260906/traces.jsonl",
+  "traces_path_original": "data/batch_100/model_trace_runs/qwen3_14b_fp8_screen_20260906/traces.jsonl",
   "traces_sha256": "e7fa224b34268c1a58db9b2861209a273adb2b7f12ad217f266927b20e8d2c8d"
 }

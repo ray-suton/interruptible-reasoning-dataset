@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit candidate planning sources for a batch from a parameter table.
 
-SUPERSEDED for new batches by `scripts/make_smoke_80_planning.py`, which uses the
+SUPERSEDED for new batches by `scripts/make_smoke_100_planning.py`, which uses the
 two recognised domains (BlocksWorld, Logistics) and renders each statement FROM
 its solver parameters instead of pairing a hand-written one with a parser. This
 file is kept because batch_100 and the smoke_20 pilot were built with it.

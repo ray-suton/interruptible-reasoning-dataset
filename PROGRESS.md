@@ -2,7 +2,7 @@
 
 ## Verified
 
-- **Contract v21** locked over `generation_rules.md`, the four schemas,
+- **Contract v22** locked over `generation_rules.md`, the four schemas,
   `scripts/validate_dataset.py`, `scripts/audit_batch.py`,
   `scripts/review_checklist.py` and `docs/label_policy.md`. `./init.sh` passes.
   v21 closed three stale rule surfaces found by auditing every patch from v11:
@@ -45,30 +45,72 @@
   to a "last number in the text" fallback and returned a plausible wrong value.
   It reported 5/10 unsolved where the true figure was 10/10.
 
-- **smoke-80 sources are screened and assigned.** 80 originals — 56 math
-  (16 gsm8k + 40 math500) and 24 planning (12 BlocksWorld + 12 Logistics) — split
-  across P1–P4 at 20 originals each, 320 rows, 70/30 exact. Planning moved from
+- **smoke-100 sources are screened and assigned.** 100 originals — 70 math
+  (20 gsm8k + 50 math500) and 30 planning (15 BlocksWorld + 15 Logistics) — split
+  across P1–P5 at 20 originals each, 400 rows to be authored. 70/30 math/planning is exact;
+  the gsm8k share within math is 20/70 = 28.6%, traded against an equal gsm8k
+  count per contributor, which 30% (21 sources, 4.2 each) cannot give. Planning moved from
   five homegrown families to two recognised domains, with statements rendered
-  from solver parameters. All 80 validate as verified source groups.
+  from solver parameters. All 100 validate as source groups; every record is `verification.status: unverified_draft`.
+- **Screening criterion (b) is executable for GSM8K.** The upstream rationale
+  carries the solver's own `<<expr=result>>` chain, so a PFM target and its
+  derivation depth are **computed** rather than asserted. Five sources were
+  rejected because their only depth-2 value is the answer itself and they cannot
+  host a `false_derived_intermediate` at all. The check runs before screening, so
+  unhostable sources cost no GPU time.
+- **Planning source ids are content-derived**, so inserting an instance no longer
+  renumbers the others — the drift that made batch_100's id space untrustworthy,
+  which this batch reproduced once before fixing.
 - **Four more grader defects found and fixed**, every one reporting a *correct*
   plan as a failure: `grade()` never called `checker_from_spec`; `\texttt{...}`,
   `\begin{aligned}` and `&` alignment tabs each parsed as part of an action.
   The running count in `workflow.md` §7 is now ten.
 
+- **Source notes admit, they do not design.** Every source carries one uniform
+  admission note; target, shape and depth are the author's. Neither the validator
+  nor the audit ever read the removed fields, and one suggestion per source made
+  PFM shape predict `source_family`. Derivations are kept as
+  `admission_evidence`, which records what was demonstrated: a scoreable target
+  is *verified* on 50 of 100 and *believed but untested* on the other 50.
+- **An impossible planning initial state was caught by independent review** —
+  one instance held a block that was also on the table, and screening "solved" a
+  task that cannot exist. `planning_domains` now refuses inconsistent initial
+  states; the instance was replaced by a spare.
+
 ## In flight
 
 - Independent Claude review of the ten smoke-20 planning quartets.
-- Deriving consequence notes for the 35 smoke-80 sources that carry none, and
+- Deriving consequence notes for the 35 smoke-100 sources that carry none, and
   human confirmation of the 45 that carry an unconfirmed one.
+
+- **Prefix-position axis for PFM rows recorded** in
+  `docs/prefix_position_axis.md`: whether the frozen prefix has already computed
+  the falsified value (contradicting) or has not reached it (front-running).
+  Both are in class; they measure different things and should not pool into one
+  rate. Recorded, not adopted — no rule implements it, and
+  the field `prefix_contains_target_value` was tried and REMOVED: a digit match
+  answered "yes" for 19 of 20 sources and matched stated coefficients, and the
+  prefix is run-specific, so the judgement belongs on the row that names its trace.
+
+- **Contract v24** admits the over-constraint PFM shape: a claim that cannot be
+  reconciled with the givens at all has no unique accepted *value*, but
+  acceptance is observable, so the row is authorable with a `structural`
+  signature (10 of smoke_20's 20 PFM rows already use one). The earlier
+  "no solution => unscoreable" confused no accepted value with no observable
+  acceptance. The premise/consequence boundary is unchanged.
 
 ## Not started
 
 - Confirming the elicited-disposition condition discriminates. It has only been
   run on rows where `ACCEPT` is correct and returned `ACCEPT` every time, so its
   discrimination is untested. This gates the evaluation protocol.
-- Authoring the 320 smoke-80 rows, then the full 200 originals.
+- Authoring the 320 smoke-100 rows, then the full 200 originals.
 - Independent **human** review. `review_responses.jsonl` is empty and no agent
   pass substitutes for it.
+- The **unauthorized-premise** stratum — the empty cell of the authority x
+  premise/consequence 2x2. Recorded in `converged_paper_plan.md` as a declared
+  extra stratum, deliberately not a fifth class: a fifth class would break the
+  matched quartet the probe depends on.
 - Probe training.
 - The model / prompt / layer / threshold / judge freeze, which gates any
   primary-test row.

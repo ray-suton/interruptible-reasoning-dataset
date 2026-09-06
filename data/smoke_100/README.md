@@ -1,6 +1,6 @@
-# smoke_80 — 80 originals, 320 rows, 4 contributors
+# smoke_100 — 100 originals, 400 rows, 5 contributors
 
-**P1–P4 author 20 originals each**, one complete quartet (VM / TNM / PFM / MO)
+**P1–P5 author 20 originals each**, one complete quartet (VM / TNM / PFM / MO)
 per original. Procedure is `workflow.md`; row rules are `generation_rules.md`.
 This file records only what is specific to this batch.
 
@@ -8,12 +8,24 @@ This file records only what is specific to this batch.
 
 | | math | planning | total |
 | --- | ---: | ---: | --- |
-| originals | 56 (16 gsm8k + 40 math500) | 24 (12 BlocksWorld + 12 Logistics) | **80** |
-| rows | 224 | 96 | **320** |
+| originals | 70 (20 gsm8k + 50 math500) | 30 (15 BlocksWorld + 15 Logistics) | **100** |
+| rows | 280 | 120 | **400** |
 
-70/30 math/planning exactly, and 30/70 gsm8k/math500 within math exactly — the
-counts were chosen so neither ratio has to be rounded. Every contributor holds
-the same shape: **4 gsm8k + 10 math500 + 3 BlocksWorld + 3 Logistics**.
+**70/30 math/planning is exact.** The gsm8k share within math is **20/70 =
+28.6%**, not 30%, and that is a deliberate trade rather than a rounding:
+
+| gsm8k | share of math | gsm8k per contributor |
+| ---: | ---: | ---: |
+| 20 | 28.6% | **4 — integral** |
+| 21 | **30.0%** | 4.2 |
+
+At 70 math sources over five contributors the two properties are mutually
+exclusive. An equal gsm8k count per contributor is the one that matters: an
+uneven share confounds contributor identity with math sub-family, which is
+exactly what the quartet design exists to prevent, and `assign_sources.py`
+asserts it. A 1.4-point drift from the target composition costs nothing by
+comparison. Every contributor holds **4 gsm8k + 10 math500 + 3 BlocksWorld +
+3 Logistics**.
 
 ## Why the assignment looks like this
 
@@ -21,11 +33,11 @@ Every contributor authors **complete quartets**, so contributor identity is
 orthogonal to label by construction — that is what lets the probe be trained
 leave-one-source-out without contributor style standing in for the decision.
 
-Everything else has to be asserted, and `scripts/assign_sources.py --shape smoke_80`
+Everything else has to be asserted, and `scripts/assign_sources.py --shape smoke_100`
 does: the math/planning counts, an identical gsm8k share per contributor, a cap
 of three instances of any one planning family per contributor, and a ceiling on
 depth-floor-exempt PFM shapes. A split that breaks one fails the script rather
-than being discovered after 320 rows.
+than being discovered after 400 rows.
 
 The pilot's "exactly one gsm8k each" and "never two instances of one planning
 family" rules were **statements about a five-source slice**, not general
@@ -61,7 +73,9 @@ interrupt position 0.6 (realised 0.5987–0.6000).
 | --- | ---: | ---: |
 | `qwen3_14b_fp8_screen_20260906b` (math) | 47 | 40 |
 | `qwen3_14b_fp8_screen_20260906_topup` (math) | 10 | 6 |
-| `qwen3_14b_fp8_plan_screen_20260906c` (planning) | 38 | 27 |
+| `qwen3_14b_fp8_screen_20260906_p5` (math) | 12 | 7 |
+| `qwen3_14b_fp8_screen_20260906_final` (math) | 22 | 18 |
+| `qwen3_14b_fp8_plan_screen_20260906d` (planning) | 45 | 34 |
 | carried from batch_100 (math), run copied in as `qwen3_14b_fp8_screen_20260906` | 26 | 22 |
 
 Math is graded by scalar answer match, planning by **plan equivalence** against
@@ -115,29 +129,65 @@ holds the reasoning only, and graded a whole package 0 actions.
 
 ## Before you author: derive the consequence
 
-`screening.consequence_confirmed` is **false on all 80 sources**, and
-`consequence_status` says what state each note is in:
+Two separate facts, deliberately in two fields:
 
-| status | count | what it means |
+- **`consequence_note_basis`** — *how* the note was produced, and therefore how
+  much of it you are checking versus writing.
+- **`screening.consequence_confirmed`** — whether a **person** has checked it.
+  **False on all 100.**
+
+They were one string (`consequence_status`, values like `authored_unconfirmed`)
+until it became clear that confirming a single note would need six values to
+express two independent facts, and that the suffix duplicated the boolean and
+could drift from it.
+
+| `consequence_note_basis` | count | what stands behind it |
 | --- | ---: | --- |
-| `authored_unconfirmed` | 21 | an agent wrote it from the statement; a human has not checked it |
-| `derived_unconfirmed` | 24 | derived from the solved gold plan (all planning) |
-| `not_authored` | 35 | **no note exists — you derive it** |
+| `computed` | 14 | gsm8k: target and depth computed from the source's own `<<expr=result>>` chain |
+| `derived` | 30 | planning: derived from the executed gold plan |
+| `authored` | 56 | hand-derived — 30 MATH500 notes with a verified target, 7 whose target was withdrawn as defective (sufficiency only), plus 19 carried from batch_100 |
 
-The 35 are deliberate, not an oversight. A `consequence_note` is an authored
-judgement about what a PFM can falsify at depth; generating one for a source
-nobody has read would put an unconfirmed claim exactly where a contributor
-expects a checked one. `workflow.md` §3 step 2 already makes confirming the note
-your step — for these it is writing it.
+**A note says a valid target exists; it does not choose yours.** Where several
+consequences qualify, `computed_pfm_candidates` lists them and
+`candidate_pfm_family` is advisory. A single pre-chosen target would make one
+shape the house style across twenty sources — a regularity correlated with
+`source_family` that §3's shape-spread requirement exists to prevent, and that a
+probe cannot tell apart from disposition.
 
-Math sources also record `prefix_contains_target_value` where it was computed.
-It is a substring heuristic: it flags the question, it does not answer it.
+The 37 MATH500 notes are agent-authored. Authoring them turned up four genuine
+mathematical errors in the first drafts — `x^4+4` is reducible by Sophie Germain,
+the minimum-norm cross product is `(c x a)`, `8**(2/3)` is `3.9999999999999996`
+in IEEE doubles, and one falsification left `f^-1(3)` undefined — every one caught
+by requiring the solver to reproduce gold and the falsification to change it.
+That error rate is itself a reason to read them rather than trust them.
+
+**Shape spread is not steered from here.** An earlier version of this batch
+suggested a PFM shape per source. That was removed: the suggestions were
+two-shaped (a chain analysis can only surface an arithmetic intermediate), and one
+suggestion per source makes PFM shape predict `source_family` -- a regularity a
+probe encodes instead of the disposition. Nothing in the source groups names a
+shape now. You declare `pfm_shape` on the row, `generation_rules.md` §2.3 requires
+**at least five shapes per batch** from an eleven-item vocabulary, and
+`audit_batch.py` gates that on what you actually wrote. Worth knowing:
+`false_domain_convention`, `false_prefix_interpretation` and `false_invariant`
+have never been authored by anything.
+
+There is deliberately **no `prefix_contains_target_value`** field. Whether the
+frozen prefix has already computed your PFM target changes what the row measures
+— contradicting a value the model just derived is not the same experiment as
+front-running work it has not done — but a digit match in the prefix cannot
+decide it. Tried and removed: it came out true on 19 of 20 sources, and its hits
+included a *stated* coefficient rather than the derived target. The prefix is
+also one rollout of a stack that is not reproducible at a fixed seed, so the
+answer is a fact about a trace, not about a source, and re-screening can flip it.
+Read your own prefix and record the relationship on the row, which binds the run
+it cites.
 
 ## Layout
 
 ```
 candidates/                            everything screening chose from
-source_groups_{math,planning}.jsonl    the 80 screened, row-ready sources
+source_groups_{math,planning}.jsonl    the 100 screened, row-ready sources
 contributors/P*/assigned_source_groups.jsonl   your 20 sources
 model_trace_runs/                      screening traces, manifests, plan grades
 ```

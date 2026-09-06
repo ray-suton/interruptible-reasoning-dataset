@@ -40,13 +40,23 @@
       ]
     },
     "domain": {
-      "enum": ["math", "planning"]
+      "enum": [
+        "math",
+        "planning"
+      ]
     },
     "split": {
-      "enum": ["development", "primary_test"]
+      "enum": [
+        "development",
+        "primary_test"
+      ]
     },
     "recipe": {
-      "enum": ["D8", "M4", "T8"]
+      "enum": [
+        "D8",
+        "M4",
+        "T8"
+      ]
     },
     "owner_id": {
       "type": "string",
@@ -86,14 +96,21 @@
     },
     "verification": {
       "type": "object",
-      "required": ["method", "status"],
+      "required": [
+        "method",
+        "status"
+      ],
       "properties": {
         "method": {
           "type": "string",
           "minLength": 1
         },
         "status": {
-          "enum": ["verified"]
+          "enum": [
+            "verified",
+            "unverified_draft"
+          ],
+          "description": "A claim about human review. 'unverified_draft' with a null verifier_id is the honest state for an unreviewed source group, and validate_dataset.py has accepted it since v8. This schema listed only 'verified', so every honest record violated the schema while passing the validator -- the schema is documentation and therefore inert, which is exactly why the disagreement went unnoticed."
         }
       }
     }

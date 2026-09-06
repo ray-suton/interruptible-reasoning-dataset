@@ -1,0 +1,336 @@
+{
+  "caveats": [
+    "Rank-1 validator failed. Under contract v8 an honest draft validates: verification.status='unverified_draft' with a null verifier_id is accepted, and a row references a run via trace_run_id rather than embedding a trace. A failure here is a real defect, not an expected artifact.",
+    "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
+  ],
+  "class_counts": {},
+  "contract_v8": {
+    "lexical_overlap": {
+      "mean_by_class": {},
+      "ratio": null,
+      "unresolved_sources": 0
+    },
+    "no_framing_wrapper": {
+      "violations": []
+    },
+    "pfm_premise_violations": [],
+    "quartet_epistemic_register": [],
+    "self_narration": [],
+    "syntactic_form": {
+      "class_exclusive": [],
+      "distinct_forms": 0,
+      "max_share_of_a_class": null,
+      "missing_field": [],
+      "unknown_forms": []
+    },
+    "syntactic_form_label_balance": {
+      "offenders": [],
+      "per_form": {}
+    },
+    "tone_only_classifier": {
+      "accuracy": null,
+      "note": "too few rows"
+    }
+  },
+  "domain_counts": {},
+  "embedded_trace_row_count": 0,
+  "first_bigram_summary_by_class": {},
+  "first_trigram_summary_by_class": {},
+  "first_unigram_summary_by_class": {},
+  "gates": [
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_unigram_share",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_bigram_share",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "class_exclusive_first_unigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_bigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_trigram",
+      "passed": true
+    },
+    {
+      "detail": "all wrappers span >=2 classes",
+      "name": "cross_class_wrapper_pooling",
+      "passed": true
+    },
+    {
+      "detail": "inf <= 1.35",
+      "name": "class_mean_update_length_ratio",
+      "passed": false
+    },
+    {
+      "detail": "0.000 <= 2.00",
+      "name": "quartet_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "template_family_share",
+      "passed": true
+    },
+    {
+      "detail": ">= 3 per class",
+      "name": "template_family_distinct_per_class",
+      "passed": true
+    },
+    {
+      "detail": "ok",
+      "name": "template_family_names_do_not_encode_class",
+      "passed": true
+    },
+    {
+      "detail": "unique",
+      "name": "wording_pattern_unique_per_row",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "mo_subtype_count",
+      "passed": false
+    },
+    {
+      "detail": {},
+      "name": "mo_evidence_status_count",
+      "passed": false
+    },
+    {
+      "detail": "0.000 <= 0.35",
+      "name": "mo_subtype_share",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "tnm_use_signature_never_noticed_branch",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "vm_shape_count",
+      "passed": false
+    },
+    {
+      "detail": "0/0",
+      "name": "vm_additive_fraction",
+      "passed": false
+    },
+    {
+      "detail": "all VM rows carry derivation evidence",
+      "name": "vm_independently_solved_updated_answer",
+      "passed": true
+    },
+    {
+      "detail": {},
+      "name": "pfm_shape_count",
+      "passed": false
+    },
+    {
+      "detail": "all PFM rows carry unique-solution derivation evidence",
+      "name": "pfm_substitute_and_solve_unique",
+      "passed": true
+    },
+    {
+      "detail": "no cue-proximate answer leak detected",
+      "name": "non_mo_update_does_not_reveal_final_answer",
+      "passed": true
+    },
+    {
+      "detail": "no collisions",
+      "name": "pfm_mo_signature_not_equal_paired_vm_answer",
+      "passed": true
+    },
+    {
+      "detail": "both proposition/directive in every class",
+      "name": "speech_act_both_values_per_class",
+      "passed": true
+    },
+    {
+      "detail": "0.000 <= 0.60",
+      "name": "surface_classifier_binary_label",
+      "passed": true
+    },
+    {
+      "detail": "0.000 <= 0.40",
+      "name": "surface_classifier_four_way_class",
+      "passed": true
+    },
+    {
+      "detail": "balanced where authoring data exists",
+      "name": "label_balance_within_strata",
+      "passed": true
+    },
+    {
+      "detail": "no prefix-citing updates",
+      "name": "trace_references_bound_when_present",
+      "passed": true
+    },
+    {
+      "detail": "rows rely on run-level trace packages",
+      "name": "no_embedded_row_trace_blocks",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "restored_factor_fields_present",
+      "passed": true
+    },
+    {
+      "detail": "no update opens with a colon-prefixed framing label",
+      "name": "no_framing_wrapper",
+      "passed": true
+    },
+    {
+      "detail": "could not compute; unresolved_sources=0 -- reported only; 0 rows is below the 40-row scope in generation_rules.md 3.3",
+      "name": "lexical_overlap_balance",
+      "passed": true
+    },
+    {
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 0, \"class_exclusive\": [], \"max_share_of_a_class\": null, \"unknown_forms\": []} -- spread reported only; 0 rows is below the 40-row scope in generation_rules.md 3.3",
+      "name": "syntactic_form_spread",
+      "passed": true
+    },
+    {
+      "detail": "every syntactic_form within +/-1 of label-balanced -- reported only; 0 rows is below the 40-row scope in generation_rules.md 3.3",
+      "name": "syntactic_form_label_balance",
+      "passed": true
+    },
+    {
+      "detail": "no update refers to its own authority, class or provenance",
+      "name": "no_self_narration",
+      "passed": true
+    },
+    {
+      "detail": "hedging does not separate labels within any quartet",
+      "name": "quartet_epistemic_register",
+      "passed": true
+    },
+    {
+      "detail": "stance-only accuracy None (cap 0.6, chance 0.50) -- reported only; 0 rows is below the 40-row scope in generation_rules.md 3.3",
+      "name": "tone_only_classifier",
+      "passed": true
+    },
+    {
+      "detail": "no PFM uses a premise-targeting semantic_type",
+      "name": "pfm_targets_consequences_not_premises",
+      "passed": true
+    }
+  ],
+  "hard_gate_failures": [
+    {
+      "detail": "inf <= 1.35",
+      "name": "class_mean_update_length_ratio"
+    },
+    {
+      "detail": {},
+      "name": "mo_subtype_count"
+    },
+    {
+      "detail": {},
+      "name": "mo_evidence_status_count"
+    },
+    {
+      "detail": {},
+      "name": "vm_shape_count"
+    },
+    {
+      "detail": "0/0",
+      "name": "vm_additive_fraction"
+    },
+    {
+      "detail": {},
+      "name": "pfm_shape_count"
+    }
+  ],
+  "label_counts": {},
+  "mo_evidence_counts": {},
+  "mo_subtype_counts": {},
+  "pfm_shape_counts": {},
+  "review_state": {},
+  "row_count": 0,
+  "rows_with_never_noticed_branch": [],
+  "source_count": 0,
+  "source_family_counts": {},
+  "stratum_label_balance": {
+    "domain": {
+      "details": {},
+      "passed": true,
+      "violations": []
+    },
+    "interrupt_position_tertile": {
+      "detail": "generation_rules.md section 5 moves interrupt_position to runtime manifest",
+      "passed": true,
+      "status": "not_applicable_at_authoring_time"
+    },
+    "source_family": {
+      "details": {},
+      "passed": true,
+      "violations": []
+    },
+    "speech_act": {
+      "details": {},
+      "passed": true,
+      "violations": []
+    },
+    "update_length_tertile": {
+      "details": {},
+      "passed": true,
+      "violations": []
+    },
+    "wrapper": {
+      "details": {},
+      "passed": true,
+      "violations": []
+    }
+  },
+  "surface_classifier_accuracies": {
+    "binary_label": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "folds": 0,
+      "total": 0
+    },
+    "four_way_class": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "folds": 0,
+      "total": 0
+    }
+  },
+  "tnm_hint_strength_counts": {},
+  "trace_run_counts": {},
+  "unique_template_families": 0,
+  "unique_update_texts": 0,
+  "unique_wording_patterns": 0,
+  "update_length_summary_by_class": {},
+  "validator_result": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "--source-groups",
+      "--rows",
+      "data/smoke_100/semantic_rows.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "exit_code": 1,
+    "stderr": [
+      "data/smoke_100/semantic_rows.jsonl: cannot read file: [Errno 2] No such file or directory: 'data/smoke_100/semantic_rows.jsonl'"
+    ],
+    "stdout": []
+  },
+  "vm_additive_fraction": 0.0,
+  "vm_shape_counts": {}
+}

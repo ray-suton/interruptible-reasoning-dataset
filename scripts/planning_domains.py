@@ -85,6 +85,37 @@ def blocks_problem(
     goals_on: dict[str, str],
     goals_clear: set[str] | None = None,
 ) -> PlanningProblem:
+    # The initial state must describe a POSSIBLE world. Nothing checked this, and
+    # one instance shipped with holding="C" alongside on_table={"B","C","D"} --
+    # C in the gripper and on the table at once. BFS solved it anyway (the state
+    # tuple tracks the three facts independently and "put down C" was a no-op on
+    # a set that already held C), the statement rendered the contradiction as
+    # prose, and the model then "solved" a task that cannot exist. A base task
+    # that is not well-posed cannot support any row built on it.
+    supported_by = set(on.values())
+    if holding is not None:
+        if holding in on_table:
+            raise AssertionError(
+                f"initial state impossible: the arm holds {holding!r} and it is also on "
+                f"the table")
+        if holding in on:
+            raise AssertionError(
+                f"initial state impossible: the arm holds {holding!r} and it is also on "
+                f"{on[holding]!r}")
+        if holding in supported_by:
+            raise AssertionError(
+                f"initial state impossible: the arm holds {holding!r} and another block "
+                f"rests on it")
+    for top, support in on.items():
+        if top in on_table:
+            raise AssertionError(
+                f"initial state impossible: {top!r} is on {support!r} and on the table")
+    if len(supported_by) != len(list(on.values())):
+        raise AssertionError("initial state impossible: two blocks rest on the same block")
+    missing = (set(on) | set(on_table) | supported_by) - set(blocks)
+    if missing:
+        raise AssertionError(f"initial state names blocks not declared: {sorted(missing)}")
+
     initial = (tuple(sorted(on.items())), tuple(sorted(on_table)), holding)
     required_clear = frozenset(goals_clear or set())
 
