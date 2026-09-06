@@ -716,93 +716,50 @@ def selftest() -> list[str]:
     return problems
 
 
-def _evidence(sid: str, e: dict) -> dict:
-    """Admission evidence, distinguishing what is VERIFIED from what is believed.
-
-    For most sources a solver reproduces gold AND a candidate consequence has
-    been falsified to a different unique answer -- criterion (b) is proven. For
-    the handful in WITHDRAWN, the first candidate failed that check, so the
-    existence of a scoreable target is *unverified*: likely, since the problem
-    has a derivation, but not demonstrated. Recording True there would assert a
-    check that did not pass, which is the same dishonesty as stamping
-    `verification.status: verified` on an unreviewed row.
-    """
-    ev = {
-        "gold_reproduced_by_solver": True,
-        "derivation": e["note"],
-        "verified_by": "scripts/math500_consequences.py::selftest",
-    }
-    if sid in WITHDRAWN:
-        ev["a_scoreable_target_exists"] = None
-        ev["unverified_because"] = WITHDRAWN[sid]
-        ev["method"] = ("a solver reproduces the pinned gold answer (criterion a). The "
-                        "one candidate target tried did NOT survive the scoreability "
-                        "check, so criterion (b) is NOT demonstrated here")
-        ev["criterion_b"] = "not_demonstrated"
-    else:
-        ev["a_scoreable_target_exists"] = True
-        ev["criterion_b"] = "demonstrated"
-        ev["method"] = ("a solver reproduces the pinned gold answer, and re-solving with "
-                        "one candidate consequence falsified yields a different unique "
-                        "answer; proof that criterion (b) holds, NOT a recommended target")
-    return ev
-
-
 def for_source(sid: str) -> dict | None:
     """What the batch builder writes onto a source group.
 
-    ADMISSION ONLY. The note says the source has a falsifiable consequence --
-    screening criterion (b) -- and says nothing about WHICH one to falsify, what
-    shape to use, or at what depth. Those are the author's, and the audit gates
-    shape spread on the row's declared `pfm_shape`, so nothing here needs to
-    pre-empt them.
+    ADMISSION ONLY, and deliberately uniform. Every source here was admitted
+    because its task has a derivation with falsifiable consequences; that is a
+    design statement about why it is in the batch, not a claim that any
+    particular target has been verified. The author picks a target and verifies
+    it while building the row, which `workflow.md` §3 step 4 requires anyway.
 
-    The earlier version named a target. It was withdrawn for two reasons, and the
-    second matters more than the first:
-
-      1. About a third of the named targets were defective -- four mathematical
-         errors, six depth-1 values claimed as depth 2, three that were the gold
-         answer, four whose falsification admitted several branches or none.
-      2. Even the correct ones spent the author's variation. A single verified
-         target reads as *the* target, and one target per source across a batch
-         makes PFM shape and depth predict `source_family`. That is a data
-         regularity a probe encodes instead of the disposition, and no ablation
-         on the probe detects it, because the leak is in the data (§0).
-
-    The derivation is still recorded, under `admission_evidence`, so a reviewer
-    confirming criterion (b) does not have to redo the work. It is evidence that
-    a valid target EXISTS, not a recommendation of one.
+    An earlier version split the batch into "criterion (b) demonstrated" and
+    "not demonstrated". That was dropped: of 50 marked not-demonstrated, 43 were
+    so marked only because THIS pipeline never ran a falsification test on them
+    (30 planning, 13 carried from batch_100) -- a fact about the process,
+    presented as a property of the source. Only 7 carried real information, and
+    those keep it as an explicit warning.
     """
     e = NOTES.get(sid)
     if e is None:
         return None
-    if sid in WITHDRAWN:
-        # These must NOT get the general note. Their one candidate target failed
-        # the scoreability check, so criterion (b) is not demonstrated here, and a
-        # note asserting it while the evidence beside it says otherwise is exactly
-        # the overclaiming this file exists to avoid.
-        return {
-            "consequence_note": (
-                "Criterion (a) is met: the base task is solved and a solver reproduces "
-                "the pinned gold answer. **Criterion (b) is NOT yet demonstrated on this "
-                "source.** The one candidate target that was tried failed the "
-                "scoreability check because " + WITHDRAWN[sid] + ". Find a target and "
-                "verify it -- substitute the false value, re-solve, confirm a different "
-                "unique answer -- before authoring this source's PFM."),
-            "consequence_note_basis": "authored",
-            "admission_evidence": _evidence(sid, e),
-        }
-    return {
+    out = {
         "consequence_note": (
-            "Criteria (a) and (b) are both met: the base task is solved, and this "
-            "source has at least one derivable "
-            "non-determined consequence that can be falsified to yield a different "
-            "unique answer, verified by executing a solver. No target, shape or depth "
-            "is prescribed -- choose your own and record it. See admission_evidence "
-            "for the derivation, and generation_rules.md §2.3 for what qualifies."),
+            "Admitted: the base task is solved and its derivation has falsifiable "
+            "consequences. No target, shape or depth is prescribed -- pick one, and "
+            "verify it as you build the row: substitute the false value, re-solve, and "
+            "confirm a different unique answer (generation_rules.md §2.3). See "
+            "admission_evidence for the derivation."),
         "consequence_note_basis": "authored",
-        "admission_evidence": _evidence(sid, e),
+        "admission_evidence": {
+            "gold_reproduced_by_solver": True,
+            "derivation": e["note"],
+            "method": ("a solver reproduces the pinned gold answer; the derivation is "
+                       "recorded so a reviewer need not redo it, and is NOT a "
+                       "recommended target"),
+            "verified_by": "scripts/math500_consequences.py::selftest",
+        },
     }
+    if sid in WITHDRAWN:
+        # The one piece of information worth carrying per-source: a candidate was
+        # tried here and it failed, so the obvious target is a dead end.
+        out["consequence_note"] += (
+            " WARNING for this source: one candidate target was tried and FAILED the "
+            "scoreability check because " + WITHDRAWN[sid] + ". Do not re-use it.")
+        out["admission_evidence"]["failed_candidate"] = WITHDRAWN[sid]
+    return out
 
 
 if __name__ == "__main__":

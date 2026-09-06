@@ -13,8 +13,9 @@ evaluation framework and the linear probe that read it.
 | 1 | `DATASET.md` | Overview and design — what a row means and why the rules take the shape they do |
 | 2 | `generation_rules.md` | **The row contract.** Classes, fields, thresholds, signatures, gates |
 | 3 | `converged_paper_plan.md` | The whole plan — contributions, research questions, dataset, models, protocol, status |
-| 4 | `workflow.md` | Reusable two-agent authoring and review procedure |
-| 5 | `q&a.md` | The owner's design decisions, cited elsewhere as `[Qn]` and `[Q-Dn]` |
+| 4 | `workflow.md` | **Written for the agent.** The procedure it executes; §0 is its boundaries |
+| 5 | `MANUAL.md` | **Written for you.** Start here if you hold a workload: what to delegate, how to brief an agent, and the seven ways one fails here |
+| 6 | `q&a.md` | The owner's design decisions, cited elsewhere as `[Qn]` and `[Q-Dn]` |
 
 Reference material lives in `docs/`: `label_policy.md` (annotator-facing),
 `update_taxonomy.md` (class reference), `examples.md` (worked rows),

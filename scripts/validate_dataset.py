@@ -62,6 +62,38 @@ BANNED_PFM_SEMANTIC_TYPES = ("false_restated_given", "unauthorized_false_prompt_
 # `false_parity_or_ordering` (a property, not a chain step); and every planning
 # shape, where "two operations from the stated inputs" has no meaning against an
 # initial state.
+# Closed shape vocabularies, one per class.
+#
+# These were free-form, and that is a silent-failure surface rather than author
+# freedom. DEPTH_FLOOR_SHAPES below is a MEMBERSHIP test: a shape spelled
+# `false_derived_intermediates` is not in it, so the depth floor simply does not
+# apply and the row passes carrying a depth-1 target. Nothing fails; the rule is
+# just skipped. Five contributors authoring independently also fragment the
+# strata that RQ1's sweeps group on -- one writing `authority_spoof` where
+# another writes `fake_authority` for the same attack.
+#
+# Closing the lists forbids nothing anyone would legitimately write: every value
+# here is one the pilot already authored, or one generation_rules.md §2.3 already
+# names. Extending a list is a lock amendment, which is the point -- a new shape
+# should be a decision, not a typo.
+VM_SHAPES = ("input_revision", "additive_state", "relation_revision",
+             "constraint_change", "target_revision", "external_state_change")
+TNM_SHAPES = ("restated_given", "corroborating_check")
+PFM_SHAPES = ("false_implied_bound", "false_implied_assignment",
+              "false_derived_relation", "false_derived_intermediate",
+              "false_parity_or_ordering", "false_aggregation",
+              "false_prefix_interpretation", "false_domain_convention",
+              "false_precondition", "false_reachability", "false_invariant")
+MO_SUBTYPES = ("marker_injection", "exfiltration", "authority_spoof",
+               "indirect_injection", "fake_errata", "fake_evaluator",
+               "goal_hijack", "format_attack")
+SHAPE_FIELD = {
+    "valid_material": ("vm_shape", VM_SHAPES),
+    "true_non_material": ("tnm_shape", TNM_SHAPES),
+    "plausible_false_material": ("pfm_shape", PFM_SHAPES),
+    "malicious_override": ("mo_subtype", MO_SUBTYPES),
+}
+
 DEPTH_FLOOR_SHAPES = ("false_derived_intermediate", "false_aggregation",
                       "false_derived_relation")
 MIN_DERIVATION_DEPTH = 2
@@ -490,6 +522,18 @@ def validate_dataset(
 
 def validate_row_semantics(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
     diagnostic_class = record.get("diagnostic_class")
+    # The declared shape must be in its class's closed vocabulary.
+    cls = record.get("diagnostic_class")
+    if cls in SHAPE_FIELD:
+        field, allowed = SHAPE_FIELD[cls]
+        shape = record.get(field) or record.get("semantic_type")
+        if shape is not None and shape not in allowed:
+            errors.add(path,
+                       f"{field} {shape!r} is not in the {cls} vocabulary. A shape outside "
+                       f"the list is treated as 'no shape' by every rule keyed on it -- the "
+                       f"depth floor included -- so a typo silently skips a hard rule. "
+                       f"Allowed: {list(allowed)}")
+
     expected_label = LABEL_FOR_CLASS.get(diagnostic_class)
     if expected_label and record.get("binary_label") != expected_label:
         errors.add(path, f"{diagnostic_class} must have binary_label {expected_label}")
