@@ -133,19 +133,26 @@ a probe separates it on topicality instead of on the decision.
                     └──────────────────────────────────────┘
 ```
 
-**1. Check your sources are screened.** Admission has **two** criteria and they
-live in two fields, because only one of them was actually established by the
-screening run:
+**1. Check your sources are screened.** Admission has **two** criteria, and only
+one of them was actually established by the screening run:
 
 - **(a) the model solves the base task with no update** -- `screening.status`,
   which is `passed` on every source in this batch.
-- **(b) the source has a falsifiable consequence** --
-  `admission_evidence.criterion_b`, which is `demonstrated` on 50 of 100 and
-  `not_demonstrated` on the other 50, each with `unverified_because`.
+- **(b) the source has a falsifiable consequence** -- recorded as prose in
+  `admission_evidence` (`derivation`, `method`, and `verified_by` where a script
+  demonstrated one), **not** as a per-source verdict. There is deliberately no
+  `demonstrated` / `not_demonstrated` field: the earlier split recorded which
+  pipeline a source came through rather than anything about the source, and
+  `scripts/selfcheck_batch.py` now asserts its absence.
 
-Where (b) is `not_demonstrated`, nobody has yet substituted a false value and
-re-solved to a different unique answer on that source. **You do that before you
-author its PFM.** Never author
+So **(b) is never pre-established for the target you pick.** Nobody has
+substituted your false value and re-solved to a different unique answer:
+`verified_by` is null on 43 of 100, and where it is set it names the target
+*that script* tried, not yours. **You do that before you author the PFM**, on
+every source. Seven sources additionally carry
+`admission_evidence.failed_candidate` and a matching `WARNING for this source`
+in the note, recording a target that was tried and found unscoreable — read it
+before choosing yours. Never author
 against an unscreened source — if the model cannot solve the problem, a failure
 cannot be attributed to update handling.
 
@@ -159,8 +166,13 @@ behind it: `computed` (target and depth computed from the source's own
 proving the falsified target changes it).
 
 **A note establishes that a valid target EXISTS. It does not choose yours.**
-Where more than one consequence qualifies, `computed_pfm_candidates` lists them,
-and `candidate_pfm_family` is advisory — you declare the shape you actually
+Nothing in a source group names a shape or a target: every prescriptive field
+was removed, because one suggestion per source made PFM shape predict
+`source_family` — a regularity a probe encodes instead of the disposition, and
+`scripts/selfcheck_batch.py` asserts those fields stay absent. The one count
+that survives is `admission_evidence.qualifying_targets_at_depth_2_or_more` on
+the 20 gsm8k sources, which says *how many* chain values clear the floor (1 to
+4) without naming them. You declare the shape you actually
 wrote. Falsify whatever consequence clears the depth floor and record which you
 chose. What is *not* yours to vary: the premise/consequence boundary
 (`[Q-D2]`) and the depth floor (`[Q-D5]`).

@@ -143,13 +143,16 @@ could drift from it.
 
 | `consequence_note_basis` | count | what stands behind it |
 | --- | ---: | --- |
-| `computed` | 14 | gsm8k: target and depth computed from the source's own `<<expr=result>>` chain |
+| `computed` | 20 | gsm8k: target and depth computed from the source's own `<<expr=result>>` chain — 14 fresh, 6 carried from batch_100 |
 | `derived` | 30 | planning: derived from the executed gold plan |
-| `authored` | 56 | hand-derived — 30 MATH500 notes with a verified target, 7 whose target was withdrawn as defective (sufficiency only), plus 19 carried from batch_100 |
+| `authored` | 50 | MATH500, hand-derived — 37 agent-authored and self-tested (30 with a verified target, 7 whose target was withdrawn as defective, leaving sufficiency only), plus 13 carried from batch_100 |
 
-**A note says a valid target exists; it does not choose yours.** Where several
-consequences qualify, `computed_pfm_candidates` lists them and
-`candidate_pfm_family` is advisory. A single pre-chosen target would make one
+**A note says a valid target exists; it does not choose yours.** No source group
+names a candidate target or shape — the prescriptive fields were removed and
+`scripts/selfcheck_batch.py` asserts they stay absent. Where several
+consequences qualify on a gsm8k source,
+`admission_evidence.qualifying_targets_at_depth_2_or_more` counts them (1 to 4)
+without naming them. A single pre-chosen target would make one
 shape the house style across twenty sources — a regularity correlated with
 `source_family` that §3's shape-spread requirement exists to prevent, and that a
 probe cannot tell apart from disposition.
