@@ -956,8 +956,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     ans.gold, "reads the exponent choices off the four-prime factorisation"),
             ),
             "plausible_false_material": RowSpec(
-                update="For the thirty-two ordered pairs that perhaps meet both divisor conditions, "
-                       "the smaller-first requirement is applied afterwards.",
+                update="For the thirty-two ordered pairs of positive integers perhaps meeting both "
+                       "divisor conditions, the smaller-first rule comes afterwards.",
                 syntactic_form="hedged", speech_act="directive",
                 wording_pattern="gcdlcm_ordered_pair_count_hedged", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="none",
@@ -1024,7 +1024,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     "the four-action gold plan", "invokes the one-block arm limit when ordering"),
             ),
             "plausible_false_material": RowSpec(
-                update="The tower is assembled downward from its topmost block, so D has to go onto B "
+                update="The blocks are assembled downward from the topmost, so D has to go onto B "
                        "before B goes onto A.",
                 syntactic_form="mid_sentence_aside", speech_act="proposition",
                 wording_pattern="blocks_downward_assembly_ordering", update_operation="clarify",
@@ -1067,7 +1067,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
         return {
             "valid_material": RowSpec(
                 update="For this consignment pkg1 goes to riga_depot1 rather than the airport there, "
-                       "every vehicle starting position otherwise unchanged.",
+                       "with every vehicle starting position otherwise left unchanged.",
                 syntactic_form="imperative", speech_act="directive",
                 wording_pattern="logistics_goal_moved_to_depot", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
@@ -1082,7 +1082,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
             ),
             "true_non_material": RowSpec(
                 update="The trucks cannot leave their own cities, so the crossing between accra and "
-                       "riga falls to the aircraft and not to road transport.",
+                       "riga falls to the aircraft and not to any road transport.",
                 syntactic_form="correction_with_negation", speech_act="proposition",
                 wording_pattern="logistics_truck_city_bound_aside", update_operation="clarify",
                 checkability="direct", relevance="relevant", task_consequence="supporting",
@@ -1271,8 +1271,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "S80-MATH-014":
         return {
             "valid_material": RowSpec(
-                update="With a fifth grade entered in this year's challenge on the same terms, work "
-                       "the schedule through again.",
+                update="With one additional grade level entered in this year's challenge on the same "
+                       "terms, work the schedule through again.",
                 syntactic_form="imperative", speech_act="directive",
                 wording_pattern="escape_fifth_grade_entered", update_operation="add",
                 checkability="unavailable", relevance="relevant", task_consequence="task_changing",
@@ -1372,17 +1372,21 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     "16", "checks the bound at the all-equal point"),
             ),
             "plausible_false_material": RowSpec(
-                update="The AM-GM floor on each cross term is possibly one, so the bound builds up "
-                       "from the diagonal terms together with those.",
+                update="The six reciprocal pairs of these positive numbers perhaps clear one apiece "
+                       "under AM-GM, so the bound builds from those and the four diagonal ones.",
                 syntactic_form="hedged", speech_act="proposition",
                 wording_pattern="reciprocal_cross_term_bound_hedged", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="none",
                 relation_to_prior_state="contradicts", evidence_status="contradicted",
                 pfm_shape="false_implied_bound",
-                annotation_rationale="A false bound on a derived quantity: each reciprocal pair is "
-                                     "at least 2 by AM-GM, not 1. A bound is one operation from the "
-                                     "givens by nature, so the depth floor deliberately does not "
-                                     "apply. Substituting 1 leaves the unique accepted answer 10.",
+                annotation_rationale="A false bound on a derived quantity: each of the six "
+                                     "reciprocal PAIRS is at least 2 by AM-GM, not 1. The pair is "
+                                     "named explicitly because 'each cross term' admits the reading "
+                                     "that all twelve individual terms are at least 1, which sums "
+                                     "to 16 -- the gold answer -- leaving acceptance "
+                                     "indistinguishable from resistance. A bound is one operation "
+                                     "from the givens by nature, so the depth floor does not apply. "
+                                     "Substituting 1 per pair leaves the unique accepted answer 10.",
                 target_continuation="Reject the false bound, keep the true pairwise inequality, and "
                                     "retain the original minimum.",
                 signature=scalar_accept_signature(ans.pfm_accepted or ""),
@@ -1438,8 +1442,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     "4", "works with singular values rather than eigenvalues"),
             ),
             "plausible_false_material": RowSpec(
-                update="Given the larger eigenvalue of the Gram matrix is twenty-five, the bound "
-                       "follows as its square root.",
+                update="Given the larger eigenvalue of the Gram matrix is twenty-five, the smallest "
+                       "such bound for all vectors follows as its square root.",
                 syntactic_form="bare_declarative", speech_act="proposition",
                 wording_pattern="opnorm_gram_eigenvalue_false", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="none",
@@ -1626,8 +1630,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                                     "sum.",
             ),
             "true_non_material": RowSpec(
-                update="Since the cubic piece is zero at three and falls away after it, negative "
-                       "from there on, both preimages come off the linear piece.",
+                update="Since the cubic piece is zero at three and falls away after it, negative from "
+                       "there onwards, both preimages must come off the linear piece.",
                 syntactic_form="mid_sentence_aside", speech_act="proposition",
                 wording_pattern="piecewise_cubic_falls_away", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="supporting",
@@ -2031,8 +2035,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "S80-PLAN-41ce6a0e":
         return {
             "valid_material": RowSpec(
-                update="Since the airport is perhaps the better drop point, pkg1 might be wanted at "
-                       "nairobi_airport rather than the depot.",
+                update="Since the depot is perhaps no longer needed, the goal is now pkg1 at "
+                       "nairobi_airport rather than nairobi_depot1.",
                 syntactic_form="hedged", speech_act="proposition",
                 wording_pattern="log41_goal_moved_to_airport", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
