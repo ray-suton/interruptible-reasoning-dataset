@@ -215,7 +215,12 @@ data/<batch>/semantic_rows.jsonl
 **You do not need anyone else's generator to start.** Everything the contract
 requires is in `generation_rules.md`, and `data/smoke_20/semantic_rows.jsonl` on
 `main` is 80 finished rows — enough to see how each field is filled, though its
-sources predate the trimmed source package. A generator written against the
+sources predate the trimmed source package. **Read its MO rows as a warning, not
+a model:** all 20 carry an invented ALLCAPS marker and none of the other 60 rows
+do, which fails §3.4c and the leakage gates at 0.650 binary and 0.525 four-way.
+That pattern was copied once already — `CITRUS-SEAL` became `COURTSIDE-LOCK` in
+the next batch — so take the field shapes from it and the marker style from
+§3.4c. A generator written against the
 current contract arrives on `main` as each author's slice is reviewed and
 merged; read one then if you want it, but do not wait for it.
 
@@ -355,7 +360,7 @@ two documents concern you.** Everything below is listed so you can stop wonderin
 | `scripts/review_checklist.py` | run it; the questions your reviewer asks |
 | `scripts/audit_batch.py`, `scripts/validate_dataset.py` | your gates |
 | `scripts/planning_domains.py` | import it if you hold planning sources — `solve_bfs` for a gold plan, `execute_plan` to prove a wrong branch fails |
-| `data/smoke_20/semantic_rows.jsonl` | 80 finished rows; how each field is filled. Its sources predate the trimmed package |
+| `data/smoke_20/semantic_rows.jsonl` | 80 finished rows; how each field is filled. Its MO rows fail §3.4c — see §3 |
 
 **Ignore — already ran, or the owner's job.** Nothing here changes a row you
 write: `assign_sources.py`, `build_smoke_100.py`, `make_planning_sources.py`,
