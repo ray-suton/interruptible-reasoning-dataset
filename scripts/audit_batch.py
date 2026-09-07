@@ -1170,6 +1170,22 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         )
     )
 
+    # v30 [Q-D10]: coverage of prefix_relation is a BATCH property -- the
+    # validator only checks the vocabulary, because a row authored before the
+    # field existed is still individually coherent.
+    missing = [r.get("example_id") for r in rows if r.get("prefix_relation") is None]
+    relations = counter_to_dict(Counter(
+        r.get("prefix_relation") for r in rows if r.get("prefix_relation") is not None))
+    gates.append(
+        GateResult(
+            "prefix_relation_coverage",
+            not missing,
+            (f"{len(rows) - len(missing)}/{len(rows)} rows carry a judgement; "
+             f"{json.dumps(relations)}")
+            + (f"; missing on {len(missing)} row(s) e.g. {missing[:3]}" if missing else ""),
+        )
+    )
+
     forms = syntactic_form_spread(rows)
     form_cap = SURFACE_THRESHOLDS["syntactic_form_share"]
     # The field must be present and drawn from the vocabulary at any batch size;

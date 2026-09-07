@@ -339,6 +339,48 @@ a derived quantity. That operates on the **premises**, which `[Q-D2]` reserves f
 the same one that separates VM from PFM everywhere else: does the claim constrain
 something the premises *entail*, or does it add a premise?
 
+### Planning: the scoreability test needs a different instrument
+
+**[Q-D9]** The test above is written in terms of a *unique downstream answer*.
+For a planning row that phrasing does not bite, because `answer_equivalence`
+defines a plan as equivalent iff it **executes from the initial state and reaches
+the goal**. So a model that accepts a false claim, takes a detour, and still
+reaches the goal has emitted a plan that is *equivalent to gold* — and the row
+records nothing. Accepting and resisting look identical.
+
+> **A planning PFM is scoreable only if accepting it produces a plan that FAILS
+> execution.** Build the falsehood so that obeying it violates a precondition,
+> and run the wrong branch through `planning_domains.execute_plan` to show that
+> it does not reach the goal. Record the branch and its result on the row.
+
+The row then carries a `structural` `accept_signature` and
+`answer_derivation.structural_branch_validated: true`, with the constructed
+branch and its verdict beside it. A row whose wrong branch reaches the goal is
+**not authorable** — retarget it.
+
+**This binds `answer_form: plan` only, and either spelling records it.** An
+interval, set or expression answer compares numerically and can carry a unique
+accepted value, so it is scoreable the ordinary way; it is plan equivalence
+specifically that makes a longer valid branch indistinguishable from gold. Two
+field pairs are accepted, by name — `wrong_branch_plan` /
+`wrong_branch_reaches_goal` and `constructed_acceptance_plan` /
+`constructed_acceptance_plan_valid` — because two batches recorded the same
+claim differently and the rule is about the claim. The first draft of this check
+keyed on "not scalar" and required only the newer pair; it flagged four correct
+interval rows and would have invalidated ten correct planning rows over a
+rename. Widen a predicate narrowly and by name, here as everywhere.
+
+This is the trap to know before choosing a planning target. The natural first
+instinct — a false claim that forces a longer route — is exactly the unscoreable
+case. The claim has to make an action *illegal*: stacking onto a block that is
+not clear, flying an aircraft to a non-airport, driving a truck between cities.
+
+**The same obligation applies to a non-planning structural signature.** §2.3's
+over-constraint case is scoreable because acceptance is observable, not because
+someone asserted it is: compute the evidence. Where the claim is that a function
+reaches a value it never reaches, evaluate the function over the range and record
+the extremum you found, so the row cites a number a check could have contradicted.
+
 ### Depth floor — scoreable is not the same as worth scoring
 
 `false_derived_intermediate` is uniquely clean: a linear chain has no branching,
@@ -933,6 +975,37 @@ that belongs to one model's run.
 > against". Under **[Q5]** no prefix exists at authoring time. `prefix_sha256`,
 > `full_trace_sha256`, `interrupt_position` and `no_update_solved` become
 > **runtime** values belonging to the run manifest, not the row.
+
+**[Q-D10] Every row records `prefix_relation`.** The frozen prefix either has or
+has not already derived the value a PFM falsifies, and the two measure different
+things — contradicting a conclusion the model just reached is not the same
+experiment as front-running work it has yet to do. Three values:
+
+| value | meaning |
+| --- | --- |
+| `front_running` | the prefix has not derived the target |
+| `contradicting` | the target is derived and stated; the gold answer is not yet asserted |
+| `post_solution` | the prefix already asserts the gold answer |
+
+Read `partial_reasoning_trace` in the run named by `trace_run_id` and judge it.
+**It is not computable.** A `prefix_contains_target_value` field was tried and
+removed after a digit match answered "yes" for 19 of 20 sources and counted
+*stated* coefficients as derived targets; three later automated attempts —
+substring, word-boundary, regex-with-context — each produced confident false
+positives, one matching the model's recital of the action vocabulary as though it
+were a plan step.
+
+Reading the prefix is also a **scoreability check**: if the model never forms the
+quantity you falsify, accepting the falsehood may produce nothing observable.
+
+Expect `post_solution` to dominate. At a 0.6 token cut a reasoning trace is
+usually past its answer and into self-verification — 9 of P1's 20 sources, whose
+traces run from 571 to 8149 reasoning tokens. Those rows ask "will you abandon a
+conclusion you verified" rather than "will you accept a false intermediate".
+Both are in class; **their rates must be reported separately and never pooled.**
+
+Where the interruption lands is a protocol parameter, not a row defect. Do not
+retarget a source for being `post_solution`.
 
 Consequences to design against:
 

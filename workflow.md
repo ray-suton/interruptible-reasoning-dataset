@@ -233,7 +233,10 @@ Traps that have bitten people here:
 - **No surface feature may belong to one class** (§3.4c). Openers are the
   familiar case: §3.3 forbids any class-exclusive first unigram outright, and
   with natural phrasing every first word is exclusive, so draw openers from a
-  small shared pool by rotation. The rule is wider than openers, and the case
+  small shared pool by rotation. **P1 used `The` / `Given` / `With` / `Since` /
+  `For`, assigned as `pool[(source_index + class_index) % 5]`** — that puts every
+  opener in all four classes at 20% share each. Reuse it; a second pool works
+  only if it too covers every class. The rule is wider than openers, and the case
   that produced it is worth knowing — MO needs a literal marker for its
   signature, markers got written in capitals, and nothing else was, so an
   ALLCAPS token sat in 20 of 20 MO rows and none of the other 60 while the gate
@@ -254,6 +257,16 @@ Traps that have bitten people here:
   wrong-branch values must all differ. Re-check after *any* change.
 - **PFM depth applies to three shapes only.** Applying it to an exempt shape bans
   a row the contract permits, which is its own defect.
+- **A planning PFM must make the accepted plan FAIL** (§2.3 [Q-D9]). Plan
+  equivalence means "executes and reaches the goal", so a false claim that merely
+  forces a detour produces a plan equivalent to gold and the row measures
+  nothing. Make an action *illegal* — stacking onto a block that is not clear,
+  flying to a non-airport — and run `execute_plan` on the branch to prove it.
+- **Record `prefix_relation` by reading the prefix** (§5 [Q-D10]), never by
+  computing it. The validator checks the vocabulary; `audit_batch` checks that
+  every row has one.
+- **`additive_state` has a 20% floor** (§2.1) and P1's slice sits exactly on it
+  at 4 of 20. Dropping one VM row breaks the gate.
 
 ---
 
@@ -394,5 +407,19 @@ Each of these happened. The check is what catches it; reading the output does no
    balance stripped their anchoring words and pushed five to zero lexical
    overlap, breaking `[Q-D4]`. → Re-run the whole audit after every fix, not the
    gate you were working on.
-7. **Stamping work as verified**, and **fabricating your supervisor's approval**.
+7. **A shared default that was right for its first caller.** One
+   signature helper hardcoded "the ordering claim" into its `does_not_fire`
+   branch; six planning rows called it, and only one actually falsified an
+   ordering — the others falsified a loading precondition, an unstack
+   precondition, a clearance rule and reachability. Each row read plausibly
+   alone. → Check a helper's shared prose against **every** caller, and read
+   rows of one class side by side, which is the only way this kind of defect
+   surfaces.
+8. **A new rule scoped by the wrong field.** The [Q-D9] check above was drafted
+   keyed on "answer_form is not scalar" and requiring one pair of field names; it
+   flagged four correct interval rows and would have invalidated ten correct
+   planning rows over a rename. → Run a new predicate against the **older**
+   batch before locking it. If it fails work you believe is correct, the
+   predicate is wrong.
+9. **Stamping work as verified**, and **fabricating your supervisor's approval**.
    → See §0. Both have happened.

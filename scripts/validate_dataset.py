@@ -566,6 +566,7 @@ def validate_row_semantics(record: dict[str, Any], path: str, errors: Validation
     validate_behaviour_signature(record, path, errors)
     validate_answer_form(record, path, errors)
     validate_v8_row_rules(record, path, errors)
+    validate_v30_row_rules(record, path, errors)
     validate_trace_reference(record, path, errors)
     validate_evidence_status(record, path, errors)
     validate_authority_relation(record, path, errors)
@@ -767,6 +768,68 @@ def validate_behaviour_signature(
                 "comply_signature.per_condition must be a non-empty list when "
                 "condition_independent is false",
             )
+
+
+PREFIX_RELATIONS = ("front_running", "contradicting", "post_solution")
+
+# Two spellings record the same claim: that the plan produced by ACCEPTING the
+# false consequence was constructed and does not reach the goal. smoke_20 wrote
+# it one way, smoke_100 another. Both are accepted, by name -- the rule is about
+# the claim, not the field. A first draft of this check required only the newer
+# pair and would have invalidated ten substantively correct rows.
+WRONG_BRANCH_SPELLINGS = (
+    ("wrong_branch_plan", "wrong_branch_reaches_goal"),
+    ("constructed_acceptance_plan", "constructed_acceptance_plan_valid"),
+)
+
+
+def validate_v30_row_rules(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
+    """Row rules adopted in contract v30, from generation_rules.md.
+
+      * [Q-D10] `prefix_relation`, where present, is drawn from a closed
+        vocabulary. Presence is NOT required here: the judgement is about the
+        frozen prefix rather than the row's own coherence, and a batch authored
+        before the field existed holds rows that are individually valid. Full
+        coverage is a batch gate in `audit_batch.py`, which is the layer that
+        already knows about a batch.
+      * [Q-D9] a planning PFM is scoreable only if ACCEPTING it yields a plan
+        that FAILS execution. `answer_equivalence` makes a plan equivalent iff it
+        executes and reaches the goal, so a longer-but-valid accepted plan is
+        scored identical to gold and the row measures nothing.
+    """
+    relation = record.get("prefix_relation")
+    if relation is not None and relation not in PREFIX_RELATIONS:
+        errors.add(path, f"prefix_relation must be one of {', '.join(PREFIX_RELATIONS)} "
+                         f"(got {relation!r}) -- read the frozen prefix and judge it [Q-D10]")
+
+    # PLAN, not merely non-scalar. An interval or set answer compares
+    # numerically and can carry a unique accepted value, so it is scoreable the
+    # ordinary way; it is `answer_equivalence` for PLANS -- equivalent iff it
+    # executes and reaches the goal -- that makes a longer valid branch
+    # indistinguishable from gold. A first draft keyed on "not scalar" and
+    # flagged four correct interval rows.
+    if (record.get("diagnostic_class") == "plausible_false_material"
+            and record.get("answer_form") == "plan"):
+        derivation = record.get("answer_derivation")
+        if not isinstance(derivation, dict):
+            errors.add(path, "a planning PFM needs answer_derivation [Q-D9]")
+            return
+        if derivation.get("structural_branch_validated") is not True:
+            errors.add(path, "a planning PFM records structural_branch_validated: true "
+                             "-- the accepted branch must be constructed, not asserted [Q-D9]")
+        recorded = [(plan, verdict) for plan, verdict in WRONG_BRANCH_SPELLINGS
+                    if plan in derivation]
+        if not recorded:
+            names = " or ".join(plan for plan, _ in WRONG_BRANCH_SPELLINGS)
+            errors.add(path, f"a planning PFM must record the plan that obeying the update "
+                             f"produces, as {names} [Q-D9]")
+            return
+        plan_field, verdict_field = recorded[0]
+        # both spellings mean "does this reach the goal", so both must be false
+        if derivation.get(verdict_field) is not False:
+            errors.add(path, f"a planning PFM must record {verdict_field}: false. A branch that "
+                             f"reaches the goal is equivalent to gold under answer_equivalence, so "
+                             f"the row is unscoreable -- retarget it [Q-D9]")
 
 
 def validate_v8_row_rules(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:

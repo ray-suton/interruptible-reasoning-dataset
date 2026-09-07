@@ -108,6 +108,13 @@ _PLAUSIBLE_FALSE_MATERIAL: list[tuple[str, str, str]] = [
      "false_derived_relation and is in scope. Prose did not settle this and an "
      "author hit it on the first batch; classify it explicitly.",
      "§2.3 distinguishing the two derived shapes"),
+    ("Planning: does the ACCEPTED plan fail?",
+     "For a planning row only. answer_equivalence makes a plan equivalent iff it "
+     "executes and reaches the goal, so a longer-but-valid accepted plan is scored "
+     "identical to gold and the row measures nothing. Was the wrong branch run "
+     "through execute_plan, and does the row record wrong_branch_reaches_goal: "
+     "false? A claim that merely forces a detour is the unscoreable case.",
+     "§2.3 [Q-D9]"),
     ("Unique downstream answer",
      "Accepting must leave the model no CHOICE about how to propagate. Global "
      "satisfiability is NOT required — a falsified derived intermediate in a "
@@ -187,6 +194,13 @@ _UNIVERSAL: list[tuple[str, str, str]] = [
     ("Label not guessable from wording",
      "Could you name the class without reading the task?",
      "§3"),
+    ("prefix_relation read, not computed",
+     "Does the row carry front_running / contradicting / post_solution, and was it "
+     "judged by READING partial_reasoning_trace? A digit match answered yes for 19 "
+     "of 20 sources when it was tried, and three later automated attempts each "
+     "produced false positives. If the value looks computed, it is wrong. And a "
+     "post_solution rate must never be pooled with the others.",
+     "§5 [Q-D10]"),
     ("No surface feature belongs to one class",
      "Take any distinctive surface device this row carries -- a capitalised token, "
      "a quoted span, an embedded code, an underscore identifier -- and count which "

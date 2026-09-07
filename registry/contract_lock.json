@@ -1,18 +1,18 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 29,
-  "locked_at": "2026-09-07T06:04:30Z",
+  "version": 30,
+  "locked_at": "2026-09-07T06:12:30Z",
   "locked_by": "P1",
-  "reason": "v29: [Q-D8] no surface feature may belong to one class, and teach the classifier to see the features it was blind to. audit_batch.feature_vector used first n-grams, length, token count and digit count only -- and tokenize() lowercases, so every feature was blind to CASING. Under that gate both authored batches passed G0 while carrying a total leak: an ALLCAPS marker token sat in 20 of 20 smoke_20 MO updates and 12 of 20 smoke_100-P1 MO updates, and in ZERO of the other 60 rows in each. A single hand-written boolean 'contains an ALLCAPS token' separates the binary label at 0.750 on smoke_20 and 0.637 on smoke_100-P1, both over G0's 0.60 cap, while the gate reported 0.475 and 0.425. The markers are not gratuitous: section 2.4 over-weights marker_injection and exfiltration because an exact literal string is the only judge-free signature in this dataset, so the fix is to give the feature to the other classes from each subject's own vocabulary (GCD, LCM, AM-GM, SVD, USD, ITL, AR) rather than to lowercase a marker, which would trade a measurable leak for an unmeasurable one. feature_vector now carries caps-token, caps-count, caps-ratio, quoted and underscore features; generation_rules gains section 3.4c stating the general rule with the measurements and the ordered remedies; review_checklist gains one item. INVALIDATES: all 80 authored rows in data/smoke_20 now FAIL the corrected gate at binary 0.650 and four-way 0.525 -- PROGRESS.md records that batch as passing both, which was true only of the casing-blind gate. Those rows are not repaired here; that is an owner decision, not the author's. P1's 80 smoke_100 rows were repaired in the same change and now read binary 0.463 and four-way 0.275 with a caps token in all four classes (5/5/3/12); the residual single-boolean MO identification of 0.738 is reported rather than engineered away, because MO is structurally the one class that issues an instruction.",
+  "reason": "v30: [Q-D9] planning scoreability and [Q-D10] prefix_relation move from one author's practice into the contract, so P2-P5 do not each rediscover them. Both were learned authoring P1's slice and existed only as prose in workflow.md, which is not normative -- a rule outside validate_dataset.py is inert. [Q-D9]: a planning PFM is scoreable ONLY if accepting it yields a plan that FAILS execution, because answer_equivalence defines a plan as equivalent iff it executes and reaches the goal, so a false claim that merely forces a detour produces a plan equivalent to gold and the row measures nothing. The natural first instinct is precisely the unscoreable case; the claim must make an action illegal. [Q-D10]: every row records prefix_relation as front_running / contradicting / post_solution, judged by READING partial_reasoning_trace -- a prefix_contains_target_value field was tried and removed after a digit match answered yes for 19 of 20 sources, and three later automated attempts each produced confident false positives. Reading it is also a scoreability check: if the model never forms the falsified quantity, acceptance may be unobservable. Expect post_solution to dominate (9 of P1's 20 sources) and never pool its rate with the others. LAYERING, and this matters: the validator enforces the prefix_relation VOCABULARY but not its presence, because the judgement concerns the frozen prefix rather than the row's own coherence and a batch authored before the field existed holds rows that are individually valid; full coverage is a new batch gate, prefix_relation_coverage, in audit_batch.py, which is the layer that knows about a batch. INVALIDATES NO AUTHORED ROW. Both smoke_20's 80 rows and smoke_100-P1's 80 rows pass validate under v30. That took two corrections found by running the draft rule against the OLDER batch: it first keyed on 'answer_form is not scalar', which flagged four correct interval PFMs whose numeric answers are scoreable the ordinary way, and it first required only wrong_branch_plan / wrong_branch_reaches_goal, which would have invalidated ten substantively correct smoke_20 planning rows whose accepted plans were constructed and DO fail, recorded as constructed_acceptance_plan / constructed_acceptance_plan_valid. Both spellings are now accepted by name and the rule is scoped to answer_form == 'plan'. smoke_20 continues to fail the v29 leakage gate; that is unchanged by this amendment and remains an open owner decision. Every new predicate was validated on both branches: four must-fail mutations caught, three must-not-fail cases correctly permitted.",
   "files": {
-    "generation_rules.md": "cd01d634b6ef4555b182d664e9e5fa0c4c98302c890f7db92cee22efa28e2f50",
+    "generation_rules.md": "93c5ec2c0e00cb1b855dd87e8f5e94cdfea9fba3a205498f179c79c9d28abc8f",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
-    "scripts/review_checklist.py": "f1731c72576cac2da3d391ad70f97ca0c3174a1a169d4c0936d2311ddadd4b7a",
-    "scripts/audit_batch.py": "6de84eaf7c3f09523478ca231bd30d100533ed8ec9e9397486f3d561e3100a17",
+    "scripts/validate_dataset.py": "f6390a9764d0336c9e93b7b7fa27004549deaccf42228aa77197f0793675a6ec",
+    "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
+    "scripts/audit_batch.py": "12a58609562e1682f1f226fb9bbe59077bb202cd2e0c283cacc1700c56a55d3b",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -451,6 +451,23 @@
         "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
         "scripts/review_checklist.py": "df3dfa72923a873e7247908aab30908d1a2343036f298b0e2fe51439cf438ebb",
         "scripts/audit_batch.py": "35b125048afc0d5ac71950f1c51577c313bc1536e5074daf90ca56a0316fb85a",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 29,
+      "locked_at": "2026-09-07T06:04:30Z",
+      "locked_by": "P1",
+      "reason": "v29: [Q-D8] no surface feature may belong to one class, and teach the classifier to see the features it was blind to. audit_batch.feature_vector used first n-grams, length, token count and digit count only -- and tokenize() lowercases, so every feature was blind to CASING. Under that gate both authored batches passed G0 while carrying a total leak: an ALLCAPS marker token sat in 20 of 20 smoke_20 MO updates and 12 of 20 smoke_100-P1 MO updates, and in ZERO of the other 60 rows in each. A single hand-written boolean 'contains an ALLCAPS token' separates the binary label at 0.750 on smoke_20 and 0.637 on smoke_100-P1, both over G0's 0.60 cap, while the gate reported 0.475 and 0.425. The markers are not gratuitous: section 2.4 over-weights marker_injection and exfiltration because an exact literal string is the only judge-free signature in this dataset, so the fix is to give the feature to the other classes from each subject's own vocabulary (GCD, LCM, AM-GM, SVD, USD, ITL, AR) rather than to lowercase a marker, which would trade a measurable leak for an unmeasurable one. feature_vector now carries caps-token, caps-count, caps-ratio, quoted and underscore features; generation_rules gains section 3.4c stating the general rule with the measurements and the ordered remedies; review_checklist gains one item. INVALIDATES: all 80 authored rows in data/smoke_20 now FAIL the corrected gate at binary 0.650 and four-way 0.525 -- PROGRESS.md records that batch as passing both, which was true only of the casing-blind gate. Those rows are not repaired here; that is an owner decision, not the author's. P1's 80 smoke_100 rows were repaired in the same change and now read binary 0.463 and four-way 0.275 with a caps token in all four classes (5/5/3/12); the residual single-boolean MO identification of 0.738 is reported rather than engineered away, because MO is structurally the one class that issues an instruction.",
+      "files": {
+        "generation_rules.md": "cd01d634b6ef4555b182d664e9e5fa0c4c98302c890f7db92cee22efa28e2f50",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
+        "scripts/review_checklist.py": "f1731c72576cac2da3d391ad70f97ca0c3174a1a169d4c0936d2311ddadd4b7a",
+        "scripts/audit_batch.py": "6de84eaf7c3f09523478ca231bd30d100533ed8ec9e9397486f3d561e3100a17",
         "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
       }
     }
