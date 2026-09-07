@@ -212,11 +212,12 @@ data/<batch>/contributors/<you>/semantic_rows.jsonl
 data/<batch>/semantic_rows.jsonl
 ```
 
-**Copy `scripts/author_smoke_100_P1.py`.** It is the current worked example —
-20 sources, 80 rows, every gate green — and the only generator written against
-the trimmed source package and the current contract. It arrives on `main` with
-P1's merge; until then it is on that author's branch, because rows do not reach
-`main` before their reviewer has seen them (§5).
+**You do not need anyone else's generator to start.** Everything the contract
+requires is in `generation_rules.md`, and `data/smoke_20/semantic_rows.jsonl` on
+`main` is 80 finished rows — enough to see how each field is filled, though its
+sources predate the trimmed source package. A generator written against the
+current contract arrives on `main` as each author's slice is reviewed and
+merged; read one then if you want it, but do not wait for it.
 
 Three consequences, each of which has cost someone a day:
 
@@ -354,7 +355,7 @@ two documents concern you.** Everything below is listed so you can stop wonderin
 | `scripts/review_checklist.py` | run it; the questions your reviewer asks |
 | `scripts/audit_batch.py`, `scripts/validate_dataset.py` | your gates |
 | `scripts/planning_domains.py` | import it if you hold planning sources — `solve_bfs` for a gold plan, `execute_plan` to prove a wrong branch fails |
-| `scripts/author_smoke_100_P1.py` | copy it; the current worked generator. Reaches `main` with its author's merge — see §5 |
+| `data/smoke_20/semantic_rows.jsonl` | 80 finished rows; how each field is filled. Its sources predate the trimmed package |
 
 **Ignore — already ran, or the owner's job.** Nothing here changes a row you
 write: `assign_sources.py`, `build_smoke_100.py`, `make_planning_sources.py`,
