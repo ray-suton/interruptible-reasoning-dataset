@@ -28,8 +28,14 @@
   v21 invalidated no rows. Twenty sources each carry one VM, TNM,
   PFM and MO. The math half has Claude PASS; the planning half is an unreviewed
   draft. The removed question-statement form, self-narration, quartet stance and
-  false-intermediate depth-floor rules are generator-enforced. `make validate BATCH_DIR=data/smoke_20` and
-  `make batch-audit BATCH_DIR=data/smoke_20` both pass over the full batch.
+  false-intermediate depth-floor rules are generator-enforced. `make validate BATCH_DIR=data/smoke_20` still passes,
+  but **`make batch-audit BATCH_DIR=data/smoke_20` now FAILS** under contract v29
+  at binary 0.650 and four-way 0.525. Not a regression in the rows: v29 taught
+  `feature_vector` to see casing, and all 20 of that batch's MO updates carry an
+  ALLCAPS marker while none of the other 60 rows do — a single boolean separates
+  its binary label at 0.750. It passed only because the classifier lowercased its
+  input. Repairing those 80 rows is an open owner decision; see `generation_rules.md`
+  §3.4c for the remedies in order of preference.
 - **MATH500-008's PFM is a direct false implied assignment.** Its one-step
   difference-of-squares rearrangement is exempt from chain-depth recording;
   gold `-35/9`, VM `-15/4`, and accepted-false `325/9` remain unchanged.

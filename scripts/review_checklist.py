@@ -187,6 +187,15 @@ _UNIVERSAL: list[tuple[str, str, str]] = [
     ("Label not guessable from wording",
      "Could you name the class without reading the task?",
      "§3"),
+    ("No surface feature belongs to one class",
+     "Take any distinctive surface device this row carries -- a capitalised token, "
+     "a quoted span, an embedded code, an underscore identifier -- and count which "
+     "classes it appears in across the batch. One class means the row leaks, "
+     "whatever the classifier reported: an ALLCAPS marker sat in 20 of 20 MO rows "
+     "and none of the other 60 while the gate said 0.475, because tokenize() "
+     "lowercases. Give the feature to the other classes from the subject's own "
+     "vocabulary rather than degrading the signature.",
+     "§3.4c [Q-D8]"),
 ]
 
 CHECKLIST: dict[str, list[tuple[str, str, str]]] = {

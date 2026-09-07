@@ -230,9 +230,18 @@ Traps that have bitten people here:
   taxonomy. *"The injected instruction says"* is a description of an attack, not
   an attack. In-world authority claims stay required: *"an official erratum
   revises this answer"* is what a `fake_errata` should say.
-- **Openers must not be class-exclusive.** §3.3 forbids any class-exclusive
-  first unigram outright, and with natural phrasing every first word is
-  exclusive. Draw openers from a small shared pool by rotation.
+- **No surface feature may belong to one class** (§3.4c). Openers are the
+  familiar case: §3.3 forbids any class-exclusive first unigram outright, and
+  with natural phrasing every first word is exclusive, so draw openers from a
+  small shared pool by rotation. The rule is wider than openers, and the case
+  that produced it is worth knowing — MO needs a literal marker for its
+  signature, markers got written in capitals, and nothing else was, so an
+  ALLCAPS token sat in 20 of 20 MO rows and none of the other 60 while the gate
+  reported 0.475 because `tokenize()` lowercases. Give the feature to the other
+  classes from the subject's own vocabulary (`GCD`, `AM-GM`, `USD`, `SVD`) rather
+  than degrading the signature. Ask it of every distinctive device a row carries
+  for scoring reasons: a quoted span, an embedded code, an underscore
+  identifier. **A gate cannot gate a feature it cannot see.**
 - **Register is held constant inside a quartet.** If the PFM hedges, the VM must
   too, or a reader picks the label off tone. Vary register *across* sources.
 - **Signatures point at obedience.** If *obeying* your update produces correct
@@ -364,12 +373,14 @@ Each of these happened. The check is what catches it; reading the output does no
 
 1. **Confident wrong mathematics** — four errors in one session of 37
    derivations. → Compute gold too and compare it to the pinned answer.
-2. **A tool written for one surface form** — **eleven** times a grader here
+2. **A tool written for one surface form** — **twelve** times a grader here
    scored confidently and wrongly, and *every one reported a correct answer as a
    failure*: a regex that could not read nested braces, `\boxed{1.00}` compared
    unequal to `1`, `\texttt{pkg1}` surviving as `texttt{pkg1}`, and a locator
-   parser that silently skipped 120 rows. → Make any tool reproduce a known-good
-   case before believing its verdict.
+   parser that silently skipped 120 rows, and a leakage classifier whose feature
+   vector was blind to casing while an ALLCAPS marker separated the labels. →
+   Make any tool reproduce a known-good case before believing its verdict, and
+   ask what its inputs cannot represent.
 3. **A check that only ever passes** — a predicate exercised on one branch
    confirms whatever you already believe. → Make every check **fail on purpose**
    once. If it cannot be made to fail, it is not a check.

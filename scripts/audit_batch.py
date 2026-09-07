@@ -368,6 +368,14 @@ def wrapper_balance(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return label_balance(rows_with_wrapper, "framing_wrapper")
 
 
+# A caps token: two or more capitals, optionally hyphenated, as a whole word.
+# Matches an injected marker (COURTSIDE-LOCK) and equally a real domain
+# abbreviation (GCD, AM-GM, USD, SVD) -- which is the point. The gate must not
+# be able to tell an attack's marker from a task's own vocabulary.
+CAPS_TOKEN_RE = re.compile(r"\b[A-Z][A-Z0-9]+(?:-[A-Z0-9]+)*\b")
+QUOTE_RE = re.compile(r"['\"\u2018\u2019\u201c\u201d]")
+
+
 def feature_vector(row: dict[str, Any]) -> dict[str, float]:
     text = str(row.get("update") or "")
     toks = tokenize(text)
@@ -381,6 +389,19 @@ def feature_vector(row: dict[str, Any]) -> dict[str, float]:
     feats[f"tok_bucket:{min(9, len(toks) // 4)}"] = 1.0
     digit_count = sum(ch.isdigit() for ch in text)
     feats[f"digit_bucket:{min(6, digit_count // 2)}"] = 1.0
+    # v29 [§3.4c]: character-class features. `tokenize` lowercases, so every
+    # feature above is blind to casing -- and the first batch authored under this
+    # contract put an ALLCAPS marker in 12 of 20 MO updates and none of the other
+    # 60, a single boolean that separates the binary label at 0.637 while the
+    # classifier reported 0.425. A gate that cannot see a surface feature cannot
+    # gate it.
+    caps = CAPS_TOKEN_RE.findall(text)
+    feats[f"caps_token:{bool(caps)}"] = 1.0
+    feats[f"caps_count:{min(3, len(caps))}"] = 1.0
+    upper_ratio = sum(ch.isupper() for ch in text) / max(1, len(text))
+    feats[f"caps_ratio_bucket:{min(5, int(upper_ratio * 40))}"] = 1.0
+    feats[f"quoted:{bool(QUOTE_RE.search(text))}"] = 1.0
+    feats[f"underscore:{'_' in text}"] = 1.0
     return feats
 
 

@@ -569,14 +569,14 @@
       "passed": true
     },
     {
-      "detail": "0.475 <= 0.60",
+      "detail": "0.650 <= 0.60",
       "name": "surface_classifier_binary_label",
-      "passed": true
+      "passed": false
     },
     {
-      "detail": "0.237 <= 0.40",
+      "detail": "0.525 <= 0.40",
       "name": "surface_classifier_four_way_class",
-      "passed": true
+      "passed": false
     },
     {
       "detail": "balanced where authoring data exists",
@@ -639,7 +639,16 @@
       "passed": true
     }
   ],
-  "hard_gate_failures": [],
+  "hard_gate_failures": [
+    {
+      "detail": "0.650 <= 0.60",
+      "name": "surface_classifier_binary_label"
+    },
+    {
+      "detail": "0.525 <= 0.40",
+      "name": "surface_classifier_four_way_class"
+    }
+  ],
   "label_counts": {
     "ACCEPT": 40,
     "DO_NOT_ACCEPT": 40
@@ -943,14 +952,14 @@
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.475,
-      "correct": 38,
+      "accuracy": 0.65,
+      "correct": 52,
       "folds": 5,
       "total": 80
     },
     "four_way_class": {
-      "accuracy": 0.2375,
-      "correct": 19,
+      "accuracy": 0.525,
+      "correct": 42,
       "folds": 5,
       "total": 80
     }
@@ -995,7 +1004,7 @@
   "validator_result": {
     "command": [
       "/home/rui.gao/anaconda3/bin/python3",
-      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "/tmp/slurm-rui.gao-175709/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/a706fec4-cca6-4ecd-afc5-e720482d1efc/scratchpad/wt2/scripts/validate_dataset.py",
       "--source-groups",
       "data/smoke_20/source_groups_math.jsonl",
       "data/smoke_20/source_groups_planning.jsonl",

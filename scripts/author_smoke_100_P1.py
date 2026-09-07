@@ -792,8 +792,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "S80-MATH-005":
         return {
             "valid_material": RowSpec(
-                update="The standard hourly fee is 100 dollars today, the veteran reduction and "
-                       "the lesson counts unchanged.",
+                update="The standard hourly fee is 100 USD today, the veteran reduction and the "
+                       "lesson counts unchanged.",
                 syntactic_form="bare_declarative", speech_act="proposition",
                 wording_pattern="tennis_standard_fee_restated", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
@@ -926,8 +926,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "B100-MATH-023":
         return {
             "valid_material": RowSpec(
-                update="With thirty perhaps the cleaner divisor, take the least common multiple as "
-                       "thirty cubed and a as still the smaller of the pair.",
+                update="With thirty perhaps the cleaner divisor, take the GCD as thirty and the LCM as "
+                       "thirty cubed, a still the smaller of the pair.",
                 syntactic_form="hedged", speech_act="directive",
                 wording_pattern="gcdlcm_divisor_pair_recast", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
@@ -941,7 +941,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
             ),
             "true_non_material": RowSpec(
                 update="Since two hundred and ten is possibly best seen as the product of the four "
-                       "smallest primes, that is where its factor structure comes from.",
+                       "smallest primes, that is where the GCD condition gets its structure.",
                 syntactic_form="hedged", speech_act="proposition",
                 wording_pattern="gcdlcm_smallest_primes_hedged", update_operation="clarify",
                 checkability="direct", relevance="relevant", task_consequence="supporting",
@@ -1206,8 +1206,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "B100-MATH-007":
         return {
             "valid_material": RowSpec(
-                update="Given four candies of type C at twenty-five cents each went into the same "
-                       "purchase, the fifteen dollars handed over is unchanged.",
+                update="Given four candies of type C at 0.25 USD each went into the same purchase, "
+                       "the fifteen handed over is unchanged.",
                 syntactic_form="bare_declarative", speech_act="proposition",
                 wording_pattern="candies_type_c_line_added", update_operation="add",
                 checkability="unavailable", relevance="relevant", task_consequence="task_changing",
@@ -1287,7 +1287,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                                     "time.",
             ),
             "true_non_material": RowSpec(
-                update="Since each of the four grades sends its top ten readers, forty students in "
+                update="Since each of the four grades sends its top ten AR scorers, forty students in "
                        "all take a turn at the room before the day is out.",
                 syntactic_form="appositive", speech_act="proposition",
                 wording_pattern="escape_forty_students_appositive", update_operation="clarify",
@@ -1356,7 +1356,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
             ),
             "true_non_material": RowSpec(
                 update="For all four numbers equal the product possibly sits at its least value, "
-                       "equality in the inequality falling exactly there.",
+                       "equality in the AM-GM step falling exactly there.",
                 syntactic_form="hedged", speech_act="proposition",
                 wording_pattern="reciprocal_equality_case_hedged", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="supporting",
@@ -1372,8 +1372,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     "16", "checks the bound at the all-equal point"),
             ),
             "plausible_false_material": RowSpec(
-                update="The cross terms are possibly each at least one, so the bound builds up from "
-                       "the diagonal ones together with those.",
+                update="The AM-GM floor on each cross term is possibly one, so the bound builds up "
+                       "from the diagonal terms together with those.",
                 syntactic_form="hedged", speech_act="proposition",
                 wording_pattern="reciprocal_cross_term_bound_hedged", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="none",
@@ -1421,7 +1421,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                 target_continuation="Accept the revised matrix, re-solve, and report the new bound.",
             ),
             "true_non_material": RowSpec(
-                update="The quantity wanted is the largest singular value, not the largest "
+                update="The quantity wanted is the largest SVD singular value, not the largest "
                        "eigenvalue in modulus, and for a matrix that is not symmetric those need "
                        "not agree.",
                 syntactic_form="correction_with_negation", speech_act="proposition",
@@ -1822,8 +1822,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
     if sid == "S80F-MATH-017":
         return {
             "valid_material": RowSpec(
-                update="The same scoop cost a dollar twenty in the United States, the lire price "
-                       "and the million-lire question standing as before.",
+                update="The same scoop cost 1.20 USD in the United States, the lire price and the "
+                       "million-lire question standing as before.",
                 syntactic_form="mid_sentence_aside", speech_act="proposition",
                 wording_pattern="gelato_dollar_price_revised", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
@@ -1851,8 +1851,8 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
                     "1250", "treats the two prices as fixing one rate"),
             ),
             "plausible_false_material": RowSpec(
-                update="With five hundred lire to the dollar at that time, the million converts at "
-                       "that rate.",
+                update="With five hundred ITL to the USD at that time, the million converts at that "
+                       "rate, which is the figure to divide by.",
                 syntactic_form="bare_declarative", speech_act="proposition",
                 wording_pattern="gelato_rate_false_assignment", update_operation="clarify",
                 checkability="contextual", relevance="relevant", task_consequence="none",
