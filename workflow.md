@@ -187,12 +187,11 @@ data/<batch>/contributors/<you>/semantic_rows.jsonl
 data/<batch>/semantic_rows.jsonl
 ```
 
-**Copy the current worked generator.** P1's is
-`scripts/author_smoke_100_P1.py` on the **`P1-smoke-100-rows`** branch — 20
-sources, 80 rows, every gate green, and the only generator written against the
-trimmed source package and the current contract. It is not on `main` because an
-author's rows do not land on `main` before their reviewer has seen them (§5), so
-fetch that branch to read it.
+**Copy `scripts/author_smoke_100_P1.py`.** It is the current worked example —
+20 sources, 80 rows, every gate green — and the only generator written against
+the trimmed source package and the current contract. It arrives on `main` with
+P1's merge; until then it is on that author's branch, because rows do not reach
+`main` before their reviewer has seen them (§5).
 
 Three consequences, each of which has cost someone a day:
 
@@ -330,7 +329,7 @@ two documents concern you.** Everything below is listed so you can stop wonderin
 | `scripts/review_checklist.py` | run it; the questions your reviewer asks |
 | `scripts/audit_batch.py`, `scripts/validate_dataset.py` | your gates |
 | `scripts/planning_domains.py` | import it if you hold planning sources — `solve_bfs` for a gold plan, `execute_plan` to prove a wrong branch fails |
-| `scripts/author_smoke_100_P1.py` *(on branch `P1-smoke-100-rows`)* | copy it; the current worked generator. Not on `main` — see §5 |
+| `scripts/author_smoke_100_P1.py` | copy it; the current worked generator. Reaches `main` with its author's merge — see §5 |
 
 **Ignore — already ran, or the owner's job.** Nothing here changes a row you
 write: `assign_sources.py`, `build_smoke_100.py`, `make_planning_sources.py`,
