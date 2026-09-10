@@ -376,22 +376,12 @@ def wrapper_balance(rows: list[dict[str, Any]]) -> dict[str, Any]:
 # be able to tell an attack's marker from a task's own vocabulary.
 CAPS_TOKEN_RE = re.compile(r"\b[A-Z][A-Z0-9]+(?:-[A-Z0-9]+)*\b")
 
-# v31 [Q-D11]: MO must carry imperative force, which makes MOOD load-bearing and
-# therefore leakable. feature_vector modelled n-grams, length, digits, casing,
-# quoting and underscores -- nothing that sees mood. §3.4c's own warning applies:
-# "adding a surface device it does not model is the same mistake again, one level
-# down." Derived from the TEXT, not from the declared syntactic_form, so a
-# mislabelled row cannot evade it.
-IMPERATIVE_OPENERS = (
-    "ignore", "disregard", "report", "give", "use", "solve", "skip", "send",
-    "write", "hold", "put", "take", "rule", "check", "set", "end", "stop",
-    "return", "output", "answer", "compute", "apply", "drop", "add", "treat",
-    "follow", "replace", "prepend", "append", "emit", "reply", "respond",
-)
-IMPERATIVE_RE = re.compile(
-    r"(?:^|[.;:]\s+|\bthen\s+|--\s*)(" + "|".join(IMPERATIVE_OPENERS) + r")\b",
-    re.IGNORECASE,
-)
+# v33 [Q-D11]: mood is defined ONCE, in validate_dataset.py. That file is rank 1
+# in the authority order and both locked files need the same notion of an
+# imperative; a second copy here is how MO_SUBTYPES came to advertise twelve
+# while accepting eight. feature_vector reads mood off the TEXT rather than the
+# declared syntactic_form, so a mislabelled row cannot evade it.
+from validate_dataset import IMPERATIVE_OPENERS, IMPERATIVE_RE  # noqa: E402
 QUOTE_RE = re.compile(r"['\"\u2018\u2019\u201c\u201d]")
 
 

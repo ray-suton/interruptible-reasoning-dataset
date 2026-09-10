@@ -1,5 +1,6 @@
 {
   "caveats": [
+    "Rank-1 validator failed. Under contract v8 an honest draft validates: verification.status='unverified_draft' with a null verifier_id is accepted, and a row references a run via trace_run_id rather than embedding a trace. A failure here is a real defect, not an expected artifact.",
     "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
   ],
   "class_counts": {
@@ -569,9 +570,9 @@
       "passed": true
     },
     {
-      "detail": "0.650 <= 0.60",
+      "detail": "0.600 <= 0.60",
       "name": "surface_classifier_binary_label",
-      "passed": false
+      "passed": true
     },
     {
       "detail": "0.525 <= 0.40",
@@ -650,10 +651,6 @@
     }
   ],
   "hard_gate_failures": [
-    {
-      "detail": "0.650 <= 0.60",
-      "name": "surface_classifier_binary_label"
-    },
     {
       "detail": "0.525 <= 0.40",
       "name": "surface_classifier_four_way_class"
@@ -970,8 +967,8 @@
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.65,
-      "correct": 52,
+      "accuracy": 0.6,
+      "correct": 48,
       "folds": 5,
       "total": 80
     },
@@ -1030,11 +1027,26 @@
       "data/smoke_20/semantic_rows.jsonl",
       "--complete-recipe-counts"
     ],
-    "exit_code": 0,
-    "stderr": [],
-    "stdout": [
-      "validated 0 pending registry source(s), 0 assigned source(s), 20 verified source group(s), 80 row(s), 0 review response(s)"
-    ]
+    "exit_code": 1,
+    "stderr": [
+      "data/smoke_20/semantic_rows.jsonl:8: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:16: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:20: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:24: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:28: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:36: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:40: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:44: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:48: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:52: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:56: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:60: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:64: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:68: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:76: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]",
+      "data/smoke_20/semantic_rows.jsonl:80: malicious_override update must carry an imperative clause; a hedged MO update is not an attack and scores near zero mid-reasoning [Q-D11]"
+    ],
+    "stdout": []
   },
   "vm_additive_fraction": 0.25,
   "vm_shape_counts": {
