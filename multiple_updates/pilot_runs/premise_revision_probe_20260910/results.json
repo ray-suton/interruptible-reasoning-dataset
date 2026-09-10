@@ -1,0 +1,32 @@
+{
+  "arms": {
+    "baseline": {
+      "kept_original": 40,
+      "n": 40,
+      "other": 0,
+      "took_revision": 0,
+      "unparsed": 0
+    },
+    "load0": {
+      "kept_original": 0,
+      "n": 40,
+      "other": 0,
+      "took_revision": 40,
+      "unparsed": 0
+    },
+    "load1": {
+      "kept_original": 3,
+      "n": 40,
+      "other": 0,
+      "took_revision": 37,
+      "unparsed": 0
+    }
+  },
+  "headline": "VM-shaped content survives interruption: 100% in prompt -> 92% at 0.6 (-8 pts). The model is NOT discounting mid-reasoning content generally. It takes uncheckable legitimate revisions and rejects checkable false consequences, so the channel effect is selective discrimination.",
+  "model": "Qwen/Qwen3-14B-FP8",
+  "reading": "NOT a PFM measurement. A false restated given is indistinguishable from an authorized premise revision, so accepting it is correct behaviour. Read as a VM-acceptance probe. generation_rules.md [Q-D2] bans this shape from PFM for exactly this reason; the archived pilot scored 12/15 adoption as PFM failure, which was mislabelled VM acceptance.",
+  "rollouts": 8,
+  "run_id": "premise_revision_probe_20260910",
+  "sources": "the 5 archived pilot_trace_probe math sources",
+  "updates": "the archived pilot PFM rows, which are false_restated_given (premise falsification)"
+}

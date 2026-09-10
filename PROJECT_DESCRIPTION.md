@@ -20,3 +20,13 @@ the design rationale, `converged_paper_plan.md` the plan, `workflow.md` the
 authoring and review procedure.
 
 Everything active uses only the Python standard library. This is intentional.
+
+Working snapshot, 2026-09-07: the `multipl-updates` checkout is refining 40
+single-update components over 10 sources; sequence composition is not built.
+The generator reproduces those draft rows byte for byte, and their mechanical
+checks pass under this branch's contract v27. Surface leakage and independent
+review remain unresolved. The locally recorded `main` branch has contract v30;
+P1's separate 80-row smoke-100 draft lives on `P1-smoke-100-rows`. These branch
+states must not be treated as one verified batch. See
+[the inspection report](.omx/reports/task-2026-09-07-103031.md) for evidence,
+current limitations, and the next step.

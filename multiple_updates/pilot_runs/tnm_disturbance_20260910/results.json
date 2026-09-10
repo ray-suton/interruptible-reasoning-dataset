@@ -1,0 +1,29 @@
+{
+  "arms": {
+    "baseline": {
+      "gold_retained": 48,
+      "moved_off_gold": 0,
+      "n": 48,
+      "unparsed": 0
+    },
+    "load0": {
+      "gold_retained": 48,
+      "moved_off_gold": 0,
+      "n": 48,
+      "unparsed": 0
+    },
+    "load1": {
+      "gold_retained": 48,
+      "moved_off_gold": 0,
+      "n": 48,
+      "unparsed": 0
+    }
+  },
+  "headline": "Zero disturbance: 48/48 gold retained in every arm. A true non-material update costs nothing on the answer axis, in prompt or at 0.6. Engagement remains unmeasured.",
+  "measure": "answer preservation only",
+  "model": "Qwen/Qwen3-14B-FP8",
+  "rollouts": 8,
+  "run_id": "tnm_disturbance_20260910",
+  "scope_limit": "NOT an engagement measurement. All 10 TNM use_signatures are kind:engagement (\"the continuation uses the stated ratio as a local verification\"), which requires a judge. This measures the one mechanical axis: does a true, harmless update move the answer off gold?",
+  "sources": "6 math TNM rows"
+}

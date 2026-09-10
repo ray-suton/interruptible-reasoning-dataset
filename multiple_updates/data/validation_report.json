@@ -11,12 +11,12 @@
   "contract_v8": {
     "lexical_overlap": {
       "mean_by_class": {
-        "malicious_override": 0.2144,
-        "plausible_false_material": 0.2481,
-        "true_non_material": 0.2394,
-        "valid_material": 0.2854
+        "malicious_override": 0.224,
+        "plausible_false_material": 0.1891,
+        "true_non_material": 0.2503,
+        "valid_material": 0.2686
       },
-      "ratio": 1.3311567164179103,
+      "ratio": 1.4204124801692228,
       "unresolved_sources": 0
     },
     "no_framing_wrapper": {
@@ -37,8 +37,8 @@
       "per_form": {
         "appositive": {
           "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
-          "deviation": 0
+          "DO_NOT_ACCEPT": 1,
+          "deviation": 1
         },
         "bare_declarative": {
           "ACCEPT": 5,
@@ -46,14 +46,14 @@
           "deviation": 0
         },
         "correction_with_negation": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 4,
           "deviation": 0
         },
         "hedged": {
-          "ACCEPT": 3,
-          "DO_NOT_ACCEPT": 2,
-          "deviation": 1
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 4,
+          "deviation": 0
         },
         "imperative": {
           "ACCEPT": 4,
@@ -61,8 +61,8 @@
           "deviation": 0
         },
         "mid_sentence_aside": {
-          "ACCEPT": 4,
-          "DO_NOT_ACCEPT": 5,
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 2,
           "deviation": 1
         }
       }
@@ -80,222 +80,222 @@
   "first_bigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "across mark's": 1,
-        "along the": 1,
-        "before planning": 1,
-        "during the": 1,
-        "given the": 1,
-        "suppose the": 1,
-        "taking the": 1,
-        "through the": 1,
-        "with these": 1,
-        "within the": 1
+        "actually the": 1,
+        "also follow": 1,
+        "before the": 1,
+        "for this": 1,
+        "it's distance": 1,
+        "note the": 1,
+        "one thing": 1,
+        "since one": 1,
+        "sorry the": 1,
+        "worth noting": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the",
+      "top_value": "worth noting",
       "total": 10
     },
     "plausible_false_material": {
       "counts": {
-        "across mark's": 1,
-        "along the": 1,
+        "actually the": 1,
+        "also with": 1,
         "before the": 1,
-        "during crate": 1,
-        "given the": 1,
-        "suppose the": 1,
-        "taking the": 1,
-        "through the": 1,
-        "with these": 1,
-        "within the": 1
+        "for the": 1,
+        "it's the": 1,
+        "note one": 1,
+        "one more": 1,
+        "since mark": 1,
+        "sorry the": 1,
+        "worth adding": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the",
+      "top_value": "one more",
       "total": 10
     },
     "true_non_material": {
       "counts": {
-        "across mark's": 1,
-        "along the": 1,
+        "actually the": 1,
+        "also with": 1,
         "before the": 1,
-        "during the": 1,
-        "given the": 1,
-        "suppose the": 1,
-        "taking the": 1,
-        "through the": 1,
-        "with positive": 1,
-        "within the": 1
+        "for the": 1,
+        "it's the": 1,
+        "note that": 1,
+        "one thing": 1,
+        "since b": 1,
+        "sorry i": 1,
+        "worth checking": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the",
+      "top_value": "for the",
       "total": 10
     },
     "valid_material": {
       "counts": {
-        "across mark's": 1,
-        "along the": 1,
-        "before planning": 1,
-        "during the": 1,
-        "given the": 1,
-        "suppose the": 1,
-        "taking the": 1,
-        "through the": 1,
-        "with these": 1,
-        "within the": 1
+        "actually the": 1,
+        "also mark": 1,
+        "before you": 1,
+        "for the": 1,
+        "it's two": 1,
+        "note the": 1,
+        "one more": 1,
+        "since the": 1,
+        "sorry the": 1,
+        "worth saying": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the",
+      "top_value": "actually the",
       "total": 10
     }
   },
   "first_trigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "across mark's incomplete": 1,
-        "along the 0": 1,
-        "before planning key": 1,
-        "during the x": 1,
-        "given the pineapple": 1,
-        "suppose the graph": 1,
-        "taking the x": 1,
-        "through the package": 1,
-        "with these a": 1,
-        "within the quartic": 1
+        "actually the run": 1,
+        "also follow the": 1,
+        "before the interval": 1,
+        "for this item": 1,
+        "it's distance hijack": 1,
+        "note the route": 1,
+        "one thing is": 1,
+        "since one step": 1,
+        "sorry the answer": 1,
+        "worth noting the": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the pineapple",
+      "top_value": "worth noting the",
       "total": 10
     },
     "plausible_false_material": {
       "counts": {
-        "across mark's completed": 1,
-        "along the route": 1,
-        "before the key": 1,
-        "during crate loading": 1,
-        "given the orange": 1,
-        "suppose the substitution": 1,
-        "taking the factored": 1,
-        "through the a": 1,
-        "with these factors": 1,
-        "within the quartic": 1
+        "actually the middle": 1,
+        "also with u": 1,
+        "before the rest": 1,
+        "for the pickup": 1,
+        "it's the door": 1,
+        "note one trip": 1,
+        "one more figure": 1,
+        "since mark finished": 1,
+        "sorry the lower": 1,
+        "worth adding that": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the orange",
+      "top_value": "one more figure",
       "total": 10
     },
     "true_non_material": {
       "counts": {
-        "across mark's schedule": 1,
-        "along the shortest": 1,
-        "before the move": 1,
-        "during the loading": 1,
-        "given the drink": 1,
-        "suppose the distance": 1,
-        "taking the moved": 1,
-        "through the a": 1,
-        "with positive b": 1,
-        "within the real": 1
+        "actually the robot": 1,
+        "also with the": 1,
+        "before the next": 1,
+        "for the pineapple": 1,
+        "it's the same": 1,
+        "note that once": 1,
+        "one thing is": 1,
+        "since b stays": 1,
+        "sorry i should": 1,
+        "worth checking that": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the drink",
+      "top_value": "for the pineapple",
       "total": 10
     },
     "valid_material": {
       "counts": {
-        "across mark's two": 1,
-        "along the grid": 1,
-        "before planning the": 1,
-        "during the crate": 1,
-        "given the mixture": 1,
-        "suppose the requested": 1,
-        "taking the quadratic": 1,
-        "through the a": 1,
-        "with these endpoint": 1,
-        "within the double": 1
+        "actually the pineapple": 1,
+        "also mark had": 1,
+        "before you carry": 1,
+        "for the double": 1,
+        "it's two now": 1,
+        "note the target": 1,
+        "one more cell": 1,
+        "since the goal": 1,
+        "sorry the door": 1,
+        "worth saying i": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given the mixture",
+      "top_value": "actually the pineapple",
       "total": 10
     }
   },
   "first_unigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "across": 1,
-        "along": 1,
+        "actually": 1,
+        "also": 1,
         "before": 1,
-        "during": 1,
-        "given": 1,
-        "suppose": 1,
-        "taking": 1,
-        "through": 1,
-        "with": 1,
-        "within": 1
+        "for": 1,
+        "it's": 1,
+        "note": 1,
+        "one": 1,
+        "since": 1,
+        "sorry": 1,
+        "worth": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given",
+      "top_value": "worth",
       "total": 10
     },
     "plausible_false_material": {
       "counts": {
-        "across": 1,
-        "along": 1,
+        "actually": 1,
+        "also": 1,
         "before": 1,
-        "during": 1,
-        "given": 1,
-        "suppose": 1,
-        "taking": 1,
-        "through": 1,
-        "with": 1,
-        "within": 1
+        "for": 1,
+        "it's": 1,
+        "note": 1,
+        "one": 1,
+        "since": 1,
+        "sorry": 1,
+        "worth": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given",
+      "top_value": "one",
       "total": 10
     },
     "true_non_material": {
       "counts": {
-        "across": 1,
-        "along": 1,
+        "actually": 1,
+        "also": 1,
         "before": 1,
-        "during": 1,
-        "given": 1,
-        "suppose": 1,
-        "taking": 1,
-        "through": 1,
-        "with": 1,
-        "within": 1
+        "for": 1,
+        "it's": 1,
+        "note": 1,
+        "one": 1,
+        "since": 1,
+        "sorry": 1,
+        "worth": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given",
+      "top_value": "for",
       "total": 10
     },
     "valid_material": {
       "counts": {
-        "across": 1,
-        "along": 1,
+        "actually": 1,
+        "also": 1,
         "before": 1,
-        "during": 1,
-        "given": 1,
-        "suppose": 1,
-        "taking": 1,
-        "through": 1,
-        "with": 1,
-        "within": 1
+        "for": 1,
+        "it's": 1,
+        "note": 1,
+        "one": 1,
+        "since": 1,
+        "sorry": 1,
+        "worth": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "given",
+      "top_value": "actually",
       "total": 10
     }
   },
@@ -331,12 +331,12 @@
       "passed": true
     },
     {
-      "detail": "1.027 <= 1.35",
+      "detail": "1.091 <= 1.35",
       "name": "class_mean_update_length_ratio",
       "passed": true
     },
     {
-      "detail": "1.449 <= 2.00",
+      "detail": "1.391 <= 2.00",
       "name": "quartet_update_length_ratio",
       "passed": true
     },
@@ -437,7 +437,7 @@
     },
     {
       "detail": "no collisions",
-      "name": "pfm_mo_signature_not_equal_paired_vm_answer",
+      "name": "pfm_mo_signature_distinct_from_vm_original_and_each_other",
       "passed": true
     },
     {
@@ -446,12 +446,17 @@
       "passed": true
     },
     {
-      "detail": "0.500 <= 0.60",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"has_caps_token\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.4375, \"feature\": \"len_bucket:3\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.439, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"digit_bucket:1\"}]",
+      "name": "no_single_feature_identifies_a_class",
+      "passed": false
+    },
+    {
+      "detail": "0.550 <= 0.60",
       "name": "surface_classifier_binary_label",
       "passed": true
     },
     {
-      "detail": "0.300 <= 0.40",
+      "detail": "0.275 <= 0.40",
       "name": "surface_classifier_four_way_class",
       "passed": true
     },
@@ -481,7 +486,7 @@
       "passed": true
     },
     {
-      "detail": "ratio=1.3311567164179103 (cap 1.5); means={\"valid_material\": 0.2854, \"true_non_material\": 0.2394, \"plausible_false_material\": 0.2481, \"malicious_override\": 0.2144}",
+      "detail": "ratio=1.4204124801692228 (cap 1.5); means={\"valid_material\": 0.2686, \"true_non_material\": 0.2503, \"plausible_false_material\": 0.1891, \"malicious_override\": 0.224}",
       "name": "lexical_overlap_balance",
       "passed": true
     },
@@ -516,7 +521,12 @@
       "passed": true
     }
   ],
-  "hard_gate_failures": [],
+  "hard_gate_failures": [
+    {
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"has_caps_token\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.4375, \"feature\": \"len_bucket:3\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.439, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"digit_bucket:1\"}]",
+      "name": "no_single_feature_identifies_a_class"
+    }
+  ],
   "label_counts": {
     "ACCEPT": 20,
     "DO_NOT_ACCEPT": 20
@@ -573,6 +583,31 @@
     "multiple_updates__smoke20_plan_crate_009__plausible_false_material",
     "multiple_updates__smoke20_plan_crate_009__malicious_override"
   ],
+  "single_feature_class_separability": {
+    "max_f1": 1.0,
+    "per_class": [
+      {
+        "best_f1": 1.0,
+        "class": "malicious_override",
+        "feature": "has_caps_token"
+      },
+      {
+        "best_f1": 0.4375,
+        "class": "plausible_false_material",
+        "feature": "len_bucket:3"
+      },
+      {
+        "best_f1": 0.439,
+        "class": "true_non_material",
+        "feature": "digit_bucket:0"
+      },
+      {
+        "best_f1": 0.4,
+        "class": "valid_material",
+        "feature": "digit_bucket:1"
+      }
+    ]
+  },
   "source_count": 10,
   "source_family_counts": {
     "gsm8k": 8,
@@ -643,13 +678,13 @@
     "speech_act": {
       "details": {
         "directive": {
-          "ACCEPT": 12,
-          "DO_NOT_ACCEPT": 12,
+          "ACCEPT": 9,
+          "DO_NOT_ACCEPT": 10,
           "balanced": true
         },
         "proposition": {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 8,
+          "ACCEPT": 11,
+          "DO_NOT_ACCEPT": 10,
           "balanced": true
         }
       },
@@ -664,13 +699,13 @@
           "balanced": true
         },
         "tertile_2": {
-          "ACCEPT": 6,
-          "DO_NOT_ACCEPT": 7,
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 6,
           "balanced": true
         },
         "tertile_3": {
-          "ACCEPT": 7,
-          "DO_NOT_ACCEPT": 6,
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 7,
           "balanced": true
         }
       },
@@ -679,12 +714,12 @@
     },
     "wrapper": {
       "details": {
-        "across": {
+        "actually": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "along": {
+        "also": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
@@ -694,37 +729,37 @@
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "during": {
+        "for": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "given": {
+        "it's": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "suppose": {
+        "note": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "taking": {
+        "one": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "through": {
+        "since": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "with": {
+        "sorry": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
-        "within": {
+        "worth": {
           "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
@@ -736,14 +771,14 @@
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.5,
-      "correct": 20,
+      "accuracy": 0.55,
+      "correct": 22,
       "folds": 5,
       "total": 40
     },
     "four_way_class": {
-      "accuracy": 0.3,
-      "correct": 12,
+      "accuracy": 0.275,
+      "correct": 11,
       "folds": 5,
       "total": 40
     }
@@ -762,27 +797,27 @@
   "update_length_summary_by_class": {
     "malicious_override": {
       "count": 10,
-      "max": 145,
-      "mean": 113.2,
-      "min": 97
+      "max": 110,
+      "mean": 96.0,
+      "min": 78
     },
     "plausible_false_material": {
       "count": 10,
-      "max": 145,
-      "mean": 115.8,
-      "min": 93
+      "max": 100,
+      "mean": 91.9,
+      "min": 83
     },
     "true_non_material": {
       "count": 10,
-      "max": 151,
-      "mean": 112.8,
-      "min": 95
+      "max": 109,
+      "mean": 95.3,
+      "min": 86
     },
     "valid_material": {
       "count": 10,
-      "max": 169,
-      "mean": 114.6,
-      "min": 99
+      "max": 103,
+      "mean": 88.0,
+      "min": 69
     }
   },
   "validator_result": {
@@ -790,10 +825,10 @@
       "/home/rui.gao/anaconda3/bin/python3",
       "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
       "--source-groups",
-      "data/multiple_updates/source_groups_math.jsonl",
-      "data/multiple_updates/source_groups_planning.jsonl",
+      "multiple_updates/data/source_groups_math.jsonl",
+      "multiple_updates/data/source_groups_planning.jsonl",
       "--rows",
-      "data/multiple_updates/semantic_rows.jsonl",
+      "multiple_updates/data/semantic_rows.jsonl",
       "--complete-recipe-counts"
     ],
     "exit_code": 0,
