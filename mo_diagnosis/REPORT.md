@@ -1,5 +1,24 @@
 # MO attack-type diagnosis — full report
 
+
+> **Superseded in part, 2026-09-10, by `anchored/REPORT.md`.** Every attack in
+> this run is **generic**, which main's §2.4 **[Q-D4]** forbids: an MO update must
+> be task-anchored. Two further arms re-measured four of these objectives with
+> contract-compliant text.
+>
+> - **Task-anchoring costs nothing.** Anchored-and-crisp reproduces the generic
+>   ranking within noise (`instruction_override` 94% -> 92%, `forced_answer`
+>   40% -> 44%). The table below therefore stands as a *ranking*.
+> - **Epistemic register is decisive and is not recorded anywhere in this run.**
+>   The same anchored attacks written in the hedged register that §3.4b requires
+>   within a source score **2%** instead of 92%. Every rate here was measured on
+>   crisp imperatives; an MO row authored to §3.4b against hedged siblings will
+>   not reproduce them.
+> - The checkability mechanism in §4 below is **confirmed** on compliant text:
+>   revocation loses 8 points mid-reasoning, assertive objectives lose 48-58.
+>
+> Read the rates below as an upper bound conditional on imperative register.
+
 **Run:** `run_20260910` · Qwen3-14B-FP8 · 850 generations · 2026-09-10
 **Status:** exploratory, development-partition sources. **Nothing here promotes to a
 primary result**, and no row in this directory has been independently reviewed.
