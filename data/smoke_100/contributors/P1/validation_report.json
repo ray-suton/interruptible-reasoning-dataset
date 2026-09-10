@@ -12,12 +12,12 @@
   "contract_v8": {
     "lexical_overlap": {
       "mean_by_class": {
-        "malicious_override": 0.2901,
-        "plausible_false_material": 0.1496,
-        "true_non_material": 0.1562,
-        "valid_material": 0.1809
+        "malicious_override": 0.2113,
+        "plausible_false_material": 0.1585,
+        "true_non_material": 0.1606,
+        "valid_material": 0.1742
       },
-      "ratio": 1.9391711229946524,
+      "ratio": 1.333123028391167,
       "unresolved_sources": 0
     },
     "no_framing_wrapper": {
@@ -29,68 +29,47 @@
     "syntactic_form": {
       "class_exclusive": [],
       "distinct_forms": 6,
-      "max_share_of_a_class": 0.7,
+      "max_share_of_a_class": 0.25,
       "missing_field": [],
       "unknown_forms": []
     },
     "syntactic_form_label_balance": {
-      "offenders": [
-        {
-          "ACCEPT": 5,
-          "DO_NOT_ACCEPT": 3,
-          "syntactic_form": "correction_with_negation"
-        },
-        {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 4,
-          "syntactic_form": "hedged"
-        },
-        {
-          "ACCEPT": 6,
-          "DO_NOT_ACCEPT": 15,
-          "syntactic_form": "imperative"
-        },
-        {
-          "ACCEPT": 7,
-          "DO_NOT_ACCEPT": 5,
-          "syntactic_form": "mid_sentence_aside"
-        }
-      ],
+      "offenders": [],
       "per_form": {
         "appositive": {
           "ACCEPT": 6,
-          "DO_NOT_ACCEPT": 5,
+          "DO_NOT_ACCEPT": 7,
           "deviation": 1
         },
         "bare_declarative": {
           "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 8,
-          "deviation": 0
+          "DO_NOT_ACCEPT": 9,
+          "deviation": 1
         },
         "correction_with_negation": {
           "ACCEPT": 5,
-          "DO_NOT_ACCEPT": 3,
-          "deviation": 2
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 0
         },
         "hedged": {
           "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 4,
-          "deviation": 4
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 1
         },
         "imperative": {
           "ACCEPT": 6,
-          "DO_NOT_ACCEPT": 15,
-          "deviation": 9
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 1
         },
         "mid_sentence_aside": {
           "ACCEPT": 7,
-          "DO_NOT_ACCEPT": 5,
-          "deviation": 2
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 0
         }
       }
     },
     "tone_only_classifier": {
-      "accuracy": 0.4875,
+      "accuracy": 0.4625,
       "n": 80
     }
   },
@@ -102,41 +81,50 @@
   "first_bigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "an erratum": 1,
-        "for the": 2,
-        "for this": 8,
-        "set the": 1,
-        "set this": 3,
-        "the marking": 1,
-        "the operator": 4
+        "for the": 1,
+        "for this": 5,
+        "given an": 1,
+        "given this": 1,
+        "since 17": 1,
+        "since the": 1,
+        "since this": 1,
+        "take 5": 1,
+        "take the": 1,
+        "the blocks": 1,
+        "the minimum": 1,
+        "the operator": 1,
+        "the repeating": 1,
+        "the routing": 1,
+        "with the": 1,
+        "with this": 1
       },
-      "share": 0.4,
-      "top_count": 8,
+      "share": 0.25,
+      "top_count": 5,
       "top_value": "for this",
       "total": 20
     },
     "plausible_false_material": {
       "counts": {
         "for a": 2,
-        "for the": 1,
         "for x": 1,
         "given aircraft": 1,
         "given freight": 1,
-        "given the": 2,
+        "given the": 1,
+        "put d": 1,
         "since a": 1,
-        "since the": 2,
+        "since the": 1,
         "since unstacking": 1,
-        "the blocks": 1,
-        "the equation": 1,
+        "take ninety": 1,
+        "take the": 3,
         "the nairobi": 1,
         "the six": 1,
+        "use the": 1,
         "with five": 1,
-        "with ninety": 1,
         "with the": 2
       },
-      "share": 0.1,
-      "top_count": 2,
-      "top_value": "with the",
+      "share": 0.15,
+      "top_count": 3,
+      "top_value": "take the",
       "total": 20
     },
     "true_non_material": {
@@ -145,25 +133,26 @@
         "for all": 1,
         "for an": 1,
         "for the": 1,
-        "given exactly": 1,
+        "given each": 1,
         "given root": 1,
-        "given the": 2,
+        "given the": 1,
         "since c": 1,
-        "since each": 1,
         "since the": 1,
-        "since two": 1,
+        "take exactly": 1,
+        "take the": 1,
+        "take two": 1,
         "the lisbon": 1,
         "the quantity": 1,
         "the right": 1,
+        "the seven": 1,
         "the trucks": 1,
+        "use fifty": 1,
         "with a": 1,
-        "with fifty": 1,
-        "with thirty": 1,
-        "with type": 1
+        "with thirty": 1
       },
-      "share": 0.1,
-      "top_count": 2,
-      "top_value": "given the",
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "take exactly",
       "total": 20
     },
     "valid_material": {
@@ -171,16 +160,16 @@
         "for the": 2,
         "for this": 2,
         "given a": 1,
-        "given four": 1,
         "given nine": 1,
-        "given the": 1,
+        "put ten": 1,
         "since b": 1,
         "since the": 2,
         "since three": 1,
+        "take four": 1,
+        "take the": 1,
         "the same": 1,
         "the second": 1,
-        "the standard": 1,
-        "the westward": 1,
+        "use twelve": 1,
         "with c": 1,
         "with one": 1,
         "with thirty": 1,
@@ -195,55 +184,58 @@
   "first_trigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "an erratum is": 1,
         "for the arrangement": 1,
-        "for the routing": 1,
-        "for this bake": 1,
-        "for this count": 1,
-        "for this escape": 1,
+        "for this diagram": 1,
         "for this four": 1,
         "for this lesson": 1,
         "for this piecewise": 1,
-        "for this product": 1,
-        "for this root": 1,
-        "set the oslo": 1,
-        "set this blocks": 1,
-        "set this possible": 1,
-        "set this repeating": 1,
-        "the marking sheet": 1,
-        "the operator has": 4
+        "for this sweets": 1,
+        "given an erratum": 1,
+        "given this bake": 1,
+        "since 17 what": 1,
+        "since the recount": 1,
+        "since this escape": 1,
+        "take 5 pi": 1,
+        "take the oslo": 1,
+        "the blocks arrangement": 1,
+        "the minimum for": 1,
+        "the operator has": 1,
+        "the repeating decimal": 1,
+        "the routing sheet": 1,
+        "with the value": 1,
+        "with this count": 1
       },
-      "share": 0.2,
-      "top_count": 4,
-      "top_value": "the operator has",
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "for this lesson",
       "total": 20
     },
     "plausible_false_material": {
       "counts": {
         "for a block": 1,
         "for a room": 1,
-        "for the thirty": 1,
         "for x beyond": 1,
         "given aircraft take": 1,
         "given freight goes": 1,
-        "given the hypotenuse": 1,
         "given the larger": 1,
+        "put d onto": 1,
         "since a repeating": 1,
-        "since the three": 1,
-        "since the two": 1,
+        "since the hypotenuse": 1,
         "since unstacking needs": 1,
-        "the blocks are": 1,
-        "the equation keeps": 1,
+        "take ninety fairies": 1,
+        "take the three": 1,
+        "take the two": 1,
+        "take the veteran": 1,
         "the nairobi truck": 1,
         "the six reciprocal": 1,
+        "use the thirty": 1,
         "with five hundred": 1,
-        "with ninety fairies": 1,
-        "with the root": 1,
-        "with the veteran": 1
+        "with the equation": 1,
+        "with the root": 1
       },
       "share": 0.05,
       "top_count": 1,
-      "top_value": "with the veteran",
+      "top_value": "take the veteran",
       "total": 20
     },
     "true_non_material": {
@@ -252,26 +244,26 @@
         "for all four": 1,
         "for an arm": 1,
         "for the package": 1,
-        "given exactly two": 1,
+        "given each of": 1,
         "given root three": 1,
-        "given the eastern": 1,
         "given the two": 1,
         "since c has": 1,
-        "since each of": 1,
         "since the cubic": 1,
-        "since two hundred": 1,
+        "take exactly two": 1,
+        "take the eastern": 1,
+        "take two hundred": 1,
         "the lisbon truck": 1,
         "the quantity wanted": 1,
         "the right angle": 1,
+        "the seven of": 1,
         "the trucks cannot": 1,
+        "use fifty four": 1,
         "with a resting": 1,
-        "with fifty four": 1,
-        "with thirty one": 1,
-        "with type a": 1
+        "with thirty one": 1
       },
       "share": 0.05,
       "top_count": 1,
-      "top_value": "given exactly two",
+      "top_value": "take exactly two",
       "total": 20
     },
     "valid_material": {
@@ -281,17 +273,17 @@
         "for this consignment": 1,
         "for this triangle": 1,
         "given a already": 1,
-        "given four candies": 1,
         "given nine thousand": 1,
-        "given the club": 1,
+        "put ten more": 1,
         "since b now": 1,
         "since the depot": 1,
         "since the polynomial": 1,
         "since three positive": 1,
+        "take four candies": 1,
+        "take the standard": 1,
         "the same scoop": 1,
         "the second term": 1,
-        "the standard hourly": 1,
-        "the westward flight": 1,
+        "use twelve muffins": 1,
         "with c already": 1,
         "with one additional": 1,
         "with thirty perhaps": 1,
@@ -299,108 +291,118 @@
       },
       "share": 0.05,
       "top_count": 1,
-      "top_value": "the standard hourly",
+      "top_value": "take the standard",
       "total": 20
     }
   },
   "first_unigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "an": 1,
-        "for": 10,
-        "set": 4,
-        "the": 5
+        "for": 6,
+        "given": 2,
+        "since": 3,
+        "take": 2,
+        "the": 5,
+        "with": 2
       },
-      "share": 0.5,
-      "top_count": 10,
+      "share": 0.3,
+      "top_count": 6,
       "top_value": "for",
       "total": 20
     },
     "plausible_false_material": {
       "counts": {
+        "for": 3,
+        "given": 3,
+        "put": 1,
+        "since": 3,
+        "take": 4,
+        "the": 2,
+        "use": 1,
+        "with": 3
+      },
+      "share": 0.2,
+      "top_count": 4,
+      "top_value": "take",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
         "for": 4,
-        "given": 4,
+        "given": 3,
+        "since": 2,
+        "take": 3,
+        "the": 5,
+        "use": 1,
+        "with": 2
+      },
+      "share": 0.25,
+      "top_count": 5,
+      "top_value": "the",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "for": 4,
+        "given": 2,
+        "put": 1,
         "since": 4,
-        "the": 4,
+        "take": 2,
+        "the": 2,
+        "use": 1,
         "with": 4
       },
       "share": 0.2,
       "top_count": 4,
       "top_value": "with",
       "total": 20
-    },
-    "true_non_material": {
-      "counts": {
-        "for": 4,
-        "given": 4,
-        "since": 4,
-        "the": 4,
-        "with": 4
-      },
-      "share": 0.2,
-      "top_count": 4,
-      "top_value": "given",
-      "total": 20
-    },
-    "valid_material": {
-      "counts": {
-        "for": 4,
-        "given": 4,
-        "since": 4,
-        "the": 4,
-        "with": 4
-      },
-      "share": 0.2,
-      "top_count": 4,
-      "top_value": "the",
-      "total": 20
     }
   },
   "gates": [
     {
-      "detail": "malicious_override:for=0.500",
+      "detail": "<= 0.35",
       "name": "top_first_unigram_share",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "malicious_override:for this=0.400",
+      "detail": "<= 0.35",
       "name": "top_first_bigram_share",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"ngram\": \"an\", \"count\": 1, \"class\": \"malicious_override\"}, {\"ngram\": \"set\", \"count\": 4, \"class\": \"malicious_override\"}]",
+      "detail": "none",
       "name": "class_exclusive_first_unigram",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"ngram\": \"set this\", \"count\": 3, \"class\": \"malicious_override\"}, {\"ngram\": \"the operator\", \"count\": 4, \"class\": \"malicious_override\"}, {\"ngram\": \"with the\", \"count\": 2, \"class\": \"plausible_false_material\"}]",
+      "detail": "none",
       "name": "recurring_class_exclusive_first_bigram",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"ngram\": \"the operator has\", \"count\": 4, \"class\": \"malicious_override\"}]",
+      "detail": "none",
       "name": "recurring_class_exclusive_first_trigram",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"wrapper\": \"an\", \"count\": 1, \"classes\": [\"malicious_override\"]}, {\"wrapper\": \"set\", \"count\": 4, \"classes\": [\"malicious_override\"]}]",
+      "detail": "all wrappers span >=2 classes",
       "name": "cross_class_wrapper_pooling",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "1.534 <= 1.35",
+      "detail": "1.097 <= 1.35",
       "name": "class_mean_update_length_ratio",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "2.824 <= 2.00",
+      "detail": "1.424 <= 2.00",
       "name": "quartet_update_length_ratio",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "malicious_override:imperative_task_reference=0.700",
+      "detail": "<= 0.35",
       "name": "template_family_share",
-      "passed": false
+      "passed": true
     },
     {
       "detail": ">= 3 per class",
@@ -503,24 +505,24 @@
       "passed": true
     },
     {
-      "detail": "0.650 <= 0.60",
+      "detail": "0.512 <= 0.60",
       "name": "surface_classifier_binary_label",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "0.438 <= 0.40",
+      "detail": "0.325 <= 0.40",
       "name": "surface_classifier_four_way_class",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.833, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.5, \"feature\": \"imperative:False\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.513, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.444, \"feature\": \"imperative:False\"}]",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.606, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.436, \"feature\": \"digit_bucket:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.513, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.471, \"feature\": \"len_bucket:5\"}]",
       "name": "no_single_feature_identifies_a_class",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "wrapper, update_length_tertile",
+      "detail": "balanced where authoring data exists",
       "name": "label_balance_within_strata",
-      "passed": false
+      "passed": true
     },
     {
       "detail": "no prefix-citing updates",
@@ -543,9 +545,9 @@
       "passed": true
     },
     {
-      "detail": "ratio=1.9391711229946524 (cap 1.5); means={\"valid_material\": 0.1809, \"true_non_material\": 0.1562, \"plausible_false_material\": 0.1496, \"malicious_override\": 0.2901}",
+      "detail": "ratio=1.333123028391167 (cap 1.5); means={\"valid_material\": 0.1742, \"true_non_material\": 0.1606, \"plausible_false_material\": 0.1585, \"malicious_override\": 0.2113}",
       "name": "lexical_overlap_balance",
-      "passed": false
+      "passed": true
     },
     {
       "detail": "80/80 rows carry a judgement; {\"contradicting\": 36, \"front_running\": 8, \"post_solution\": 36}",
@@ -553,14 +555,14 @@
       "passed": true
     },
     {
-      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.7, \"unknown_forms\": []}",
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
       "name": "syntactic_form_spread",
-      "passed": false
+      "passed": true
     },
     {
-      "detail": "[{\"syntactic_form\": \"correction_with_negation\", \"ACCEPT\": 5, \"DO_NOT_ACCEPT\": 3}, {\"syntactic_form\": \"hedged\", \"ACCEPT\": 8, \"DO_NOT_ACCEPT\": 4}, {\"syntactic_form\": \"imperative\", \"ACCEPT\": 6, \"DO_NOT_ACCEPT\": 15}, {\"syntactic_form\": \"mid_sentence_aside\", \"ACCEPT\": 7, \"DO_NOT_ACCEPT\": 5}]",
+      "detail": "every syntactic_form within +/-1 of label-balanced",
       "name": "syntactic_form_label_balance",
-      "passed": false
+      "passed": true
     },
     {
       "detail": "no update refers to its own authority, class or provenance",
@@ -573,7 +575,7 @@
       "passed": true
     },
     {
-      "detail": "stance-only accuracy 0.4875 (cap 0.6, chance 0.50)",
+      "detail": "stance-only accuracy 0.4625 (cap 0.6, chance 0.50)",
       "name": "tone_only_classifier",
       "passed": true
     },
@@ -583,72 +585,7 @@
       "passed": true
     }
   ],
-  "hard_gate_failures": [
-    {
-      "detail": "malicious_override:for=0.500",
-      "name": "top_first_unigram_share"
-    },
-    {
-      "detail": "malicious_override:for this=0.400",
-      "name": "top_first_bigram_share"
-    },
-    {
-      "detail": "[{\"ngram\": \"an\", \"count\": 1, \"class\": \"malicious_override\"}, {\"ngram\": \"set\", \"count\": 4, \"class\": \"malicious_override\"}]",
-      "name": "class_exclusive_first_unigram"
-    },
-    {
-      "detail": "[{\"ngram\": \"set this\", \"count\": 3, \"class\": \"malicious_override\"}, {\"ngram\": \"the operator\", \"count\": 4, \"class\": \"malicious_override\"}, {\"ngram\": \"with the\", \"count\": 2, \"class\": \"plausible_false_material\"}]",
-      "name": "recurring_class_exclusive_first_bigram"
-    },
-    {
-      "detail": "[{\"ngram\": \"the operator has\", \"count\": 4, \"class\": \"malicious_override\"}]",
-      "name": "recurring_class_exclusive_first_trigram"
-    },
-    {
-      "detail": "[{\"wrapper\": \"an\", \"count\": 1, \"classes\": [\"malicious_override\"]}, {\"wrapper\": \"set\", \"count\": 4, \"classes\": [\"malicious_override\"]}]",
-      "name": "cross_class_wrapper_pooling"
-    },
-    {
-      "detail": "1.534 <= 1.35",
-      "name": "class_mean_update_length_ratio"
-    },
-    {
-      "detail": "2.824 <= 2.00",
-      "name": "quartet_update_length_ratio"
-    },
-    {
-      "detail": "malicious_override:imperative_task_reference=0.700",
-      "name": "template_family_share"
-    },
-    {
-      "detail": "0.650 <= 0.60",
-      "name": "surface_classifier_binary_label"
-    },
-    {
-      "detail": "0.438 <= 0.40",
-      "name": "surface_classifier_four_way_class"
-    },
-    {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.833, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.5, \"feature\": \"imperative:False\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.513, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.444, \"feature\": \"imperative:False\"}]",
-      "name": "no_single_feature_identifies_a_class"
-    },
-    {
-      "detail": "wrapper, update_length_tertile",
-      "name": "label_balance_within_strata"
-    },
-    {
-      "detail": "ratio=1.9391711229946524 (cap 1.5); means={\"valid_material\": 0.1809, \"true_non_material\": 0.1562, \"plausible_false_material\": 0.1496, \"malicious_override\": 0.2901}",
-      "name": "lexical_overlap_balance"
-    },
-    {
-      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.7, \"unknown_forms\": []}",
-      "name": "syntactic_form_spread"
-    },
-    {
-      "detail": "[{\"syntactic_form\": \"correction_with_negation\", \"ACCEPT\": 5, \"DO_NOT_ACCEPT\": 3}, {\"syntactic_form\": \"hedged\", \"ACCEPT\": 8, \"DO_NOT_ACCEPT\": 4}, {\"syntactic_form\": \"imperative\", \"ACCEPT\": 6, \"DO_NOT_ACCEPT\": 15}, {\"syntactic_form\": \"mid_sentence_aside\", \"ACCEPT\": 7, \"DO_NOT_ACCEPT\": 5}]",
-      "name": "syntactic_form_label_balance"
-    }
-  ],
+  "hard_gate_failures": [],
   "label_counts": {
     "ACCEPT": 40,
     "DO_NOT_ACCEPT": 40
@@ -789,86 +726,81 @@
     "update_length_tertile": {
       "details": {
         "tertile_1": {
-          "ACCEPT": 5,
-          "DO_NOT_ACCEPT": 22,
-          "balanced": false
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 14,
+          "balanced": true
         },
         "tertile_2": {
-          "ACCEPT": 16,
-          "DO_NOT_ACCEPT": 11,
-          "balanced": false
+          "ACCEPT": 14,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
         },
         "tertile_3": {
-          "ACCEPT": 19,
-          "DO_NOT_ACCEPT": 7,
-          "balanced": false
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
         }
       },
-      "passed": false,
-      "violations": [
-        "tertile_1",
-        "tertile_2",
-        "tertile_3"
-      ]
+      "passed": true,
+      "violations": []
     },
     "wrapper": {
       "details": {
-        "an": {
-          "ACCEPT": 0,
-          "DO_NOT_ACCEPT": 1,
-          "balanced": true
-        },
         "for": {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 14,
-          "balanced": false
-        },
-        "given": {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 4,
-          "balanced": false
-        },
-        "set": {
-          "ACCEPT": 0,
-          "DO_NOT_ACCEPT": 4,
-          "balanced": false
-        },
-        "since": {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 4,
-          "balanced": false
-        },
-        "the": {
           "ACCEPT": 8,
           "DO_NOT_ACCEPT": 9,
           "balanced": true
         },
+        "given": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 5,
+          "balanced": true
+        },
+        "put": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "since": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "take": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "the": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "balanced": true
+        },
+        "use": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
         "with": {
-          "ACCEPT": 8,
-          "DO_NOT_ACCEPT": 4,
-          "balanced": false
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 5,
+          "balanced": true
         }
       },
-      "passed": false,
-      "violations": [
-        "for",
-        "given",
-        "set",
-        "since",
-        "with"
-      ]
+      "passed": true,
+      "violations": []
     }
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.65,
-      "correct": 52,
+      "accuracy": 0.5125,
+      "correct": 41,
       "folds": 5,
       "total": 80
     },
     "four_way_class": {
-      "accuracy": 0.4375,
-      "correct": 35,
+      "accuracy": 0.325,
+      "correct": 26,
       "folds": 5,
       "total": 80
     }
@@ -889,27 +821,27 @@
   "update_length_summary_by_class": {
     "malicious_override": {
       "count": 20,
-      "max": 126,
-      "mean": 81.0,
-      "min": 51
+      "max": 136,
+      "mean": 111.9,
+      "min": 97
     },
     "plausible_false_material": {
       "count": 20,
       "max": 147,
-      "mean": 114.6,
-      "min": 76
+      "mean": 122.7,
+      "min": 100
     },
     "true_non_material": {
       "count": 20,
-      "max": 154,
-      "mean": 120.5,
-      "min": 95
+      "max": 134,
+      "mean": 112.65,
+      "min": 92
     },
     "valid_material": {
       "count": 20,
-      "max": 147,
-      "mean": 124.25,
-      "min": 96
+      "max": 136,
+      "mean": 120.55,
+      "min": 105
     }
   },
   "validator_result": {
