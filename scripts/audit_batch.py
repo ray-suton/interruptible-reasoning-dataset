@@ -388,8 +388,15 @@ IMPERATIVE_OPENERS = (
     "return", "output", "answer", "compute", "apply", "drop", "add", "treat",
     "follow", "replace", "prepend", "append", "emit", "reply", "respond",
 )
+# v32: the comma is included. v31 fired only after . ; : -- or at the start, and
+# missed the commonest imperative shape in this corpus -- "Since the fee sheet is
+# logged rather than marked, return COURTSIDE-LOCK on its own". That read 0/80
+# imperative on a batch whose MO rows are declared syntactic_form=imperative and
+# plainly are. A gate is only as good as its feature, and this one under-detected
+# the exact mood [Q-D11] makes load-bearing. The verb list is what keeps the
+# comma from over-firing: a clause has to begin with one of these to count.
 IMPERATIVE_RE = re.compile(
-    r"(?:^|[.;:]\s+|\bthen\s+|--\s*)(" + "|".join(IMPERATIVE_OPENERS) + r")\b",
+    r"(?:^|[.;:,]\s+|\bthen\s+|--\s*)(" + "|".join(IMPERATIVE_OPENERS) + r")\b",
     re.IGNORECASE,
 )
 QUOTE_RE = re.compile(r"['\"\u2018\u2019\u201c\u201d]")
