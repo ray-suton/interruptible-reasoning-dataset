@@ -1,0 +1,933 @@
+{
+  "caveats": [
+    "Rank-1 validator failed. Under contract v8 an honest draft validates: verification.status='unverified_draft' with a null verifier_id is accepted, and a row references a run via trace_run_id rather than embedding a trace. A failure here is a real defect, not an expected artifact.",
+    "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
+  ],
+  "class_counts": {
+    "malicious_override": 20,
+    "plausible_false_material": 20,
+    "true_non_material": 20,
+    "valid_material": 20
+  },
+  "contract_v8": {
+    "lexical_overlap": {
+      "mean_by_class": {
+        "malicious_override": 0.1717,
+        "plausible_false_material": 0.1496,
+        "true_non_material": 0.1562,
+        "valid_material": 0.1809
+      },
+      "ratio": 1.2092245989304813,
+      "unresolved_sources": 0
+    },
+    "no_framing_wrapper": {
+      "violations": []
+    },
+    "pfm_premise_violations": [],
+    "quartet_epistemic_register": [],
+    "self_narration": [],
+    "syntactic_form": {
+      "class_exclusive": [],
+      "distinct_forms": 6,
+      "max_share_of_a_class": 0.25,
+      "missing_field": [],
+      "unknown_forms": []
+    },
+    "syntactic_form_label_balance": {
+      "offenders": [],
+      "per_form": {
+        "appositive": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 1
+        },
+        "bare_declarative": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 9,
+          "deviation": 1
+        },
+        "correction_with_negation": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 4,
+          "deviation": 1
+        },
+        "hedged": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "deviation": 0
+        },
+        "imperative": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "deviation": 0
+        },
+        "mid_sentence_aside": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 6,
+          "deviation": 1
+        }
+      }
+    },
+    "tone_only_classifier": {
+      "accuracy": 0.5,
+      "n": 80
+    }
+  },
+  "domain_counts": {
+    "math": 56,
+    "planning": 24
+  },
+  "embedded_trace_row_count": 0,
+  "first_bigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "for the": 2,
+        "for this": 2,
+        "given station": 1,
+        "given the": 2,
+        "given this": 1,
+        "since the": 3,
+        "since this": 1,
+        "the arrangement": 1,
+        "the logging": 1,
+        "the operator": 1,
+        "the scoring": 1,
+        "with an": 1,
+        "with the": 3
+      },
+      "share": 0.15,
+      "top_count": 3,
+      "top_value": "since the",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "for a": 2,
+        "for the": 1,
+        "for x": 1,
+        "given aircraft": 1,
+        "given freight": 1,
+        "given the": 2,
+        "since a": 1,
+        "since the": 2,
+        "since unstacking": 1,
+        "the blocks": 1,
+        "the equation": 1,
+        "the nairobi": 1,
+        "the six": 1,
+        "with five": 1,
+        "with ninety": 1,
+        "with the": 2
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "with the",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "for a": 1,
+        "for all": 1,
+        "for an": 1,
+        "for the": 1,
+        "given exactly": 1,
+        "given root": 1,
+        "given the": 2,
+        "since c": 1,
+        "since each": 1,
+        "since the": 1,
+        "since two": 1,
+        "the lisbon": 1,
+        "the quantity": 1,
+        "the right": 1,
+        "the trucks": 1,
+        "with a": 1,
+        "with fifty": 1,
+        "with thirty": 1,
+        "with type": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "given the",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "for the": 2,
+        "for this": 2,
+        "given a": 1,
+        "given four": 1,
+        "given nine": 1,
+        "given the": 1,
+        "since b": 1,
+        "since the": 2,
+        "since three": 1,
+        "the same": 1,
+        "the second": 1,
+        "the standard": 1,
+        "the westward": 1,
+        "with c": 1,
+        "with one": 1,
+        "with thirty": 1,
+        "with twelve": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "for this",
+      "total": 20
+    }
+  },
+  "first_trigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "for the arrangement": 1,
+        "for the operator": 1,
+        "for this bake": 1,
+        "for this sweets": 1,
+        "given station control": 1,
+        "given the operator": 1,
+        "given the sheet": 1,
+        "given this product": 1,
+        "since the fee": 1,
+        "since the marking": 1,
+        "since the record": 1,
+        "since this count": 1,
+        "the arrangement sheet": 1,
+        "the logging route": 1,
+        "the operator guidance": 1,
+        "the scoring form": 1,
+        "with an official": 1,
+        "with the dispatch": 1,
+        "with the note": 1,
+        "with the yard": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "since the fee",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "for a block": 1,
+        "for a room": 1,
+        "for the thirty": 1,
+        "for x beyond": 1,
+        "given aircraft take": 1,
+        "given freight goes": 1,
+        "given the hypotenuse": 1,
+        "given the larger": 1,
+        "since a repeating": 1,
+        "since the three": 1,
+        "since the two": 1,
+        "since unstacking needs": 1,
+        "the blocks are": 1,
+        "the equation keeps": 1,
+        "the nairobi truck": 1,
+        "the six reciprocal": 1,
+        "with five hundred": 1,
+        "with ninety fairies": 1,
+        "with the root": 1,
+        "with the veteran": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "with the veteran",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "for a check": 1,
+        "for all four": 1,
+        "for an arm": 1,
+        "for the package": 1,
+        "given exactly two": 1,
+        "given root three": 1,
+        "given the eastern": 1,
+        "given the two": 1,
+        "since c has": 1,
+        "since each of": 1,
+        "since the cubic": 1,
+        "since two hundred": 1,
+        "the lisbon truck": 1,
+        "the quantity wanted": 1,
+        "the right angle": 1,
+        "the trucks cannot": 1,
+        "with a resting": 1,
+        "with fifty four": 1,
+        "with thirty one": 1,
+        "with type a": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given exactly two",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "for the oslo": 1,
+        "for the same": 1,
+        "for this consignment": 1,
+        "for this triangle": 1,
+        "given a already": 1,
+        "given four candies": 1,
+        "given nine thousand": 1,
+        "given the club": 1,
+        "since b now": 1,
+        "since the depot": 1,
+        "since the polynomial": 1,
+        "since three positive": 1,
+        "the same scoop": 1,
+        "the second term": 1,
+        "the standard hourly": 1,
+        "the westward flight": 1,
+        "with c already": 1,
+        "with one additional": 1,
+        "with thirty perhaps": 1,
+        "with twelve wanted": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "the standard hourly",
+      "total": 20
+    }
+  },
+  "first_unigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "for": 4,
+        "given": 4,
+        "since": 4,
+        "the": 4,
+        "with": 4
+      },
+      "share": 0.2,
+      "top_count": 4,
+      "top_value": "since",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "for": 4,
+        "given": 4,
+        "since": 4,
+        "the": 4,
+        "with": 4
+      },
+      "share": 0.2,
+      "top_count": 4,
+      "top_value": "with",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "for": 4,
+        "given": 4,
+        "since": 4,
+        "the": 4,
+        "with": 4
+      },
+      "share": 0.2,
+      "top_count": 4,
+      "top_value": "given",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "for": 4,
+        "given": 4,
+        "since": 4,
+        "the": 4,
+        "with": 4
+      },
+      "share": 0.2,
+      "top_count": 4,
+      "top_value": "the",
+      "total": 20
+    }
+  },
+  "gates": [
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_unigram_share",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_bigram_share",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "class_exclusive_first_unigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_bigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_trigram",
+      "passed": true
+    },
+    {
+      "detail": "all wrappers span >=2 classes",
+      "name": "cross_class_wrapper_pooling",
+      "passed": true
+    },
+    {
+      "detail": "1.092 <= 1.35",
+      "name": "class_mean_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "1.803 <= 2.00",
+      "name": "quartet_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "template_family_share",
+      "passed": true
+    },
+    {
+      "detail": ">= 3 per class",
+      "name": "template_family_distinct_per_class",
+      "passed": true
+    },
+    {
+      "detail": "ok",
+      "name": "template_family_names_do_not_encode_class",
+      "passed": true
+    },
+    {
+      "detail": "unique",
+      "name": "wording_pattern_unique_per_row",
+      "passed": true
+    },
+    {
+      "detail": {
+        "authority_spoof": 3,
+        "exfiltration": 2,
+        "fake_errata": 2,
+        "fake_evaluator": 3,
+        "format_attack": 2,
+        "goal_hijack": 2,
+        "indirect_injection": 1,
+        "marker_injection": 5
+      },
+      "name": "mo_subtype_count",
+      "passed": true
+    },
+    {
+      "detail": {
+        "contradicted": 2,
+        "not_applicable": 10,
+        "unresolved": 8
+      },
+      "name": "mo_evidence_status_count",
+      "passed": true
+    },
+    {
+      "detail": "0.250 <= 0.35",
+      "name": "mo_subtype_share",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "tnm_use_signature_never_noticed_branch",
+      "passed": true
+    },
+    {
+      "detail": {
+        "additive_state": 4,
+        "external_state_change": 3,
+        "input_revision": 8,
+        "target_revision": 5
+      },
+      "name": "vm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "4/20",
+      "name": "vm_additive_fraction",
+      "passed": true
+    },
+    {
+      "detail": "all VM rows carry derivation evidence",
+      "name": "vm_independently_solved_updated_answer",
+      "passed": true
+    },
+    {
+      "detail": {
+        "false_aggregation": 3,
+        "false_derived_intermediate": 6,
+        "false_domain_convention": 1,
+        "false_implied_assignment": 2,
+        "false_implied_bound": 1,
+        "false_parity_or_ordering": 1,
+        "false_precondition": 5,
+        "false_reachability": 1
+      },
+      "name": "pfm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "all PFM rows carry unique-solution derivation evidence",
+      "name": "pfm_substitute_and_solve_unique",
+      "passed": true
+    },
+    {
+      "detail": "no cue-proximate answer leak detected",
+      "name": "non_mo_update_does_not_reveal_final_answer",
+      "passed": true
+    },
+    {
+      "detail": "no collisions",
+      "name": "pfm_mo_signatures_distinct_from_vm_original_and_each_other",
+      "passed": true
+    },
+    {
+      "detail": "both proposition/directive in every class",
+      "name": "speech_act_both_values_per_class",
+      "passed": true
+    },
+    {
+      "detail": "0.475 <= 0.60",
+      "name": "surface_classifier_binary_label",
+      "passed": true
+    },
+    {
+      "detail": "0.287 <= 0.40",
+      "name": "surface_classifier_four_way_class",
+      "passed": true
+    },
+    {
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.558, \"feature\": \"caps_count:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.453, \"feature\": \"caps_count:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.444, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"bias\"}]",
+      "name": "no_single_feature_identifies_a_class",
+      "passed": true
+    },
+    {
+      "detail": "balanced where authoring data exists",
+      "name": "label_balance_within_strata",
+      "passed": true
+    },
+    {
+      "detail": "no prefix-citing updates",
+      "name": "trace_references_bound_when_present",
+      "passed": true
+    },
+    {
+      "detail": "rows rely on run-level trace packages",
+      "name": "no_embedded_row_trace_blocks",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "restored_factor_fields_present",
+      "passed": true
+    },
+    {
+      "detail": "no update opens with a colon-prefixed framing label",
+      "name": "no_framing_wrapper",
+      "passed": true
+    },
+    {
+      "detail": "ratio=1.2092245989304813 (cap 1.5); means={\"valid_material\": 0.1809, \"true_non_material\": 0.1562, \"plausible_false_material\": 0.1496, \"malicious_override\": 0.1717}",
+      "name": "lexical_overlap_balance",
+      "passed": true
+    },
+    {
+      "detail": "80/80 rows carry a judgement; {\"contradicting\": 36, \"front_running\": 8, \"post_solution\": 36}",
+      "name": "prefix_relation_coverage",
+      "passed": true
+    },
+    {
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
+      "name": "syntactic_form_spread",
+      "passed": true
+    },
+    {
+      "detail": "every syntactic_form within +/-1 of label-balanced",
+      "name": "syntactic_form_label_balance",
+      "passed": true
+    },
+    {
+      "detail": "no update refers to its own authority, class or provenance",
+      "name": "no_self_narration",
+      "passed": true
+    },
+    {
+      "detail": "hedging does not separate labels within any quartet",
+      "name": "quartet_epistemic_register",
+      "passed": true
+    },
+    {
+      "detail": "stance-only accuracy 0.5 (cap 0.6, chance 0.50)",
+      "name": "tone_only_classifier",
+      "passed": true
+    },
+    {
+      "detail": "no PFM uses a premise-targeting semantic_type",
+      "name": "pfm_targets_consequences_not_premises",
+      "passed": true
+    }
+  ],
+  "hard_gate_failures": [],
+  "label_counts": {
+    "ACCEPT": 40,
+    "DO_NOT_ACCEPT": 40
+  },
+  "mo_evidence_counts": {
+    "contradicted": 2,
+    "not_applicable": 10,
+    "unresolved": 8
+  },
+  "mo_subtype_counts": {
+    "authority_spoof": 3,
+    "exfiltration": 2,
+    "fake_errata": 2,
+    "fake_evaluator": 3,
+    "format_attack": 2,
+    "goal_hijack": 2,
+    "indirect_injection": 1,
+    "marker_injection": 5
+  },
+  "pfm_shape_counts": {
+    "false_aggregation": 3,
+    "false_derived_intermediate": 6,
+    "false_domain_convention": 1,
+    "false_implied_assignment": 2,
+    "false_implied_bound": 1,
+    "false_parity_or_ordering": 1,
+    "false_precondition": 5,
+    "false_reachability": 1
+  },
+  "review_state": {
+    "unreviewed": 80
+  },
+  "row_count": 80,
+  "rows_with_never_noticed_branch": [
+    "s80_gsm8k_005__true_non_material",
+    "s80_gsm8k_005__malicious_override",
+    "s80_math500_018__true_non_material",
+    "b100_math500_023__true_non_material",
+    "b100_math500_023__malicious_override",
+    "s80_plan_blocks_01678d09__true_non_material",
+    "s80_plan_blocks_01678d09__plausible_false_material",
+    "s80_plan_blocks_01678d09__malicious_override",
+    "s80_plan_logistics_74f5f185__true_non_material",
+    "s80_plan_logistics_74f5f185__plausible_false_material",
+    "s80_plan_logistics_74f5f185__malicious_override",
+    "b100_gsm8k_000__true_non_material",
+    "b100_gsm8k_000__malicious_override",
+    "b100_gsm8k_007__true_non_material",
+    "s80_gsm8k_014__true_non_material",
+    "s80_gsm8k_014__malicious_override",
+    "b100_math500_010__true_non_material",
+    "b100_math500_010__malicious_override",
+    "b100_math500_015__true_non_material",
+    "b100_math500_015__malicious_override",
+    "s80_math500_025__true_non_material",
+    "s80_math500_031__true_non_material",
+    "s80_math500_031__malicious_override",
+    "s80_math500_036__true_non_material",
+    "s80_math500_036__plausible_false_material",
+    "s80_math500_036__malicious_override",
+    "s80_math500_042__true_non_material",
+    "s80_math500_042__malicious_override",
+    "s80f_math500_009__true_non_material",
+    "s80f_math500_017__true_non_material",
+    "s80_plan_blocks_5ffe71d3__true_non_material",
+    "s80_plan_blocks_5ffe71d3__plausible_false_material",
+    "s80_plan_blocks_5ffe71d3__malicious_override",
+    "s80_plan_blocks_2880f651__true_non_material",
+    "s80_plan_blocks_2880f651__plausible_false_material",
+    "s80_plan_blocks_2880f651__malicious_override",
+    "s80_plan_logistics_41ce6a0e__true_non_material",
+    "s80_plan_logistics_41ce6a0e__plausible_false_material",
+    "s80_plan_logistics_41ce6a0e__malicious_override",
+    "s80_plan_logistics_0a752ca5__true_non_material",
+    "s80_plan_logistics_0a752ca5__plausible_false_material",
+    "s80_plan_logistics_0a752ca5__malicious_override"
+  ],
+  "source_count": 20,
+  "source_family_counts": {
+    "gsm8k": 16,
+    "math500": 40,
+    "plan_blocks": 12,
+    "plan_logistics": 12
+  },
+  "stratum_label_balance": {
+    "domain": {
+      "details": {
+        "math": {
+          "ACCEPT": 28,
+          "DO_NOT_ACCEPT": 28,
+          "balanced": true
+        },
+        "planning": {
+          "ACCEPT": 12,
+          "DO_NOT_ACCEPT": 12,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "interrupt_position_tertile": {
+      "detail": "generation_rules.md section 5 moves interrupt_position to runtime manifest",
+      "passed": true,
+      "status": "not_applicable_at_authoring_time"
+    },
+    "source_family": {
+      "details": {
+        "gsm8k": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "math500": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        },
+        "plan_blocks": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "plan_logistics": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "speech_act": {
+      "details": {
+        "directive": {
+          "ACCEPT": 15,
+          "DO_NOT_ACCEPT": 15,
+          "balanced": true
+        },
+        "proposition": {
+          "ACCEPT": 25,
+          "DO_NOT_ACCEPT": 25,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "update_length_tertile": {
+      "details": {
+        "tertile_1": {
+          "ACCEPT": 14,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        },
+        "tertile_2": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 14,
+          "balanced": true
+        },
+        "tertile_3": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "wrapper": {
+      "details": {
+        "for": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "given": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "since": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "the": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "with": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    }
+  },
+  "surface_classifier_accuracies": {
+    "binary_label": {
+      "accuracy": 0.475,
+      "correct": 38,
+      "folds": 5,
+      "total": 80
+    },
+    "four_way_class": {
+      "accuracy": 0.2875,
+      "correct": 23,
+      "folds": 5,
+      "total": 80
+    }
+  },
+  "tnm_hint_strength_counts": {
+    "corroborating": 10,
+    "redundant": 10
+  },
+  "trace_run_counts": {
+    "qwen3_14b_fp8_plan_screen_20260906d": 24,
+    "qwen3_14b_fp8_screen_20260906": 20,
+    "qwen3_14b_fp8_screen_20260906_final": 8,
+    "qwen3_14b_fp8_screen_20260906b": 28
+  },
+  "unique_template_families": 6,
+  "unique_update_texts": 80,
+  "unique_wording_patterns": 80,
+  "update_length_summary_by_class": {
+    "malicious_override": {
+      "count": 20,
+      "max": 138,
+      "mean": 125.1,
+      "min": 96
+    },
+    "plausible_false_material": {
+      "count": 20,
+      "max": 147,
+      "mean": 114.6,
+      "min": 76
+    },
+    "true_non_material": {
+      "count": 20,
+      "max": 154,
+      "mean": 120.5,
+      "min": 95
+    },
+    "valid_material": {
+      "count": 20,
+      "max": 147,
+      "mean": 124.25,
+      "min": 96
+    }
+  },
+  "validator_result": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "--source-groups",
+      "--rows",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "exit_code": 1,
+    "stderr": [
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:1: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:2: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:3: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:4: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:5: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:6: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:7: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:8: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:9: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:10: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:11: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:12: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:13: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:14: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:15: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:16: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:17: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:18: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:19: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:20: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:21: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:22: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:23: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:24: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:25: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:26: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:27: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:28: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:29: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:30: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:31: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:32: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:33: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:34: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:35: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:36: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:37: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:38: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:39: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:40: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:41: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:42: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:43: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:44: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:45: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:46: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:47: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:48: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:49: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:50: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:51: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:52: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:53: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:54: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:55: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:56: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:57: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:58: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:59: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:60: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:61: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:62: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:63: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:64: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:65: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:66: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:67: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:68: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:69: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:70: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:71: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:72: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:73: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:74: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:75: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:76: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:77: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:78: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:79: row references unknown task_group_id",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl:80: row references unknown task_group_id"
+    ],
+    "stdout": []
+  },
+  "vm_additive_fraction": 0.2,
+  "vm_shape_counts": {
+    "additive_state": 4,
+    "external_state_change": 3,
+    "input_revision": 8,
+    "target_revision": 5
+  }
+}
