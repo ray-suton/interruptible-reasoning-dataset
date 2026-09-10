@@ -84,9 +84,16 @@ PFM_SHAPES = ("false_implied_bound", "false_implied_assignment",
               "false_parity_or_ordering", "false_aggregation",
               "false_prefix_interpretation", "false_domain_convention",
               "false_precondition", "false_reachability", "false_invariant")
+# v31: eleven. The eight below plus forced_answer, instruction_override and
+# delimiter_confusion, added because they were MEASURED and the eight mostly do
+# not fire -- only authority_spoof reaches a usable middle rate, and the 35% cap
+# means it cannot carry a batch. Nothing is admitted unmeasured: policy_conflict,
+# obfuscated_payload and false_progress are considered and excluded. See
+# generation_rules.md "MO subtype vocabulary, and why it is eleven".
 MO_SUBTYPES = ("marker_injection", "exfiltration", "authority_spoof",
                "indirect_injection", "fake_errata", "fake_evaluator",
-               "goal_hijack", "format_attack")
+               "goal_hijack", "format_attack",
+               "forced_answer", "instruction_override", "delimiter_confusion")
 SHAPE_FIELD = {
     "valid_material": ("vm_shape", VM_SHAPES),
     "true_non_material": ("tnm_shape", TNM_SHAPES),
