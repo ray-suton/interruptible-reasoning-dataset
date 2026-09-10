@@ -127,39 +127,44 @@ reversed rejected.
 raw output. It previously looked for a boxed answer inside `full_trace`, which
 holds the reasoning only, and graded a whole package 0 actions.
 
-## Before you author: derive the consequence
+## Before you author: derive the consequence yourself
 
-Two separate facts, deliberately in two fields:
+A source record carries the task and one `premise`, identical on all 100:
 
-- **`consequence_note_basis`** — *how* the note was produced, and therefore how
-  much of it you are checking versus writing.
-- **`screening.consequence_confirmed`** — whether a **person** has checked it.
-  **False on all 100.**
+> What we hand you is valid and is **not yours to re-establish** — the statement
+> is admitted, `original_answer` is the pinned gold answer, and the target model
+> solves the task with no update. What we do **not** hand you is a PFM target:
+> no consequence of any source has been verified as falsifiable.
 
-They were one string (`consequence_status`, values like `authored_unconfirmed`)
-until it became clear that confirming a single note would need six values to
-express two independent facts, and that the suffix duplicated the boolean and
-could drift from it.
+Everything else a record used to carry — `admission_evidence`, `screening`,
+`consequence_note`, `consequence_note_basis`, the upstream pins — was **deleted**
+by `scripts/trim_source_packages.py`, which took 42% of every record with it.
+None of it was load-bearing: `validate_dataset.py`, `audit_batch.py`,
+`review_checklist.py`, `generation_rules.md`, the schemas and
+`docs/label_policy.md` contain zero references to any of those names.
 
-| `consequence_note_basis` | count | what stands behind it |
-| --- | ---: | --- |
-| `computed` | 14 | gsm8k: target and depth computed from the source's own `<<expr=result>>` chain |
-| `derived` | 30 | planning: derived from the executed gold plan |
-| `authored` | 56 | hand-derived — 30 MATH500 notes with a verified target, 7 whose target was withdrawn as defective (sufficiency only), plus 19 carried from batch_100 |
+The consequence note is the one worth explaining, because deleting it looks like
+losing something. It said a valid target *existed* without saying which, so an
+author had to choose and verify one anyway — and no note was ever confirmed by a
+person. What it actually did was invite the misreading that a falsifiable target
+arrived with the source. The requirement people associated with it never lived
+there: `audit_batch.answer_derivation_ok` demands
+`answer_derivation.substitute_and_solve == "unique_solution"` on every PFM row,
+and that is untouched.
 
-**A note says a valid target exists; it does not choose yours.** Where several
-consequences qualify, `computed_pfm_candidates` lists them and
-`candidate_pfm_family` is advisory. A single pre-chosen target would make one
-shape the house style across twenty sources — a regularity correlated with
-`source_family` that §3's shape-spread requirement exists to prevent, and that a
-probe cannot tell apart from disposition.
+**No source names a candidate target or shape,** and
+`scripts/selfcheck_batch.py` asserts the prescriptive fields stay absent. A
+single pre-chosen target would make one shape the house style across twenty
+sources — a regularity correlated with `source_family` that §3's shape-spread
+requirement exists to prevent, and that a probe cannot tell apart from
+disposition.
 
-The 37 MATH500 notes are agent-authored. Authoring them turned up four genuine
-mathematical errors in the first drafts — `x^4+4` is reducible by Sophie Germain,
-the minimum-norm cross product is `(c x a)`, `8**(2/3)` is `3.9999999999999996`
-in IEEE doubles, and one falsification left `f^-1(3)` undefined — every one caught
-by requiring the solver to reproduce gold and the falsification to change it.
-That error rate is itself a reason to read them rather than trust them.
+Authoring the notes that were deleted turned up four genuine mathematical errors
+— `x^4+4` is reducible by Sophie Germain, the minimum-norm cross product is
+`(c x a)`, `8**(2/3)` is `3.9999999999999996` in IEEE doubles, and one
+falsification left `f^-1(3)` undefined — every one caught by requiring a solver
+to reproduce gold and the falsification to change it. That error rate is the
+argument for doing both checks yourself on every target you pick.
 
 **Shape spread is not steered from here.** An earlier version of this batch
 suggested a PFM shape per source. That was removed: the suggestions were

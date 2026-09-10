@@ -28,8 +28,14 @@
   v21 invalidated no rows. Twenty sources each carry one VM, TNM,
   PFM and MO. The math half has Claude PASS; the planning half is an unreviewed
   draft. The removed question-statement form, self-narration, quartet stance and
-  false-intermediate depth-floor rules are generator-enforced. `make validate BATCH_DIR=data/smoke_20` and
-  `make batch-audit BATCH_DIR=data/smoke_20` both pass over the full batch.
+  false-intermediate depth-floor rules are generator-enforced. `make validate BATCH_DIR=data/smoke_20` still passes,
+  but **`make batch-audit BATCH_DIR=data/smoke_20` now FAILS** under contract v29
+  at binary 0.650 and four-way 0.525. Not a regression in the rows: v29 taught
+  `feature_vector` to see casing, and all 20 of that batch's MO updates carry an
+  ALLCAPS marker while none of the other 60 rows do — a single boolean separates
+  its binary label at 0.750. It passed only because the classifier lowercased its
+  input. Repairing those 80 rows is an open owner decision; see `generation_rules.md`
+  §3.4c for the remedies in order of preference.
 - **MATH500-008's PFM is a direct false implied assignment.** Its one-step
   difference-of-squares rearrangement is exempt from chain-depth recording;
   gold `-35/9`, VM `-15/4`, and accepted-false `325/9` remain unchanged.
@@ -70,8 +76,10 @@
   admission note; target, shape and depth are the author's. Neither the validator
   nor the audit ever read the removed fields, and one suggestion per source made
   PFM shape predict `source_family`. Derivations are kept as
-  `admission_evidence`, which records what was demonstrated: a scoreable target
-  is *verified* on 50 of 100 and *believed but untested* on the other 50.
+  `admission_evidence`. That record has since been **deleted** along with the
+  rest of the build metadata — see `scripts/trim_source_packages.py`; a source
+  now carries the task and one `premise`, and the author establishes their own
+  target.
 - **An impossible planning initial state was caught by independent review** —
   one instance held a block that was also on the table, and screening "solved" a
   task that cannot exist. `planning_domains` now refuses inconsistent initial
