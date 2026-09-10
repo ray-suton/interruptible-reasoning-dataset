@@ -11,12 +11,12 @@
   "contract_v8": {
     "lexical_overlap": {
       "mean_by_class": {
-        "malicious_override": 0.3308,
-        "plausible_false_material": 0.2387,
-        "true_non_material": 0.2676,
+        "malicious_override": 0.3317,
+        "plausible_false_material": 0.2369,
+        "true_non_material": 0.2547,
         "valid_material": 0.2417
       },
-      "ratio": 1.3858399664851277,
+      "ratio": 1.4001688476150274,
       "unresolved_sources": 0
     },
     "no_framing_wrapper": {
@@ -80,13 +80,13 @@
   "first_bigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "also a": 1,
         "also for": 1,
-        "before the": 1,
         "for this": 1,
         "it's 62": 1,
         "one instruction": 1,
         "since a": 1,
+        "since the": 1,
+        "sorry the": 1,
         "take x": 1,
         "use 41": 1,
         "worth noting": 1
@@ -102,11 +102,11 @@
         "also with": 1,
         "before the": 1,
         "for the": 1,
-        "it's the": 1,
         "one more": 1,
-        "take 75": 1,
+        "take the": 1,
         "take x": 1,
         "use 1": 1,
+        "use the": 1,
         "worth adding": 1
       },
       "share": 0.1,
@@ -117,13 +117,13 @@
     "true_non_material": {
       "counts": {
         "actually the": 1,
+        "also b": 1,
+        "before anything": 1,
         "before the": 1,
         "for the": 1,
         "one thing": 1,
-        "since b": 1,
         "since the": 1,
         "sorry the": 1,
-        "use 1": 1,
         "use five": 1,
         "use the": 1
       },
@@ -134,10 +134,10 @@
     },
     "valid_material": {
       "counts": {
+        "also the": 1,
         "for the": 1,
         "it's two": 1,
         "since the": 1,
-        "sorry the": 1,
         "take 1": 1,
         "take a": 1,
         "take the": 1,
@@ -154,13 +154,13 @@
   "first_trigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "also a value": 1,
         "also for this": 1,
-        "before the closest": 1,
         "for this grid": 1,
         "it's 62 the": 1,
         "one instruction replaces": 1,
         "since a and": 1,
+        "since the operator": 1,
+        "sorry the closest": 1,
         "take x in": 1,
         "use 41 as": 1,
         "worth noting the": 1
@@ -176,11 +176,11 @@
         "also with u": 1,
         "before the rest": 1,
         "for the pickup": 1,
-        "it's the door": 1,
         "one more figure": 1,
-        "take 75 finished": 1,
+        "take the 75": 1,
         "take x and": 1,
         "use 1 as": 1,
+        "use the door": 1,
         "worth adding that": 1
       },
       "share": 0.1,
@@ -191,13 +191,13 @@
     "true_non_material": {
       "counts": {
         "actually the robot": 1,
+        "also b stays": 1,
+        "before anything else": 1,
         "before the next": 1,
         "for the pineapple": 1,
         "one thing x": 1,
-        "since b stays": 1,
         "since the door": 1,
         "sorry the distance": 1,
-        "use 1 0": 1,
         "use five questions": 1,
         "use the fact": 1
       },
@@ -208,10 +208,10 @@
     },
     "valid_material": {
       "counts": {
+        "also the door": 1,
         "for the double": 1,
         "it's two now": 1,
         "since the goal": 1,
-        "sorry the door": 1,
         "take 1 1": 1,
         "take a times": 1,
         "take the pineapple": 1,
@@ -228,19 +228,19 @@
   "first_unigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "also": 2,
-        "before": 1,
+        "also": 1,
         "for": 1,
         "it's": 1,
         "one": 1,
-        "since": 1,
+        "since": 2,
+        "sorry": 1,
         "take": 1,
         "use": 1,
         "worth": 1
       },
       "share": 0.2,
       "top_count": 2,
-      "top_value": "also",
+      "top_value": "since",
       "total": 10
     },
     "plausible_false_material": {
@@ -249,10 +249,9 @@
         "also": 1,
         "before": 1,
         "for": 1,
-        "it's": 1,
         "one": 1,
         "take": 2,
-        "use": 1,
+        "use": 2,
         "worth": 1
       },
       "share": 0.2,
@@ -263,24 +262,25 @@
     "true_non_material": {
       "counts": {
         "actually": 1,
-        "before": 1,
+        "also": 1,
+        "before": 2,
         "for": 1,
         "one": 1,
-        "since": 2,
+        "since": 1,
         "sorry": 1,
-        "use": 3
+        "use": 2
       },
-      "share": 0.3,
-      "top_count": 3,
+      "share": 0.2,
+      "top_count": 2,
       "top_value": "use",
       "total": 10
     },
     "valid_material": {
       "counts": {
+        "also": 1,
         "for": 1,
         "it's": 1,
         "since": 1,
-        "sorry": 1,
         "take": 3,
         "use": 2,
         "worth": 1
@@ -323,7 +323,7 @@
       "passed": true
     },
     {
-      "detail": "1.077 <= 1.35",
+      "detail": "1.083 <= 1.35",
       "name": "class_mean_update_length_ratio",
       "passed": true
     },
@@ -437,22 +437,22 @@
       "passed": true
     },
     {
-      "detail": "0.475 <= 0.60",
+      "detail": "0.675 <= 0.60",
       "name": "surface_classifier_binary_label",
-      "passed": true
+      "passed": false
     },
     {
-      "detail": "0.175 <= 0.40",
+      "detail": "0.200 <= 0.40",
       "name": "surface_classifier_four_way_class",
       "passed": true
     },
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.5, \"feature\": \"digit_bucket:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.408, \"feature\": \"caps_count:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.514, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.414, \"feature\": \"tok_bucket:4\"}]",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.5, \"feature\": \"digit_bucket:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.438, \"feature\": \"tok_bucket:4\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.514, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.408, \"feature\": \"caps_count:0\"}]",
       "name": "no_single_feature_identifies_a_class",
       "passed": true
     },
     {
-      "detail": "wrapper, update_length_tertile",
+      "detail": "update_length_tertile",
       "name": "label_balance_within_strata",
       "passed": false
     },
@@ -477,7 +477,7 @@
       "passed": true
     },
     {
-      "detail": "ratio=1.3858399664851277 (cap 1.5); means={\"valid_material\": 0.2417, \"true_non_material\": 0.2676, \"plausible_false_material\": 0.2387, \"malicious_override\": 0.3308}",
+      "detail": "ratio=1.4001688476150274 (cap 1.5); means={\"valid_material\": 0.2417, \"true_non_material\": 0.2547, \"plausible_false_material\": 0.2369, \"malicious_override\": 0.3317}",
       "name": "lexical_overlap_balance",
       "passed": true
     },
@@ -519,7 +519,11 @@
   ],
   "hard_gate_failures": [
     {
-      "detail": "wrapper, update_length_tertile",
+      "detail": "0.675 <= 0.60",
+      "name": "surface_classifier_binary_label"
+    },
+    {
+      "detail": "update_length_tertile",
       "name": "label_balance_within_strata"
     },
     {
@@ -673,21 +677,20 @@
           "balanced": false
         },
         "tertile_2": {
-          "ACCEPT": 9,
-          "DO_NOT_ACCEPT": 4,
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 5,
           "balanced": false
         },
         "tertile_3": {
-          "ACCEPT": 5,
-          "DO_NOT_ACCEPT": 8,
-          "balanced": false
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 7,
+          "balanced": true
         }
       },
       "passed": false,
       "violations": [
         "tertile_1",
-        "tertile_2",
-        "tertile_3"
+        "tertile_2"
       ]
     },
     "wrapper": {
@@ -698,13 +701,13 @@
           "balanced": true
         },
         "also": {
-          "ACCEPT": 0,
-          "DO_NOT_ACCEPT": 3,
-          "balanced": false
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
         },
         "before": {
-          "ACCEPT": 1,
-          "DO_NOT_ACCEPT": 2,
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 1,
           "balanced": true
         },
         "for": {
@@ -714,7 +717,7 @@
         },
         "it's": {
           "ACCEPT": 1,
-          "DO_NOT_ACCEPT": 2,
+          "DO_NOT_ACCEPT": 1,
           "balanced": true
         },
         "one": {
@@ -723,14 +726,14 @@
           "balanced": true
         },
         "since": {
-          "ACCEPT": 3,
-          "DO_NOT_ACCEPT": 1,
-          "balanced": false
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
         },
         "sorry": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 0,
-          "balanced": false
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
         },
         "take": {
           "ACCEPT": 3,
@@ -738,9 +741,9 @@
           "balanced": true
         },
         "use": {
-          "ACCEPT": 5,
-          "DO_NOT_ACCEPT": 2,
-          "balanced": false
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 3,
+          "balanced": true
         },
         "worth": {
           "ACCEPT": 1,
@@ -748,25 +751,20 @@
           "balanced": true
         }
       },
-      "passed": false,
-      "violations": [
-        "also",
-        "since",
-        "sorry",
-        "use"
-      ]
+      "passed": true,
+      "violations": []
     }
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.475,
-      "correct": 19,
+      "accuracy": 0.675,
+      "correct": 27,
       "folds": 5,
       "total": 40
     },
     "four_way_class": {
-      "accuracy": 0.175,
-      "correct": 7,
+      "accuracy": 0.2,
+      "correct": 8,
       "folds": 5,
       "total": 40
     }
@@ -786,25 +784,25 @@
     "malicious_override": {
       "count": 10,
       "max": 106,
-      "mean": 84.5,
-      "min": 68
+      "mean": 87.2,
+      "min": 74
     },
     "plausible_false_material": {
       "count": 10,
-      "max": 127,
-      "mean": 89.8,
-      "min": 64
+      "max": 110,
+      "mean": 90.2,
+      "min": 73
     },
     "true_non_material": {
       "count": 10,
       "max": 109,
-      "mean": 87.5,
-      "min": 67
+      "mean": 88.3,
+      "min": 63
     },
     "valid_material": {
       "count": 10,
       "max": 101,
-      "mean": 83.4,
+      "mean": 83.3,
       "min": 60
     }
   },
