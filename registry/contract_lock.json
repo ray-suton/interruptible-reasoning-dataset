@@ -1,18 +1,18 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 32,
-  "locked_at": "2026-09-10T18:53:41Z",
+  "version": 33,
+  "locked_at": "2026-09-10T19:13:03Z",
   "locked_by": "P1",
-  "reason": "v32: the imperative-mood feature added at v31 fired only after . ; : -- or at line start, and missed comma-preceded imperatives -- the commonest shape in this corpus. It read 0/80 on P1's smoke_100 slice, whose MO rows are declared imperative and are. [Q-D11] makes mood load-bearing, so an under-detecting feature under-protects the separability gate it feeds. Feature only; no rule changes. INVALIDATES NO AUTHORED ROW: multiple_updates reads 7/7/7/10 under both regexes and its gate improves from 0.606 to 0.514.",
+  "reason": "v33: [Q-D11] enforced per row. validate_dataset.py now rejects a malicious_override update with no imperative clause. v31 stated the rule and nothing checked it, so it was inert for authors -- and the batch gate only catches mood when it LEAKS, which a batch with hedged MO and hedged siblings does not. The imperative vocabulary and regex move to validate_dataset.py, rank 1, and audit_batch.py imports them, so the two locked files cannot drift the way MO_SUBTYPES did. INVALIDATES 16 of the 20 MO rows in P1's smoke_100 slice, which are hedged declaratives; the 10 multiple_updates MO rows and 4 of P1's pass unchanged. smoke_20's 20 MO rows were already invalidated at v31.",
   "files": {
     "generation_rules.md": "40c5fc8819ca7504670d6ac7a2a51b0c5e8241b5202863a75172bcce4f798623",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "e3b274265b6dea3c8c45e27b1c166b6b32d406243b92214da2fdffa00b5944f6",
+    "scripts/validate_dataset.py": "89a8ab8b2b34b71f02d82d88e3e0c803725f6c2a474f97bbab17993030bd73b4",
     "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
-    "scripts/audit_batch.py": "ff973583799d013bf05866d9e13174ac63d7b305fa41f4d935fd76a6f9782fea",
+    "scripts/audit_batch.py": "e1af008a408563bfb0906b6767208d1027d213de00955f43246286cee0c9daeb",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -502,6 +502,23 @@
         "scripts/validate_dataset.py": "e3b274265b6dea3c8c45e27b1c166b6b32d406243b92214da2fdffa00b5944f6",
         "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
         "scripts/audit_batch.py": "c1c1bf2e8e2d3fc02c78a37f5c4d8bd8b269bb5b2d06ae34356c966fc5eea7a1",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 32,
+      "locked_at": "2026-09-10T18:53:41Z",
+      "locked_by": "P1",
+      "reason": "v32: the imperative-mood feature added at v31 fired only after . ; : -- or at line start, and missed comma-preceded imperatives -- the commonest shape in this corpus. It read 0/80 on P1's smoke_100 slice, whose MO rows are declared imperative and are. [Q-D11] makes mood load-bearing, so an under-detecting feature under-protects the separability gate it feeds. Feature only; no rule changes. INVALIDATES NO AUTHORED ROW: multiple_updates reads 7/7/7/10 under both regexes and its gate improves from 0.606 to 0.514.",
+      "files": {
+        "generation_rules.md": "40c5fc8819ca7504670d6ac7a2a51b0c5e8241b5202863a75172bcce4f798623",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "e3b274265b6dea3c8c45e27b1c166b6b32d406243b92214da2fdffa00b5944f6",
+        "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
+        "scripts/audit_batch.py": "ff973583799d013bf05866d9e13174ac63d7b305fa41f4d935fd76a6f9782fea",
         "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
       }
     }
