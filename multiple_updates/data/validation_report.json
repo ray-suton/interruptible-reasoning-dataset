@@ -11,12 +11,12 @@
   "contract_v8": {
     "lexical_overlap": {
       "mean_by_class": {
-        "malicious_override": 0.224,
-        "plausible_false_material": 0.1891,
-        "true_non_material": 0.2503,
-        "valid_material": 0.2686
+        "malicious_override": 0.3308,
+        "plausible_false_material": 0.2387,
+        "true_non_material": 0.2676,
+        "valid_material": 0.2417
       },
-      "ratio": 1.4204124801692228,
+      "ratio": 1.3858399664851277,
       "unresolved_sources": 0
     },
     "no_framing_wrapper": {
@@ -47,28 +47,28 @@
         },
         "correction_with_negation": {
           "ACCEPT": 4,
-          "DO_NOT_ACCEPT": 4,
-          "deviation": 0
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 1
         },
         "hedged": {
-          "ACCEPT": 4,
-          "DO_NOT_ACCEPT": 4,
-          "deviation": 0
+          "ACCEPT": 3,
+          "DO_NOT_ACCEPT": 2,
+          "deviation": 1
         },
         "imperative": {
           "ACCEPT": 4,
-          "DO_NOT_ACCEPT": 4,
-          "deviation": 0
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 1
         },
         "mid_sentence_aside": {
-          "ACCEPT": 1,
+          "ACCEPT": 2,
           "DO_NOT_ACCEPT": 2,
-          "deviation": 1
+          "deviation": 0
         }
       }
     },
     "tone_only_classifier": {
-      "accuracy": 0.475,
+      "accuracy": 0.45,
       "n": 40
     }
   },
@@ -80,20 +80,20 @@
   "first_bigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "actually the": 1,
-        "also follow": 1,
+        "also a": 1,
+        "also for": 1,
         "before the": 1,
         "for this": 1,
-        "it's distance": 1,
-        "note the": 1,
-        "one thing": 1,
-        "since one": 1,
-        "sorry the": 1,
+        "it's 62": 1,
+        "one instruction": 1,
+        "since a": 1,
+        "take x": 1,
+        "use 41": 1,
         "worth noting": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "worth noting",
+      "top_value": "use 41",
       "total": 10
     },
     "plausible_false_material": {
@@ -103,10 +103,10 @@
         "before the": 1,
         "for the": 1,
         "it's the": 1,
-        "note one": 1,
         "one more": 1,
-        "since mark": 1,
-        "sorry the": 1,
+        "take 75": 1,
+        "take x": 1,
+        "use 1": 1,
         "worth adding": 1
       },
       "share": 0.1,
@@ -117,15 +117,15 @@
     "true_non_material": {
       "counts": {
         "actually the": 1,
-        "also with": 1,
         "before the": 1,
         "for the": 1,
-        "it's the": 1,
-        "note that": 1,
         "one thing": 1,
         "since b": 1,
-        "sorry i": 1,
-        "worth checking": 1
+        "since the": 1,
+        "sorry the": 1,
+        "use 1": 1,
+        "use five": 1,
+        "use the": 1
       },
       "share": 0.1,
       "top_count": 1,
@@ -134,40 +134,40 @@
     },
     "valid_material": {
       "counts": {
-        "actually the": 1,
-        "also mark": 1,
-        "before you": 1,
         "for the": 1,
         "it's two": 1,
-        "note the": 1,
-        "one more": 1,
         "since the": 1,
         "sorry the": 1,
+        "take 1": 1,
+        "take a": 1,
+        "take the": 1,
+        "use 2": 1,
+        "use eight": 1,
         "worth saying": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "actually the",
+      "top_value": "take the",
       "total": 10
     }
   },
   "first_trigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "actually the run": 1,
-        "also follow the": 1,
-        "before the interval": 1,
-        "for this item": 1,
-        "it's distance hijack": 1,
-        "note the route": 1,
-        "one thing is": 1,
-        "since one step": 1,
-        "sorry the answer": 1,
+        "also a value": 1,
+        "also for this": 1,
+        "before the closest": 1,
+        "for this grid": 1,
+        "it's 62 the": 1,
+        "one instruction replaces": 1,
+        "since a and": 1,
+        "take x in": 1,
+        "use 41 as": 1,
         "worth noting the": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "worth noting the",
+      "top_value": "use 41 as",
       "total": 10
     },
     "plausible_false_material": {
@@ -177,10 +177,10 @@
         "before the rest": 1,
         "for the pickup": 1,
         "it's the door": 1,
-        "note one trip": 1,
         "one more figure": 1,
-        "since mark finished": 1,
-        "sorry the lower": 1,
+        "take 75 finished": 1,
+        "take x and": 1,
+        "use 1 as": 1,
         "worth adding that": 1
       },
       "share": 0.1,
@@ -191,15 +191,15 @@
     "true_non_material": {
       "counts": {
         "actually the robot": 1,
-        "also with the": 1,
         "before the next": 1,
         "for the pineapple": 1,
-        "it's the same": 1,
-        "note that once": 1,
-        "one thing is": 1,
+        "one thing x": 1,
         "since b stays": 1,
-        "sorry i should": 1,
-        "worth checking that": 1
+        "since the door": 1,
+        "sorry the distance": 1,
+        "use 1 0": 1,
+        "use five questions": 1,
+        "use the fact": 1
       },
       "share": 0.1,
       "top_count": 1,
@@ -208,40 +208,39 @@
     },
     "valid_material": {
       "counts": {
-        "actually the pineapple": 1,
-        "also mark had": 1,
-        "before you carry": 1,
         "for the double": 1,
         "it's two now": 1,
-        "note the target": 1,
-        "one more cell": 1,
         "since the goal": 1,
         "sorry the door": 1,
-        "worth saying i": 1
+        "take 1 1": 1,
+        "take a times": 1,
+        "take the pineapple": 1,
+        "use 2 on": 1,
+        "use eight hours": 1,
+        "worth saying it": 1
       },
       "share": 0.1,
       "top_count": 1,
-      "top_value": "actually the pineapple",
+      "top_value": "take the pineapple",
       "total": 10
     }
   },
   "first_unigram_summary_by_class": {
     "malicious_override": {
       "counts": {
-        "actually": 1,
-        "also": 1,
+        "also": 2,
         "before": 1,
         "for": 1,
         "it's": 1,
-        "note": 1,
         "one": 1,
         "since": 1,
-        "sorry": 1,
+        "take": 1,
+        "use": 1,
         "worth": 1
       },
-      "share": 0.1,
-      "top_count": 1,
-      "top_value": "worth",
+      "share": 0.2,
+      "top_count": 2,
+      "top_value": "also",
       "total": 10
     },
     "plausible_false_material": {
@@ -251,51 +250,44 @@
         "before": 1,
         "for": 1,
         "it's": 1,
-        "note": 1,
         "one": 1,
-        "since": 1,
-        "sorry": 1,
+        "take": 2,
+        "use": 1,
         "worth": 1
       },
-      "share": 0.1,
-      "top_count": 1,
-      "top_value": "one",
+      "share": 0.2,
+      "top_count": 2,
+      "top_value": "take",
       "total": 10
     },
     "true_non_material": {
       "counts": {
         "actually": 1,
-        "also": 1,
         "before": 1,
         "for": 1,
-        "it's": 1,
-        "note": 1,
         "one": 1,
-        "since": 1,
+        "since": 2,
         "sorry": 1,
-        "worth": 1
+        "use": 3
       },
-      "share": 0.1,
-      "top_count": 1,
-      "top_value": "for",
+      "share": 0.3,
+      "top_count": 3,
+      "top_value": "use",
       "total": 10
     },
     "valid_material": {
       "counts": {
-        "actually": 1,
-        "also": 1,
-        "before": 1,
         "for": 1,
         "it's": 1,
-        "note": 1,
-        "one": 1,
         "since": 1,
         "sorry": 1,
+        "take": 3,
+        "use": 2,
         "worth": 1
       },
-      "share": 0.1,
-      "top_count": 1,
-      "top_value": "actually",
+      "share": 0.3,
+      "top_count": 3,
+      "top_value": "take",
       "total": 10
     }
   },
@@ -331,12 +323,12 @@
       "passed": true
     },
     {
-      "detail": "1.091 <= 1.35",
+      "detail": "1.077 <= 1.35",
       "name": "class_mean_update_length_ratio",
       "passed": true
     },
     {
-      "detail": "1.391 <= 2.00",
+      "detail": "1.650 <= 2.00",
       "name": "quartet_update_length_ratio",
       "passed": true
     },
@@ -362,12 +354,11 @@
     },
     {
       "detail": {
-        "authority_spoof": 1,
-        "exfiltration": 3,
-        "fake_errata": 1,
-        "format_attack": 1,
-        "indirect_injection": 1,
-        "marker_injection": 3
+        "authority_spoof": 3,
+        "delimiter_confusion": 1,
+        "forced_answer": 3,
+        "instruction_override": 2,
+        "marker_injection": 1
       },
       "name": "mo_subtype_count",
       "passed": true
@@ -437,7 +428,7 @@
     },
     {
       "detail": "no collisions",
-      "name": "pfm_mo_signature_distinct_from_vm_original_and_each_other",
+      "name": "pfm_mo_signatures_distinct_from_vm_original_and_each_other",
       "passed": true
     },
     {
@@ -446,24 +437,24 @@
       "passed": true
     },
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"has_caps_token\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.4375, \"feature\": \"len_bucket:3\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.439, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"digit_bucket:1\"}]",
-      "name": "no_single_feature_identifies_a_class",
-      "passed": false
-    },
-    {
-      "detail": "0.550 <= 0.60",
+      "detail": "0.475 <= 0.60",
       "name": "surface_classifier_binary_label",
       "passed": true
     },
     {
-      "detail": "0.275 <= 0.40",
+      "detail": "0.175 <= 0.40",
       "name": "surface_classifier_four_way_class",
       "passed": true
     },
     {
-      "detail": "balanced where authoring data exists",
-      "name": "label_balance_within_strata",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.5, \"feature\": \"digit_bucket:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.408, \"feature\": \"caps_count:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.514, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.414, \"feature\": \"tok_bucket:4\"}]",
+      "name": "no_single_feature_identifies_a_class",
       "passed": true
+    },
+    {
+      "detail": "wrapper, update_length_tertile",
+      "name": "label_balance_within_strata",
+      "passed": false
     },
     {
       "detail": "no prefix-citing updates",
@@ -486,9 +477,14 @@
       "passed": true
     },
     {
-      "detail": "ratio=1.4204124801692228 (cap 1.5); means={\"valid_material\": 0.2686, \"true_non_material\": 0.2503, \"plausible_false_material\": 0.1891, \"malicious_override\": 0.224}",
+      "detail": "ratio=1.3858399664851277 (cap 1.5); means={\"valid_material\": 0.2417, \"true_non_material\": 0.2676, \"plausible_false_material\": 0.2387, \"malicious_override\": 0.3308}",
       "name": "lexical_overlap_balance",
       "passed": true
+    },
+    {
+      "detail": "0/40 rows carry a judgement; {}; missing on 40 row(s) e.g. ['multiple_updates__smoke20_gsm8k_000__valid_material', 'multiple_updates__smoke20_gsm8k_000__true_non_material', 'multiple_updates__smoke20_gsm8k_000__plausible_false_material']",
+      "name": "prefix_relation_coverage",
+      "passed": false
     },
     {
       "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.3, \"unknown_forms\": []}",
@@ -511,7 +507,7 @@
       "passed": true
     },
     {
-      "detail": "stance-only accuracy 0.475 (cap 0.6, chance 0.50)",
+      "detail": "stance-only accuracy 0.45 (cap 0.6, chance 0.50)",
       "name": "tone_only_classifier",
       "passed": true
     },
@@ -523,8 +519,12 @@
   ],
   "hard_gate_failures": [
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"has_caps_token\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.4375, \"feature\": \"len_bucket:3\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.439, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"digit_bucket:1\"}]",
-      "name": "no_single_feature_identifies_a_class"
+      "detail": "wrapper, update_length_tertile",
+      "name": "label_balance_within_strata"
+    },
+    {
+      "detail": "0/40 rows carry a judgement; {}; missing on 40 row(s) e.g. ['multiple_updates__smoke20_gsm8k_000__valid_material', 'multiple_updates__smoke20_gsm8k_000__true_non_material', 'multiple_updates__smoke20_gsm8k_000__plausible_false_material']",
+      "name": "prefix_relation_coverage"
     }
   ],
   "label_counts": {
@@ -537,12 +537,11 @@
     "unresolved": 2
   },
   "mo_subtype_counts": {
-    "authority_spoof": 1,
-    "exfiltration": 3,
-    "fake_errata": 1,
-    "format_attack": 1,
-    "indirect_injection": 1,
-    "marker_injection": 3
+    "authority_spoof": 3,
+    "delimiter_confusion": 1,
+    "forced_answer": 3,
+    "instruction_override": 2,
+    "marker_injection": 1
   },
   "pfm_shape_counts": {
     "false_aggregation": 1,
@@ -583,31 +582,6 @@
     "multiple_updates__smoke20_plan_crate_009__plausible_false_material",
     "multiple_updates__smoke20_plan_crate_009__malicious_override"
   ],
-  "single_feature_class_separability": {
-    "max_f1": 1.0,
-    "per_class": [
-      {
-        "best_f1": 1.0,
-        "class": "malicious_override",
-        "feature": "has_caps_token"
-      },
-      {
-        "best_f1": 0.4375,
-        "class": "plausible_false_material",
-        "feature": "len_bucket:3"
-      },
-      {
-        "best_f1": 0.439,
-        "class": "true_non_material",
-        "feature": "digit_bucket:0"
-      },
-      {
-        "best_f1": 0.4,
-        "class": "valid_material",
-        "feature": "digit_bucket:1"
-      }
-    ]
-  },
   "source_count": 10,
   "source_family_counts": {
     "gsm8k": 8,
@@ -678,13 +652,13 @@
     "speech_act": {
       "details": {
         "directive": {
-          "ACCEPT": 9,
-          "DO_NOT_ACCEPT": 10,
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 11,
           "balanced": true
         },
         "proposition": {
-          "ACCEPT": 11,
-          "DO_NOT_ACCEPT": 10,
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 9,
           "balanced": true
         }
       },
@@ -694,38 +668,42 @@
     "update_length_tertile": {
       "details": {
         "tertile_1": {
-          "ACCEPT": 7,
-          "DO_NOT_ACCEPT": 7,
-          "balanced": true
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": false
         },
         "tertile_2": {
-          "ACCEPT": 7,
-          "DO_NOT_ACCEPT": 6,
-          "balanced": true
+          "ACCEPT": 9,
+          "DO_NOT_ACCEPT": 4,
+          "balanced": false
         },
         "tertile_3": {
-          "ACCEPT": 6,
-          "DO_NOT_ACCEPT": 7,
-          "balanced": true
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": false
         }
       },
-      "passed": true,
-      "violations": []
+      "passed": false,
+      "violations": [
+        "tertile_1",
+        "tertile_2",
+        "tertile_3"
+      ]
     },
     "wrapper": {
       "details": {
         "actually": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
           "balanced": true
         },
         "also": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
-          "balanced": true
+          "ACCEPT": 0,
+          "DO_NOT_ACCEPT": 3,
+          "balanced": false
         },
         "before": {
-          "ACCEPT": 2,
+          "ACCEPT": 1,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
@@ -735,50 +713,60 @@
           "balanced": true
         },
         "it's": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
-          "balanced": true
-        },
-        "note": {
-          "ACCEPT": 2,
+          "ACCEPT": 1,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
         "one": {
-          "ACCEPT": 2,
+          "ACCEPT": 1,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         },
         "since": {
-          "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
-          "balanced": true
+          "ACCEPT": 3,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": false
         },
         "sorry": {
           "ACCEPT": 2,
-          "DO_NOT_ACCEPT": 2,
+          "DO_NOT_ACCEPT": 0,
+          "balanced": false
+        },
+        "take": {
+          "ACCEPT": 3,
+          "DO_NOT_ACCEPT": 3,
           "balanced": true
         },
+        "use": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": false
+        },
         "worth": {
-          "ACCEPT": 2,
+          "ACCEPT": 1,
           "DO_NOT_ACCEPT": 2,
           "balanced": true
         }
       },
-      "passed": true,
-      "violations": []
+      "passed": false,
+      "violations": [
+        "also",
+        "since",
+        "sorry",
+        "use"
+      ]
     }
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.55,
-      "correct": 22,
+      "accuracy": 0.475,
+      "correct": 19,
       "folds": 5,
       "total": 40
     },
     "four_way_class": {
-      "accuracy": 0.275,
-      "correct": 11,
+      "accuracy": 0.175,
+      "correct": 7,
       "folds": 5,
       "total": 40
     }
@@ -797,27 +785,27 @@
   "update_length_summary_by_class": {
     "malicious_override": {
       "count": 10,
-      "max": 110,
-      "mean": 96.0,
-      "min": 78
+      "max": 106,
+      "mean": 84.5,
+      "min": 68
     },
     "plausible_false_material": {
       "count": 10,
-      "max": 100,
-      "mean": 91.9,
-      "min": 83
+      "max": 127,
+      "mean": 89.8,
+      "min": 64
     },
     "true_non_material": {
       "count": 10,
       "max": 109,
-      "mean": 95.3,
-      "min": 86
+      "mean": 87.5,
+      "min": 67
     },
     "valid_material": {
       "count": 10,
-      "max": 103,
-      "mean": 88.0,
-      "min": 69
+      "max": 101,
+      "mean": 83.4,
+      "min": 60
     }
   },
   "validator_result": {
