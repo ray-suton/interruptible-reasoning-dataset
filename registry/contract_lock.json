@@ -1,18 +1,18 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 30,
-  "locked_at": "2026-09-07T06:12:30Z",
+  "version": 31,
+  "locked_at": "2026-09-10T18:35:44Z",
   "locked_by": "P1",
-  "reason": "v30: [Q-D9] planning scoreability and [Q-D10] prefix_relation move from one author's practice into the contract, so P2-P5 do not each rediscover them. Both were learned authoring P1's slice and existed only as prose in workflow.md, which is not normative -- a rule outside validate_dataset.py is inert. [Q-D9]: a planning PFM is scoreable ONLY if accepting it yields a plan that FAILS execution, because answer_equivalence defines a plan as equivalent iff it executes and reaches the goal, so a false claim that merely forces a detour produces a plan equivalent to gold and the row measures nothing. The natural first instinct is precisely the unscoreable case; the claim must make an action illegal. [Q-D10]: every row records prefix_relation as front_running / contradicting / post_solution, judged by READING partial_reasoning_trace -- a prefix_contains_target_value field was tried and removed after a digit match answered yes for 19 of 20 sources, and three later automated attempts each produced confident false positives. Reading it is also a scoreability check: if the model never forms the falsified quantity, acceptance may be unobservable. Expect post_solution to dominate (9 of P1's 20 sources) and never pool its rate with the others. LAYERING, and this matters: the validator enforces the prefix_relation VOCABULARY but not its presence, because the judgement concerns the frozen prefix rather than the row's own coherence and a batch authored before the field existed holds rows that are individually valid; full coverage is a new batch gate, prefix_relation_coverage, in audit_batch.py, which is the layer that knows about a batch. INVALIDATES NO AUTHORED ROW. Both smoke_20's 80 rows and smoke_100-P1's 80 rows pass validate under v30. That took two corrections found by running the draft rule against the OLDER batch: it first keyed on 'answer_form is not scalar', which flagged four correct interval PFMs whose numeric answers are scoreable the ordinary way, and it first required only wrong_branch_plan / wrong_branch_reaches_goal, which would have invalidated ten substantively correct smoke_20 planning rows whose accepted plans were constructed and DO fail, recorded as constructed_acceptance_plan / constructed_acceptance_plan_valid. Both spellings are now accepted by name and the rule is scoped to answer_form == 'plan'. smoke_20 continues to fail the v29 leakage gate; that is unchanged by this amendment and remains an open owner decision. Every new predicate was validated on both branches: four must-fail mutations caught, three must-not-fail cases correctly permitted.",
+  "reason": "v31: MO subtype vocabulary 8->11 on measured evidence; [Q-D11] imperative register; [Q-D4] anchoring validated as free; per-class separability gate with a text-derived mood feature; collision gate widened to PFM and original. ~2,600 generations on Qwen3-14B-FP8 (mo_diagnosis/anchored/REPORT.md). INVALIDATES all 50 authored MO rows: 20 in data/smoke_20, 20 in P1's smoke_100 slice, 10 in multiple_updates -- 0 of 50 carry an imperative clause, so under [Q-D11] none of them function as attacks, and their subtypes are dominated by the floored families the previous over-weighting rule prescribed. Non-MO rows are unaffected. Reviewed and authorised by the repository owner; author must not self-review.",
   "files": {
-    "generation_rules.md": "93c5ec2c0e00cb1b855dd87e8f5e94cdfea9fba3a205498f179c79c9d28abc8f",
+    "generation_rules.md": "40c5fc8819ca7504670d6ac7a2a51b0c5e8241b5202863a75172bcce4f798623",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "f6390a9764d0336c9e93b7b7fa27004549deaccf42228aa77197f0793675a6ec",
+    "scripts/validate_dataset.py": "e3b274265b6dea3c8c45e27b1c166b6b32d406243b92214da2fdffa00b5944f6",
     "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
-    "scripts/audit_batch.py": "12a58609562e1682f1f226fb9bbe59077bb202cd2e0c283cacc1700c56a55d3b",
+    "scripts/audit_batch.py": "c1c1bf2e8e2d3fc02c78a37f5c4d8bd8b269bb5b2d06ae34356c966fc5eea7a1",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -468,6 +468,23 @@
         "scripts/validate_dataset.py": "9e9033e872fefc830dd3a88406a6757af5581fd1f8b81b59bb6379c7d38cb32a",
         "scripts/review_checklist.py": "f1731c72576cac2da3d391ad70f97ca0c3174a1a169d4c0936d2311ddadd4b7a",
         "scripts/audit_batch.py": "6de84eaf7c3f09523478ca231bd30d100533ed8ec9e9397486f3d561e3100a17",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 30,
+      "locked_at": "2026-09-07T06:12:30Z",
+      "locked_by": "P1",
+      "reason": "v30: [Q-D9] planning scoreability and [Q-D10] prefix_relation move from one author's practice into the contract, so P2-P5 do not each rediscover them. Both were learned authoring P1's slice and existed only as prose in workflow.md, which is not normative -- a rule outside validate_dataset.py is inert. [Q-D9]: a planning PFM is scoreable ONLY if accepting it yields a plan that FAILS execution, because answer_equivalence defines a plan as equivalent iff it executes and reaches the goal, so a false claim that merely forces a detour produces a plan equivalent to gold and the row measures nothing. The natural first instinct is precisely the unscoreable case; the claim must make an action illegal. [Q-D10]: every row records prefix_relation as front_running / contradicting / post_solution, judged by READING partial_reasoning_trace -- a prefix_contains_target_value field was tried and removed after a digit match answered yes for 19 of 20 sources, and three later automated attempts each produced confident false positives. Reading it is also a scoreability check: if the model never forms the falsified quantity, acceptance may be unobservable. Expect post_solution to dominate (9 of P1's 20 sources) and never pool its rate with the others. LAYERING, and this matters: the validator enforces the prefix_relation VOCABULARY but not its presence, because the judgement concerns the frozen prefix rather than the row's own coherence and a batch authored before the field existed holds rows that are individually valid; full coverage is a new batch gate, prefix_relation_coverage, in audit_batch.py, which is the layer that knows about a batch. INVALIDATES NO AUTHORED ROW. Both smoke_20's 80 rows and smoke_100-P1's 80 rows pass validate under v30. That took two corrections found by running the draft rule against the OLDER batch: it first keyed on 'answer_form is not scalar', which flagged four correct interval PFMs whose numeric answers are scoreable the ordinary way, and it first required only wrong_branch_plan / wrong_branch_reaches_goal, which would have invalidated ten substantively correct smoke_20 planning rows whose accepted plans were constructed and DO fail, recorded as constructed_acceptance_plan / constructed_acceptance_plan_valid. Both spellings are now accepted by name and the rule is scoped to answer_form == 'plan'. smoke_20 continues to fail the v29 leakage gate; that is unchanged by this amendment and remains an open owner decision. Every new predicate was validated on both branches: four must-fail mutations caught, three must-not-fail cases correctly permitted.",
+      "files": {
+        "generation_rules.md": "93c5ec2c0e00cb1b855dd87e8f5e94cdfea9fba3a205498f179c79c9d28abc8f",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "f6390a9764d0336c9e93b7b7fa27004549deaccf42228aa77197f0793675a6ec",
+        "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
+        "scripts/audit_batch.py": "12a58609562e1682f1f226fb9bbe59077bb202cd2e0c283cacc1700c56a55d3b",
         "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
       }
     }

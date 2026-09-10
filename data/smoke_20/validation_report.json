@@ -560,7 +560,7 @@
     },
     {
       "detail": "no collisions",
-      "name": "pfm_mo_signature_not_equal_paired_vm_answer",
+      "name": "pfm_mo_signatures_distinct_from_vm_original_and_each_other",
       "passed": true
     },
     {
@@ -576,6 +576,11 @@
     {
       "detail": "0.525 <= 0.40",
       "name": "surface_classifier_four_way_class",
+      "passed": false
+    },
+    {
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"caps_count:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}]",
+      "name": "no_single_feature_identifies_a_class",
       "passed": false
     },
     {
@@ -607,6 +612,11 @@
       "detail": "ratio=1.217560975609756 (cap 1.5); means={\"valid_material\": 0.2496, \"true_non_material\": 0.205, \"plausible_false_material\": 0.2487, \"malicious_override\": 0.2378}",
       "name": "lexical_overlap_balance",
       "passed": true
+    },
+    {
+      "detail": "0/80 rows carry a judgement; {}; missing on 80 row(s) e.g. ['smoke20_gsm8k_000__valid_material', 'smoke20_gsm8k_000__true_non_material', 'smoke20_gsm8k_000__plausible_false_material']",
+      "name": "prefix_relation_coverage",
+      "passed": false
     },
     {
       "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
@@ -647,6 +657,14 @@
     {
       "detail": "0.525 <= 0.40",
       "name": "surface_classifier_four_way_class"
+    },
+    {
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 1.0, \"feature\": \"caps_count:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.5, \"feature\": \"caps_count:0\"}]",
+      "name": "no_single_feature_identifies_a_class"
+    },
+    {
+      "detail": "0/80 rows carry a judgement; {}; missing on 80 row(s) e.g. ['smoke20_gsm8k_000__valid_material', 'smoke20_gsm8k_000__true_non_material', 'smoke20_gsm8k_000__plausible_false_material']",
+      "name": "prefix_relation_coverage"
     }
   ],
   "label_counts": {
@@ -1004,7 +1022,7 @@
   "validator_result": {
     "command": [
       "/home/rui.gao/anaconda3/bin/python3",
-      "/tmp/slurm-rui.gao-175709/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/a706fec4-cca6-4ecd-afc5-e720482d1efc/scratchpad/wt2/scripts/validate_dataset.py",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
       "--source-groups",
       "data/smoke_20/source_groups_math.jsonl",
       "data/smoke_20/source_groups_planning.jsonl",
