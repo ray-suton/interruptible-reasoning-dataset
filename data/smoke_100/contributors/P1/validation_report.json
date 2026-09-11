@@ -505,17 +505,17 @@
       "passed": true
     },
     {
-      "detail": "0.512 <= 0.60",
+      "detail": "0.525 <= 0.60",
       "name": "surface_classifier_binary_label",
       "passed": true
     },
     {
-      "detail": "0.325 <= 0.40",
+      "detail": "0.400 <= 0.40",
       "name": "surface_classifier_four_way_class",
       "passed": true
     },
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.606, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.436, \"feature\": \"digit_bucket:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.513, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.471, \"feature\": \"len_bucket:5\"}]",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.588, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.436, \"feature\": \"digit_bucket:0\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.513, \"feature\": \"digit_bucket:0\"}, {\"class\": \"valid_material\", \"best_f1\": 0.471, \"feature\": \"len_bucket:5\"}]",
       "name": "no_single_feature_identifies_a_class",
       "passed": true
     },
@@ -793,14 +793,14 @@
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.5125,
-      "correct": 41,
+      "accuracy": 0.525,
+      "correct": 42,
       "folds": 5,
       "total": 80
     },
     "four_way_class": {
-      "accuracy": 0.325,
-      "correct": 26,
+      "accuracy": 0.4,
+      "correct": 32,
       "folds": 5,
       "total": 80
     }
@@ -840,7 +840,7 @@
     "valid_material": {
       "count": 20,
       "max": 136,
-      "mean": 120.55,
+      "mean": 120.8,
       "min": 105
     }
   },

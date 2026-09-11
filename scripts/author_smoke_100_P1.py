@@ -940,7 +940,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
         return {
             "valid_material": RowSpec(
                 update="With thirty perhaps the cleaner divisor, take the GCD as thirty and the LCM as "
-                       "thirty cubed, a still the smaller of the pair.",
+                       "thirty cubed, with a still the smaller of the pair.",
                 syntactic_form="hedged", speech_act="directive",
                 wording_pattern="gcdlcm_divisor_pair_recast", update_operation="modify",
                 checkability="direct", relevance="relevant", task_consequence="task_changing",
