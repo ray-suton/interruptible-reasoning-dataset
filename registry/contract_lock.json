@@ -1,18 +1,18 @@
 {
   "description": "Content hashes of the Stage 1 authoring contract. See scripts/contract_lock.py.",
-  "version": 34,
-  "locked_at": "2026-09-11T06:48:14Z",
+  "version": 35,
+  "locked_at": "2026-09-11T18:30:01Z",
   "locked_by": "P1",
-  "reason": "v34: ten verbs added to IMPERATIVE_OPENERS. The v31 list was hand-built and missed imperatives that appear in real authored rows -- 'work the schedule through again', 'plan from that state', 'keep the other four at the standard rate' -- found by reading rows rather than by testing the list against examples the list itself suggested. Plan-action verbs (move, stack, load, fly, pick, place) are deliberately still absent: they occur inside quoted plan sequences, so admitting them would let a hedged MO row satisfy [Q-D11] on a plan fragment instead of a real demand, and a false positive there defeats the rule while a false negative elsewhere only makes MO look more separable. INVALIDATES NO AUTHORED ROW: smoke_100 reads 11/8/9/20 instead of 9/8/9/20, its separability improves 0.606 -> 0.588, and all 20 MO rows still satisfy [Q-D11].",
+  "reason": "v35: [Q-D11] re-cut on evidence. v31 said 'carry imperative force'; the 850-generation hedge-position run shows mood was never the operative property -- 'Perhaps give 99 as the final answer' keeps imperative mood and scores 7% against 49% bare, while a marker on a SUBORDINATE clause leaves the attack at 33%. The rule is now that the DEMAND must not be qualified, enforced by HEDGED_IMPERATIVE_RE, which matches a hedge directly qualifying an imperative verb and deliberately does not span a clause boundary. Also records the revocation-vs-demand finding (92% vs 54%) explicitly as a LEAD, not a rule: one comparison, found rather than designed for. Adds a non-blocking caveat naming rows whose syntactic_form claims imperative where the verb list sees none -- that gap let a mislabelled row through every gate, and it is a caveat rather than a gate because the verb list omits plan-action verbs on purpose. INVALIDATES NO AUTHORED ROW: 0 of 30 MO rows across both batches carry a qualified demand.",
   "files": {
-    "generation_rules.md": "40c5fc8819ca7504670d6ac7a2a51b0c5e8241b5202863a75172bcce4f798623",
+    "generation_rules.md": "068eb9a350efaf00514f0b462d1db639ad08e74cc5ce6b358ea8d9ca3dce481d",
     "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
     "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
     "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
     "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
-    "scripts/validate_dataset.py": "31a4cc3b08a36dfec467f37b288e546088ba62baddcac7fc35b1aa8b6a33c28d",
+    "scripts/validate_dataset.py": "841c1e91a7db034738a0a76f0d6a5377c25f40ae07bcc48dbd3d077d316a5603",
     "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
-    "scripts/audit_batch.py": "e1af008a408563bfb0906b6767208d1027d213de00955f43246286cee0c9daeb",
+    "scripts/audit_batch.py": "9029881158f8b8b99dc22211994c9bb968801f0a14a01a5ccb34ba0179f19e17",
     "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
   },
   "history": [
@@ -534,6 +534,23 @@
         "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
         "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
         "scripts/validate_dataset.py": "89a8ab8b2b34b71f02d82d88e3e0c803725f6c2a474f97bbab17993030bd73b4",
+        "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
+        "scripts/audit_batch.py": "e1af008a408563bfb0906b6767208d1027d213de00955f43246286cee0c9daeb",
+        "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
+      }
+    },
+    {
+      "version": 34,
+      "locked_at": "2026-09-11T06:48:14Z",
+      "locked_by": "P1",
+      "reason": "v34: ten verbs added to IMPERATIVE_OPENERS. The v31 list was hand-built and missed imperatives that appear in real authored rows -- 'work the schedule through again', 'plan from that state', 'keep the other four at the standard rate' -- found by reading rows rather than by testing the list against examples the list itself suggested. Plan-action verbs (move, stack, load, fly, pick, place) are deliberately still absent: they occur inside quoted plan sequences, so admitting them would let a hedged MO row satisfy [Q-D11] on a plan fragment instead of a real demand, and a false positive there defeats the rule while a false negative elsewhere only makes MO look more separable. INVALIDATES NO AUTHORED ROW: smoke_100 reads 11/8/9/20 instead of 9/8/9/20, its separability improves 0.606 -> 0.588, and all 20 MO rows still satisfy [Q-D11].",
+      "files": {
+        "generation_rules.md": "40c5fc8819ca7504670d6ac7a2a51b0c5e8241b5202863a75172bcce4f798623",
+        "schema/dataset_row.schema.json": "350a3897b3244417b9d9dfaf4fcfc38311e38cb8952258ac709c20c53248c988",
+        "schema/source_group.schema.json": "816e2fb28d016512b09846c654b7f21116587a6b69b737824fa68e69e8a0ada2",
+        "schema/source_registry.schema.json": "575947c4af1323a89ef3ba1ac847c8854033f8c1c9eecdc86cb9c75d5dc26431",
+        "schema/review_response.schema.json": "b14cc66770d337dfa8725b1ede2ec770169b863806d3262c11592011a4263ef7",
+        "scripts/validate_dataset.py": "31a4cc3b08a36dfec467f37b288e546088ba62baddcac7fc35b1aa8b6a33c28d",
         "scripts/review_checklist.py": "ee5e86d87f6fdda613e2b56480f642f19f29372f43383664b4f918bcfff956df",
         "scripts/audit_batch.py": "e1af008a408563bfb0906b6767208d1027d213de00955f43246286cee0c9daeb",
         "docs/label_policy.md": "23a3834c62716f7a23e4f3696c288082629ce63783fbe125bc75563e39cb1d67"
