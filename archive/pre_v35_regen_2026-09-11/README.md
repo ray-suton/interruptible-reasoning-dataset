@@ -44,3 +44,21 @@ The generators. `scripts/author_smoke_100_P1.py` and
 files are their output. Fixes go in the generator, never in emitted rows.
 
 Full history is in git regardless of this directory.
+
+## The generators are archived here too
+
+`multiple_updates/author_multiple_updates.py` and
+`smoke_100/author_smoke_100_P1.py` sit beside the rows they produced.
+
+**They will not run from this directory.** `author_multiple_updates.py` imports
+`author_smoke_20` and `author_smoke_20_planning`, which are still live under
+`scripts/` for a different batch; the import path does not resolve from here.
+That is intended — these are a record of how the retired rows were built, not a
+tool. `author_multiple_updates.py` was also removed from the Makefile's
+`pycheck` list, which `init.sh` runs, so the gate does not compile a file that
+no longer has its imports.
+
+**Nothing regenerates these batches now.** That is the point of archiving the
+generators rather than only their output: the design encoded in them produces
+the leakage profile described above, so the next batch is a fresh authoring
+pass, not a rerun.
