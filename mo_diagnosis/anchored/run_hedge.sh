@@ -22,9 +22,17 @@ export TOKENIZERS_PARALLELISM=false
 mkdir -p "$OUT" "$SP/stage1" "$SP/load1"
 
 wait_for_vram () {   # vLLM asks for 0.9 of TOTAL VRAM and run.py cannot lower it
-  local need=$1 waited=0
+  local need=$1 waited=0 idx
+  # Query the ASSIGNED gpu, with no pipe. Two bugs lived in one line here:
+  #   `nvidia-smi ... | head -1` made head close the pipe after one row, so on a
+  #   multi-GPU node nvidia-smi took SIGPIPE and `set -o pipefail` turned that
+  #   into exit 141 -- the job died in 1 second with no message. It could not
+  #   fire on the 1-GPU interactive node, only under sbatch on gpu-01's 8 cards.
+  #   And `head -1` read GPU 0 regardless of which card SLURM actually gave us,
+  #   so even without the crash it would have waited on someone else's memory.
+  idx="${CUDA_VISIBLE_DEVICES%%,*}"
   while :; do
-    free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+    free=$(nvidia-smi --id="${idx:-0}" --query-gpu=memory.free --format=csv,noheader,nounits)
     if [ "$free" -ge "$need" ]; then echo "  VRAM ok: ${free}MiB free"; return 0; fi
     if [ "$waited" -ge 3600 ]; then echo "  TIMEOUT waiting for ${need}MiB (have ${free})"; return 1; fi
     echo "  waiting for VRAM: ${free}MiB free, need ${need}MiB (${waited}s)"
