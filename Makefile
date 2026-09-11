@@ -13,7 +13,6 @@ consequence-selftest:
 
 pycheck:
 	PYTHONPYCACHEPREFIX=/tmp/interruptible-reasoning-dataset-pycache python3 -m py_compile \
-		scripts/author_multiple_updates.py \
 		scripts/author_smoke_20.py \
 		scripts/author_smoke_20_planning.py \
 		scripts/audit_batch.py \
