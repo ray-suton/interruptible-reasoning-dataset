@@ -29,7 +29,7 @@
     "syntactic_form": {
       "class_exclusive": [],
       "distinct_forms": 6,
-      "max_share_of_a_class": 0.25,
+      "max_share_of_a_class": 0.3,
       "missing_field": [],
       "unknown_forms": []
     },
@@ -42,9 +42,9 @@
           "deviation": 1
         },
         "bare_declarative": {
-          "ACCEPT": 8,
+          "ACCEPT": 9,
           "DO_NOT_ACCEPT": 9,
-          "deviation": 1
+          "deviation": 0
         },
         "correction_with_negation": {
           "ACCEPT": 5,
@@ -57,9 +57,9 @@
           "deviation": 1
         },
         "imperative": {
-          "ACCEPT": 6,
+          "ACCEPT": 5,
           "DO_NOT_ACCEPT": 5,
-          "deviation": 1
+          "deviation": 0
         },
         "mid_sentence_aside": {
           "ACCEPT": 7,
@@ -555,7 +555,7 @@
       "passed": true
     },
     {
-      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.3, \"unknown_forms\": []}",
       "name": "syntactic_form_spread",
       "passed": true
     },

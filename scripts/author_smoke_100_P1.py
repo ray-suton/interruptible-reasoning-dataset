@@ -1218,7 +1218,7 @@ def specs_for(source: dict[str, Any], ans: Answers) -> dict[str, RowSpec]:
             ),
             "true_non_material": RowSpec(
                 update="The seven of type A at half a dollar apiece come to three fifty when the lines are combined.",
-                syntactic_form="imperative", speech_act="directive",
+                syntactic_form="bare_declarative", speech_act="directive",
                 wording_pattern="candies_type_a_line_check", update_operation="clarify",
                 checkability="direct", relevance="relevant", task_consequence="supporting",
                 relation_to_prior_state="consistent", evidence_status="supported",
