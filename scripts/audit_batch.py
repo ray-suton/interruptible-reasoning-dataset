@@ -1337,6 +1337,25 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
             "references a run via trace_run_id rather than embedding a trace. A failure here is a "
             "real defect, not an expected artifact."
         )
+    # v35. Nothing checked that syntactic_form describes the update it labels.
+    # That gap let a row declare "imperative" over a bare declarative through
+    # every gate, because the form gates measure DISTRIBUTION and never the
+    # match. Reported rather than gated: IMPERATIVE_OPENERS deliberately omits
+    # plan-action verbs, so "move B off before putting C in its place" is a real
+    # imperative this cannot see, and a hard gate would fail a correct row.
+    form_text_mismatches = [
+        str(row.get("example_id") or "")
+        for row in rows
+        if row.get("syntactic_form") == "imperative"
+        and not IMPERATIVE_RE.search(str(row.get("update") or ""))
+    ]
+    if form_text_mismatches:
+        caveats.append(
+            "syntactic_form='imperative' with no imperative clause the verb list can "
+            f"see, on {len(form_text_mismatches)} row(s): {', '.join(form_text_mismatches[:8])}. "
+            "Read each one: either the label is wrong or the verb is outside the "
+            "deliberately conservative list."
+        )
     if stratum_balances["interrupt_position_tertile"]["status"] == "not_applicable_at_authoring_time":
         caveats.append("Interrupt-position stratum balance cannot be audited until runtime trace manifests exist.")
 
