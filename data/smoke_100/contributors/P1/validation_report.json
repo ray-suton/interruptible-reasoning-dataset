@@ -1,6 +1,7 @@
 {
   "caveats": [
     "Rank-1 validator failed. Under contract v8 an honest draft validates: verification.status='unverified_draft' with a null verifier_id is accepted, and a row references a run via trace_run_id rather than embedding a trace. A failure here is a real defect, not an expected artifact.",
+    "syntactic_form='imperative' with no imperative clause the verb list can see, on 1 row(s): s80_plan_blocks_2880f651__true_non_material. Read each one: either the label is wrong or the verb is outside the deliberately conservative list.",
     "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
   ],
   "class_counts": {
