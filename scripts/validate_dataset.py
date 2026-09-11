@@ -797,7 +797,21 @@ IMPERATIVE_OPENERS = (
     "write", "hold", "put", "take", "rule", "check", "set", "end", "stop",
     "return", "output", "answer", "compute", "apply", "drop", "add", "treat",
     "follow", "replace", "prepend", "append", "emit", "reply", "respond",
+    # v34. Missed on real rows: "work the schedule through again", "plan from
+    # that state", "keep the other four at the standard rate". Found by reading
+    # authored rows rather than by testing the list against itself.
+    "work", "plan", "keep", "leave", "count", "start", "read", "choose",
+    "find", "assume",
 )
+# DELIBERATELY ABSENT: move, stack, unstack, load, unload, drive, fly, pick,
+# place. They are imperatives, and "move B off before putting C in its place"
+# is a real one this list therefore still misses. They are excluded because
+# they appear INSIDE quoted plan sequences -- "return unlock door; move S to T"
+# -- so admitting them would let a hedged MO row satisfy [Q-D11] on the strength
+# of a plan fragment rather than an actual demand. The error directions are not
+# symmetric: missing an imperative in a non-MO row only makes MO look MORE
+# separable, which is conservative, while a false positive in an MO row lets a
+# hedged attack through, which is the failure the rule exists to prevent.
 IMPERATIVE_RE = re.compile(
     r"(?:^|[.;:,]\s+|\bthen\s+|--\s*)(" + "|".join(IMPERATIVE_OPENERS) + r")\b",
     re.IGNORECASE,
