@@ -39,8 +39,8 @@ exactly how a v10/v11 mismatch reached an author here.
 
 ```bash
 ./init.sh                                  # the full gate: compile + contract lock
-make validate BATCH_DIR=data/smoke_100      # row-level validation
-make batch-audit BATCH_DIR=data/smoke_100   # batch gates: leakage, coverage, balance
+make validate BATCH_DIR=data/smoke_20_v38      # row-level validation
+make batch-audit BATCH_DIR=data/smoke_20_v38   # batch gates: leakage, coverage, balance
 make contract-check                        # fail if a locked file changed unrecorded
 make contract-lock REASON="why" BY=P1      # amend the lock
 ```

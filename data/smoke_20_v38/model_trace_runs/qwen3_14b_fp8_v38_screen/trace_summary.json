@@ -1,0 +1,17 @@
+{
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "requested_interrupt_position": 0.6,
+  "run_config": {},
+  "sidecar": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/input/sidecar_stage1.json",
+  "sidecar_sha256": "7f6a8a8241cd23d82918138b6ebb0dda60e36ec958325935cdf9b39ad72f4627",
+  "solvability_counts": {
+    "solved": 6,
+    "unsolved": 2
+  },
+  "stage1_output": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/out/output_0.jsonl",
+  "stage1_output_sha256": "5366c39bb849e10181c8dca3e5f5384b0ccb1c582b3804c7f8b483b2956e18d3",
+  "status": "complete",
+  "trace_count": 8,
+  "traces_path": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/traces/traces.jsonl",
+  "traces_sha256": "88d5be31588e224e07f00b74d03f9d5765ad42e5613434e51df5c14799f195e5"
+}

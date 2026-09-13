@@ -49,18 +49,18 @@ Read, in this order:
   1. workflow.md       (your procedure. §0 is your boundaries. Start there)
   2. generation_rules.md §2 for the class you are writing — not all of it
   3. scripts/review_checklist.py  — RUN it; those are the questions we will be asked
-  4. data/smoke_20/semantic_rows.jsonl — 80 finished rows; copy how fields are filled
+  4. data/smoke_20_v38/semantic_rows.jsonl — 80 finished rows that pass all 44 gates; copy how fields are filled
 
 Do NOT read archive/. Its rules were overturned.
 
-My assignment: data/smoke_100/contributors/<me>/assigned_source_groups.jsonl
+My assignment: data/smoke_20_v38/contributors/<me>/assigned_source_groups.jsonl
 20 sources, one quartet each, 80 rows.
 
 Report at workflow.md §6's three checkpoints: after reading, after five
 sources, and at handover. Before you write anything: tell me what you found,
 and anything in generation_rules.md you think is wrong.
 
-Then: author data/smoke_100/contributors/<me>/semantic_rows.jsonl directly,
+Then: author data/smoke_20_v38/contributors/<me>/semantic_rows.jsonl directly,
 one source at a time, all four updates of a source written together before the
 next source (generation_rules.md §3.4d). No generator file — they are retired.
 Derive every answer by executing a solver that reproduces the pinned gold FIRST.
@@ -234,16 +234,16 @@ workflow.md             the procedure
 scripts/review_checklist.py   run it; the questions your reviewer asks
 scripts/validate_dataset.py   the contract, executable
 scripts/planning_domains.py   planning solvers (blocks, logistics, BFS, execute)
-data/smoke_100/contributors/<you>/assigned_source_groups.jsonl   your 20 sources
-data/smoke_20/semantic_rows.jsonl   80 finished rows — the worked example
+data/smoke_20_v38/contributors/<you>/assigned_source_groups.jsonl   your 20 sources
+data/smoke_20_v38/semantic_rows.jsonl   80 finished rows — the worked example
 archive/                DO NOT READ. Its rules were overturned
 ```
 
 ```bash
 ./init.sh                                     # the full gate
 python3 scripts/review_checklist.py           # the questions you will be asked
-make validate    BATCH_DIR=data/smoke_100     # row-level, rank 1
-make batch-audit BATCH_DIR=data/smoke_100     # batch-level gates
+make validate    BATCH_DIR=data/smoke_20_v38     # row-level, rank 1
+make batch-audit BATCH_DIR=data/smoke_20_v38     # batch-level gates
 ```
 
 Authority order, and getting it backwards has caused a real error here:

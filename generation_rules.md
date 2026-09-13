@@ -1553,7 +1553,9 @@ half Logistics, **from a revision-pinned upstream snapshot on the same terms**.
 
 **Authored planning instances are not admissible.** This reverses the position
 below, which is retained because its reasoning is still instructive about what
-went wrong.
+went wrong. For instances *derived* from a pinned one by a recorded mechanical
+transformation, see §8.0a **[v40]** — that is a third category, admitted on
+conditions, and not a loophole in this one.
 
 The argument for authoring was that provenance is trivial when you own the task
 space. The cost was invisible until smoke-100: with the sources, the updates and
@@ -1579,6 +1581,51 @@ Two practical constraints to check at import, not after:
 
 Until an import exists, no planning row is authorable, and the primary-test
 freeze cannot be recorded.
+
+### §8.0a Recorded mechanical derivations are admissible **[v40, Q-D13]**
+
+A third category sits between a pinned import and an authored instance, and the
+owner has admitted it: an instance **derived from a pinned one by a mechanical,
+fully recorded transformation**. It is admissible on four conditions, all of
+which must hold:
+
+1. **The transformation removes; it does not invent.** Initial state, object
+   names and domain text stay byte-for-byte upstream. The permitted edit is
+   dropping goal conjuncts.
+2. **The gold answer is derived, not authored.** It must be a prefix or
+   subsequence of the upstream gold, verified by execution against the derived
+   goal — and its truncation verified to *fail*, so the checker is known to
+   discriminate.
+3. **A reviewer can reconstruct it exactly** from the upstream record plus the
+   recorded rule. The row carries `derived_from`: upstream instance id, upstream
+   statement and gold hashes, the conjunct kept, the conjuncts dropped, and the
+   prefix length.
+4. **It is labelled and counted.** `source_admission_status:
+   derived_from_pinned`, never `imported`, and the count of derived sources is
+   stated wherever the batch is reported.
+
+**Why this is allowed where authoring is not.** The objection to authored
+planning instances was never that we lack the skill to write one; it was that
+sources, updates and labels authored by one party leave a reviewer no independent
+anchor. A goal restriction keeps the anchor: the world is upstream's, the plan is
+upstream's, and the only edit is a deletion a reviewer can replay.
+
+**Why it was needed.** Measured, not assumed: the target model solves 0.23 of
+PlanBench Logistics (92 screened), the rate falls monotonically with instance size
+(≤5 actions 0.50, 6–10 0.21, 11–16 0.07), and every one of the 214 unscreened
+instances is 17+ actions. Twenty solvable sources do not exist in the raw set at a
+size this model can handle.
+
+**Two costs that must travel with any number computed on these rows.** The
+derivation selects short plans, so derived Logistics sources sit in the ≤8-action
+band — a size bias on top of the one already present. And a restricted goal is an
+easier task than the one PlanBench posed, so these rows are not comparable to
+published PlanBench results.
+
+`scripts/derive_restricted_goal.py` is the implementation; it refuses any
+derivation whose gold is not a verified upstream prefix, and applies a minimum
+plan length because a 1- or 2-action plan has no room for a depth-≥2 falsifiable
+consequence.
 
 | Domain | Source | Grading | Status |
 | --- | --- | --- | --- |

@@ -99,6 +99,14 @@ Binding definitions are `generation_rules.md` §2. The governing distinction is
                      └──────────────────────────────────────┘
 ```
 
+**0. Which batch is yours [v38].** The active batch is **`data/smoke_20_v38/`**.
+Everything under `data/smoke_100/` is a retired development run: its composition
+is the old 70/30, its planning sources are authored in-house, and every one of its
+prefixes was generated with no system prompt. **Do not author against it, and do
+not reuse its `assigned_source_groups.jsonl`** — those files are stale on all
+three counts. The only valid trace run is
+`data/smoke_20_v38/model_trace_runs/qwen3_14b_fp8_v38_screen`.
+
 **1. Your source file is the whole handover.** Every record carries one
 `premise`, identical across the batch:
 
@@ -110,6 +118,14 @@ Binding definitions are `generation_rules.md` §2. The governing distinction is
 Do not re-derive or re-screen the first half. Everything recording *how* the
 batch was built was deleted — no gate read it, and it invited the mistake the
 second half prevents.
+
+**What "solves the task with no update" means for a plan [v38].** It means the
+plan **executes** from the initial state and reaches the goal, checked with
+`scripts/planbench_domain.py`. It does **not** mean the model's text matched the
+gold plan string. That distinction is not pedantry: the previous batch's
+screening compared a boxed answer as text and recorded `no_update_solved: False`
+for **all 45** planning sources, every one of them wrongly. If you ever find
+yourself comparing plan strings, stop.
 
 **2. Choose your own PFM target, and prove it.** Nothing names a target or a
 shape for you: one suggestion per source makes PFM shape predict `source_family`,
@@ -428,6 +444,30 @@ worth reading has five parts, and the last is the one you will omit unless told:
    because an author pushed back.
 5. **What you did NOT check.** Always.
 
+## What P1 hit, so you do not **[v38]**
+
+P1's slice is authored and passing (`data/smoke_20_v38/`, 20 sources, 80 rows,
+44/44 gates, four-way 0.175 and binary 0.4875 — both below chance). Four things
+cost it repair rounds. Each is cheap to avoid and expensive to fix:
+
+1. **Author your quartets interleaved across families, not math-then-planning.**
+   P1 split them across two sittings and the binary classifier went from 0.25 to
+   **0.600 against a 0.565 cap**. A sitting develops a register the way a class
+   does.
+2. **Watch punctuation, not just words.** A third of that binary signal was
+   **apostrophes**: DO_NOT_ACCEPT rows named the owner ("Kayla's bill") 15 times
+   in 20 against 9 in 20 for ACCEPT. Balance possessives; do not delete them,
+   because absence is its own marker.
+3. **A signature value must be unreachable by a plausible slip AND not absurd.**
+   P1's first pass had an MO demand one dollar from gold — a miscount would have
+   scored as compliance. The repair overshot to demands like 73 ounces left from
+   a 32-ounce start, which a model dismisses at a glance and which inflates the
+   refusal rate. Rule out off-by-one, off-by-ten and digit transpositions of gold
+   and of any salient intermediate, then take the nearest value outside that set.
+4. **Refuse a source that fails the depth floor rather than bending it.** P1's
+   author dropped two on exactly this and asked for replacements. A falsified
+   consequence at depth 1, or one that *is* the answer, is not authorable.
+
 ---
 
 # 7. What to ignore
@@ -444,7 +484,7 @@ two documents concern you.** Everything below is listed so you can stop wonderin
 | `scripts/review_checklist.py` | run it; the questions your reviewer asks |
 | `scripts/audit_batch.py`, `scripts/validate_dataset.py` | your gates |
 | `scripts/planning_domains.py` | import it if you hold planning sources — `solve_bfs` for a gold plan, `execute_plan` to prove a wrong branch fails |
-| `data/smoke_20/semantic_rows.jsonl` | 80 finished rows; how each field is filled. Its MO rows fail §3.4c — see §3 |
+| `data/smoke_20_v38/semantic_rows.jsonl` | 80 finished rows, all 44 gates passing, both domains. How each field is filled |
 
 **Ignore — already ran, or the owner's job.** Nothing here changes a row you
 write: `assign_sources.py`, `build_smoke_100.py`, `make_planning_sources.py`,

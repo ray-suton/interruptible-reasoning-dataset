@@ -14,8 +14,12 @@ Two contributions: the benchmark and evaluation framework, and a linear probe
 separating the two labels from hidden states. The probe is why surface leakage is
 a fatal defect rather than a cosmetic one — see `generation_rules.md` §0.
 
-Active batch root: `data/smoke_100/`. Everything under `archive/` is recoverable
-history and **not** authoritative.
+Active batch root: **`data/smoke_20_v38/`** — 20 sources, 80 rows, prefixes
+generated under the frozen baseline system prompt recorded at
+`registry/baseline_system_prompt.json`. Everything under `archive/` is
+recoverable history and **not** authoritative; that now includes the pre-v38
+batches (`archive/retired_pre_v38_2026-09-13/`), whose composition, planning
+provenance and prefix conditioning all fail v38. See `plan.md`.
 
 Python standard library only for all active checks, validation and generation.
 This is intentional; do not add dependencies.
@@ -40,8 +44,8 @@ This is intentional; do not add dependencies.
 
 ```bash
 ./init.sh                                  # full gate: compile + contract lock
-make validate BATCH_DIR=data/smoke_100     # row-level validation
-make batch-audit BATCH_DIR=data/smoke_100  # batch gates; rank-1 verdict is a gate (v36)
+make validate BATCH_DIR=data/smoke_20_v38     # row-level validation
+make batch-audit BATCH_DIR=data/smoke_20_v38  # batch gates; rank-1 verdict is a gate (v36)
 make embedding-check BATCH_DIR=... VECTORS=<vectors.jsonl>   # separability off embeddings (v36)
 make contract-check
 make contract-lock REASON="why" BY=P1      # amend; both args required

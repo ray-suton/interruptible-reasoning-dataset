@@ -1,0 +1,20 @@
+{
+  "contract_version": 39,
+  "id": "baseline_v38",
+  "invariant": "The SAME prompt must be used at both ends. A prefix is bound to the prompt that produced it; changing this string invalidates every prefix generated under the old one, and with them every row's prefix_relation.",
+  "planned_variations": "Later protocol conditions keep the acknowledgement and change only the instruction (incorporate-by-default, consider-before-continuing, verify-first). Each needs its OWN prefix generation; a condition replayed over another condition's prefixes measures the mismatch, not the instruction.",
+  "reasoning_prefix": "\n\n<update>",
+  "reasoning_suffix": "</update>\n\n",
+  "rule": "generation_rules.md \u00a77.0",
+  "runnable_copy": "../interrupt-lrm/tmp/repro/smoke100_p1_run/prompts/baseline_v38.json",
+  "system_prompt": "During your reasoning, the user may send an update. An update appears as <update>...</update>.",
+  "system_prompt_sha256": "d5a2fbc1a88326699c33d0e0d834b9fb2bf50f00ea735800b577d99ae4c98a42",
+  "update_prefix": "",
+  "update_suffix": "",
+  "used_for": [
+    "prefix generation (screening, --mode initial)",
+    "replay (--mode subsequent_interrupt_update)"
+  ],
+  "why_it_says_nothing_about_handling": "Any instruction about how to treat an update is an instruction about the thing being measured, and it would land differently on the four classes. This prompt states only that updates exist.",
+  "why_there_is_no_decision_line": "The elicited 'Decision: ACCEPT/DO_NOT_ACCEPT' protocol was retired in v38. Under it, 70 of 240 continuations emitted no decision at all -- 68 of them MATH500, 57% of that family -- while finishing normally with a boxed answer. Coverage, not discrimination, retired it."
+}
