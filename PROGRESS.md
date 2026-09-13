@@ -458,11 +458,15 @@ any judge output existed; agreement 45/48, three ADJUDICATE left for the owner.
 
 **`denies_update_exists` rose to 21/240 from v35's 10/240, and the rubric's
 pre-registered explanation is refuted.** The rubric said a non-trivial count means the
-binding is wrong; the 80/80 sha check predates the data and says it is not. The residual
-cause is the injection role — the update lands in the assistant's own turn while the
-system prompt says the *user* sends one — which is a protocol property every future
-condition inherits, and an owner decision. Rates are reported as-measured per the frozen
-rubric; removing denials moves only VM (0.483 → 0.593).
+binding is wrong; the 80/80 sha check predates the data and says it is not. What remains
+is a **hypothesis, not a finding**: the injection role — the update lands in the
+assistant's own turn while the system prompt says the *user* sends one. The injection
+location is observed; the causal attribution is not, and the discriminating test
+(re-inject the same prefixes with `--interrupt_role user`) was not run. One piece of
+evidence favours it over the competing few-shot explanation: denials concentrate in
+math500, 13 of 21, rather than in the planning families. Either way it is a protocol
+property every future condition inherits, and an owner decision. Rates are reported
+as-measured per the frozen rubric; removing denials moves only VM (0.483 → 0.593).
 
 **A both-branch selftest passed and was still wrong.** It covered the plan spellings we
 constructed; the model used three we had not — `\begin{aligned}` with `&` marks,

@@ -27,5 +27,21 @@
   "statement_sha_bad": [],
   "no_source": [],
   "no_trace": []
+ },
+ "harness": {
+  "note": "The code that produced every number in this package. It ran from ../../../../../interrupt-lrm/tmp/repro/smoke20_v38_replay/, which is gitignored \u2014 the v35 harness has the same hole and that is a reason to close it, not a precedent. Copied here verbatim so the run is reconstructible from the repo alone. baseline_v38.json is the prompt the registry names, included so the binding can be re-verified without the other repo.",
+  "sha256": {
+   "README.md": "920d0a86e56bc15b5c0bf3290a48746e9245e76061f7207edf5b9d8200a95bcd",
+   "aggregate_rates_v38.py": "2b1b09ebe75e5ceefe4ccfdf36f14a56e8e53cec0406ff9f749bf51e0326e544",
+   "baseline_v38.json": "a71fa8336d39ec135aa360788abf73f2e443d799cd2a291d3845c8e6faa34b58",
+   "build_replay_input_v38.py": "dcf599041864f4d5e89cd9683c3bf13a1630b751307862e65f83be33badb1d32",
+   "compare_crossgrade.py": "714a47de205ff73aaf8f6199a2b5719822b37cca5fe96a8469eede4895868e0a",
+   "grade_replay_v38.py": "259677315b63776ebd30aa82b1e616462cdced249efe97f2bbf9d27829356628",
+   "judge_v38_par.sh": "3f4b5778661f96fb09af5c71a290b5a3a14a6ca1fb0fb2ebd93480ad3bfffa12",
+   "make_calibration_v38.py": "117cab350eb8654aa741799e1687c293c9d4eb7076feb648e4c67850b6597596",
+   "make_judge_batches_v38.py": "7b35970e35294015eee4b50cbc4b30006f26e15399800df8a8cf56f997df43e7",
+   "run_replay_v38.sh": "c573a1f2b8d72dac05931c47c4538b49c5aec61501d962b17cf48342f4877bc8",
+   "selftest_grade_v38.py": "3dc7624c8cd5a3a30fd2145fe9270443c6d0bec6ce5b55bbb55d3638d0f74bba"
+  }
  }
 }

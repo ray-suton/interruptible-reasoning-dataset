@@ -54,11 +54,12 @@ the user says to consider it, I have to follow it."*
 Every gsm8k row was accepted; four fifths of blocks rows were not. On 5 rows per family
 this is a direction, not an effect size. But the shape is consistent across all four
 classes — the two math families engage more than the two planning families — and it has
-a plausible mechanism in the prompt format rather than in the disposition being
-measured. **PlanBench statements are few-shot: the model frequently reads the update as
-the start of a new `[STATEMENT]` block rather than as an update to the current one.**
-That is a confound between `source_family` and update salience, and any cross-family
-claim from this batch inherits it.
+a candidate mechanism in the prompt format rather than in the disposition being measured:
+PlanBench statements are few-shot, and in several of the continuations read during the
+cross-grade the model treats the update as the start of a new `[STATEMENT]` block rather
+than as an update to the current one. **That observation was not counted**, so it is a
+confound worth naming and not a measured effect. Any cross-family claim from this batch
+inherits it.
 
 ## `denies_update_exists` went UP, and the pre-registered explanation is refuted
 
@@ -72,13 +73,24 @@ source's initial prompt under `baseline_v38` and matched the pinned
 `formatted_input_prompt_sha256` on **80/80**. The prefixes are bound to the prompt they
 are replayed under. The binding is not the cause.
 
-The residual cause is visible in the run input and is a **protocol property, not a
-defect in this batch**: the update is injected into the *assistant's own turn*
-(`--interrupt_role assistant`), so the model encounters `<update>` inside what reads as
-its own reasoning, while the system prompt says *the user* may send one. It resolves the
-mismatch by concluding it wrote the tag itself and no update arrived. v35 had this too,
-so v35's denial count conflated two causes; v38 removed the prompt mismatch and the
-count still rose, which localises the remaining cause to the injection role.
+What remains is a hypothesis, and it should be read as one. What is **observed** is the
+injection location: the update goes into the *assistant's own turn*
+(`--interrupt_role assistant`), so the model meets `<update>` inside what reads as its
+own reasoning, while the system prompt says *the user* may send one — and the denials
+are exactly the model resolving that mismatch by concluding it wrote the tag itself.
+What is **inferred** is that this is the cause. No experiment here tests it. The test
+that would is cheap and is not run: re-inject the same prefixes with
+`--interrupt_role user` and compare.
+
+One piece of evidence does discriminate between the two candidate explanations. If
+denials came from PlanBench's few-shot `[STATEMENT]` format being mistaken for a new
+problem, they should concentrate in the planning families; they do the opposite — 13 of
+21 are math500 and only 1 is plan_logistics. That is evidence for the injection-role
+account over the few-shot account, not proof of either.
+
+Either way this is a **protocol property, not a defect in this batch**: v35 had the same
+injection role, so its denial count conflated two causes; v38 removed the prompt
+mismatch and the count still rose.
 
 Rates are reported as-measured, per the frozen rubric. The denials-removed column moves
 only VM materially (0.483 → 0.593), because denials concentrate in VM and MO (9 each)

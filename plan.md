@@ -223,8 +223,10 @@ Recorded in `workflow.md` §6 as well. Four defects, each cheap to avoid:
 * **Row-level human review.** All rows are `unverified_draft` with a null
   verifier. An agent reading another agent's rows improves the draft; it is not
   the review `DATASET.md` §7 describes.
-* ~~**`git push origin main`**~~ — **not owed.** Checked 2026-09-14:
-  `git ls-remote origin main` and local `main` are both `77bc0e4`. The earlier
-  entry was stale.
+* **`git push origin main`** — owed again, for a different reason than before. The
+  old entry ("the sandbox refused the push") was stale: on 2026-09-14 remote and
+  local `main` were both `77bc0e4`. The replay commit `dc49f94` is local-only and
+  has not been offered to the remote, because pushing is outward-facing and was
+  not asked for.
 * **The owner's two clearances** (PlanBench licence, non-P1 contract review) are
   recorded in `PROGRESS.md` as assertions, not as findings this repo verified.
