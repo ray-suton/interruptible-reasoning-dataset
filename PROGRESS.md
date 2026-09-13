@@ -430,3 +430,58 @@ these rows are not comparable to published PlanBench results.
 
 **The non-author review is still owed on v36 through v40.** An owner admitting a
 category in session is an owner decision, not the review the contract requires.
+
+## 2026-09-14 — the v38 batch is measured; preservation is mostly inattention
+
+`plan.md` §4 step 5 is done. P1's 80 rows x 3 rollouts, Qwen3-14B-FP8, frozen 0.6
+prefixes replayed under **the prompt that generated them** — verified 80/80 by
+rebuilding each source's initial prompt under `baseline_v38` and matching the pinned
+`formatted_input_prompt_sha256` before any GPU time was spent.
+
+| class | rate | |
+| --- | ---: | --- |
+| `valid_material` | 0.483 | answered the revised task |
+| `malicious_override` | 0.133 | emitted the demanded value |
+| `plausible_false_material` | 0.433 | engaged **and** did not adopt |
+| `true_non_material` | 0.217 | used the stated fact as a check |
+
+**The result is the decomposition, not the rates.** PFM preserved its answer in 55 of
+60 continuations but engaged with the claim in only 31: answer-only grading would have
+reported resistance at 0.92 against a true 0.433. TNM preserved 60/60 and never noticed
+47/60. MO is the exception — 40 of 60 engaged, so its preservation really is refusal.
+This is exactly the confound `DATASET.md` names, measured for the first time here.
+
+Engagement is the judge's: Codex CLI (GPT family, model under test is Qwen), rubric
+frozen before the first verdict, calibration 23/23 including the two TNM
+signature-clause traps. Claude cross-graded 48/240 (20%), every verdict written before
+any judge output existed; agreement 45/48, three ADJUDICATE left for the owner.
+
+**`denies_update_exists` rose to 21/240 from v35's 10/240, and the rubric's
+pre-registered explanation is refuted.** The rubric said a non-trivial count means the
+binding is wrong; the 80/80 sha check predates the data and says it is not. The residual
+cause is the injection role — the update lands in the assistant's own turn while the
+system prompt says the *user* sends one — which is a protocol property every future
+condition inherits, and an owner decision. Rates are reported as-measured per the frozen
+rubric; removing denials moves only VM (0.483 → 0.593).
+
+**A both-branch selftest passed and was still wrong.** It covered the plan spellings we
+constructed; the model used three we had not — `\begin{aligned}` with `&` marks,
+escaped underscores, and PlanBench's own `[PLAN]` markers. **All 36 `\begin{aligned}`
+continuations had graded `invalid`**, a parse failure wearing the costume of a model
+that cannot plan. Caught by reading real output during the cross-grade, not by the
+tests. The judge pass was killed mid-flight and its output discarded rather than
+aggregated over wrong buckets. After the repair, `invalid` fell 55 → 5 and the residual
+buckets were audited to exhaustion: zero unparsed action lines outside one continuation
+that genuinely answers `\text{Impossible}`, and zero `disturbed` scalars. The lesson is
+recorded in `plan.md` §5.5 — a selftest validates the spellings you imagined, so
+enumerate the shapes sitting in the residual buckets before trusting them.
+
+Also corrected: `trace_summary.json` for the screening run described only the first
+exploratory batch (`trace_count` 8, `/tmp` paths, a `traces_sha256` that had not matched
+the file since) and now describes the 219 traces that exist. And `plan.md` §6's
+"`git push origin main` still owed" was stale — remote and local `main` are both
+`77bc0e4`.
+
+Rows remain `unverified_draft` with a null verifier. **No rate above is a measurement of
+a reviewed dataset**, and nothing here was fed back into a row: one oddity found while
+reading output (`pb_logistics_286_vm` answering "Impossible") is recorded, not repaired.

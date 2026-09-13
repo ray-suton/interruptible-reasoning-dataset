@@ -1,17 +1,22 @@
 {
-  "model_name": "Qwen/Qwen3-14B-FP8",
-  "requested_interrupt_position": 0.6,
-  "run_config": {},
-  "sidecar": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/input/sidecar_stage1.json",
-  "sidecar_sha256": "7f6a8a8241cd23d82918138b6ebb0dda60e36ec958325935cdf9b39ad72f4627",
-  "solvability_counts": {
-    "solved": 6,
-    "unsolved": 2
+  "by_family": {
+    "gsm8k": 42,
+    "math500": 41,
+    "plan_blocks": 39,
+    "plan_logistics": 97
   },
-  "stage1_output": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/out/output_0.jsonl",
-  "stage1_output_sha256": "5366c39bb849e10181c8dca3e5f5384b0ccb1c582b3804c7f8b483b2956e18d3",
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "note": "This run package is the MERGE of the v38 screening batches; prefixes were appended as each batch landed. The previous summary described only the first exploratory batch (trace_count 8) and pointed at /tmp scratchpad paths that no longer exist, so its traces_sha256 had not matched the file since. Regenerated 2026-09-14 from the file that exists. Planning solvability here is by EXECUTION (scripts/planbench_domain.py), not by the trace exporter's string comparator, which reports every planning source unsolved.",
+  "prompt": "baseline_v38",
+  "prompt_system_prompt_sha256": "d5a2fbc1a88326699c33d0e0d834b9fb2bf50f00ea735800b577d99ae4c98a42",
+  "regenerated": "2026-09-14",
+  "requested_interrupt_position": 0.6,
+  "run_mode": "--mode initial --interrupt_pos 0.6 --task math --problem_field_name original_problem",
+  "solvability_counts": {
+    "solved": 71,
+    "unsolved": 148
+  },
   "status": "complete",
-  "trace_count": 8,
-  "traces_path": "/tmp/claude-3430/-home-rui-gao-Desktop-Interruptible-Reasoning-interruptible-reasoning-dataset/3b2c1b44-d892-4772-b20f-6db4f903fda8/scratchpad/v38_screen/traces/traces.jsonl",
-  "traces_sha256": "88d5be31588e224e07f00b74d03f9d5765ad42e5613434e51df5c14799f195e5"
+  "trace_count": 219,
+  "traces_sha256": "af2f08c727cb2251cf928c64d1c18a99a8ec9daa0daae14fc7a4f048000a95fe"
 }

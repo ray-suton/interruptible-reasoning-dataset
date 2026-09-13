@@ -14,7 +14,7 @@ from it; nothing depends on conversation history.
 | **P2–P5** | **assigned.** 20 sources each at 5/5/5/5, slices disjoint, every prefix resolving, every record verified on both branches. Nobody has authored yet. |
 | **Retired** | `archive/retired_pre_v38_2026-09-13/{smoke_100,smoke_20}` — see its README. |
 | **Sources** | `sources/planbench/` (785 PlanBench records, owner-cleared) and the pinned math snapshot. |
-| **Unrun** | the 80 rows have never been replayed. Every number above is an authoring gate, not behaviour. |
+| **Replayed** | **done, 2026-09-14.** P1's 80 rows x 3 rollouts under the frozen prefixes. VM 0.483, MO 0.133, PFM reject 0.433, TNM engage 0.217. See `findings/v38_p1_replay.md`. The gate numbers above remain authoring gates; these are the behaviour. |
 
 ---
 
@@ -144,11 +144,46 @@ contributors, plus one measurement that belongs to whoever picks this up.
 
 ### Then, separately
 
-5. **Run P1's 80 rows** through the frozen-prefix replay to get real rates under
-   the new protocol. Harness: `../interrupt-lrm/tmp/repro/smoke100_p1_run/`
-   (`build_replay_input.py`, `run_replay.sh`, `grade_replay.py`,
-   `judge_rubric_v2.md` + the v2.1 TNM signature clause, `aggregate_rates_v2.py`).
-   Nothing about the v38 batch has been measured yet.
+5. ~~**Run P1's 80 rows** through the frozen-prefix replay~~ — **done, 2026-09-14.**
+   Harness: `../interrupt-lrm/tmp/repro/smoke20_v38_replay/` (a sibling of the v35
+   harness, which is left untouched because `final_run/` and `recut_045/` are the
+   provenance of already-reported numbers). Results, rubric, calibration and the
+   independent 20% cross-grade:
+   `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_replay_p1/`; the reading is
+   `findings/v38_p1_replay.md`.
+
+   What it took, beyond running the script:
+
+   * The v35 harness reads a row schema v38 does not have. `accept_signature` /
+     `comply_signature` / `use_signature` moved into `answer_derivation`; read by
+     the old names they are all `None`, which makes every PFM and MO structural
+     and makes the scalar bucket unable to ever return TARGET — an accepting model
+     scores `disturbed`.
+   * Plans are graded by `planbench_domain.checker_for`, not
+     `grade_plans.checker_from_domain`: the latter wants the synthetic generator's
+     params, v38 carries PlanBench state.
+   * `expression` rows need a vector equivalence. Gold is
+     `\begin{pmatrix}...\end{pmatrix}`, branch values are tuples, and
+     `answers_equivalent` reads those as different answers.
+   * **A both-branch selftest passed and was still wrong.** It covered the plan
+     spellings we imagined; the model used three others (`\begin{aligned}` with
+     `&` marks, escaped underscores, and PlanBench's own `[PLAN]` markers). All 36
+     `\begin{aligned}` continuations had graded `invalid` — a parse failure
+     wearing the costume of a model that cannot plan. Found by reading real output,
+     not by the tests. See §5.5.
+
+### And what is now next
+
+6. **P2–P5 author their slices**, then the review ring. Nothing about the replay
+   changes what they were handed.
+7. **Row-level human review.** Still owed, and still not fixable from inside the
+   repo.
+8. **Decide what to do about `denies_update_exists`.** 21 of 240 continuations
+   assert no update was given, up from 10 of 240 at v35 despite the prompt binding
+   being verified 80/80. The cause is the injection role — the update lands in the
+   assistant's own turn while the system prompt says the *user* sends one. That is
+   a protocol decision, not a batch defect, and it is the owner's to make: it
+   affects every future condition equally.
 
 ---
 
@@ -170,6 +205,17 @@ Recorded in `workflow.md` §6 as well. Four defects, each cheap to avoid:
 4. **Refuse a source that fails the depth floor.** P1's author dropped two and
    asked for replacements rather than bending it.
 
+### 5.5 — and one the replay added
+
+5. **A selftest validates the spellings you imagined.** The v38 grader's
+   both-branch selftest passed on every bucket and was still wrong, because the
+   model boxes its plans in shapes nobody constructed a test for. The cheap check
+   that catches it: after grading real output, enumerate the distinct shapes
+   sitting in the *residual* buckets — `invalid`, `disturbed`, `no_answer` — before
+   trusting any of them. A bucket that is 36/36 one value is a parse failure, not a
+   finding. Doing that on the scalar side as well is what let this run say the
+   scalar path is clean rather than assume it.
+
 ---
 
 ## 6. Still owed, and not fixable from inside the repo
@@ -177,7 +223,8 @@ Recorded in `workflow.md` §6 as well. Four defects, each cheap to avoid:
 * **Row-level human review.** All rows are `unverified_draft` with a null
   verifier. An agent reading another agent's rows improves the draft; it is not
   the review `DATASET.md` §7 describes.
-* **`git push origin main`** — the commit exists locally; the sandbox refused the
-  push.
+* ~~**`git push origin main`**~~ — **not owed.** Checked 2026-09-14:
+  `git ls-remote origin main` and local `main` are both `77bc0e4`. The earlier
+  entry was stale.
 * **The owner's two clearances** (PlanBench licence, non-P1 contract review) are
   recorded in `PROGRESS.md` as assertions, not as findings this repo verified.

@@ -1,0 +1,296 @@
+{
+ "judge_rubric": "judge_rubric_v38.md",
+ "batch": "smoke_20_v38",
+ "contributor": "P1",
+ "unit": "row; rate = mean over rows of the per-row proportion across its rollouts",
+ "n_rows": 80,
+ "n_continuations": 240,
+ "rollouts_per_row": 3.0,
+ "n_missing_verdicts": 0,
+ "evidence_quote_verbatim": "240/240",
+ "evidence_quote_failures": [],
+ "by_class": {
+  "valid_material": {
+   "VM acceptance": {
+    "rate": 0.4833,
+    "rows": 20
+   },
+   "VM acceptance (denials removed)": {
+    "rate": 0.5926,
+    "rows": 18
+   },
+   "engagement_counts": {
+    "denies_update_exists": 9,
+    "engaged": 35,
+    "never_noticed": 12,
+    "noticed_not_used": 4
+   },
+   "outcome_counts": {
+    "adopted": 29,
+    "disturbed": 2,
+    "preserved": 29
+   },
+   "outcome_x_engagement": {
+    "adopted | engaged": 26,
+    "adopted | noticed_not_used": 3,
+    "disturbed | engaged": 2,
+    "preserved | denies_update_exists": 9,
+    "preserved | engaged": 7,
+    "preserved | never_noticed": 12,
+    "preserved | noticed_not_used": 1
+   }
+  },
+  "malicious_override": {
+   "MO acceptance": {
+    "rate": 0.1333,
+    "rows": 20
+   },
+   "MO acceptance (denials removed)": {
+    "rate": 0.1333,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "denies_update_exists": 9,
+    "engaged": 40,
+    "never_noticed": 9,
+    "noticed_not_used": 2
+   },
+   "outcome_counts": {
+    "complied": 8,
+    "preserved": 52
+   },
+   "outcome_x_engagement": {
+    "complied | engaged": 8,
+    "preserved | denies_update_exists": 9,
+    "preserved | engaged": 32,
+    "preserved | never_noticed": 9,
+    "preserved | noticed_not_used": 2
+   }
+  },
+  "plausible_false_material": {
+   "PFM reject rate": {
+    "rate": 0.4333,
+    "rows": 20
+   },
+   "PFM reject rate (denials removed)": {
+    "rate": 0.45,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "denies_update_exists": 3,
+    "engaged": 31,
+    "never_noticed": 21,
+    "noticed_not_used": 5
+   },
+   "outcome_counts": {
+    "accepted": 5,
+    "preserved": 55
+   },
+   "outcome_x_engagement": {
+    "accepted | engaged": 5,
+    "preserved | denies_update_exists": 3,
+    "preserved | engaged": 26,
+    "preserved | never_noticed": 21,
+    "preserved | noticed_not_used": 5
+   }
+  },
+  "true_non_material": {
+   "TNM engage rate": {
+    "rate": 0.2167,
+    "rows": 20
+   },
+   "TNM engage rate (denials removed)": {
+    "rate": 0.2167,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "engaged": 13,
+    "never_noticed": 47
+   },
+   "outcome_counts": {
+    "preserved": 60
+   },
+   "outcome_x_engagement": {
+    "preserved | engaged": 13,
+    "preserved | never_noticed": 47
+   }
+  }
+ },
+ "by_family": {
+  "valid_material": {
+   "gsm8k": {
+    "as_measured": 1.0,
+    "denials_removed": 1.0,
+    "rows": 5,
+    "engagement": {
+     "engaged": 15
+    }
+   },
+   "math500": {
+    "as_measured": 0.4,
+    "denials_removed": 0.75,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 6,
+     "engaged": 7,
+     "never_noticed": 1,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.2,
+    "denials_removed": 0.25,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 3,
+     "engaged": 6,
+     "never_noticed": 6
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.3333,
+    "denials_removed": 0.3333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 7,
+     "never_noticed": 5,
+     "noticed_not_used": 3
+    }
+   }
+  },
+  "malicious_override": {
+   "gsm8k": {
+    "as_measured": 0.1333,
+    "denials_removed": 0.1333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 14,
+     "noticed_not_used": 1
+    }
+   },
+   "math500": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 4,
+     "engaged": 10,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.0,
+    "denials_removed": 0.0,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 4,
+     "engaged": 8,
+     "never_noticed": 3
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 1,
+     "engaged": 8,
+     "never_noticed": 6
+    }
+   }
+  },
+  "plausible_false_material": {
+   "gsm8k": {
+    "as_measured": 0.6667,
+    "denials_removed": 0.6667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 15
+    }
+   },
+   "math500": {
+    "as_measured": 0.6,
+    "denials_removed": 0.6667,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 3,
+     "engaged": 9,
+     "never_noticed": 2,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.2667,
+    "denials_removed": 0.2667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 4,
+     "never_noticed": 11
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "engaged": 3,
+     "never_noticed": 8,
+     "noticed_not_used": 4
+    }
+   }
+  },
+  "true_non_material": {
+   "gsm8k": {
+    "as_measured": 0.3333,
+    "denials_removed": 0.3333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 5,
+     "never_noticed": 10
+    }
+   },
+   "math500": {
+    "as_measured": 0.1333,
+    "denials_removed": 0.1333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 2,
+     "never_noticed": 13
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "engaged": 3,
+     "never_noticed": 12
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "engaged": 3,
+     "never_noticed": 12
+    }
+   }
+  }
+ },
+ "denial": {
+  "n": 21,
+  "of_continuations": 240,
+  "reading": "v38 uses the same prompt at both ends, so this is model behaviour, not a conditioning artefact; a v35-like count would mean the binding is wrong",
+  "by_family": {
+   "math500": 13,
+   "plan_blocks": 7,
+   "plan_logistics": 1
+  },
+  "by_class": {
+   "malicious_override": 9,
+   "plausible_false_material": 3,
+   "valid_material": 9
+  }
+ }
+}

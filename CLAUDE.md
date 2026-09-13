@@ -92,30 +92,43 @@ model that detected and rejected the update and by one that never engaged.
 Resolve engagement — never-noticed / detected-and-rejected / accepted — before
 computing any rate.
 
-**...and every grader currently in this repo is answer-only.** That is not a
-contradiction to fix by weakening the rule; it is the state of the work. We are
-in the data-generation stage, and the evaluation half is unbuilt:
+**Every grader in `scripts/` is answer-only, and that is still true.** The
+evaluation half lives in the replay harness, not here:
 
 - `export_model_traces.py` decides `no_update_solved` by comparing the boxed
   answer to the pinned one. It **stores** the reasoning trace; it does not grade
-  on it.
-- `grade_plans.py` does the same with plan equivalence on the boxed plan.
-- **No engagement grader exists here**, so never-noticed cannot presently be
-  distinguished from detected-and-rejected. One exists in the other repo at
-  `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`, from earlier
-  probe work; it is unreferenced by this repo and predates this contract.
-- **No LLM judge exists.** `converged_paper_plan.md` specifies one (never the
-  model under test or its family, frozen with everything else). Every "judge" in
-  `scripts/` is the English word in a comment.
+  on it. `grade_plans.py` does the same with plan equivalence on the boxed plan.
+  So `no_update_solved` means **screening** — did the model solve the base task —
+  and nothing more. Never read it as an engagement or acceptance measure.
+- **The engagement grader and the LLM judge now exist**, as of 2026-09-14, in
+  `../interrupt-lrm/tmp/repro/smoke20_v38_replay/`: a deterministic outcome layer
+  (`grade_replay_v38.py`, answers and plan execution), a frozen judge rubric
+  (`judge_rubric_v38.md`, Codex CLI — GPT family, never the model under test's
+  family), and the aggregator that will not compute a rate without an engagement
+  verdict (`aggregate_rates_v38.py`). The first results are in
+  `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_replay_p1/`.
+- An older engagement grader sits at
+  `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`; it predates
+  this contract and is not the one to use.
 
-So `no_update_solved` means **screening** — did the model solve the base task —
-and nothing more. Do not read it as an engagement or acceptance measure, and do
-not compute any acceptance rate from the tooling as it stands.
+**Still compute no acceptance rate from `scripts/` alone.** Resolve engagement
+first, with the harness above; the v38 run is what that rule costs when it is
+obeyed — PFM looked 0.92 resistant on answers and measured 0.433.
 
 **Validate every predicate on both branches.** A predicate exercised only on the
 outcomes that happen to occur confirms whatever the current belief is. This has
 produced both a false positive and a false negative here, and most recently an
 answer extractor that silently returned plausible wrong values.
+
+**And a both-branch selftest is still not enough on its own.** The v38 replay
+grader passed one on every bucket and was wrong anyway: it covered the plan
+spellings we constructed, and the model used three we had not (`\begin{aligned}`
+with `&` marks, escaped underscores, PlanBench's own `[PLAN]` markers). All 36
+affected continuations graded `invalid` — a parse failure that reads exactly like
+a model that cannot plan. After grading real output, **enumerate the distinct
+shapes sitting in the residual buckets** (`invalid`, `disturbed`, `no_answer`)
+before trusting any of them. A residual bucket that is 36/36 one value is a bug,
+not a finding.
 
 ## Governance
 
