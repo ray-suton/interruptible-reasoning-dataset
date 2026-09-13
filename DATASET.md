@@ -159,7 +159,7 @@ happened.
 4. Author rows against the screened sources.
 5. Run the validator and the batch audit.
 6. Hand the batch to an independent reviewer.
-7. Resolve `FIX` items — in the generator, not the emitted rows.
+7. Resolve `FIX` items in the rows, then re-run the solver and both gates.
 8. Open the PR once the review status is settled.
 
 ## 9. Branches

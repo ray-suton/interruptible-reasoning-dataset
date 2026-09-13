@@ -40,8 +40,9 @@ This is intentional; do not add dependencies.
 
 ```bash
 ./init.sh                                  # full gate: compile + contract lock
-make validate BATCH_DIR=data/smoke_20      # row-level validation
-make batch-audit BATCH_DIR=data/smoke_20   # batch gates
+make validate BATCH_DIR=data/smoke_100     # row-level validation
+make batch-audit BATCH_DIR=data/smoke_100  # batch gates; rank-1 verdict is a gate (v36)
+make embedding-check BATCH_DIR=... VECTORS=<vectors.jsonl>   # separability off embeddings (v36)
 make contract-check
 make contract-lock REASON="why" BY=P1      # amend; both args required
 ```
@@ -127,5 +128,9 @@ answer extractor that silently returned plausible wrong values.
 - **Primary-test rows are one-shot.** No construction until the
   model/prompt/layer/threshold/judge freeze is recorded; no retuning after. That
   freeze is a separate, later event from the contract lock.
-- Fixes go into the generator, never into emitted rows — hand-edited JSONL drifts
-  and silently reverts.
+- **Rows are the artefact; generator files are retired (v36).** Author a quartet
+  at a time, never a class at a time — a class authored as a block develops a
+  house style, and house style is what a probe reads. Fix the row, then re-run
+  your solver and the gates after every edit. Numbers are still **computed, not
+  typed**: a wrong `accept_signature` scores a complying model as resistant and
+  nothing downstream disagrees.

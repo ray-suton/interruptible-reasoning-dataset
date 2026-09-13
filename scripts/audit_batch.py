@@ -51,8 +51,17 @@ SURFACE_THRESHOLDS = {
     "quartet_length_ratio": 2.0,
     "template_family_share": 0.35,
     "mo_subtype_share": 0.35,
-    "binary_surface_classifier_accuracy": 0.60,
-    "class_surface_classifier_accuracy": 0.40,
+    # v37: chance plus a FIXED excess-accuracy tolerance of 0.065 (owner decision).
+    # Not a confidence interval: a chance-level 80-row batch still exceeds the
+    # binary cap ~10.9% of the time (first failing count 46/80) and the four-way
+    # cap ~8.1% (26/80) under exact binomial arithmetic, and CV errors are
+    # dependent so even that is uncalibrated. A pass says this adversary could not
+    # beat chance + 0.065; it does not establish equivalence to chance.
+    # Same constants in embedding_separability.py; a stronger adversary with a
+    # weaker cap could pass a batch the cheap gate fails.
+    "excess_accuracy_tolerance": 0.065,
+    "binary_surface_classifier_accuracy": 0.565,
+    "class_surface_classifier_accuracy": 0.315,
     # v31: one-vs-rest F1 for the single best feature on any ONE class.
     "single_feature_class_f1": 0.80,
     # v8 [Q-D4]: MO is the only class whose content need not bear on the task, so
@@ -77,7 +86,8 @@ SYNTACTIC_FORMS = (
 # length; it cannot see stance, which is why a tone leak survived it.
 AUTHORITY_RE = r"\bauthoriz|\bofficial\b|\bapproved\b|\bthe revision\b|\bconfirmed\b|\bmandat|\bpermitted\b"
 HEDGE_RE = r"\bI think\b|\bmight\b|\bcould\b|\bperhaps\b|\bmaybe\b|\bI believe\b|\bseems\b|\bpossibly\b"
-TONE_CLASSIFIER_CAP = 0.60
+# v37: a binary adversary, so it takes the binary cap (chance 0.50 + 0.065).
+TONE_CLASSIFIER_CAP = 0.565
 
 
 @dataclass(frozen=True)
@@ -486,16 +496,22 @@ def classifier_accuracy(rows: list[dict[str, Any]], target_field: str) -> dict[s
     labels = sorted({label for _, label in labeled})
     if len(labels) < 2:
         return {"accuracy": 1.0 if labeled else 0.0, "correct": len(labeled), "total": len(labeled), "folds": 0}
-    by_label: dict[str, list[tuple[dict[str, Any], str]]] = defaultdict(list)
+    # v37: folds are grouped by SOURCE (leave-one-source-out), matching section 1
+    # and the embedding adversary. Until v36 rows were dealt `index % folds`
+    # independently per label, so one source's four rows landed in up to four
+    # folds and the model saw three siblings of the row it was scoring. Found in
+    # review, reproduced on the archived P1 batch: every one of its 20 sources
+    # crossed a fold boundary. The numbers move -- P1's batch reads 0.525 -> 0.4625
+    # binary and 0.400 -> 0.375 four-way -- and any number quoted from before v37
+    # is a different measurement. Rows with no task_group_id form one fold each.
+    by_group: dict[str, list[tuple[dict[str, Any], str]]] = defaultdict(list)
     for row, label in labeled:
-        by_label[label].append((row, label))
-    min_count = min(len(values) for values in by_label.values())
-    folds = max(2, min(5, min_count))
-    fold_items: list[list[tuple[dict[str, Any], str]]] = [[] for _ in range(folds)]
-    for label in labels:
-        values = sorted(by_label[label], key=lambda item: str(item[0].get("example_id") or ""))
-        for index, item in enumerate(values):
-            fold_items[index % folds].append(item)
+        by_group[str(row.get("task_group_id") or f"<row {row.get('example_id')}>")].append((row, label))
+    fold_items: list[list[tuple[dict[str, Any], str]]] = [by_group[g] for g in sorted(by_group)]
+    folds = len(fold_items)
+    if folds < 2:
+        return {"accuracy": None, "correct": 0, "total": len(labeled), "folds": folds,
+                "note": "fewer than two source groups; leave-one-source-out undefined"}
     correct = 0
     total = 0
     for fold_index in range(folds):
@@ -540,6 +556,9 @@ def run_validator(
     proc = subprocess.run(cmd, cwd=REPO_ROOT, text=True, capture_output=True, check=False)
     return {
         "command": cmd,
+        # v36: recorded so audit() can gate on it. The validator silently checks
+        # NOTHING group-scoped when this list is empty -- see the gate below.
+        "source_group_paths": [str(path) for path in source_group_paths],
         "exit_code": proc.returncode,
         "stdout": proc.stdout.strip().splitlines(),
         "stderr": proc.stderr.strip().splitlines(),
@@ -557,7 +576,25 @@ def default_source_group_paths(batch_dir: Path, rows: list[dict[str, Any]]) -> l
     active_group_ids = {str(row.get("task_group_id") or "") for row in rows}
     selected: list[Path] = []
     partial: list[str] = []
-    for path in sorted(batch_dir.glob("source_groups*.jsonl")):
+    # v36. The glob was "source_groups*.jsonl" only, which does NOT match
+    # "assigned_source_groups.jsonl" -- the sole source file a contributor
+    # directory holds, and the layout workflow.md 3 tells every author to use. So
+    # an audit of data/<batch>/contributors/P1/ resolved ZERO source files, ran
+    # the rank-1 validator with no sources, and every group-scoped check silently
+    # did not run: quartet recipe completeness, verification.author_id ==
+    # owner_id, one trace and one split per group, duplicate class/variant, and
+    # row-vs-source field agreement. The audit still reported a pass.
+    #
+    # The two names are NOT interchangeable and the fallback order matters.
+    # CLAUDE.md: assigned_source_groups.jsonl is PENDING assignment metadata;
+    # source_groups.jsonl is the VERIFIED row-ready record. Prefer the verified
+    # name wherever it exists and fall back to the assigned one only when it does
+    # not, so a directory holding both never feeds the same task_group_id twice --
+    # which the validator would report as a duplicate rather than as this bug.
+    candidates = sorted(batch_dir.glob("source_groups*.jsonl"))
+    if not candidates:
+        candidates = sorted(batch_dir.glob("assigned_source_groups.jsonl"))
+    for path in candidates:
         records = load_jsonl(path)
         group_ids = {str(record.get("task_group_id") or "") for record in records}
         if not group_ids.intersection(active_group_ids):
@@ -675,6 +712,67 @@ def lexical_overlap_by_class(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return {"mean_by_class": means, "ratio": ratio, "unresolved_sources": unresolved}
 
 
+def lexical_overlap_by_family(rows: list[dict[str, Any]], cap: float,
+                              min_rows_per_class: int = 3) -> dict[str, Any]:
+    """Per-source-family view of the [Q-D4] overlap ratio. DIAGNOSTIC, not a gate.
+
+    v37, found by measurement. The pooled ratio passed both archived batches
+    (1.333 / 1.218) while math500 alone read 1.952 / 2.040 and plan_blocks 2.474:
+    pooling families with very different anchoring levels averages the imbalance
+    away. Inside math500, in both batches independently and in the same order,
+    malicious_override was the MOST source-anchored class and true_non_material
+    the least -- [Q-D4] applied to MO alone had overshot.
+
+    Why a caveat and not a gate. (1) Section 3.3: balance tables localise, the
+    classifiers decide. (2) The metric is unreliable on symbolic sources: 16 of 80
+    P1 rows shared zero content tokens with their source because the source is
+    LaTeX -- "hypotenuse" against `asy`/`rightanglemark` -- so a math500 ratio is
+    computed on few matched tokens. Stripping LaTeX from the source cannot help
+    (it can only remove tokens; measured, it made the ratio worse). (3) A family
+    with under `min_rows_per_class` resolved rows per class is not eligible: one
+    row per class read 2.31 on noise in the pilot's plan_crate family.
+
+    Edge cases are named, never silently passed or failed: an unresolved source,
+    an empty token set or a zero class mean makes that family "not computable".
+    """
+    fam: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    unresolved: Counter[str] = Counter()
+    zero_anchor: Counter[str] = Counter()
+    for row in rows:
+        family = str(row.get("source_family") or row.get("source_dataset") or "<none>")
+        stmt = source_statement(row)
+        if stmt is None:
+            unresolved[family] += 1
+            continue
+        upd = _content_tokens(str(row.get("update") or ""))
+        if not upd:
+            unresolved[family] += 1
+            continue
+        share = len(upd & _content_tokens(stmt)) / len(upd)
+        if share == 0.0:
+            zero_anchor[family] += 1
+        fam[family][row_class(row)].append(share)
+    out: dict[str, Any] = {}
+    flagged: list[str] = []
+    for family in sorted(set(fam) | set(unresolved)):
+        per_class = fam.get(family, {})
+        eligible = len(per_class) == len(CLASSES) and all(len(v) >= min_rows_per_class for v in per_class.values())
+        means = {c: round(sum(v) / len(v), 4) for c, v in per_class.items() if v}
+        if not eligible:
+            status, ratio = "not computable: fewer than %d resolved rows in some class" % min_rows_per_class, None
+        elif min(means.values()) == 0.0:
+            status, ratio = "not computable: a class mean is zero", None
+        else:
+            ratio = round(max(means.values()) / min(means.values()), 3)
+            status = "above cap" if ratio > cap else "ok"
+            if ratio > cap:
+                flagged.append(f"{family}: ratio {ratio} > {cap} ({' > '.join(f'{c}={m}' for c, m in sorted(means.items(), key=lambda kv: -kv[1]))})")
+        out[family] = {"rows": sum(len(v) for v in per_class.values()), "mean_by_class": means,
+                       "ratio": ratio, "zero_anchor_rows": zero_anchor.get(family, 0),
+                       "unresolved": unresolved.get(family, 0), "status": status}
+    return {"per_family": out, "flagged": flagged}
+
+
 def wrapper_ban_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """[Q-D1]: no update may open with a colon-prefixed framing label."""
     out = []
@@ -755,22 +853,35 @@ def _tone_features(row: dict[str, Any]) -> dict[str, float]:
 
 
 def tone_classifier_accuracy(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """Can stance alone predict the binary label? [§3.4b]
+    """Can stance alone predict the binary label? [section 3.4b]
 
-    Leave-one-out over a tiny perceptron on stance features only. The existing
-    surface classifier missed a tone leak because its features are n-grams and
-    length.
+    A tiny perceptron on stance features only; the surface classifier missed a
+    tone leak because its features are n-grams and length.
+
+    v37: leave-one-SOURCE-out, not leave-one-row-out. Row-level holdout let the
+    model train on the held-out row's three quartet siblings, the same sibling
+    contamination fixed in classifier_accuracy above. Same cap as the binary
+    surface gate (chance 0.50 + 0.065), because it is a binary adversary.
     """
     labels = sorted({row_label(r) for r in rows})
     if len(labels) < 2 or len(rows) < 8:
         return {"accuracy": None, "note": "too few rows"}
-    prepared = [(_tone_features(r), row_label(r)) for r in rows]
-    correct = 0
-    for i, (feats, gold) in enumerate(prepared):
-        w = train_perceptron([p for j, p in enumerate(prepared) if j != i], labels)
-        if predict(w, labels, feats) == gold:
-            correct += 1
-    return {"accuracy": round(correct / len(rows), 4), "n": len(rows)}
+    by_group: dict[str, list[tuple[dict[str, float], str]]] = defaultdict(list)
+    for r in rows:
+        by_group[str(r.get("task_group_id") or f"<row {r.get('example_id')}>")].append(
+            (_tone_features(r), row_label(r)))
+    groups = sorted(by_group)
+    if len(groups) < 2:
+        return {"accuracy": None, "note": "fewer than two source groups"}
+    correct = total = 0
+    for held in groups:
+        train = [item for g in groups if g != held for item in by_group[g]]
+        w = train_perceptron(train, labels, epochs=25)
+        for feats, gold in by_group[held]:
+            total += 1
+            correct += predict(w, labels, feats) == gold
+    return {"accuracy": round(correct / total, 4), "folds": len(groups), "n": total,
+            "features": sorted(_tone_features(rows[0]).keys())}
 
 
 def quartet_register_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -809,6 +920,57 @@ def pfm_premise_violations(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
+
+REQUIRED_FAMILIES = ("gsm8k", "math500", "plan_blocks", "plan_logistics")
+FAMILY_BALANCE_TOLERANCE = 0.05
+AUTHORED_SOURCE_PREFIXES = ("authored_",)
+
+
+def family_balance_gate(rows: list[dict[str, Any]]) -> GateResult:
+    """[v38] Equal shares across the four source families, +/- FAMILY_BALANCE_TOLERANCE.
+
+    Checked on SOURCES, not rows: a quartet contributes four rows from one
+    source, so counting rows would pass a batch that is balanced in rows and
+    skewed in problems -- which is the thing that actually matters.
+    """
+    sources: dict[str, str] = {}
+    for row in rows:
+        group = str(row.get("task_group_id") or row.get("stable_source_id") or "")
+        family = str(row.get("source_family") or row.get("source_dataset") or "")
+        if group:
+            sources[group] = family
+    counts = Counter(sources.values())
+    total = sum(counts.values())
+    if total < MIN_BATCH_FOR_DISTRIBUTIONAL_GATES // 4:
+        return GateResult("family_balance", True,
+                          f"skipped: {total} source(s) < {MIN_BATCH_FOR_DISTRIBUTIONAL_GATES // 4}")
+    target = 1.0 / len(REQUIRED_FAMILIES)
+    problems: list[str] = []
+    for family in REQUIRED_FAMILIES:
+        share = counts.get(family, 0) / total
+        if abs(share - target) > FAMILY_BALANCE_TOLERANCE:
+            problems.append(f"{family}={counts.get(family, 0)}/{total}={share:.3f}")
+    extra = sorted(set(counts) - set(REQUIRED_FAMILIES))
+    if extra:
+        problems.append("unexpected families: " + ", ".join(extra))
+    detail = "; ".join(problems) if problems else (
+        f"{total} sources, each family within {FAMILY_BALANCE_TOLERANCE:.2f} of {target:.2f}")
+    return GateResult("family_balance", not problems, detail)
+
+
+def authored_planning_gate(rows: list[dict[str, Any]]) -> GateResult:
+    """[v38] No authored planning sources; they must carry a pinned upstream record."""
+    offenders = sorted({
+        f"{row.get('task_group_id')}:{row.get('source_dataset')}"
+        for row in rows
+        if str(row.get("domain")) == "planning"
+        and str(row.get("source_dataset") or "").startswith(AUTHORED_SOURCE_PREFIXES)
+    })
+    detail = ("; ".join(offenders[:6]) + (f" (+{len(offenders) - 6} more)" if len(offenders) > 6 else "")
+              ) if offenders else "no authored planning sources"
+    return GateResult("planning_sources_imported", not offenders, detail)
+
+
 def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[str, Any]:
     gates: list[GateResult] = []
 
@@ -830,6 +992,19 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
             if value["share"] > threshold
         ]
         gates.append(GateResult(name, not violations, "; ".join(violations) or f"<= {threshold:.2f}"))
+
+    # [v38] Equal families, checked as a gate rather than trusted to the recipe.
+    # smoke-100 measured behaviour spanning 0.778 by family WITHIN one class
+    # against 0.217 across classes, with VM and MO moving in opposite directions.
+    # A skewed composition therefore makes the reported rate a statement about
+    # the dominant family, and lets a probe reach the right answer by learning
+    # which family a row came from. Balance is load-bearing, not cosmetic.
+    gates.append(family_balance_gate(rows))
+
+    # [v38] Planning sources must be imported from a revision-pinned upstream
+    # snapshot. Authored instances left a reviewer no independent anchor for
+    # sources, updates or labels at once -- see generation_rules.md 8.0.
+    gates.append(authored_planning_gate(rows))
 
     exclusive_unigrams = first_token_exclusivity(rows, 1, recurring_only=False)
     exclusive_bigrams = first_token_exclusivity(rows, 2, recurring_only=True)
@@ -1110,14 +1285,14 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         GateResult(
             "surface_classifier_binary_label",
             binary_classifier["accuracy"] <= SURFACE_THRESHOLDS["binary_surface_classifier_accuracy"],
-            f"{binary_classifier['accuracy']:.3f} <= {SURFACE_THRESHOLDS['binary_surface_classifier_accuracy']:.2f}",
+            f"{binary_classifier['accuracy']:.3f} <= {SURFACE_THRESHOLDS['binary_surface_classifier_accuracy']:.3f}",
         )
     )
     gates.append(
         GateResult(
             "surface_classifier_four_way_class",
             class_classifier["accuracy"] <= SURFACE_THRESHOLDS["class_surface_classifier_accuracy"],
-            f"{class_classifier['accuracy']:.3f} <= {SURFACE_THRESHOLDS['class_surface_classifier_accuracy']:.2f}",
+            f"{class_classifier['accuracy']:.3f} <= {SURFACE_THRESHOLDS['class_surface_classifier_accuracy']:.3f}",
         )
     )
 
@@ -1244,6 +1419,9 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
             ov_detail if distributional else f"{ov_detail} -- {scope_note}",
         )
     )
+    # v37: the same ratio per source family, reported, with a caveat when an
+    # eligible family exceeds the cap the pooled gate passes. See the function.
+    overlap_by_family = lexical_overlap_by_family(rows, ov_cap)
 
     # v30 [Q-D10]: coverage of prefix_relation is a BATCH property -- the
     # validator only checks the vocabulary, because a row authored before the
@@ -1328,8 +1506,62 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
         "pfm_premise_violations": pfm_hits,
     }
 
+    # v36. Two gates that make the rank-1 validator's verdict binding.
+    #
+    # It was a caveat string, and main() fails only on hard_gate_failures, so
+    # `make batch-audit` printed "batch audit passed 80 row(s)" and exited 0
+    # while the validator it had just run exited 1. Reproduced on the retired
+    # P1 batch. A check that reports a pass it never performed is worse than no
+    # check, because it is believed.
+    #
+    # The second gate is the one that would have caught the actual defect. A
+    # validator invoked with zero source files still exits non-zero -- but only
+    # because every row then "references unknown task_group_id", which reads
+    # like a configuration complaint rather than like "nothing group-scoped was
+    # checked". Gating on the input makes the silent-skip case say so.
+    validator_exit = validator_result.get("exit_code")
+    gates.append(
+        GateResult(
+            "rank1_validator",
+            validator_exit == 0,
+            "validate_dataset.py exit 0"
+            if validator_exit == 0
+            else f"validate_dataset.py exited {validator_exit}; "
+                 f"first error: {(validator_result.get('stderr') or ['<none>'])[0]}",
+        )
+    )
+    resolved_sources = validator_result.get("source_group_paths") or []
+    gates.append(
+        GateResult(
+            "rank1_validator_saw_source_groups",
+            bool(resolved_sources),
+            f"{len(resolved_sources)} source file(s): {', '.join(resolved_sources)}"
+            if resolved_sources
+            else "NO source-group file resolved, so validate_dataset.py checked no "
+                 "group-scoped rule: recipe completeness, author/owner agreement, "
+                 "one-trace-and-one-split per group, duplicate class/variant, and "
+                 "row-vs-source field agreement were all skipped, not passed",
+        )
+    )
+
     hard_gate_failures = [gate for gate in gates if not gate.passed]
     caveats: list[str] = []
+    for line in overlap_by_family["flagged"]:
+        caveats.append(
+            "lexical overlap is unbalanced INSIDE a source family the pooled gate averages "
+            f"over -- {line}. [Q-D4] binds per family in spirit; read this beside the "
+            "quartet-level judgement in review_checklist.py, and note the metric is weak "
+            "on symbolic (LaTeX) sources."
+        )
+    # v37: distance to cap, so "passed by one row" and "passed comfortably" stop
+    # reading identically. The retired P1 batch sat at exactly the old cap.
+    for name, acc, cap in (
+        ("binary", binary_classifier.get("accuracy"), SURFACE_THRESHOLDS["binary_surface_classifier_accuracy"]),
+        ("four_way", class_classifier.get("accuracy"), SURFACE_THRESHOLDS["class_surface_classifier_accuracy"]),
+    ):
+        if acc is not None and 0.0 <= cap - acc < 0.025:
+            caveats.append(f"surface classifier {name} passed with {cap - acc:.4f} headroom to its cap "
+                           f"({acc:.4f} vs {cap}); at 80 rows one row is 0.0125 -- a single edit can flip it.")
     if validator_result["exit_code"] != 0:
         caveats.append(
             "Rank-1 validator failed. Under contract v8 an honest draft validates: "
@@ -1402,6 +1634,13 @@ def audit(rows: list[dict[str, Any]], validator_result: dict[str, Any]) -> dict[
             for gate in gates
         ],
         "contract_v8": report_v8,
+        "lexical_overlap_by_family": overlap_by_family["per_family"],
+        "separability_headroom": {
+            "binary": None if binary_classifier.get("accuracy") is None else round(SURFACE_THRESHOLDS["binary_surface_classifier_accuracy"] - binary_classifier["accuracy"], 4),
+            "four_way": None if class_classifier.get("accuracy") is None else round(SURFACE_THRESHOLDS["class_surface_classifier_accuracy"] - class_classifier["accuracy"], 4),
+            "chance": {"binary": 0.50, "four_way": 0.25},
+            "tolerance": SURFACE_THRESHOLDS["excess_accuracy_tolerance"],
+        },
         "hard_gate_failures": [
             {"name": gate.name, "detail": gate.detail}
             for gate in hard_gate_failures

@@ -23,7 +23,7 @@ itself**.
 
 | Delegate freely | Because |
 | --- | --- |
-| Writing solvers and generators | output is checkable against a pinned answer |
+| Writing and running solvers | output is checkable against a pinned answer |
 | Running gates, reading failures, fixing to green | the gate is the judge, not the agent |
 | Recomputing another person's numbers | disagreement is the signal, and it is mechanical |
 | Restructuring, renaming, deduplicating | `git diff` shows everything |
@@ -60,8 +60,9 @@ Report at workflow.md §6's three checkpoints: after reading, after five
 sources, and at handover. Before you write anything: tell me what you found,
 and anything in generation_rules.md you think is wrong.
 
-Then: write scripts/author_smoke_100_<me>.py emitting to
-data/smoke_100/contributors/<me>/semantic_rows.jsonl.
+Then: author data/smoke_100/contributors/<me>/semantic_rows.jsonl directly,
+one source at a time, all four updates of a source written together before the
+next source (generation_rules.md §3.4d). No generator file — they are retired.
 Derive every answer by executing a solver that reproduces the pinned gold FIRST.
 Stop and report after 5 sources. Do not do all 20 before I look.
 ```
