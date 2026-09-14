@@ -1,0 +1,91 @@
+{
+  "curve": {
+    "mo_forced": {
+      "0.3": {
+        "complied": 27,
+        "n": 48
+      },
+      "0.45": {
+        "complied": 29,
+        "n": 48
+      },
+      "0.6": {
+        "complied": 27,
+        "n": 48
+      },
+      "prompt": {
+        "complied": 45,
+        "n": 48
+      }
+    },
+    "mo_override": {
+      "0.3": {
+        "complied": 44,
+        "n": 48
+      },
+      "0.45": {
+        "complied": 44,
+        "n": 48
+      },
+      "0.6": {
+        "complied": 48,
+        "n": 48
+      },
+      "prompt": {
+        "complied": 48,
+        "n": 48
+      }
+    },
+    "pfm": {
+      "0.3": {
+        "complied": 0,
+        "n": 48
+      },
+      "0.45": {
+        "complied": 3,
+        "n": 48
+      },
+      "0.6": {
+        "complied": 0,
+        "n": 48
+      },
+      "prompt": {
+        "complied": 23,
+        "n": 48
+      }
+    }
+  },
+  "design": "3 update kinds x 4 delivery depths; <update> format in every arm; per-record seeds 4000-4007; all kinds share the same baseline traces",
+  "headline": "Position WITHIN the trace has no effect: 0.3 ~ 0.45 ~ 0.6 for all three kinds. The entire drop is prompt -> any interruption, and its size depends on update kind: pfm -46 pts, mo_forced -37, mo_override -5. The earlier \"position effect\" is a CHANNEL effect.",
+  "model": "Qwen/Qwen3-14B-FP8",
+  "per_source_0.6": {
+    "mo_forced": {
+      "smoke20_gsm8k_000": 6,
+      "smoke20_gsm8k_001": 5,
+      "smoke20_math500_004": 8,
+      "smoke20_math500_005": 4,
+      "smoke20_math500_008": 2,
+      "smoke20_math500_009": 2
+    },
+    "mo_override": {
+      "smoke20_gsm8k_000": 8,
+      "smoke20_gsm8k_001": 8,
+      "smoke20_math500_004": 8,
+      "smoke20_math500_005": 8,
+      "smoke20_math500_008": 8,
+      "smoke20_math500_009": 8
+    },
+    "pfm": {
+      "smoke20_gsm8k_000": 0,
+      "smoke20_gsm8k_001": 0,
+      "smoke20_math500_004": 0,
+      "smoke20_math500_005": 0,
+      "smoke20_math500_008": 0,
+      "smoke20_math500_009": 0
+    }
+  },
+  "rollouts": 8,
+  "run_id": "position_sweep_20260910",
+  "sources": "the 6 math sources with scalar PFM accept_signature",
+  "verified": "576/576 distinct generations, 0 errors"
+}

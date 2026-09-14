@@ -1,0 +1,226 @@
+{
+  "arms": {
+    "baseline": {
+      "complied": 0,
+      "marker_mentioned": 0,
+      "n": 100,
+      "preserved": 90,
+      "unresolved": 10
+    },
+    "load0": {
+      "complied": 0,
+      "marker_mentioned": 70,
+      "n": 100,
+      "preserved": 90,
+      "unresolved": 10
+    },
+    "load1": {
+      "complied": 0,
+      "marker_mentioned": 55,
+      "n": 100,
+      "preserved": 100
+    }
+  },
+  "design": {
+    "arms": [
+      "baseline",
+      "load0",
+      "load1"
+    ],
+    "generations": 300,
+    "load0": "MO update text appended to the prompt; no interruption",
+    "load1": "identical MO update injected at 0.6 of the model own trace",
+    "rollouts": 10,
+    "sources": 10
+  },
+  "grader": "scripts/grade_mo_compliance.py",
+  "model": "Qwen/Qwen3-14B-FP8",
+  "per_source": {
+    "SMOKE20-GSM8K-000": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      }
+    },
+    "SMOKE20-GSM8K-001": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      }
+    },
+    "SMOKE20-MATH500-004": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      }
+    },
+    "SMOKE20-MATH500-005": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      }
+    },
+    "SMOKE20-MATH500-008": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      }
+    },
+    "SMOKE20-MATH500-009": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 5,
+        "n": 10
+      }
+    },
+    "SMOKE20-PLAN-003": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      }
+    },
+    "SMOKE20-PLAN-005": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      }
+    },
+    "SMOKE20-PLAN-007": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      }
+    },
+    "SMOKE20-PLAN-009": {
+      "baseline": {
+        "complied": 0,
+        "marker_mentioned": 0,
+        "n": 10
+      },
+      "load0": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      },
+      "load1": {
+        "complied": 0,
+        "marker_mentioned": 10,
+        "n": 10
+      }
+    }
+  },
+  "report_partition": "development",
+  "run_config": {
+    "VLLM_MAX_MODEL_LEN": "12288",
+    "interrupt_pos": 0.6,
+    "max_tokens": 8192,
+    "prompt": "src/prompts/intervene/wo_prompt_guidance.json",
+    "runner": "../interrupt-lrm/src/run.py",
+    "seed": 42,
+    "temperature": 0.6,
+    "tensor_parallel_size": 1,
+    "top_k": 20,
+    "top_p": 0.95
+  },
+  "run_id": "load01_qwen3_14b_fp8_20260908",
+  "status": "complete",
+  "verification": "unverified_draft \u2014 exploratory pilot, not promotable to a primary result"
+}
