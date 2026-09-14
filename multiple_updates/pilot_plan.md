@@ -12,6 +12,15 @@ run that precedes the main experiment, not a study in its own right.
 same attack delivered in the prompt, and its vulnerability rises with the number of
 prior interruptions.
 
+> **Status 2026-09-14 — the first half of this claim is refuted by the pilots this
+> plan commissioned.** Mid-reasoning delivery is *protective* in every cell
+> measured (PFM −46 pts, MO forced-answer −37, MO direct-override −5, VM −8), and
+> position within the trace has no effect at all. The second half — dose-response
+> in the number of prior interruptions — has never been tested: no pilot delivered
+> two updates to one trace, and the harness has no round loop. The claim is left
+> in its original wording above so the record shows what was predicted. See
+> `v38_replay_crosscheck.md` and `mo_findings_and_changes.md` §1.3–1.4.
+
 That is a dose-response claim about **interruption load**, so it needs power, a
 baseline, and a measured outcome. Right now it has none of the three:
 
