@@ -262,6 +262,13 @@ def validate_registry_shape(record: dict[str, Any], path: str, errors: Validatio
         errors.add(path, "robustness report partitions must use split primary_test")
     if record.get("domain") == "math" and record.get("source_year") is None:
         errors.add(path, "math records must have a concrete source_year")
+    # [v38] Planning sources must be imported from a revision-pinned upstream
+    # snapshot, on the same terms as math. Authoring the sources as well as the
+    # updates and the labels left a reviewer no independent anchor for any of
+    # the three -- generation_rules.md 8.0. Checked per row, not only per batch,
+    # so a single authored row cannot enter through a validator-only path.
+    if record.get("domain") == "planning" and str(record.get("source_dataset") or "").startswith("authored_"):
+        errors.add(path, "planning source_dataset must be a pinned upstream import, not authored_* [v38]")
 
 
 def validate_source_shape(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
@@ -304,6 +311,27 @@ def validate_source_shape(record: dict[str, Any], path: str, errors: ValidationE
     verification = record.get("verification")
     if isinstance(verification, dict) and verification.get("status") not in VERIFICATION_STATUSES:
         errors.add(path, f"source verification.status must be one of {', '.join(VERIFICATION_STATUSES)}")
+    # [v40 §8.0a] A derived planning source is admissible, but only as a RECORDED
+    # mechanical transformation -- prose alone is inert. A reviewer must be able to
+    # reconstruct the instance from the upstream record plus the rule, and that is
+    # exactly what derived_from holds.
+    if record.get("source_admission_status") == "derived_from_pinned":
+        d = record.get("derived_from")
+        if not isinstance(d, dict):
+            errors.add(path, "derived_from_pinned requires a derived_from block [v40 §8.0a]")
+        else:
+            for field in ("upstream_instance_id", "upstream_statement_sha256", "upstream_gold_sha256",
+                          "rule", "goal_kept", "goal_dropped", "gold_prefix_actions"):
+                if field not in d:
+                    errors.add(path, f"derived_from missing required field '{field}' [v40 §8.0a]")
+            for field in ("upstream_statement_sha256", "upstream_gold_sha256"):
+                if field in d and not has_sha256(d[field]):
+                    errors.add(path, f"derived_from.{field} must be 64 lowercase hex characters")
+            if not d.get("goal_dropped"):
+                errors.add(path, "derived_from.goal_dropped must be non-empty: a derivation that drops "
+                                 "nothing is the upstream instance and belongs as imported [v40 §8.0a]")
+
+
 
 
 def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErrorCollector) -> None:
@@ -379,6 +407,13 @@ def validate_row_shape(record: dict[str, Any], path: str, errors: ValidationErro
         errors.add(path, "robustness report partitions must use split primary_test")
     if record.get("domain") == "math" and record.get("source_year") is None:
         errors.add(path, "math records must have a concrete source_year")
+    # [v38] Planning sources must be imported from a revision-pinned upstream
+    # snapshot, on the same terms as math. Authoring the sources as well as the
+    # updates and the labels left a reviewer no independent anchor for any of
+    # the three -- generation_rules.md 8.0. Checked per row, not only per batch,
+    # so a single authored row cannot enter through a validator-only path.
+    if record.get("domain") == "planning" and str(record.get("source_dataset") or "").startswith("authored_"):
+        errors.add(path, "planning source_dataset must be a pinned upstream import, not authored_* [v38]")
     trace = record.get("trace")
     if isinstance(trace, dict):
         require_fields(trace, f"{path}.trace", ("full_trace", *EXPECTED_TRACE_FIELDS), errors)

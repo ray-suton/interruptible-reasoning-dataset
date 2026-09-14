@@ -1,0 +1,31 @@
+{
+ "estimand": "frozen_prefix_replay",
+ "batch": "smoke_20_v38",
+ "contributor": "P1",
+ "cut_source": "pinned_0.6_screening_cut",
+ "model": "Qwen/Qwen3-14B-FP8",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "n_rows": 80,
+ "n_sources": 20,
+ "n_records": 240,
+ "prompt_file": "tmp/repro/smoke20_v38_replay/../smoke100_p1_run/prompts/explicit_label.json",
+ "prompt_file_sha256": "48e6bbcc01fe020e979b9063c5ec10eb2ad8ddb5e4dfbd79b18dc413d749e788",
+ "system_prompt_sha256": "65313fd2f7bc986d496d68d7f28627105ce6ee5ef5aa46455ac9ab56ff166d7f",
+ "prefix_generated_under": "baseline_v38.json",
+ "replayed_under": "During your reasoning process, the user may provide updates in the format: <update>...</update>. When an update arrives,",
+ "same_prompt_both_ends": false,
+ "rows_sha256": "a458a0b2e817ed0eb7dbe2f12ef6219471261c47dbe3f7e890609821f84c9517",
+ "checks": {
+  "prefix_sha_ok": 80,
+  "prefix_sha_bad": [],
+  "screen_prompt_sha_ok": 80,
+  "screen_prompt_sha_bad": [],
+  "statement_sha_bad": [],
+  "no_source": [],
+  "no_trace": []
+ }
+}

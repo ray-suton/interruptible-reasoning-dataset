@@ -75,15 +75,25 @@ Contract: `generation_rules.md`. Design rationale: `DATASET.md`. Procedure:
 | Smoke | 80 | 320 | Show the rules produce scoreable, non-leaking rows at scale; four contributors × 20 originals |
 | Full | 200 | 800 | The Stage 1 dataset |
 
-**Composition.** 70% math, 30% planning; within math 30% GSM8K, 70% MATH500.
-Code is deferred pending a source-admission decision. One matched quartet per
+**Composition [v38, Q-D12].** Equal across four families: per contributor 10
+math (5 GSM8K + 5 MATH500) and 10 planning (5 BlocksWorld + 5 Logistics). This
+replaces 70/30. Behaviour varies more across families *within* one class (up to
+0.778) than across classes (0.217), and in opposite directions for VM and MO, so
+a skewed composition makes the headline rate a statement about the dominant
+family and lets a probe read family instead of label. Code is deferred pending a
+source-admission decision. One matched quartet per
 source — VM, TNM, PFM, MO — required rather than default, because the probe needs
 within-source contrast.
 
-**Sources.** Math from the revision-pinned upstream snapshot. Planning from
-generated PDDL (BlocksWorld and Logistics) at controlled difficulty, which is the
-decisive property: because instances are generated, difficulty can be dialled
-until base-task solvability holds. Mystery-BlocksWorld is an optional robustness
+**Sources [v38, Q-D12].** Math from the revision-pinned upstream snapshot.
+**Planning from a revision-pinned upstream import on the same terms — generated
+in-house instances are no longer admissible.** The controlled-difficulty argument
+for generating them was real, and it was outweighed: with sources, updates and
+labels all authored by one party a reviewer has no independent anchor for any of
+the three. Difficulty now has to be handled by selecting imported instances that
+fit the token budget and pass both screening criteria, which is strictly harder
+and is the price of the provenance. **No planning row is authorable until the
+import exists.** Mystery-BlocksWorld is an optional robustness
 stratum — obfuscated predicates strip world-knowledge priors, isolating update
 handling from semantic pattern-matching.
 

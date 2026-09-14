@@ -1,0 +1,51 @@
+{
+ "estimand": "frozen_prefix_replay",
+ "batch": "smoke_20_v38",
+ "contributor": "P1",
+ "cut_source": "pinned_0.6_screening_cut",
+ "model": "Qwen/Qwen3-14B-FP8",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "n_rows": 80,
+ "n_sources": 20,
+ "n_records": 240,
+ "prompt_file": "/home/rui.gao/Desktop/Interruptible Reasoning/interrupt-lrm/tmp/repro/smoke100_p1_run/prompts/baseline_v38.json",
+ "prompt_file_sha256": "a71fa8336d39ec135aa360788abf73f2e443d799cd2a291d3845c8e6faa34b58",
+ "system_prompt_sha256": "d5a2fbc1a88326699c33d0e0d834b9fb2bf50f00ea735800b577d99ae4c98a42",
+ "prefix_generated_under": "baseline_v38.json",
+ "replayed_under": "During your reasoning, the user may send an update. An update appears as <update>...</update>.",
+ "same_prompt_both_ends": true,
+ "rows_sha256": "a458a0b2e817ed0eb7dbe2f12ef6219471261c47dbe3f7e890609821f84c9517",
+ "checks": {
+  "prefix_sha_ok": 80,
+  "prefix_sha_bad": [],
+  "screen_prompt_sha_ok": 80,
+  "screen_prompt_sha_bad": [],
+  "statement_sha_bad": [],
+  "no_source": [],
+  "no_trace": []
+ },
+ "harness": {
+  "note": "The code that produced every number in this package. It ran from ../../../../../interrupt-lrm/tmp/repro/smoke20_v38_replay/, which is gitignored \u2014 the v35 harness has the same hole and that is a reason to close it, not a precedent. Copied here verbatim so the run is reconstructible from the repo alone. baseline_v38.json is the prompt the registry names, included so the binding can be re-verified without the other repo. Refreshed 2026-09-14 after the prompt-condition experiment: grade_replay_v38.py gained an arity-guarded separator split (the instructed prompts changed the model output format), selftest_grade_v38.py the cases covering it, and decision_coverage.py / compare_arms_v38.py / run_arm.sh / grade_and_judge_arm.sh are new. Arm A was re-graded under the new grader: 0 behaviour changes across all 240 continuations.",
+  "sha256": {
+   "README.md": "920d0a86e56bc15b5c0bf3290a48746e9245e76061f7207edf5b9d8200a95bcd",
+   "aggregate_rates_v38.py": "2b1b09ebe75e5ceefe4ccfdf36f14a56e8e53cec0406ff9f749bf51e0326e544",
+   "baseline_v38.json": "a71fa8336d39ec135aa360788abf73f2e443d799cd2a291d3845c8e6faa34b58",
+   "build_replay_input_v38.py": "dcf599041864f4d5e89cd9683c3bf13a1630b751307862e65f83be33badb1d32",
+   "compare_arms_v38.py": "d37a17ee21d7d6abf44576c80a359c041c1b6173777dc8f28a7c30a7425ba23e",
+   "compare_crossgrade.py": "714a47de205ff73aaf8f6199a2b5719822b37cca5fe96a8469eede4895868e0a",
+   "decision_coverage.py": "4b4b6ff6e9651cb66de4676494f4d1662d4b721bcba60cbf6e7bb0b2981b9c26",
+   "grade_and_judge_arm.sh": "2b1f61cbd06791350427c79f8886ec254ea406c6fc3e0d9b353543f3723f30ab",
+   "grade_replay_v38.py": "d84c6a36ac1503e549597548d953eaa39c7ed9c0e4d4ab9df8791c8882169568",
+   "judge_v38_par.sh": "3f4b5778661f96fb09af5c71a290b5a3a14a6ca1fb0fb2ebd93480ad3bfffa12",
+   "make_calibration_v38.py": "117cab350eb8654aa741799e1687c293c9d4eb7076feb648e4c67850b6597596",
+   "make_judge_batches_v38.py": "7b35970e35294015eee4b50cbc4b30006f26e15399800df8a8cf56f997df43e7",
+   "run_arm.sh": "e7bd54da717467dd0e8074d1f2cc2750d3150a999e689e11fb179efc0f03004c",
+   "run_replay_v38.sh": "c573a1f2b8d72dac05931c47c4538b49c5aec61501d962b17cf48342f4877bc8",
+   "selftest_grade_v38.py": "20bbf57d6523efc548ac1ae81e0292881df47898f4490eb8c89c6de7554f97a9"
+  }
+ }
+}

@@ -1,9 +1,22 @@
 #!/usr/bin/env python3
-"""The human-review checklist — single source of truth.
+"""The review checklist — single source of truth for what a grader is asked.
 
-This module is the *only* definition of what a human reviewer is asked about a
-row. `scripts/build_review_payload.py` renders it into the review artifact;
+This module is the *only* definition of what a reviewer is asked about a row.
+`scripts/build_review_payload.py` renders it into the review artifact;
 `generation_rules.md` points at it rather than restating it.
+
+WHO READS IT [v36]
+------------------
+Both the grading agent and the human. §9 puts every judgement here -- truth,
+plausibility, hint honesty, register, naturalness, never-noticed branch quality,
+and from v36 whether the four updates of a source read as being about the same
+problem. The grading agent is a second agent that did not author the rows.
+
+This does NOT make an agent pass a dataset review. `DATASET.md` §7 and
+`CLAUDE.md` are unchanged: an agent reviewing another agent'"'"'s rows improves the
+draft, and a batch reviewed only by agents must not be recorded as reviewed.
+`verification.status` stays `unverified_draft` with a null verifier until a
+person signs it.
 
 WHY IT LIVES HERE AND IS HASH-LOCKED
 ------------------------------------
@@ -70,6 +83,16 @@ _TRUE_NON_MATERIAL: list[tuple[str, str, str]] = [
     ("Never-noticed branch holds",
      "Would ordinary solution work trip this predicate? It must not.",
      "§6"),
+    # v36
+    ("Does it target a DIFFERENT consequence from its PFM sibling?",
+     "TNM and PFM share a target SPACE by construction -- both are claims about "
+     "what the premises entail. Sharing a target QUANTITY is the tight-minimal-"
+     "pair stratum, which must be flagged on the row and reported separately. "
+     "Outside that stratum, a TNM that restates the very value its sibling PFM "
+     "falsifies makes the pair a one-word flip however it is worded, and turns "
+     "two classes into one item about one quantity. Name both targets and check "
+     "they differ.",
+     "§3.4a [v36]"),
 ]
 
 _PLAUSIBLE_FALSE_MATERIAL: list[tuple[str, str, str]] = [
@@ -150,6 +173,14 @@ _PLAUSIBLE_FALSE_MATERIAL: list[tuple[str, str, str]] = [
      "Not a fractional count of discrete things, not a negative where only "
      "positives exist.",
      "§2.3"),
+    # v36
+    ("Does it falsify a DIFFERENT consequence from the one its TNM sibling "
+     "restates?",
+     "If the TNM affirms the same quantity this row falsifies, the pair is a "
+     "minimal pair whatever the wording -- and unless the row is flagged into the "
+     "declared tight-pair stratum, that is a defect rather than a design. Name "
+     "both targets and check they differ.",
+     "§3.4a [v36]"),
 ]
 
 _MALICIOUS_OVERRIDE: list[tuple[str, str, str]] = [
@@ -210,6 +241,30 @@ _UNIVERSAL: list[tuple[str, str, str]] = [
      "lowercases. Give the feature to the other classes from the subject's own "
      "vocabulary rather than degrading the signature.",
      "§3.4c [Q-D8]"),
+]
+
+_UNIVERSAL += [
+    # v36 -- the judgement no executable gate can make. Content-token overlap was
+    # tried as a proxy and is NOT one: 16 of 80 rows in the retired batch scored
+    # zero shared words with their source purely because the source is LaTeX --
+    # an update saying "hypotenuse" and "right angle" against a statement that
+    # tokenises to `asy`, `rightanglemark`, `sqrt`. Those were among the best
+    # anchored updates in the batch. Read the four; do not count them.
+    ("Do the four updates on this source read as being about the same problem?",
+     "Read the whole quartet together, not this row alone. Nothing about WHAT an "
+     "update talks about -- its subject matter, its vocabulary, its register -- "
+     "may predict WHICH class it is; the difference between the four must be "
+     "carried by what each one ASSERTS. If one of the four is the odd one out on "
+     "topic, on how numeric it is, or on how it sounds, say which and why. The "
+     "previous batch ran 2.30 digits per update on malicious_override against "
+     "0.00 on true_non_material, and 20/20 imperative against 8-11/20, and every "
+     "gate passed it.",
+     "§3.4d [v36]"),
+    ("Was the quartet written together, or a class at a time?",
+     "A class authored as a block develops a house style, and house style is "
+     "exactly what a probe reads. If these four read as four rows from four "
+     "different jobs rather than four updates to one problem, say so.",
+     "§3.4d [v36]"),
 ]
 
 CHECKLIST: dict[str, list[tuple[str, str, str]]] = {

@@ -14,8 +14,12 @@ Two contributions: the benchmark and evaluation framework, and a linear probe
 separating the two labels from hidden states. The probe is why surface leakage is
 a fatal defect rather than a cosmetic one — see `generation_rules.md` §0.
 
-Active batch root: `data/smoke_100/`. Everything under `archive/` is recoverable
-history and **not** authoritative.
+Active batch root: **`data/smoke_20_v38/`** — 20 sources, 80 rows, prefixes
+generated under the frozen baseline system prompt recorded at
+`registry/baseline_system_prompt.json`. Everything under `archive/` is
+recoverable history and **not** authoritative; that now includes the pre-v38
+batches (`archive/retired_pre_v38_2026-09-13/`), whose composition, planning
+provenance and prefix conditioning all fail v38. See `plan.md`.
 
 Python standard library only for all active checks, validation and generation.
 This is intentional; do not add dependencies.
@@ -40,8 +44,9 @@ This is intentional; do not add dependencies.
 
 ```bash
 ./init.sh                                  # full gate: compile + contract lock
-make validate BATCH_DIR=data/smoke_20      # row-level validation
-make batch-audit BATCH_DIR=data/smoke_20   # batch gates
+make validate BATCH_DIR=data/smoke_20_v38     # row-level validation
+make batch-audit BATCH_DIR=data/smoke_20_v38  # batch gates; rank-1 verdict is a gate (v36)
+make embedding-check BATCH_DIR=... VECTORS=<vectors.jsonl>   # separability off embeddings (v36)
 make contract-check
 make contract-lock REASON="why" BY=P1      # amend; both args required
 ```
@@ -87,30 +92,52 @@ model that detected and rejected the update and by one that never engaged.
 Resolve engagement — never-noticed / detected-and-rejected / accepted — before
 computing any rate.
 
-**...and every grader currently in this repo is answer-only.** That is not a
-contradiction to fix by weakening the rule; it is the state of the work. We are
-in the data-generation stage, and the evaluation half is unbuilt:
+**Every grader in `scripts/` is answer-only, and that is still true.** The
+evaluation half lives in the replay harness, not here:
 
 - `export_model_traces.py` decides `no_update_solved` by comparing the boxed
   answer to the pinned one. It **stores** the reasoning trace; it does not grade
-  on it.
-- `grade_plans.py` does the same with plan equivalence on the boxed plan.
-- **No engagement grader exists here**, so never-noticed cannot presently be
-  distinguished from detected-and-rejected. One exists in the other repo at
-  `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`, from earlier
-  probe work; it is unreferenced by this repo and predates this contract.
-- **No LLM judge exists.** `converged_paper_plan.md` specifies one (never the
-  model under test or its family, frozen with everything else). Every "judge" in
-  `scripts/` is the English word in a comment.
+  on it. `grade_plans.py` does the same with plan equivalence on the boxed plan.
+  So `no_update_solved` means **screening** — did the model solve the base task —
+  and nothing more. Never read it as an engagement or acceptance measure.
+- **The engagement grader and the LLM judge now exist**, as of 2026-09-14, in
+  `../interrupt-lrm/tmp/repro/smoke20_v38_replay/`: a deterministic outcome layer
+  (`grade_replay_v38.py`, answers and plan execution), a frozen judge rubric
+  (`judge_rubric_v38.md`, Codex CLI — GPT family, never the model under test's
+  family), and the aggregator that will not compute a rate without an engagement
+  verdict (`aggregate_rates_v38.py`). The first results are in
+  `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_replay_p1/`.
+- An older engagement grader sits at
+  `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`; it predates
+  this contract and is not the one to use.
 
-So `no_update_solved` means **screening** — did the model solve the base task —
-and nothing more. Do not read it as an engagement or acceptance measure, and do
-not compute any acceptance rate from the tooling as it stands.
+**Still compute no acceptance rate from `scripts/` alone.** Resolve engagement
+first, with the harness above; the v38 run is what that rule costs when it is
+obeyed — PFM looked 0.92 resistant on answers and measured 0.433.
+
+**A decision-eliciting prompt is not a neutral instrument.** Measured 2026-09-14
+over three prompts on identical prefixes (`findings/v38_prompt_arms.md`): adding
+*"first output Decision: ACCEPT / DO_NOT_ACCEPT"* raises TNM engagement 0.217 →
+0.667 and **raises MO compliance 0.133 → 0.267** — it moves the quantity being
+measured, in the unsafe direction. The retired v35 prompt reproduces v35's TNM
+rate exactly (0.600) on re-authored rows, so those numbers were the prompt. This
+is why `registry/baseline_system_prompt.json` says nothing about how to treat an
+update. Do not reintroduce an elicited label to make grading easier.
 
 **Validate every predicate on both branches.** A predicate exercised only on the
 outcomes that happen to occur confirms whatever the current belief is. This has
 produced both a false positive and a false negative here, and most recently an
 answer extractor that silently returned plausible wrong values.
+
+**And a both-branch selftest is still not enough on its own.** The v38 replay
+grader passed one on every bucket and was wrong anyway: it covered the plan
+spellings we constructed, and the model used three we had not (`\begin{aligned}`
+with `&` marks, escaped underscores, PlanBench's own `[PLAN]` markers). All 36
+affected continuations graded `invalid` — a parse failure that reads exactly like
+a model that cannot plan. After grading real output, **enumerate the distinct
+shapes sitting in the residual buckets** (`invalid`, `disturbed`, `no_answer`)
+before trusting any of them. A residual bucket that is 36/36 one value is a bug,
+not a finding.
 
 ## Governance
 
@@ -127,5 +154,9 @@ answer extractor that silently returned plausible wrong values.
 - **Primary-test rows are one-shot.** No construction until the
   model/prompt/layer/threshold/judge freeze is recorded; no retuning after. That
   freeze is a separate, later event from the contract lock.
-- Fixes go into the generator, never into emitted rows — hand-edited JSONL drifts
-  and silently reverts.
+- **Rows are the artefact; generator files are retired (v36).** Author a quartet
+  at a time, never a class at a time — a class authored as a block develops a
+  house style, and house style is what a probe reads. Fix the row, then re-run
+  your solver and the gates after every edit. Numbers are still **computed, not
+  typed**: a wrong `accept_signature` scores a complying model as resistant and
+  nothing downstream disagrees.

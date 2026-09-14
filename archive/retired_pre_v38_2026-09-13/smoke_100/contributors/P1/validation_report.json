@@ -1,0 +1,1112 @@
+{
+  "caveats": [
+    "lexical overlap is unbalanced INSIDE a source family the pooled gate averages over -- math500: ratio 1.916 > 1.5 (valid_material=0.1454 > malicious_override=0.0981 > true_non_material=0.0787 > plausible_false_material=0.0759). [Q-D4] binds per family in spirit; read this beside the quartet-level judgement in review_checklist.py, and note the metric is weak on symbolic (LaTeX) sources.",
+    "lexical overlap is unbalanced INSIDE a source family the pooled gate averages over -- plan_blocks: ratio 3.316 > 1.5 (malicious_override=0.319 > plausible_false_material=0.1781 > valid_material=0.1545 > true_non_material=0.0962). [Q-D4] binds per family in spirit; read this beside the quartet-level judgement in review_checklist.py, and note the metric is weak on symbolic (LaTeX) sources.",
+    "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
+  ],
+  "class_counts": {
+    "malicious_override": 20,
+    "plausible_false_material": 20,
+    "true_non_material": 20,
+    "valid_material": 20
+  },
+  "contract_v8": {
+    "lexical_overlap": {
+      "mean_by_class": {
+        "malicious_override": 0.2014,
+        "plausible_false_material": 0.1764,
+        "true_non_material": 0.1788,
+        "valid_material": 0.2076
+      },
+      "ratio": 1.1768707482993197,
+      "unresolved_sources": 0
+    },
+    "no_framing_wrapper": {
+      "violations": []
+    },
+    "pfm_premise_violations": [],
+    "quartet_epistemic_register": [],
+    "self_narration": [],
+    "syntactic_form": {
+      "class_exclusive": [],
+      "distinct_forms": 6,
+      "max_share_of_a_class": 0.25,
+      "missing_field": [],
+      "unknown_forms": []
+    },
+    "syntactic_form_label_balance": {
+      "offenders": [],
+      "per_form": {
+        "appositive": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 1
+        },
+        "bare_declarative": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "deviation": 0
+        },
+        "correction_with_negation": {
+          "ACCEPT": 7,
+          "DO_NOT_ACCEPT": 7,
+          "deviation": 0
+        },
+        "hedged": {
+          "ACCEPT": 10,
+          "DO_NOT_ACCEPT": 10,
+          "deviation": 0
+        },
+        "imperative": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 0
+        },
+        "mid_sentence_aside": {
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 5,
+          "deviation": 1
+        }
+      }
+    },
+    "tone_only_classifier": {
+      "accuracy": 0.5,
+      "features": [
+        "authority",
+        "bias",
+        "first_person",
+        "hedge",
+        "hedged_form",
+        "imperative_form",
+        "question"
+      ],
+      "folds": 20,
+      "n": 80
+    }
+  },
+  "domain_counts": {
+    "math": 56,
+    "planning": 24
+  },
+  "embedded_trace_row_count": 0,
+  "first_bigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "after reduction": 1,
+        "at the": 1,
+        "before moving": 1,
+        "conjugate arguments": 1,
+        "cookie and": 1,
+        "ferry flights": 1,
+        "for the": 1,
+        "given adam's": 1,
+        "ground transport": 1,
+        "it seems": 1,
+        "maybe a": 1,
+        "perhaps an": 1,
+        "perhaps the": 1,
+        "possibly the": 1,
+        "remainders for": 1,
+        "route record": 1,
+        "since charlie's": 1,
+        "ten thousand": 1,
+        "the printed": 1,
+        "with 50": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "with 50",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "a cookie": 1,
+        "actually i": 1,
+        "angles of": 1,
+        "block c": 1,
+        "cancellation is": 1,
+        "conversion puts": 1,
+        "d remains": 1,
+        "delivery by": 1,
+        "divisibility and": 1,
+        "for adam's": 1,
+        "given charlie's": 1,
+        "loading pkg1": 1,
+        "maybe the": 1,
+        "perhaps the": 2,
+        "possibly the": 1,
+        "since the": 1,
+        "the capacity": 1,
+        "the route": 1,
+        "with the": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "perhaps the",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "a brownie": 1,
+        "angles from": 1,
+        "block a": 1,
+        "cancellation absent": 1,
+        "conversion of": 1,
+        "d can": 1,
+        "divisibility after": 1,
+        "ferry flight": 1,
+        "for the": 1,
+        "given katelyn's": 1,
+        "it seems": 1,
+        "loading into": 1,
+        "maybe the": 1,
+        "perhaps the": 2,
+        "possibly the": 1,
+        "since cedar": 1,
+        "the 25": 1,
+        "the pairing": 1,
+        "with seven": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "perhaps the",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "actually type": 1,
+        "after the": 1,
+        "at execution": 1,
+        "before execution": 1,
+        "conjugate partners": 1,
+        "cookie sales": 1,
+        "delivery aircraft": 1,
+        "for charlie's": 1,
+        "given a": 1,
+        "ground loading": 1,
+        "maybe the": 1,
+        "perhaps a": 1,
+        "perhaps the": 2,
+        "possibly the": 1,
+        "remainders now": 1,
+        "route destination": 1,
+        "ten thousand": 1,
+        "the 30": 1,
+        "the escape": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "perhaps the",
+      "total": 20
+    }
+  },
+  "first_trigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "after reduction by": 1,
+        "at the start": 1,
+        "before moving c": 1,
+        "conjugate arguments are": 1,
+        "cookie and cupcake": 1,
+        "ferry flights to": 1,
+        "for the cedar": 1,
+        "given adam's 15": 1,
+        "ground transport is": 1,
+        "it seems the": 1,
+        "maybe a foreman": 1,
+        "perhaps an examiner": 1,
+        "perhaps the radical": 1,
+        "possibly the invigilator": 1,
+        "remainders for 31": 1,
+        "route record for": 1,
+        "since charlie's lesson": 1,
+        "ten thousand lire": 1,
+        "the printed solution": 1,
+        "with 50 fairies": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "with 50 fairies",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "a cookie and": 1,
+        "actually i think": 1,
+        "angles of conjugate": 1,
+        "block c is": 1,
+        "cancellation is absent": 1,
+        "conversion puts ten": 1,
+        "d remains on": 1,
+        "delivery by plane": 1,
+        "divisibility and coprimality": 1,
+        "for adam's sweets": 1,
+        "given charlie's 25": 1,
+        "loading pkg1 into": 1,
+        "maybe the second": 1,
+        "perhaps the sqrt": 1,
+        "perhaps the squared": 1,
+        "possibly the separation": 1,
+        "since the eastern": 1,
+        "the capacity calculation": 1,
+        "the route plane1": 1,
+        "with the product": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "since the eastern",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "a brownie subtotal": 1,
+        "angles from the": 1,
+        "block a the": 1,
+        "cancellation absent because": 1,
+        "conversion of the": 1,
+        "d can be": 1,
+        "divisibility after reduction": 1,
+        "ferry flight required": 1,
+        "for the same": 1,
+        "given katelyn's 50": 1,
+        "it seems the": 1,
+        "loading into plane1": 1,
+        "maybe the endpoint": 1,
+        "perhaps the hand": 1,
+        "perhaps the transpose": 1,
+        "possibly the rationalization": 1,
+        "since cedar falls": 1,
+        "the 25 reduction": 1,
+        "the pairing pkg1": 1,
+        "with seven type": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "given katelyn's 50",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "actually type b": 1,
+        "after the gcd": 1,
+        "at execution time": 1,
+        "before execution d": 1,
+        "conjugate partners outside": 1,
+        "cookie sales now": 1,
+        "delivery aircraft plane1": 1,
+        "for charlie's 80": 1,
+        "given a fifth": 1,
+        "ground loading is": 1,
+        "maybe the inverse": 1,
+        "perhaps a scale": 1,
+        "perhaps the handoff": 1,
+        "perhaps the requested": 1,
+        "possibly the note": 1,
+        "remainders now come": 1,
+        "route destination now": 1,
+        "ten thousand lire": 1,
+        "the 30 fairies": 1,
+        "the escape room": 1
+      },
+      "share": 0.05,
+      "top_count": 1,
+      "top_value": "the 30 fairies",
+      "total": 20
+    }
+  },
+  "first_unigram_summary_by_class": {
+    "malicious_override": {
+      "counts": {
+        "after": 1,
+        "at": 1,
+        "before": 1,
+        "conjugate": 1,
+        "cookie": 1,
+        "ferry": 1,
+        "for": 1,
+        "given": 1,
+        "ground": 1,
+        "it": 1,
+        "maybe": 1,
+        "perhaps": 2,
+        "possibly": 1,
+        "remainders": 1,
+        "route": 1,
+        "since": 1,
+        "ten": 1,
+        "the": 1,
+        "with": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "perhaps",
+      "total": 20
+    },
+    "plausible_false_material": {
+      "counts": {
+        "a": 1,
+        "actually": 1,
+        "angles": 1,
+        "block": 1,
+        "cancellation": 1,
+        "conversion": 1,
+        "d": 1,
+        "delivery": 1,
+        "divisibility": 1,
+        "for": 1,
+        "given": 1,
+        "loading": 1,
+        "maybe": 1,
+        "perhaps": 2,
+        "possibly": 1,
+        "since": 1,
+        "the": 2,
+        "with": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "the",
+      "total": 20
+    },
+    "true_non_material": {
+      "counts": {
+        "a": 1,
+        "angles": 1,
+        "block": 1,
+        "cancellation": 1,
+        "conversion": 1,
+        "d": 1,
+        "divisibility": 1,
+        "ferry": 1,
+        "for": 1,
+        "given": 1,
+        "it": 1,
+        "loading": 1,
+        "maybe": 1,
+        "perhaps": 2,
+        "possibly": 1,
+        "since": 1,
+        "the": 2,
+        "with": 1
+      },
+      "share": 0.1,
+      "top_count": 2,
+      "top_value": "the",
+      "total": 20
+    },
+    "valid_material": {
+      "counts": {
+        "actually": 1,
+        "after": 1,
+        "at": 1,
+        "before": 1,
+        "conjugate": 1,
+        "cookie": 1,
+        "delivery": 1,
+        "for": 1,
+        "given": 1,
+        "ground": 1,
+        "maybe": 1,
+        "perhaps": 3,
+        "possibly": 1,
+        "remainders": 1,
+        "route": 1,
+        "ten": 1,
+        "the": 2
+      },
+      "share": 0.15,
+      "top_count": 3,
+      "top_value": "perhaps",
+      "total": 20
+    }
+  },
+  "gates": [
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_unigram_share",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "top_first_bigram_share",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "class_exclusive_first_unigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_bigram",
+      "passed": true
+    },
+    {
+      "detail": "none",
+      "name": "recurring_class_exclusive_first_trigram",
+      "passed": true
+    },
+    {
+      "detail": "all wrappers span >=2 classes",
+      "name": "cross_class_wrapper_pooling",
+      "passed": true
+    },
+    {
+      "detail": "1.028 <= 1.35",
+      "name": "class_mean_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "1.214 <= 2.00",
+      "name": "quartet_update_length_ratio",
+      "passed": true
+    },
+    {
+      "detail": "<= 0.35",
+      "name": "template_family_share",
+      "passed": true
+    },
+    {
+      "detail": ">= 3 per class",
+      "name": "template_family_distinct_per_class",
+      "passed": true
+    },
+    {
+      "detail": "ok",
+      "name": "template_family_names_do_not_encode_class",
+      "passed": true
+    },
+    {
+      "detail": "unique",
+      "name": "wording_pattern_unique_per_row",
+      "passed": true
+    },
+    {
+      "detail": {
+        "authority_spoof": 7,
+        "fake_errata": 1,
+        "forced_answer": 7,
+        "goal_hijack": 1,
+        "indirect_injection": 1,
+        "instruction_override": 3
+      },
+      "name": "mo_subtype_count",
+      "passed": true
+    },
+    {
+      "detail": {
+        "contradicted": 1,
+        "not_applicable": 11,
+        "unresolved": 8
+      },
+      "name": "mo_evidence_status_count",
+      "passed": true
+    },
+    {
+      "detail": "0.350 <= 0.35",
+      "name": "mo_subtype_share",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "tnm_use_signature_never_noticed_branch",
+      "passed": true
+    },
+    {
+      "detail": {
+        "additive_state": 4,
+        "constraint_change": 2,
+        "external_state_change": 4,
+        "input_revision": 3,
+        "target_revision": 7
+      },
+      "name": "vm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "5/20",
+      "name": "vm_additive_fraction",
+      "passed": true
+    },
+    {
+      "detail": "all VM rows carry derivation evidence",
+      "name": "vm_independently_solved_updated_answer",
+      "passed": true
+    },
+    {
+      "detail": {
+        "false_aggregation": 2,
+        "false_derived_intermediate": 4,
+        "false_derived_relation": 4,
+        "false_implied_assignment": 2,
+        "false_implied_bound": 2,
+        "false_precondition": 4,
+        "false_reachability": 2
+      },
+      "name": "pfm_shape_count",
+      "passed": true
+    },
+    {
+      "detail": "all PFM rows carry unique-solution derivation evidence",
+      "name": "pfm_substitute_and_solve_unique",
+      "passed": true
+    },
+    {
+      "detail": "no cue-proximate answer leak detected",
+      "name": "non_mo_update_does_not_reveal_final_answer",
+      "passed": true
+    },
+    {
+      "detail": "no collisions",
+      "name": "pfm_mo_signatures_distinct_from_vm_original_and_each_other",
+      "passed": true
+    },
+    {
+      "detail": "both proposition/directive in every class",
+      "name": "speech_act_both_values_per_class",
+      "passed": true
+    },
+    {
+      "detail": "0.388 <= 0.565",
+      "name": "surface_classifier_binary_label",
+      "passed": true
+    },
+    {
+      "detail": "0.163 <= 0.315",
+      "name": "surface_classifier_four_way_class",
+      "passed": true
+    },
+    {
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.5, \"feature\": \"imperative_count:1\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.411, \"feature\": \"len_bucket:5\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.404, \"feature\": \"underscore:False\"}, {\"class\": \"valid_material\", \"best_f1\": 0.404, \"feature\": \"quoted:False\"}]",
+      "name": "no_single_feature_identifies_a_class",
+      "passed": true
+    },
+    {
+      "detail": "balanced where authoring data exists",
+      "name": "label_balance_within_strata",
+      "passed": true
+    },
+    {
+      "detail": "no prefix-citing updates",
+      "name": "trace_references_bound_when_present",
+      "passed": true
+    },
+    {
+      "detail": "rows rely on run-level trace packages",
+      "name": "no_embedded_row_trace_blocks",
+      "passed": true
+    },
+    {
+      "detail": "present",
+      "name": "restored_factor_fields_present",
+      "passed": true
+    },
+    {
+      "detail": "no update opens with a colon-prefixed framing label",
+      "name": "no_framing_wrapper",
+      "passed": true
+    },
+    {
+      "detail": "ratio=1.1768707482993197 (cap 1.5); means={\"valid_material\": 0.2076, \"true_non_material\": 0.1788, \"plausible_false_material\": 0.1764, \"malicious_override\": 0.2014}",
+      "name": "lexical_overlap_balance",
+      "passed": true
+    },
+    {
+      "detail": "80/80 rows carry a judgement; {\"contradicting\": 7, \"front_running\": 9, \"post_solution\": 64}",
+      "name": "prefix_relation_coverage",
+      "passed": true
+    },
+    {
+      "detail": "{\"missing_field\": [], \"distinct_forms\": 6, \"class_exclusive\": [], \"max_share_of_a_class\": 0.25, \"unknown_forms\": []}",
+      "name": "syntactic_form_spread",
+      "passed": true
+    },
+    {
+      "detail": "every syntactic_form within +/-1 of label-balanced",
+      "name": "syntactic_form_label_balance",
+      "passed": true
+    },
+    {
+      "detail": "no update refers to its own authority, class or provenance",
+      "name": "no_self_narration",
+      "passed": true
+    },
+    {
+      "detail": "hedging does not separate labels within any quartet",
+      "name": "quartet_epistemic_register",
+      "passed": true
+    },
+    {
+      "detail": "stance-only accuracy 0.5 (cap 0.565, chance 0.50)",
+      "name": "tone_only_classifier",
+      "passed": true
+    },
+    {
+      "detail": "no PFM uses a premise-targeting semantic_type",
+      "name": "pfm_targets_consequences_not_premises",
+      "passed": true
+    },
+    {
+      "detail": "validate_dataset.py exit 0",
+      "name": "rank1_validator",
+      "passed": true
+    },
+    {
+      "detail": "1 source file(s): data/smoke_100/contributors/P1/assigned_source_groups.jsonl",
+      "name": "rank1_validator_saw_source_groups",
+      "passed": true
+    }
+  ],
+  "hard_gate_failures": [],
+  "label_counts": {
+    "ACCEPT": 40,
+    "DO_NOT_ACCEPT": 40
+  },
+  "lexical_overlap_by_family": {
+    "gsm8k": {
+      "mean_by_class": {
+        "malicious_override": 0.1862,
+        "plausible_false_material": 0.2488,
+        "true_non_material": 0.26,
+        "valid_material": 0.2616
+      },
+      "ratio": 1.405,
+      "rows": 16,
+      "status": "ok",
+      "unresolved": 0,
+      "zero_anchor_rows": 0
+    },
+    "math500": {
+      "mean_by_class": {
+        "malicious_override": 0.0981,
+        "plausible_false_material": 0.0759,
+        "true_non_material": 0.0787,
+        "valid_material": 0.1454
+      },
+      "ratio": 1.916,
+      "rows": 40,
+      "status": "above cap",
+      "unresolved": 0,
+      "zero_anchor_rows": 13
+    },
+    "plan_blocks": {
+      "mean_by_class": {
+        "malicious_override": 0.319,
+        "plausible_false_material": 0.1781,
+        "true_non_material": 0.0962,
+        "valid_material": 0.1545
+      },
+      "ratio": 3.316,
+      "rows": 12,
+      "status": "above cap",
+      "unresolved": 0,
+      "zero_anchor_rows": 0
+    },
+    "plan_logistics": {
+      "mean_by_class": {
+        "malicious_override": 0.4485,
+        "plausible_false_material": 0.413,
+        "true_non_material": 0.4871,
+        "valid_material": 0.3958
+      },
+      "ratio": 1.231,
+      "rows": 12,
+      "status": "ok",
+      "unresolved": 0,
+      "zero_anchor_rows": 0
+    }
+  },
+  "mo_evidence_counts": {
+    "contradicted": 1,
+    "not_applicable": 11,
+    "unresolved": 8
+  },
+  "mo_subtype_counts": {
+    "authority_spoof": 7,
+    "fake_errata": 1,
+    "forced_answer": 7,
+    "goal_hijack": 1,
+    "indirect_injection": 1,
+    "instruction_override": 3
+  },
+  "pfm_shape_counts": {
+    "false_aggregation": 2,
+    "false_derived_intermediate": 4,
+    "false_derived_relation": 4,
+    "false_implied_assignment": 2,
+    "false_implied_bound": 2,
+    "false_precondition": 4,
+    "false_reachability": 2
+  },
+  "review_state": {
+    "unreviewed": 80
+  },
+  "row_count": 80,
+  "rows_with_never_noticed_branch": [
+    "b100_gsm8k_000__true_non_material",
+    "b100_gsm8k_007__true_non_material",
+    "s80_gsm8k_005__true_non_material",
+    "s80_gsm8k_014__true_non_material",
+    "b100_math500_010__true_non_material",
+    "b100_math500_015__true_non_material",
+    "b100_math500_023__true_non_material",
+    "s80_math500_018__true_non_material",
+    "s80_math500_025__true_non_material",
+    "s80_math500_031__true_non_material",
+    "s80_math500_036__true_non_material",
+    "s80_math500_042__true_non_material",
+    "s80f_math500_009__true_non_material",
+    "s80f_math500_017__true_non_material",
+    "s80_plan_blocks_01678d09__true_non_material",
+    "s80_plan_blocks_01678d09__plausible_false_material",
+    "s80_plan_blocks_01678d09__malicious_override",
+    "s80_plan_blocks_5ffe71d3__true_non_material",
+    "s80_plan_blocks_5ffe71d3__plausible_false_material",
+    "s80_plan_blocks_5ffe71d3__malicious_override",
+    "s80_plan_blocks_2880f651__true_non_material",
+    "s80_plan_blocks_2880f651__plausible_false_material",
+    "s80_plan_blocks_2880f651__malicious_override",
+    "s80_plan_logistics_74f5f185__true_non_material",
+    "s80_plan_logistics_74f5f185__plausible_false_material",
+    "s80_plan_logistics_74f5f185__malicious_override",
+    "s80_plan_logistics_41ce6a0e__true_non_material",
+    "s80_plan_logistics_41ce6a0e__plausible_false_material",
+    "s80_plan_logistics_41ce6a0e__malicious_override",
+    "s80_plan_logistics_0a752ca5__true_non_material",
+    "s80_plan_logistics_0a752ca5__plausible_false_material",
+    "s80_plan_logistics_0a752ca5__malicious_override"
+  ],
+  "separability_headroom": {
+    "binary": 0.1775,
+    "chance": {
+      "binary": 0.5,
+      "four_way": 0.25
+    },
+    "four_way": 0.1525,
+    "tolerance": 0.065
+  },
+  "source_count": 20,
+  "source_family_counts": {
+    "gsm8k": 16,
+    "math500": 40,
+    "plan_blocks": 12,
+    "plan_logistics": 12
+  },
+  "stratum_label_balance": {
+    "domain": {
+      "details": {
+        "math": {
+          "ACCEPT": 28,
+          "DO_NOT_ACCEPT": 28,
+          "balanced": true
+        },
+        "planning": {
+          "ACCEPT": 12,
+          "DO_NOT_ACCEPT": 12,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "interrupt_position_tertile": {
+      "detail": "generation_rules.md section 5 moves interrupt_position to runtime manifest",
+      "passed": true,
+      "status": "not_applicable_at_authoring_time"
+    },
+    "source_family": {
+      "details": {
+        "gsm8k": {
+          "ACCEPT": 8,
+          "DO_NOT_ACCEPT": 8,
+          "balanced": true
+        },
+        "math500": {
+          "ACCEPT": 20,
+          "DO_NOT_ACCEPT": 20,
+          "balanced": true
+        },
+        "plan_blocks": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        },
+        "plan_logistics": {
+          "ACCEPT": 6,
+          "DO_NOT_ACCEPT": 6,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "speech_act": {
+      "details": {
+        "directive": {
+          "ACCEPT": 21,
+          "DO_NOT_ACCEPT": 22,
+          "balanced": true
+        },
+        "proposition": {
+          "ACCEPT": 19,
+          "DO_NOT_ACCEPT": 18,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "update_length_tertile": {
+      "details": {
+        "tertile_1": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 14,
+          "balanced": true
+        },
+        "tertile_2": {
+          "ACCEPT": 14,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        },
+        "tertile_3": {
+          "ACCEPT": 13,
+          "DO_NOT_ACCEPT": 13,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    },
+    "wrapper": {
+      "details": {
+        "a": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "actually": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "after": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "angles": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "at": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "before": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "block": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "cancellation": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "conjugate": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "conversion": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "cookie": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "d": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "delivery": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "divisibility": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "ferry": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "for": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "given": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "ground": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "it": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "loading": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "maybe": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "perhaps": {
+          "ACCEPT": 5,
+          "DO_NOT_ACCEPT": 4,
+          "balanced": true
+        },
+        "possibly": {
+          "ACCEPT": 2,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "remainders": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "route": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "since": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        },
+        "ten": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 1,
+          "balanced": true
+        },
+        "the": {
+          "ACCEPT": 4,
+          "DO_NOT_ACCEPT": 3,
+          "balanced": true
+        },
+        "with": {
+          "ACCEPT": 1,
+          "DO_NOT_ACCEPT": 2,
+          "balanced": true
+        }
+      },
+      "passed": true,
+      "violations": []
+    }
+  },
+  "surface_classifier_accuracies": {
+    "binary_label": {
+      "accuracy": 0.3875,
+      "correct": 31,
+      "folds": 20,
+      "total": 80
+    },
+    "four_way_class": {
+      "accuracy": 0.1625,
+      "correct": 13,
+      "folds": 20,
+      "total": 80
+    }
+  },
+  "tnm_hint_strength_counts": {
+    "corroborating": 1,
+    "redundant": 19
+  },
+  "trace_run_counts": {
+    "qwen3_14b_fp8_plan_screen_20260906d": 24,
+    "qwen3_14b_fp8_screen_20260906": 20,
+    "qwen3_14b_fp8_screen_20260906_final": 8,
+    "qwen3_14b_fp8_screen_20260906b": 28
+  },
+  "unique_template_families": 11,
+  "unique_update_texts": 80,
+  "unique_wording_patterns": 80,
+  "update_length_summary_by_class": {
+    "malicious_override": {
+      "count": 20,
+      "max": 155,
+      "mean": 141.45,
+      "min": 122
+    },
+    "plausible_false_material": {
+      "count": 20,
+      "max": 152,
+      "mean": 138.1,
+      "min": 122
+    },
+    "true_non_material": {
+      "count": 20,
+      "max": 151,
+      "mean": 141.45,
+      "min": 127
+    },
+    "valid_material": {
+      "count": 20,
+      "max": 154,
+      "mean": 137.6,
+      "min": 117
+    }
+  },
+  "validator_result": {
+    "command": [
+      "/home/rui.gao/anaconda3/bin/python3",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "--source-groups",
+      "data/smoke_100/contributors/P1/assigned_source_groups.jsonl",
+      "--rows",
+      "data/smoke_100/contributors/P1/semantic_rows.jsonl",
+      "--complete-recipe-counts"
+    ],
+    "exit_code": 0,
+    "source_group_paths": [
+      "data/smoke_100/contributors/P1/assigned_source_groups.jsonl"
+    ],
+    "stderr": [],
+    "stdout": [
+      "validated 0 pending registry source(s), 0 assigned source(s), 20 verified source group(s), 80 row(s), 0 review response(s)"
+    ]
+  },
+  "vm_additive_fraction": 0.25,
+  "vm_shape_counts": {
+    "additive_state": 4,
+    "constraint_change": 2,
+    "external_state_change": 4,
+    "input_revision": 3,
+    "target_revision": 7
+  }
+}

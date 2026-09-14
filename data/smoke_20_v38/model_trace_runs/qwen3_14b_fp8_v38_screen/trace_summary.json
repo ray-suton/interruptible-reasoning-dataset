@@ -1,0 +1,22 @@
+{
+  "by_family": {
+    "gsm8k": 42,
+    "math500": 41,
+    "plan_blocks": 39,
+    "plan_logistics": 97
+  },
+  "model_name": "Qwen/Qwen3-14B-FP8",
+  "note": "This run package is the MERGE of the v38 screening batches; prefixes were appended as each batch landed. The previous summary described only the first exploratory batch (trace_count 8) and pointed at /tmp scratchpad paths that no longer exist, so its traces_sha256 had not matched the file since. Regenerated 2026-09-14 from the file that exists. Planning solvability here is by EXECUTION (scripts/planbench_domain.py), not by the trace exporter's string comparator, which reports every planning source unsolved.",
+  "prompt": "baseline_v38",
+  "prompt_system_prompt_sha256": "d5a2fbc1a88326699c33d0e0d834b9fb2bf50f00ea735800b577d99ae4c98a42",
+  "regenerated": "2026-09-14",
+  "requested_interrupt_position": 0.6,
+  "run_mode": "--mode initial --interrupt_pos 0.6 --task math --problem_field_name original_problem",
+  "solvability_counts": {
+    "solved": 71,
+    "unsolved": 148
+  },
+  "status": "complete",
+  "trace_count": 219,
+  "traces_sha256": "af2f08c727cb2251cf928c64d1c18a99a8ec9daa0daae14fc7a4f048000a95fe"
+}

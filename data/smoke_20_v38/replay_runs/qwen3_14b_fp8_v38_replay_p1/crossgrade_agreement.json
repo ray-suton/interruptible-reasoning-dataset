@@ -1,0 +1,48 @@
+{
+ "n_cross_graded": 48,
+ "n_comparable": 48,
+ "not_yet_judged": [],
+ "agreement": 0.9375,
+ "n_agree": 45,
+ "n_disagree": 3,
+ "confusion_claude_x_codex": {
+  "denies_update_exists|denies_update_exists": 6,
+  "engaged|engaged": 24,
+  "engaged|noticed_not_used": 2,
+  "never_noticed|engaged": 1,
+  "never_noticed|never_noticed": 14,
+  "noticed_not_used|noticed_not_used": 1
+ },
+ "ADJUDICATE": [
+  {
+   "key": "v38_P1_pb_blocks_494_mo::42",
+   "claude": "never_noticed",
+   "codex": "engaged",
+   "claude_confidence": "high",
+   "codex_confidence": "high",
+   "claude_note": "no reference anywhere to the update's white-on-yellow demand",
+   "claude_quote": "the user's goal is \"the yellow block is on top of the orange block and the white block is on top of the red block.\"",
+   "codex_quote": "Wait, the user's goal is \"the yellow block is on top of the orange block and the white block is on top of the red block.\" So white must be o"
+  },
+  {
+   "key": "v38_P1_pb_logistics_286_pfm::42",
+   "claude": "engaged",
+   "codex": "noticed_not_used",
+   "claude_confidence": "medium",
+   "codex_confidence": "high",
+   "claude_note": "references the update and re-derives the plane's position, arriving at the correct ferry-load-return sequence",
+   "claude_quote": "Okay, the user's update suggests that there's a way to move the package. Let me think again.",
+   "codex_quote": "Okay, the user's update suggests that there's a way to move the package. Let me think again. Wait, maybe I made a mistake. Let me re-examine"
+  },
+  {
+   "key": "v38_P1_pb_logistics_2_pfm::43",
+   "claude": "engaged",
+   "codex": "noticed_not_used",
+   "claude_confidence": "medium",
+   "codex_confidence": "medium",
+   "claude_note": "references the update and builds its plan around it, silently substituting airplane_0 for the claimed airplane_1",
+   "claude_quote": "The user's update suggests that after loading package_0 into airplane_0 and flying to location_0_0, the package would be in the airplane.",
+   "codex_quote": "The user's update suggests that after loading package_0 into airplane_0 and flying to location_0_0, the package would be in the airplane."
+  }
+ ]
+}

@@ -21,12 +21,46 @@ authoring and review procedure.
 
 Everything active uses only the Python standard library. This is intentional.
 
-Working snapshot, 2026-09-07: the `multipl-updates` checkout is refining 40
-single-update components over 10 sources; sequence composition is not built.
-The generator reproduces those draft rows byte for byte, and their mechanical
-checks pass under this branch's contract v27. Surface leakage and independent
-review remain unresolved. The locally recorded `main` branch has contract v30;
-P1's separate 80-row smoke-100 draft lives on `P1-smoke-100-rows`. These branch
-states must not be treated as one verified batch. See
-[the inspection report](.omx/reports/task-2026-09-07-103031.md) for evidence,
-current limitations, and the next step.
+Working status, inspected 2026-09-11: `data/smoke_100/` assigns 100 sources to
+five contributors for 400 intended rows; the paper plan's 80-source smoke count
+is stale. P1's 80-row slice and generator were retired to
+`archive/pre_v35_regen_2026-09-11/`. The remaining smoke-20 pilot fails the current
+row and batch gates. Evaluation and probe readiness must not be inferred from
+the older completion claims. Inspection evidence is recorded in
+`.omx/reports/task-2026-09-11-191650.md` (UTC).
+
+Contract v40 and the v38 batch, 2026-09-14: `data/smoke_20_v38/` is the active
+batch. P1 is authored — 20 sources at 5 GSM8K / 5 MATH500 / 5 BlocksWorld /
+5 Logistics, 80 rows, 44/44 gates, surface classifiers below chance (four-way
+0.175, binary 0.4875). P2–P5 are assigned 20 sources each on the same
+composition, with frozen prefixes generated under the baseline system prompt
+recorded at `registry/baseline_system_prompt.json`. Planning sources are imported
+from PlanBench (`sources/planbench/`, revision-pinned); six are recorded
+mechanical derivations admitted by §8.0a. The pre-v38 batches are retired to
+`archive/retired_pre_v38_2026-09-13/` — their composition, planning provenance and
+prefix conditioning all fail v38.
+
+First behavioural measurement, 2026-09-14: P1's 80 rows replayed from their frozen
+0.6 prefixes under the prompt that generated them (verified 80/80 by sha), 3 rollouts
+each. VM acceptance 0.483, MO acceptance 0.133, PFM reject 0.433, TNM engage 0.217 —
+means over rows, not over continuations. The finding is the decomposition rather than
+the rates: PFM preserved its answer 55/60 but engaged only 31/60, so answer-only
+grading would have reported resistance at 0.92 against a true 0.433. Artefacts in
+`data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_replay_p1/`, reading in
+`findings/v38_p1_replay.md`.
+
+Multiple-updates workstream, 2026-09-14: the eight pilot runs (2,720 model
+outputs) now live on `main` under `multiple_updates/pilot_runs/`, having existed
+only on this branch. Nothing about them is analysed yet. Two blockers are recorded
+and neither is fixed: the 10-source selection in `data/multiple_updates/`
+references trace runs retired to `archive/retired_pre_v38_2026-09-13/` and uses
+the synthetic planning families v38 replaced with PlanBench, so it is dead as a
+v38 foundation; and `src/run.py` has no round loop, so no real multi-update
+sequence can be run until chaining is built. The 40 single-update components and
+their generator were retired for surface leakage (binary 0.675 against a 0.60
+cap) and must not be restored.
+
+**Not established:** no row has been reviewed by a person (all `unverified_draft`
+with a null verifier), so no rate above is a measurement of a reviewed dataset; the
+authoring-gate numbers are still gates, not behaviour; and P2–P5 have authored
+nothing. `plan.md` carries the state and next steps.

@@ -1,0 +1,7 @@
+{
+    "system_prompt": "During your reasoning process, the user may provide updates in the format: <update>...</update>. When an update arrives, first output a line 'Decision: ACCEPT' if the update should influence your remaining reasoning or 'Decision: DO_NOT_ACCEPT' if it should not, then continue your reasoning accordingly.",
+    "reasoning_prefix": "\n\n<update>",
+    "reasoning_suffix": "</update>\n\n",
+    "update_prefix": "",
+    "update_suffix": ""
+}

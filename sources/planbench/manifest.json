@@ -1,0 +1,19 @@
+{
+ "config": "task_1_plan_generation",
+ "dataset_id": "tasksource/planbench",
+ "import_status": "text_imported_owner_cleared",
+ "license_declared_by_dataset_card": null,
+ "license_note": "Dataset card declares no license. Redistribution cleared by the repository owner on 2026-09-13 (in-session instruction: \"the license is good. proceed.\"). Recorded as an owner decision, not as a licence finding.",
+ "output": "task1_blocksworld_logistics.jsonl",
+ "output_sha256": "54bd089ed54aae27feefe6c3916982645c0f88fb89259b5ec9ebae9320b451b2",
+ "record_count": 785,
+ "revision": "653dcebd212078d9b64ee8aa7bed19e8b11a9d6a",
+ "selection": "domain in {blocksworld, logistics}; query and ground_truth_plan retained verbatim",
+ "source_family_counts": {
+  "blocksworld": 500,
+  "logistics": 285
+ },
+ "source_url": "https://huggingface.co/datasets/tasksource/planbench/tree/653dcebd212078d9b64ee8aa7bed19e8b11a9d6a",
+ "split": "train",
+ "upstream_paper": "Valmeekam et al., PlanBench, NeurIPS 2023 Datasets & Benchmarks; arXiv:2206.10498"
+}

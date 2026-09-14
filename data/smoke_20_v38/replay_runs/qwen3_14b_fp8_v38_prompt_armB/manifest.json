@@ -1,0 +1,31 @@
+{
+ "estimand": "frozen_prefix_replay",
+ "batch": "smoke_20_v38",
+ "contributor": "P1",
+ "cut_source": "pinned_0.6_screening_cut",
+ "model": "Qwen/Qwen3-14B-FP8",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "n_rows": 80,
+ "n_sources": 20,
+ "n_records": 240,
+ "prompt_file": "tmp/repro/smoke20_v38_replay/prompts/baseline_plus_decision.json",
+ "prompt_file_sha256": "e48e15899d2cff02ed099a46e870c06d2e92364600b13d75a49c981f04201509",
+ "system_prompt_sha256": "0795752d914c5a1f90b70bbe1bcd2f06d5c7857e4bfc1b7cd5b2283f12fa4e31",
+ "prefix_generated_under": "baseline_v38.json",
+ "replayed_under": "During your reasoning, the user may send an update. An update appears as <update>...</update>. When an update arrives, f",
+ "same_prompt_both_ends": false,
+ "rows_sha256": "a458a0b2e817ed0eb7dbe2f12ef6219471261c47dbe3f7e890609821f84c9517",
+ "checks": {
+  "prefix_sha_ok": 80,
+  "prefix_sha_bad": [],
+  "screen_prompt_sha_ok": 80,
+  "screen_prompt_sha_bad": [],
+  "statement_sha_bad": [],
+  "no_source": [],
+  "no_trace": []
+ }
+}

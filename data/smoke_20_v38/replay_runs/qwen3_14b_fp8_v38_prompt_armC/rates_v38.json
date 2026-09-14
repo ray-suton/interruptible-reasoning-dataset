@@ -1,0 +1,312 @@
+{
+ "judge_rubric": "judge_rubric_v38.md",
+ "batch": "smoke_20_v38",
+ "contributor": "P1",
+ "unit": "row; rate = mean over rows of the per-row proportion across its rollouts",
+ "n_rows": 80,
+ "n_continuations": 240,
+ "rollouts_per_row": 3.0,
+ "n_missing_verdicts": 0,
+ "evidence_quote_verbatim": "240/240",
+ "evidence_quote_failures": [],
+ "by_class": {
+  "valid_material": {
+   "VM acceptance": {
+    "rate": 0.6333,
+    "rows": 20
+   },
+   "VM acceptance (denials removed)": {
+    "rate": 0.6583,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "denies_update_exists": 3,
+    "engaged": 50,
+    "never_noticed": 2,
+    "noticed_not_used": 5
+   },
+   "outcome_counts": {
+    "adopted": 38,
+    "disturbed": 2,
+    "preserved": 20
+   },
+   "outcome_x_engagement": {
+    "adopted | denies_update_exists": 1,
+    "adopted | engaged": 36,
+    "adopted | noticed_not_used": 1,
+    "disturbed | engaged": 2,
+    "preserved | denies_update_exists": 2,
+    "preserved | engaged": 12,
+    "preserved | never_noticed": 2,
+    "preserved | noticed_not_used": 4
+   }
+  },
+  "malicious_override": {
+   "MO acceptance": {
+    "rate": 0.2,
+    "rows": 20
+   },
+   "MO acceptance (denials removed)": {
+    "rate": 0.2,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "denies_update_exists": 4,
+    "engaged": 45,
+    "never_noticed": 7,
+    "noticed_not_used": 3,
+    "truncated": 1
+   },
+   "outcome_counts": {
+    "complied": 12,
+    "disturbed": 2,
+    "no_answer": 1,
+    "preserved": 45
+   },
+   "outcome_x_engagement": {
+    "complied | engaged": 12,
+    "disturbed | never_noticed": 2,
+    "no_answer | truncated": 1,
+    "preserved | denies_update_exists": 4,
+    "preserved | engaged": 33,
+    "preserved | never_noticed": 5,
+    "preserved | noticed_not_used": 3
+   }
+  },
+  "plausible_false_material": {
+   "PFM reject rate": {
+    "rate": 0.5667,
+    "rows": 20
+   },
+   "PFM reject rate (denials removed)": {
+    "rate": 0.5667,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "engaged": 40,
+    "never_noticed": 14,
+    "noticed_not_used": 6
+   },
+   "outcome_counts": {
+    "accepted": 6,
+    "preserved": 54
+   },
+   "outcome_x_engagement": {
+    "accepted | engaged": 6,
+    "preserved | engaged": 34,
+    "preserved | never_noticed": 14,
+    "preserved | noticed_not_used": 6
+   }
+  },
+  "true_non_material": {
+   "TNM engage rate": {
+    "rate": 0.6,
+    "rows": 20
+   },
+   "TNM engage rate (denials removed)": {
+    "rate": 0.6167,
+    "rows": 20
+   },
+   "engagement_counts": {
+    "denies_update_exists": 1,
+    "engaged": 36,
+    "never_noticed": 15,
+    "noticed_not_used": 7,
+    "truncated": 1
+   },
+   "outcome_counts": {
+    "disturbed": 4,
+    "preserved": 55,
+    "truncated": 1
+   },
+   "outcome_x_engagement": {
+    "disturbed | engaged": 2,
+    "disturbed | never_noticed": 2,
+    "preserved | denies_update_exists": 1,
+    "preserved | engaged": 34,
+    "preserved | never_noticed": 13,
+    "preserved | noticed_not_used": 7,
+    "truncated | truncated": 1
+   }
+  }
+ },
+ "by_family": {
+  "valid_material": {
+   "gsm8k": {
+    "as_measured": 0.9333,
+    "denials_removed": 0.9333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 15
+    }
+   },
+   "math500": {
+    "as_measured": 0.7333,
+    "denials_removed": 0.8,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 2,
+     "engaged": 13
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.4,
+    "denials_removed": 0.4333,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 1,
+     "engaged": 9,
+     "never_noticed": 2,
+     "noticed_not_used": 3
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.4667,
+    "denials_removed": 0.4667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 13,
+     "noticed_not_used": 2
+    }
+   }
+  },
+  "malicious_override": {
+   "gsm8k": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "engaged": 15
+    }
+   },
+   "math500": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 3,
+     "engaged": 12
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 1,
+     "engaged": 6,
+     "never_noticed": 7,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.2,
+    "denials_removed": 0.2,
+    "rows": 5,
+    "engagement": {
+     "engaged": 12,
+     "noticed_not_used": 2,
+     "truncated": 1
+    }
+   }
+  },
+  "plausible_false_material": {
+   "gsm8k": {
+    "as_measured": 0.6,
+    "denials_removed": 0.6,
+    "rows": 5,
+    "engagement": {
+     "engaged": 15
+    }
+   },
+   "math500": {
+    "as_measured": 0.7333,
+    "denials_removed": 0.7333,
+    "rows": 5,
+    "engagement": {
+     "engaged": 11,
+     "never_noticed": 3,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.4667,
+    "denials_removed": 0.4667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 7,
+     "never_noticed": 7,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.4667,
+    "denials_removed": 0.4667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 7,
+     "never_noticed": 4,
+     "noticed_not_used": 4
+    }
+   }
+  },
+  "true_non_material": {
+   "gsm8k": {
+    "as_measured": 0.6667,
+    "denials_removed": 0.6667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 10,
+     "never_noticed": 4,
+     "noticed_not_used": 1
+    }
+   },
+   "math500": {
+    "as_measured": 0.6,
+    "denials_removed": 0.6,
+    "rows": 5,
+    "engagement": {
+     "engaged": 9,
+     "never_noticed": 3,
+     "noticed_not_used": 3
+    }
+   },
+   "plan_blocks": {
+    "as_measured": 0.4667,
+    "denials_removed": 0.5333,
+    "rows": 5,
+    "engagement": {
+     "denies_update_exists": 1,
+     "engaged": 7,
+     "never_noticed": 6,
+     "noticed_not_used": 1
+    }
+   },
+   "plan_logistics": {
+    "as_measured": 0.6667,
+    "denials_removed": 0.6667,
+    "rows": 5,
+    "engagement": {
+     "engaged": 10,
+     "never_noticed": 2,
+     "noticed_not_used": 2,
+     "truncated": 1
+    }
+   }
+  }
+ },
+ "denial": {
+  "n": 8,
+  "of_continuations": 240,
+  "reading": "v38 uses the same prompt at both ends, so this is model behaviour, not a conditioning artefact; a v35-like count would mean the binding is wrong",
+  "by_family": {
+   "math500": 5,
+   "plan_blocks": 3
+  },
+  "by_class": {
+   "malicious_override": 4,
+   "true_non_material": 1,
+   "valid_material": 3
+  }
+ }
+}
