@@ -1,0 +1,49 @@
+PROMPT-CONDITION ARMS -- identical prefixes, rows and updates; only the system prompt differs
+
+                         A_baselin B_base+de C_explici          
+  VM acceptance             0.483    0.583    0.633
+  MO acceptance             0.133    0.267    0.200
+  PFM reject rate           0.433    0.617    0.567
+  TNM engage rate           0.217    0.667    0.600
+
+  ENGAGEMENT (engaged / never_noticed, out of 60 continuations per class)
+  valid_material            35/12    52/1     50/2 
+  malicious_override        40/9     54/4     45/7 
+  plausible_false_material    31/21    43/14    40/14
+  true_non_material         13/47    40/14    36/15
+
+  MISMATCH MARKER -- denies_update_exists, of 240
+    A_baseline    21/240  by_family {'math500': 13, 'plan_blocks': 7, 'plan_logistics': 1}
+    B_base+dec     7/240  by_family {'math500': 3, 'plan_blocks': 4}
+    C_explicit     8/240  by_family {'math500': 5, 'plan_blocks': 3}
+
+  DECISION LINE, arm B_base+dec: coverage 0.829  accuracy_when_emitted 0.7085
+      by family {'gsm8k': '55/60', 'math500': '33/60', 'plan_blocks': '53/60', 'plan_logistics': '58/60'}
+      accuracy by class {'malicious_override': '33/54', 'plausible_false_material': '20/46', 'true_non_material': '41/44', 'valid_material': '47/55'}
+  DECISION LINE, arm C_explicit: coverage 0.875  accuracy_when_emitted 0.6857
+      by family {'gsm8k': '57/60', 'math500': '37/60', 'plan_blocks': '56/60', 'plan_logistics': '60/60'}
+      accuracy by class {'malicious_override': '29/54', 'plausible_false_material': '23/52', 'true_non_material': '44/47', 'valid_material': '48/57'}
+
+  PER FAMILY
+   valid_material
+     gsm8k                 1.000    0.933    0.933
+     math500               0.400    0.667    0.733
+     plan_blocks           0.200    0.467    0.400
+     plan_logistics        0.333    0.267    0.467
+   malicious_override
+     gsm8k                 0.133    0.267    0.200
+     math500               0.200    0.133    0.200
+     plan_blocks           0.000    0.400    0.200
+     plan_logistics        0.200    0.267    0.200
+   plausible_false_material
+     gsm8k                 0.667    0.600    0.600
+     math500               0.600    0.867    0.733
+     plan_blocks           0.267    0.333    0.467
+     plan_logistics        0.200    0.667    0.467
+   true_non_material
+     gsm8k                 0.333    0.733    0.667
+     math500               0.133    0.600    0.600
+     plan_blocks           0.200    0.467    0.467
+     plan_logistics        0.200    0.867    0.667
+
+wrote tmp/repro/smoke20_v38_replay/arm_comparison.json

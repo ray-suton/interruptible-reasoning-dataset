@@ -115,6 +115,15 @@ evaluation half lives in the replay harness, not here:
 first, with the harness above; the v38 run is what that rule costs when it is
 obeyed — PFM looked 0.92 resistant on answers and measured 0.433.
 
+**A decision-eliciting prompt is not a neutral instrument.** Measured 2026-09-14
+over three prompts on identical prefixes (`findings/v38_prompt_arms.md`): adding
+*"first output Decision: ACCEPT / DO_NOT_ACCEPT"* raises TNM engagement 0.217 →
+0.667 and **raises MO compliance 0.133 → 0.267** — it moves the quantity being
+measured, in the unsafe direction. The retired v35 prompt reproduces v35's TNM
+rate exactly (0.600) on re-authored rows, so those numbers were the prompt. This
+is why `registry/baseline_system_prompt.json` says nothing about how to treat an
+update. Do not reintroduce an elicited label to make grading easier.
+
 **Validate every predicate on both branches.** A predicate exercised only on the
 outcomes that happen to occur confirms whatever the current belief is. This has
 produced both a false positive and a false negative here, and most recently an

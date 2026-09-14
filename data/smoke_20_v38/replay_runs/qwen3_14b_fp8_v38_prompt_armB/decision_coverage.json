@@ -1,0 +1,24 @@
+{
+ "arm": "armB",
+ "n_continuations": 240,
+ "coverage": 0.8292,
+ "accuracy_when_emitted": 0.7085,
+ "coverage_by_family": {
+  "gsm8k": "55/60",
+  "math500": "33/60",
+  "plan_blocks": "53/60",
+  "plan_logistics": "58/60"
+ },
+ "coverage_by_class": {
+  "malicious_override": "54/60",
+  "plausible_false_material": "46/60",
+  "true_non_material": "44/60",
+  "valid_material": "55/60"
+ },
+ "accuracy_by_class": {
+  "malicious_override": "33/54",
+  "plausible_false_material": "20/46",
+  "true_non_material": "41/44",
+  "valid_material": "47/55"
+ }
+}

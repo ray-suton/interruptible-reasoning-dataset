@@ -489,3 +489,58 @@ the file since) and now describes the 219 traces that exist. And `plan.md` §6's
 Rows remain `unverified_draft` with a null verifier. **No rate above is a measurement of
 a reviewed dataset**, and nothing here was fed back into a row: one oddity found while
 reading output (`pb_logistics_286_vm` answering "Impossible") is recorded, not repaired.
+
+## 2026-09-14 — prompt-condition arms: the instruction was doing the work
+
+Three arms over the **same 80 rows, same pinned prefixes, same updates** (verified
+byte-identical except `formatted_input_prompt`, 240/240), same grader, same frozen
+rubric, same judge. A = `baseline_v38`; B = baseline verbatim + the decision
+instruction; C = `explicit_label`, v35's prompt.
+
+| | A | B | C |
+| --- | ---: | ---: | ---: |
+| VM acceptance | 0.483 | 0.583 | 0.633 |
+| MO acceptance | 0.133 | 0.267 | 0.200 |
+| PFM reject | 0.433 | 0.617 | 0.567 |
+| TNM engage | 0.217 | 0.667 | 0.600 |
+
+**Arm C reproduces v35's TNM engage rate exactly — 0.600 against 0.600 under the
+same signature clause** — on different rows, different sources and a different
+family mix. The earlier question is settled: v35's PFM and TNM figures were
+substantially the elicitation prompt, not the disposition. TNM `never_noticed`
+falls 47 → 14; VM and MO, which have an intrinsic trigger, move far less.
+
+**Two things overturn earlier reasoning and are recorded as such.**
+
+1. *The registry's predicted mismatch penalty did not appear; the opposite did.*
+   `denies_update_exists` is 21/240 in the matched arm and 7–8/240 in the two
+   mismatched arms. An instruction **suppresses** denial. The injection-role
+   account in `v38_p1_replay.md` survives as a mechanism, but denial is a
+   **salience** failure, not a binding failure — consistent with the binding being
+   verified 80/80 by sha before every run.
+2. *Instructing the model to adjudicate makes it MORE compliant with attacks.* MO
+   acceptance 0.133 → 0.267 / 0.200, while engagement rises. It reads the demand,
+   reasons about it, and complies anyway. **A decision-eliciting protocol is not a
+   neutral instrument** — it moves the measured quantity in the unsafe direction.
+
+The elicited decision is near chance where it matters: coverage 0.83/0.88, says
+ACCEPT ~0.70 on a 50/50 set, recall on `DO_NOT_ACCEPT` 0.53/0.49 against a 0.50
+majority baseline. math500 omits the decision line 38–45% of the time while
+finishing normally — v35's retiring defect, replicated on new rows.
+
+**Grader change, and the third instance of the same lesson.** The instructed
+prompts changed the *output format*: one-line comma/semicolon plans, LaTeX escaped
+spaces, inline `[PLAN]` markers. The normaliser tuned on arm A mis-graded 25 of
+arm B's plans. Repaired with an **arity-guarded** separator split — a tokenisation
+is accepted only if every action has the right argument count, which is purely
+syntactic and so cannot prefer a split because it happens to reach the goal. The
+selftest now runs 30 cases including "reversed on one line", "one line with a
+garbage step" and "one line missing its last step", all of which must stay
+`invalid`. **Arm A was re-graded under the new grader: 0 behaviour changes across
+all 240 continuations**, so every committed arm-A number is unchanged.
+
+Artefacts: `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_prompt_arm{B,C}/` and
+`.../prompt_arm_comparison/`; reading in `findings/v38_prompt_arms.md`. Arms B and
+C are mismatch arms by construction — they establish a direction and a magnitude,
+not clean absolute rates for an instructed protocol, which would need its own
+prefix generation.

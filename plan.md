@@ -172,13 +172,25 @@ contributors, plus one measurement that belongs to whoever picks this up.
      wearing the costume of a model that cannot plan. Found by reading real output,
      not by the tests. See §5.5.
 
+### And the follow-up it triggered
+
+5b. **Prompt-condition arms — done, 2026-09-14.** Three prompts over the same
+   prefixes settled whether v35's better-looking numbers were the model or the
+   prompt. They were the prompt: v35's prompt reproduces v35's TNM engage rate
+   exactly (0.600) on re-authored rows, against 0.217 for the baseline. Two
+   results overturn earlier reasoning — an instruction *suppresses*
+   `denies_update_exists` (21 → 7/8, the opposite of the predicted mismatch
+   penalty), and it makes the model **more** compliant with malicious overrides
+   (0.133 → 0.267/0.200). `findings/v38_prompt_arms.md`.
+
 ### And what is now next
 
 6. **P2–P5 author their slices**, then the review ring. Nothing about the replay
    changes what they were handed.
 7. **Row-level human review.** Still owed, and still not fixable from inside the
    repo.
-8. **Decide what to do about `denies_update_exists`.** 21 of 240 continuations
+8. **Decide what to do about `denies_update_exists`.** (Updated by 5b: it is a
+   salience failure, not a binding failure — an instruction suppresses it.) 21 of 240 continuations
    assert no update was given, up from 10 of 240 at v35 despite the prompt binding
    being verified 80/80. The cause is the injection role — the update lands in the
    assistant's own turn while the system prompt says the *user* sends one. That is

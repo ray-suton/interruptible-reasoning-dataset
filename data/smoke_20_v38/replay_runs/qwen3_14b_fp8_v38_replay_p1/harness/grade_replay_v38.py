@@ -91,57 +91,107 @@ def equiv(a, b):
 
 # ------------------------------------------------------------------ plan layer
 _PLAN_STRIP = re.compile(r"\\(?:text|texttt|mathrm|mathbf|textbf|operatorname)\s*")
-_ENVELOPE = re.compile(r"\[\s*(?:plan|plan\s*end|statement|goal|initial\s*conditions?|end)\s*\]", re.I)
 _PLAN_ENV = re.compile(r"\\(?:begin|end)\{(?:aligned|align\*?|array|gathered|cases|matrix)\}(?:\{[^}]*\})?")
+# PlanBench's own markers. Removed ANYWHERE, not just on their own line: under the
+# instructed prompts the model writes the whole plan inline as
+# "[PLAN] a; b; c [PLAN END]". They are never actions, so this is safe.
+_ENVELOPE = re.compile(r"\[\s*(?:plan\s*end|plan|statement|goal|initial\s*conditions?|end)\s*\]", re.I)
+_LEADIN = re.compile(r"(?im)^\s*(?:my\s+|the\s+)?plan\s*(?:is|would\s+be)?\s*:\s*")
+_ACT_SEP = (";", ",")
+from planbench_domain import _bw_actions as _BWA, _lg_actions as _LGA  # noqa: E402
+_PARSER = {"plan_blocks": _BWA, "plan_logistics": _LGA}
 
 
-def plan_lines(raw):
-    r"""Model plan spellings -> one action per line, for planbench_domain.
-
-    The screening outputs happened to be newline separated; a replay is not
-    obliged to be. Found by cross-reading the real output, NOT by the first
-    version of this function's tests: 36 of 120 plan continuations box their
-    plan inside `\begin{aligned} ... \end{aligned}` with `&` alignment marks,
-    and 8 escape the underscores in PlanBench names (`package\_0`). Both
-    survive `\text` stripping and then fail to match planbench_domain's
-    leading-verb regex, so ALL 36 graded `invalid` -- a parse failure wearing
-    the costume of a model that cannot plan. The first selftest missed it
-    because it only exercised the `\text{...} \\` spelling that happened to
-    appear first.
-
-    Every added rule is refuted on the wrong branch in the selftest: a broken
-    plan stays broken through all of these spellings.
-    """
-    if raw is None:
-        return None
+def _normalise(raw):
+    """Surface clean-up that is unambiguous: LaTeX wrappers, escapes, envelopes."""
     s = _PLAN_ENV.sub("", str(raw))
     s = _PLAN_STRIP.sub("", s)
+    s = _ENVELOPE.sub("\n", s)
+    s = _LEADIN.sub("", s)
     s = s.replace("\\left", "").replace("\\right", "")
+    s = re.sub(r"\\\\|\\newline|\\n", "\n", s)   # line separators BEFORE escape cleanup (see below)
     s = s.replace("\\_", "_").replace("\\%", "%").replace("\\$", "$")
-    s = re.sub(r"\\\\|\\newline|\\n", "\n", s)
-    s = re.sub(r"(?m)^\s*&+\s*", "", s)          # aligned-environment marks
+    s = s.replace("\\ ", " ").replace("\\,", " ").replace("\\;", " ")   # `\ ` would otherwise eat the 2nd `\` of a `\\` break
+    s = re.sub(r"(?m)^\s*&+\s*", "", s)
     s = re.sub(r"(?m)^\s*(?:\d+[.)]|[-*\u2022])\s*", "", s)
     s = re.sub(r"\)\s*(?=\()", ")\n", s)
     lines = []
     for line in s.splitlines():
+        # Order matters. The lead-in and list-marker strips are applied PER LINE and
+        # AFTER the wrapper is removed: the model writes `\text{plan: a, b, c}` and
+        # `\text{1. unstack red}`, which after \text-stripping are `{plan: ...}` and
+        # `{1. ...}`. A `^`-anchored strip run on the whole string never sees past
+        # the brace, so both survived and the whole plan graded invalid.
         line = line.strip().strip("$").strip()
-        line = re.sub(r"^\{|\}$", "", line).strip()
-        line = re.sub(r"^&+\s*", "", line)
-        # PlanBench's OWN envelope markers, which the model copies out of the
-        # few-shot statement: 15 of the 20 remaining `invalid` plans were a
-        # correct plan wrapped in [PLAN] ... [PLAN END]. Dropped by exact name,
-        # never by "it did not parse" -- dropping unparsed lines generally would
-        # let a plan with a garbage step through, which is the opposite failure.
-        if _ENVELOPE.fullmatch(line):
-            continue
+        for _ in range(3):
+            before = line
+            line = re.sub(r"^[\{\[\(]\s*|\s*[\}\]]$", "", line).strip()
+            line = _LEADIN.sub("", line).strip()
+            line = re.sub(r"^\s*(?:\d+[.)]|[-*\u2022])\s*", "", line).strip()
+            line = re.sub(r"^&+\s*", "", line).strip()
+            line = re.sub(r"(?i)^and\s+", "", line).strip().rstrip(".")
+            if line == before:
+                break
         if line:
             lines.append(line)
     return "\n".join(lines) if lines else None
 
 
+# Expected argument counts. The executors read a[1]/a[2] and IGNORE anything past
+# that, so a run-on line like "pick-up yellow, stack yellow orange" parses to the
+# single action ("pick-up","yellow","stack","yellow","orange"), executes as just
+# the pick-up, and silently loses the stack -- an invalid plan that was really a
+# valid one written on one line. Arity, not "did the verb parse", is therefore the
+# test for whether a tokenisation is the right one. It is purely syntactic: it
+# cannot prefer a split because the split happens to reach the goal.
+_BW_ARITY = {"pick-up": (1,), "put-down": (1,), "unstack": (2,), "stack": (2,)}
+_LG_ARITY = {"load-truck": (2, 3), "unload-truck": (2, 3), "load-airplane": (2, 3),
+             "unload-airplane": (2, 3), "load": (2, 3), "unload": (2, 3),
+             "drive-truck": (3,), "fly-airplane": (3,), "drive": (3,), "fly": (3,)}
+
+
+def _all_wellformed(acts, family):
+    if not acts:
+        return False
+    table = _BW_ARITY if family == "plan_blocks" else _LG_ARITY
+    return all(a[0] in table and (len(a) - 1) in table[a[0]] for a in acts)
+
+
+def plan_lines(raw, family=None):
+    r"""Model plan spellings -> one action per line, for planbench_domain.
+
+    Found by reading real output twice, never by the tests. The baseline arm boxes
+    plans one-per-line inside `\begin{aligned}`, with escaped underscores, or
+    wrapped in `[PLAN]`/`[PLAN END]`. The INSTRUCTED arms box the whole plan on a
+    single line, comma- or semicolon-separated, with LaTeX escaped spaces (`\ `)
+    and the markers inline. A prompt change changed the output format, so a
+    normaliser tuned on one arm silently mis-grades another.
+
+    The separator split is GUARDED: a candidate split is accepted only if EVERY
+    resulting segment parses to a known action verb. That keeps the fix one-way --
+    it can rescue a correct plan written on one line, and it cannot rescue a plan
+    containing a garbage step, because that step would not parse under any split.
+    """
+    base = _normalise(raw)
+    if base is None or family is None:
+        return base
+    parse = _PARSER.get(family)
+    if parse is None:
+        return base
+    if _all_wellformed(parse(base), family):
+        return base
+    for sep in _ACT_SEP:
+        if sep not in base:
+            continue
+        cand = _normalise(re.sub(re.escape(sep) + r"\s*", "\n", base))
+        if cand and _all_wellformed(parse(cand), family):
+            return cand
+    return base
+
+
 def plan_bucket(boxed, family, params, revised_params=None):
     """valid_original / valid_revised / invalid / no_plan -- by execution."""
-    plan = plan_lines(boxed)
+    plan = plan_lines(boxed, family)
     if not plan:
         return "no_plan"
     domain = PB_DOMAIN.get(family)

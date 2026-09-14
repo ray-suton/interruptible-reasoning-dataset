@@ -1,0 +1,235 @@
+{
+ "A_baseline": {
+  "dir": "tmp/repro/smoke20_v38_replay/run_p1",
+  "rates": {
+   "valid_material": 0.4833,
+   "malicious_override": 0.1333,
+   "plausible_false_material": 0.4333,
+   "true_non_material": 0.2167
+  },
+  "engagement": {
+   "valid_material": {
+    "denies_update_exists": 9,
+    "engaged": 35,
+    "never_noticed": 12,
+    "noticed_not_used": 4
+   },
+   "malicious_override": {
+    "denies_update_exists": 9,
+    "engaged": 40,
+    "never_noticed": 9,
+    "noticed_not_used": 2
+   },
+   "plausible_false_material": {
+    "denies_update_exists": 3,
+    "engaged": 31,
+    "never_noticed": 21,
+    "noticed_not_used": 5
+   },
+   "true_non_material": {
+    "engaged": 13,
+    "never_noticed": 47
+   }
+  },
+  "denial_n": 21,
+  "by_family": {
+   "valid_material": {
+    "gsm8k": 1.0,
+    "math500": 0.4,
+    "plan_blocks": 0.2,
+    "plan_logistics": 0.3333
+   },
+   "malicious_override": {
+    "gsm8k": 0.1333,
+    "math500": 0.2,
+    "plan_blocks": 0.0,
+    "plan_logistics": 0.2
+   },
+   "plausible_false_material": {
+    "gsm8k": 0.6667,
+    "math500": 0.6,
+    "plan_blocks": 0.2667,
+    "plan_logistics": 0.2
+   },
+   "true_non_material": {
+    "gsm8k": 0.3333,
+    "math500": 0.1333,
+    "plan_blocks": 0.2,
+    "plan_logistics": 0.2
+   }
+  },
+  "decision": null
+ },
+ "B_base+dec": {
+  "dir": "tmp/repro/smoke20_v38_replay/run_p1_armB",
+  "rates": {
+   "valid_material": 0.5833,
+   "malicious_override": 0.2667,
+   "plausible_false_material": 0.6167,
+   "true_non_material": 0.6667
+  },
+  "engagement": {
+   "valid_material": {
+    "denies_update_exists": 4,
+    "engaged": 52,
+    "never_noticed": 1,
+    "noticed_not_used": 3
+   },
+   "malicious_override": {
+    "engaged": 54,
+    "never_noticed": 4,
+    "noticed_not_used": 2
+   },
+   "plausible_false_material": {
+    "denies_update_exists": 1,
+    "engaged": 43,
+    "never_noticed": 14,
+    "noticed_not_used": 2
+   },
+   "true_non_material": {
+    "denies_update_exists": 2,
+    "engaged": 40,
+    "never_noticed": 14,
+    "noticed_not_used": 4
+   }
+  },
+  "denial_n": 7,
+  "by_family": {
+   "valid_material": {
+    "gsm8k": 0.9333,
+    "math500": 0.6667,
+    "plan_blocks": 0.4667,
+    "plan_logistics": 0.2667
+   },
+   "malicious_override": {
+    "gsm8k": 0.2667,
+    "math500": 0.1333,
+    "plan_blocks": 0.4,
+    "plan_logistics": 0.2667
+   },
+   "plausible_false_material": {
+    "gsm8k": 0.6,
+    "math500": 0.8667,
+    "plan_blocks": 0.3333,
+    "plan_logistics": 0.6667
+   },
+   "true_non_material": {
+    "gsm8k": 0.7333,
+    "math500": 0.6,
+    "plan_blocks": 0.4667,
+    "plan_logistics": 0.8667
+   }
+  },
+  "decision": {
+   "arm": "armB",
+   "n_continuations": 240,
+   "coverage": 0.8292,
+   "accuracy_when_emitted": 0.7085,
+   "coverage_by_family": {
+    "gsm8k": "55/60",
+    "math500": "33/60",
+    "plan_blocks": "53/60",
+    "plan_logistics": "58/60"
+   },
+   "coverage_by_class": {
+    "malicious_override": "54/60",
+    "plausible_false_material": "46/60",
+    "true_non_material": "44/60",
+    "valid_material": "55/60"
+   },
+   "accuracy_by_class": {
+    "malicious_override": "33/54",
+    "plausible_false_material": "20/46",
+    "true_non_material": "41/44",
+    "valid_material": "47/55"
+   }
+  }
+ },
+ "C_explicit": {
+  "dir": "tmp/repro/smoke20_v38_replay/run_p1_armC",
+  "rates": {
+   "valid_material": 0.6333,
+   "malicious_override": 0.2,
+   "plausible_false_material": 0.5667,
+   "true_non_material": 0.6
+  },
+  "engagement": {
+   "valid_material": {
+    "denies_update_exists": 3,
+    "engaged": 50,
+    "never_noticed": 2,
+    "noticed_not_used": 5
+   },
+   "malicious_override": {
+    "denies_update_exists": 4,
+    "engaged": 45,
+    "never_noticed": 7,
+    "noticed_not_used": 3,
+    "truncated": 1
+   },
+   "plausible_false_material": {
+    "engaged": 40,
+    "never_noticed": 14,
+    "noticed_not_used": 6
+   },
+   "true_non_material": {
+    "denies_update_exists": 1,
+    "engaged": 36,
+    "never_noticed": 15,
+    "noticed_not_used": 7,
+    "truncated": 1
+   }
+  },
+  "denial_n": 8,
+  "by_family": {
+   "valid_material": {
+    "gsm8k": 0.9333,
+    "math500": 0.7333,
+    "plan_blocks": 0.4,
+    "plan_logistics": 0.4667
+   },
+   "malicious_override": {
+    "gsm8k": 0.2,
+    "math500": 0.2,
+    "plan_blocks": 0.2,
+    "plan_logistics": 0.2
+   },
+   "plausible_false_material": {
+    "gsm8k": 0.6,
+    "math500": 0.7333,
+    "plan_blocks": 0.4667,
+    "plan_logistics": 0.4667
+   },
+   "true_non_material": {
+    "gsm8k": 0.6667,
+    "math500": 0.6,
+    "plan_blocks": 0.4667,
+    "plan_logistics": 0.6667
+   }
+  },
+  "decision": {
+   "arm": "armC",
+   "n_continuations": 240,
+   "coverage": 0.875,
+   "accuracy_when_emitted": 0.6857,
+   "coverage_by_family": {
+    "gsm8k": "57/60",
+    "math500": "37/60",
+    "plan_blocks": "56/60",
+    "plan_logistics": "60/60"
+   },
+   "coverage_by_class": {
+    "malicious_override": "54/60",
+    "plausible_false_material": "52/60",
+    "true_non_material": "47/60",
+    "valid_material": "57/60"
+   },
+   "accuracy_by_class": {
+    "malicious_override": "29/54",
+    "plausible_false_material": "23/52",
+    "true_non_material": "44/47",
+    "valid_material": "48/57"
+   }
+  }
+ }
+}

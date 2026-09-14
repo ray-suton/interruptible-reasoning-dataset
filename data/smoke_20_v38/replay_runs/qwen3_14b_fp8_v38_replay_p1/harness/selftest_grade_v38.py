@@ -105,6 +105,28 @@ def main():
     check("envelope markers alone are no_plan",
           plan_bucket("\\text{[PLAN]}\n\\text{[PLAN END]}", fam, params), "no_plan")
 
+    # The INSTRUCTED arms (baseline+decision, explicit_label) box the whole plan on
+    # ONE line, comma- or semicolon-separated, with LaTeX escaped spaces and the
+    # markers inline. A normaliser tuned on the baseline arm mis-graded 25 of these.
+    # The split is guarded, so the wrong branch must survive it -- that is c3 below.
+    one_comma = ", ".join(gl)
+    one_semi = "; ".join(gl)
+    esc = one_comma.replace(" ", r"\ ")
+    check("gold on one comma-separated line executes", plan_bucket(one_comma, fam, params), "valid_original")
+    check("gold on one semicolon line executes", plan_bucket(one_semi, fam, params), "valid_original")
+    check("gold one-line with escaped spaces executes", plan_bucket(esc, fam, params), "valid_original")
+    check("gold inline [PLAN] a; b [PLAN END] executes",
+          plan_bucket("[PLAN] " + one_semi + " [PLAN END]", fam, params), "valid_original")
+    check("gold behind a 'Plan:' lead-in executes", plan_bucket("Plan: " + one_comma, fam, params), "valid_original")
+    check("REVERSED on one line is still refuted",
+          plan_bucket(", ".join(rl), fam, params), "invalid")
+    check("one line with a GARBAGE step is refuted",
+          plan_bucket(", ".join(gl + ["frobnicate the widget"]), fam, params), "invalid")
+    check("one line missing its last step is refuted",
+          plan_bucket(", ".join(gl[:-1]), fam, params), "invalid")
+    check("a goal statement is not a plan",
+          plan_bucket("blue block is on top of the yellow block", fam, params), "invalid")
+
     check("gold numbered-list spelling executes",
           plan_bucket("\n".join(f"{i+1}. {l}" for i, l in enumerate(gl)), fam, params), "valid_original")
     check("reversed numbered-list spelling refuted",
