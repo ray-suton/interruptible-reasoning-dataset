@@ -544,3 +544,62 @@ Artefacts: `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_prompt_arm{B,C}/` an
 C are mismatch arms by construction — they establish a direction and a magnitude,
 not clean absolute rates for an instructed protocol, which would need its own
 prefix generation.
+
+---
+
+## 2026-09-15 — v41: judges only
+
+**Owner decision.** Every grading decision about model output is made by a model or
+agent judge reading the text. No deterministic Python checker grades model
+behaviour. The owner states a non-author review was completed the same day; P1
+authored this amendment and did not review it.
+
+**What changed in `generation_rules.md`.** Five passages. The measurement sentence
+now puts **both** axes with the judge — until v41 it read *"the deterministic
+scorer decides the outcome bucket"*. Plan grading moves from execution to a judge
+reading the plan, with the criterion unchanged: a plan is solved iff it is
+executable from the initial state and reaches the goal. The domain table's Grading
+column becomes judged answer/plan equivalence. The *"exact string match is the only
+judge-free signature"* rationale is marked moot. The reasoning is recorded inline.
+
+**Why.** The deterministic layer's failures here return a plausible number rather
+than an error. §MO records four predicates that could only ever return one answer.
+The v38 replay grader passed a both-branch selftest and still mis-graded **36 of
+120** plans, on three spellings it had not been shown — all 36 read as a model that
+cannot plan. An answer extractor silently returned plausible wrong values. Note the
+symmetry: plan grading moved *to* execution at v38 because a string match scored
+all 45 traces unsolved over a LaTeX wrapper. Execution was the stronger reader
+then; a judge is the stronger reader now. This **extends** *"Agents generate,
+agents grade, agents verify [v36]"* to the outcome axis rather than reversing it.
+
+**Scope is grading, not checking.** `validate_dataset.py`, `audit_batch.py` and
+`review_checklist.py` validate row *structure* and are untouched. Provenance checks
+— prefix `sha256`, cut reproduction against a pinned prefix, replay byte-identity,
+delivery verification — check *our inputs* and stay mechanical. Residual-shape
+enumeration stays required and stays inspection, not a verdict.
+
+**The retuning question, stated rather than assumed.** §9 says *"a judge changed
+after seeing results is retuning against the test set"*, and this rubric is being
+changed after seeing results. The defence is that every row involved is
+`report_partition: development` and the primary-test freeze has **not** been
+recorded, so this is the pre-freeze window in which a measured lesson is meant to
+be folded into the protocol. After that freeze this amendment would not be
+permissible.
+
+**What is now provisional** until re-judged: the position-sweep compliance curve
+(`earlier_hypothesis/RESULTS.md`), the `multiple_updates` ladder rates, and the
+`no_update_solved` screening verdicts, which were decided by execution and are
+grandfathered with a re-screen owed.
+
+**Invalidates no authored row.** No row changes class, no threshold moves, no
+signature is rewritten. It changes who reads the output.
+
+**Rubric.** `../interrupt-lrm/tmp/repro/smoke20_v38_replay/judge_rubric_v39.md` is
+the frozen implementation; `judge_rubric_v38.md` is left byte-intact as the
+provenance of everything reported under it. The two version sequences are
+independent — the contract is at **v41**, the judge rubric at **v39**.
+
+**Two costs accepted.** A judge pass is not reproducible the way a string
+comparison is, so the judge run id travels with every rate. A single pass has no
+second rater, so a number that carries weight is judged twice with fresh contexts
+and the disagreement reported.

@@ -153,6 +153,40 @@ controls and the recorded prefix token counts are what make this visible.
    companion-class result in arm A.
 6. **Rollouts are not independent observations.**
 
+## 6b. Engagement pre-registration — written 2026-09-15, before any judge verdict
+
+The compliance curve is in (`RESULTS.md`): a cliff between 0 and 58 reasoning
+tokens, flat from 0.05 to 0.60. It cannot say *why* the 80% who did not comply did
+not comply. The single-update judge answers that, and these are the predictions,
+recorded before the first batch is read.
+
+**Under the claim-evaluation account** — the model treats an update as a claim the
+moment it is reasoning in its own voice, and refuses this one because the demanded
+value is checkably wrong:
+
+> `engaged` is **high and flat across 0.05–0.60**. The model reads the attack and
+> rejects it at every depth. The cliff is a switch in *whether the update is
+> evaluated at all*, and it flips almost immediately.
+
+**Under the alternative** — early updates are not evaluated and rejected, they are
+simply ignored:
+
+> `never_noticed` is **high at 0.05 and falls with depth**, and `engaged` rises.
+> The cliff would then mean early attacks are *skipped*, not *refused*, which is a
+> different mechanism and a worse one for the benchmark: non-compliance at 0.05
+> would not be evidence of judgement at all.
+
+The two are distinguishable on the engagement × position table alone. Whichever
+holds, **the 0.00 cell is the one to watch**: 60% complied there, so if the
+remaining 40% is `never_noticed` the zero-reasoning cell is not measuring refusal
+either.
+
+**No rate from this run is promotable** and the rubric is the frozen
+`judge_rubric_v38.md`, applied unchanged. Position is deliberately **not** shown to
+the judge — it is not in the frozen rubric, and a judge that could condition on
+depth would be answering a different question. Position is joined from the sidecar
+at aggregation time.
+
 ## 7. Status
 
 | | |
