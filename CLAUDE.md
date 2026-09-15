@@ -100,13 +100,15 @@ evaluation half lives in the replay harness, not here:
   on it. `grade_plans.py` does the same with plan equivalence on the boxed plan.
   So `no_update_solved` means **screening** — did the model solve the base task —
   and nothing more. Never read it as an engagement or acceptance measure.
-- **The engagement grader and the LLM judge now exist**, as of 2026-09-14, in
-  `../interrupt-lrm/tmp/repro/smoke20_v38_replay/`: a deterministic outcome layer
-  (`grade_replay_v38.py`, answers and plan execution), a frozen judge rubric
-  (`judge_rubric_v38.md`, Codex CLI — GPT family, never the model under test's
-  family), and the aggregator that will not compute a rate without an engagement
+- **The engagement grader and the LLM judge exist**, in
+  `../interrupt-lrm/tmp/repro/smoke20_v38_replay/`: a frozen judge rubric
+  (**`judge_rubric_v39.md`** — Codex CLI, GPT family, never the model under test's
+  family) and the aggregator that will not compute a rate without an engagement
   verdict (`aggregate_rates_v38.py`). The first results are in
   `data/smoke_20_v38/replay_runs/qwen3_14b_fp8_v38_replay_p1/`.
+  **`grade_replay_v38.py` is the retired deterministic outcome layer** — answers by
+  string comparison, plans by execution. It is superseded by the judges-only policy
+  below; keep it for reproducing the numbers it produced, do not grade with it.
 - An older engagement grader sits at
   `../interrupt-lrm/tmp/repro/p1_probe_smoke/grade_engagement.py`; it predates
   this contract and is not the one to use.
@@ -186,13 +188,25 @@ pass has no second rater, so inter-rater agreement is unmeasured; where a number
 carries weight, judge it twice with fresh contexts and report the disagreement
 rather than only the verdict.
 
-**Amendment debt.** `judge_rubric_v38.md` currently says *"Outcome is the
-deterministic scorer's, never the judge's … and plans by execution against the
-PlanBench domain model."* That line now contradicts this policy and the rubric
-needs amending — it is frozen, so this is a real amendment with a non-author
-reviewer, not an edit. Until it lands, every deterministically-graded number in the
-repository is provisional, including the position-sweep compliance curve in
-`earlier_hypothesis/RESULTS.md` and the ladder's rates.
+**The rubric that implements this is `judge_rubric_v39.md`**
+(`../interrupt-lrm/tmp/repro/smoke20_v38_replay/`), frozen 2026-09-15.
+`judge_rubric_v38.md` is marked superseded and left **byte-intact**, because it is
+the provenance of every number reported under it — `findings/v38_p1_replay.md` and
+the position sweep's engagement verdicts among them. Do not edit it and do not
+judge new batches with it.
+
+**Two version sequences, independent.** The contract is at **v41**; the judge
+rubric is at **v39**. `judge_rubric_v38.md` was named after the *batch*
+(`smoke_20_v38`), not the contract. They will not line up again.
+
+**Still provisional until re-judged under v39**: every deterministically-graded
+number in the repository — the position-sweep compliance curve in
+`earlier_hypothesis/RESULTS.md`, the `multiple_updates` ladder rates, and the
+`no_update_solved` screening verdicts, which were decided by execution and are
+grandfathered with a re-screen owed. **Nothing has been re-judged yet**, and the
+v39 rubric has never been run.
+
+**Non-author review is owed on v36 through v41.**
 
 ## Governance
 
