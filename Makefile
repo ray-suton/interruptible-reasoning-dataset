@@ -1,9 +1,9 @@
-.PHONY: test check pycheck consequence-selftest embedding-selftest batch-rebuild validate batch-audit contract-check contract-lock embedding-check
+.PHONY: test check pycheck consequence-selftest embedding-selftest rows-selftest rows-check rows-assemble batch-rebuild validate batch-audit contract-check contract-lock embedding-check
 
 test: check
 
 # The full gate. Run before authoring and in CI.
-check: pycheck consequence-selftest embedding-selftest contract-check
+check: pycheck consequence-selftest embedding-selftest rows-selftest rows-check contract-check
 
 # Every MATH500 consequence note must reproduce its source's pinned gold answer
 # and change it under falsification. A note that fails is not a typo: it either
@@ -17,6 +17,25 @@ consequence-selftest:
 # repo does not produce, so nothing else would exercise it.
 embedding-selftest:
 	python3 scripts/embedding_separability.py --selftest
+
+# The batch-level rows file is DERIVED from the contributor files -- workflow.md
+# says "the owner concatenates, in contributor order, after review". It was once
+# produced by a point-in-time copy instead, and the two disagreed on five rows for
+# two days while every gate stayed green, because each file validates on its own.
+# Validated on both branches: agreement passes, and each way of disagreeing is caught.
+rows-selftest:
+	python3 scripts/assemble_rows.py --selftest
+
+# Fails if the batch rows file disagrees with the contributor files. A batch file
+# that merely LAGS (rows authored, not yet assembled) warns and passes -- workflow.md
+# has the owner concatenate after review, so lagging is the expected mid-batch state.
+# In `check` so a copy can never silently replace the derivation again.
+rows-check:
+	python3 scripts/assemble_rows.py --check --batch-dir "$(or $(BATCH_DIR),data/smoke_20_v38)"
+
+# Re-derive it. This is the only sanctioned way that file is written.
+rows-assemble:
+	python3 scripts/assemble_rows.py --build --batch-dir "$(or $(BATCH_DIR),data/smoke_20_v38)"
 
 pycheck:
 	PYTHONPYCACHEPREFIX=/tmp/interruptible-reasoning-dataset-pycache python3 -m py_compile \
@@ -41,7 +60,8 @@ pycheck:
 		scripts/make_planning_sources.py \
 		scripts/planning_domains.py \
 		scripts/prepare_trace_input.py \
-		scripts/validate_dataset.py
+		scripts/validate_dataset.py \
+		scripts/assemble_rows.py
 
 # Rebuild the smoke-100 batch. TWO stages, in this order: build_smoke_100 emits
 # the source groups with owner_id null, and assign_sources decides the owners and

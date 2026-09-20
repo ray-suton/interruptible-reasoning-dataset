@@ -1,7 +1,7 @@
 {
   "caveats": [
     "lexical overlap is unbalanced INSIDE a source family the pooled gate averages over -- math500: ratio 2.002 > 1.5 (malicious_override=0.1676 > valid_material=0.14 > plausible_false_material=0.1053 > true_non_material=0.0837). [Q-D4] binds per family in spirit; read this beside the quartet-level judgement in review_checklist.py, and note the metric is weak on symbolic (LaTeX) sources.",
-    "lexical overlap is unbalanced INSIDE a source family the pooled gate averages over -- plan_logistics: ratio 1.558 > 1.5 (malicious_override=0.3019 > plausible_false_material=0.2276 > valid_material=0.2075 > true_non_material=0.1938). [Q-D4] binds per family in spirit; read this beside the quartet-level judgement in review_checklist.py, and note the metric is weak on symbolic (LaTeX) sources.",
+    "lexical overlap is unbalanced INSIDE a source family the pooled gate averages over -- plan_logistics: ratio 1.558 > 1.5 (malicious_override=0.3019 > plausible_false_material=0.2228 > valid_material=0.2075 > true_non_material=0.1938). [Q-D4] binds per family in spirit; read this beside the quartet-level judgement in review_checklist.py, and note the metric is weak on symbolic (LaTeX) sources.",
     "Interrupt-position stratum balance cannot be audited until runtime trace manifests exist."
   ],
   "class_counts": {
@@ -13,12 +13,12 @@
   "contract_v8": {
     "lexical_overlap": {
       "mean_by_class": {
-        "malicious_override": 0.2784,
-        "plausible_false_material": 0.2851,
-        "true_non_material": 0.2525,
+        "malicious_override": 0.2805,
+        "plausible_false_material": 0.2839,
+        "true_non_material": 0.252,
         "valid_material": 0.25
       },
-      "ratio": 1.1404,
+      "ratio": 1.1356,
       "unresolved_sources": 0
     },
     "no_framing_wrapper": {
@@ -189,7 +189,7 @@
         "for the foreman's": 1,
         "for the image": 1,
         "for the mixed": 1,
-        "keep orange's final": 1,
+        "keep orange's support": 1,
         "keep the geometric": 1,
         "keep the parcel's": 1,
         "keep the winter": 1,
@@ -392,7 +392,7 @@
       "passed": true
     },
     {
-      "detail": "1.024 <= 1.35",
+      "detail": "1.022 <= 1.35",
       "name": "class_mean_update_length_ratio",
       "passed": true
     },
@@ -506,17 +506,17 @@
       "passed": true
     },
     {
-      "detail": "0.487 <= 0.565",
+      "detail": "0.425 <= 0.565",
       "name": "surface_classifier_binary_label",
       "passed": true
     },
     {
-      "detail": "0.175 <= 0.315",
+      "detail": "0.200 <= 0.315",
       "name": "surface_classifier_four_way_class",
       "passed": true
     },
     {
-      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.43, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.4, \"feature\": \"bias\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.451, \"feature\": \"tok_bucket:6\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"bias\"}]",
+      "detail": "[{\"class\": \"malicious_override\", \"best_f1\": 0.43, \"feature\": \"imperative:True\"}, {\"class\": \"plausible_false_material\", \"best_f1\": 0.406, \"feature\": \"len_bucket:6\"}, {\"class\": \"true_non_material\", \"best_f1\": 0.435, \"feature\": \"tok_bucket:6\"}, {\"class\": \"valid_material\", \"best_f1\": 0.4, \"feature\": \"bias\"}]",
       "name": "no_single_feature_identifies_a_class",
       "passed": true
     },
@@ -546,7 +546,7 @@
       "passed": true
     },
     {
-      "detail": "ratio=1.1404 (cap 1.5); means={\"valid_material\": 0.25, \"true_non_material\": 0.2525, \"plausible_false_material\": 0.2851, \"malicious_override\": 0.2784}",
+      "detail": "ratio=1.1356 (cap 1.5); means={\"valid_material\": 0.25, \"true_non_material\": 0.252, \"plausible_false_material\": 0.2839, \"malicious_override\": 0.2805}",
       "name": "lexical_overlap_balance",
       "passed": true
     },
@@ -630,12 +630,12 @@
     },
     "plan_blocks": {
       "mean_by_class": {
-        "malicious_override": 0.3745,
+        "malicious_override": 0.3826,
         "plausible_false_material": 0.4311,
-        "true_non_material": 0.3617,
+        "true_non_material": 0.3596,
         "valid_material": 0.3645
       },
-      "ratio": 1.192,
+      "ratio": 1.199,
       "rows": 20,
       "status": "ok",
       "unresolved": 0,
@@ -644,7 +644,7 @@
     "plan_logistics": {
       "mean_by_class": {
         "malicious_override": 0.3019,
-        "plausible_false_material": 0.2276,
+        "plausible_false_material": 0.2228,
         "true_non_material": 0.1938,
         "valid_material": 0.2075
       },
@@ -731,12 +731,12 @@
     "v38_P1_pb_logistics_52_mo"
   ],
   "separability_headroom": {
-    "binary": 0.0775,
+    "binary": 0.14,
     "chance": {
       "binary": 0.5,
       "four_way": 0.25
     },
-    "four_way": 0.14,
+    "four_way": 0.115,
     "tolerance": 0.065
   },
   "source_count": 20,
@@ -865,14 +865,14 @@
   },
   "surface_classifier_accuracies": {
     "binary_label": {
-      "accuracy": 0.4875,
-      "correct": 39,
+      "accuracy": 0.425,
+      "correct": 34,
       "folds": 20,
       "total": 80
     },
     "four_way_class": {
-      "accuracy": 0.175,
-      "correct": 14,
+      "accuracy": 0.2,
+      "correct": 16,
       "folds": 20,
       "total": 80
     }
@@ -891,25 +891,25 @@
     "malicious_override": {
       "count": 20,
       "max": 171,
-      "mean": 147.0,
-      "min": 132
+      "mean": 147.4,
+      "min": 126
     },
     "plausible_false_material": {
       "count": 20,
-      "max": 160,
-      "mean": 143.5,
+      "max": 166,
+      "mean": 144.2,
       "min": 126
     },
     "true_non_material": {
       "count": 20,
       "max": 176,
-      "mean": 145.95,
+      "mean": 146.6,
       "min": 127
     },
     "valid_material": {
       "count": 20,
       "max": 178,
-      "mean": 146.85,
+      "mean": 147.25,
       "min": 126
     }
   },
