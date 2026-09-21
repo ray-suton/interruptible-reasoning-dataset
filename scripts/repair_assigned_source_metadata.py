@@ -62,9 +62,9 @@ def fix(r, problems):
     new["source_record_locator"]=f"{MATH_PATH}:{n}"
     return new
 
-def main(write):
-    tot=collections.Counter(); probs=[]; staged={}; relocated=[]
-    for p in ["P2","P3","P4","P5"]:
+def main(write, people, correct_existing):
+    tot=collections.Counter(); probs=[]; staged={}; relocated=[]; corrected=[]
+    for p in people:
         path=f"data/smoke_20_v38/contributors/{p}/assigned_source_groups.jsonl"
         recs=[json.loads(l) for l in open(path) if l.strip()]
         notes={r["license_note"] for r in recs if r["source_family"]=="gsm8k" and "license_note" in r}
@@ -75,6 +75,12 @@ def main(write):
             n=fix(r,probs)
             if n is None: out.append(r); continue
             if "answer_source" not in r: tot["answer_source"]+=1
+            elif n["answer_source"]!=r["answer_source"]:
+                if correct_existing:
+                    tot["answer_source corrected"]+=1
+                    corrected.append((r["task_group_id"], r["answer_source"], n["answer_source"]))
+                else:
+                    n["answer_source"]=r["answer_source"]
             if n.get("source_record_locator")!=r.get("source_record_locator"):
                 tot["source_record_locator corrected"]+=1
                 relocated.append(f"{r['task_group_id']}: {r['source_record_locator'].rpartition(':')[2]} -> {n['source_record_locator'].rpartition(':')[2]}")
@@ -88,6 +94,10 @@ def main(write):
     print("changes:", dict(tot))
     print("\nlocator corrections (first 8):")
     for x in relocated[:8]: print("   ",x)
+    if corrected:
+        print(f"\nanswer_source corrections ({len(corrected)}):")
+        for tid,old,new in corrected:
+            print(f"    {tid:22} line {old.get('line')} -> {new.get('line')}   marker {old.get('final_answer_marker')!r} -> {new.get('final_answer_marker')!r}")
     if write:
         for path,out in staged.items():
             with open(path,"w",encoding="utf-8") as fh:
@@ -95,4 +105,5 @@ def main(write):
             print(f"  wrote {path} ({len(out)})")
     else: print("\n(dry run)")
     return 0
-sys.exit(main("--write" in sys.argv))
+_people=[a for a in sys.argv[1:] if a.startswith("P") and a[1:].isdigit()] or ["P2","P3","P4","P5"]
+sys.exit(main("--write" in sys.argv, _people, "--correct-existing" in sys.argv))

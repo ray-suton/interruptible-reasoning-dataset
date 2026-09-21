@@ -916,7 +916,7 @@
   "validator_result": {
     "command": [
       "/home/rui.gao/anaconda3/bin/python3",
-      "/home/rui.gao/Desktop/Interruptible Reasoning/interruptible-reasoning-dataset/scripts/validate_dataset.py",
+      "/home/rui.gao/Desktop/Interruptible Reasoning/ird-agent-autonomous/scripts/validate_dataset.py",
       "--source-groups",
       "data/smoke_20_v38/source_groups.jsonl",
       "--rows",
